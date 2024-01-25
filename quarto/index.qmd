@@ -7,6 +7,9 @@ This Quarto book is a demo of the SPARRA package.
 First, we load the package from the local directory.
 
 ```{r}
+library(fst)
+library(tidyverse)
+library(varhandle)
 install.packages("../minisparra/", repos = NULL, type="source")
 library(miniSPARRA01)
 ```
@@ -15,4 +18,32 @@ This lets us call functions such as `print_hello()`.
 
 ```{r}
 print_hello()
+```
+
+```{r}
+lookup_df = make_lookup()
+knitr::kable(lookup_df)
+haven::write_sav(lookup_df,"LOOKUP_SIMD_sex_dob_for_ATI.zsav",compress=TRUE)
+```
+
+```{r}
+ae2_df = make_raw_ae2()
+knitr::kable(ae2_df)
+haven::write_sav(ae2_df,"Final_AE2_extract_incl_UniqueStudyID.zsav",compress=TRUE)
+```
+
+```{r}
+smr00_df = make_raw_smr00()
+knitr::kable(smr00_df)
+haven::write_sav(smr00_df,"Final_SMR00_extract_incl_UniqueStudyID.zsav",compress=TRUE)
+```
+
+```{r}
+table_AE2 = clean_rawData_ae2()
+fst::write.fst(table_AE2, path = "./AE2.fst", compress = 100)
+```
+
+```{r}
+table_SMR00 = clean_rawData()
+fst::write.fst(table_SMR00,path = "./SMR00.fst", compress = 100)
 ```

@@ -6,3 +6,7 @@ tmp_*
 # Quarto
 .quarto
 _site
+
+# Intermediate files
+*.fst
+*.zsav

@@ -4,6 +4,7 @@
 ##' @param dir_rawData directory containing raw data tables (from EHRs)
 ##' @param dir_cleanData directory to which clean data tables will be written
 ##' @returns NULL
+##' @export
 clean_rawData_ae2 <- function(force_redo = TRUE,
                           dir_rawData = ".",
                           dir_cleanData = "."){
@@ -41,6 +42,7 @@ clean_rawData_ae2 <- function(force_redo = TRUE,
   ae2_filepath_clean <- file.path(dir_cleanData,"AE2.fst")
   cat(paste0("... cleaning file: ", ae2_filepath_clean, "\n"))
   table_AE2 <- haven::read_sav(file.path(dir_rawData, data_filenames[["AE2"]]))
+  library(tidyverse)
   glimpse(table_AE2)
 
   # Parse the times
@@ -63,6 +65,7 @@ clean_rawData_ae2 <- function(force_redo = TRUE,
     numerise_columns() %>%
     filter(!is.na(id)) # No point keeping records with no ID. Typically very few.
 
+  library(tidyverse)
   glimpse(table_AE2)
 
   return(table_AE2)
