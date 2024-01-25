@@ -1,7 +1,18 @@
 ---
-title: "Quarto"
+title: "SPARRA"
 ---
 
-This is a Quarto website.
+This Quarto book is a demo of the SPARRA package.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+First, we load the package from the local directory.
+
+```{r}
+install.packages("../minisparra/", repos = NULL, type="source")
+library(miniSPARRA01)
+```
+
+This lets us call functions such as `print_hello()`.
+
+```{r}
+print_hello()
+```
