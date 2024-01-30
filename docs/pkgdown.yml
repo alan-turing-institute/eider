@@ -1,0 +1,9 @@
+pandoc: 2.9.2.1
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles: {}
+last_built: 2024-01-30T20:56Z
+urls:
+  reference: https://alan-turing-institute.github.io/SPARRA/docs/reference
+  article: https://alan-turing-institute.github.io/SPARRA/docs/articles
+
