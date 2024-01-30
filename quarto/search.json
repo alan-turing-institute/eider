@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SPARRA",
+    "section": "",
+    "text": "This Quarto book is a demo of the SPARRA package.\nFirst, we load the package from the local directory.\nlibrary(knitr)\nlibrary(magrittr)\ninstall.packages(\"../minisparra/\", repos = NULL, type=\"source\")\n\nInstalling package into '/home/runner/work/_temp/Library'\n(as 'lib' is unspecified)\n\nlibrary(miniSPARRA01)"
+  },
+  {
+    "objectID": "index.html#looking-at-the-data",
+    "href": "index.html#looking-at-the-data",
+    "title": "SPARRA",
+    "section": "Looking at the data",
+    "text": "Looking at the data\n\nmake_lookup() %&gt;% knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\nUNIQUE_STUDY_ID\nGENDER\nDOB\nSIMD_QUINTILE_2016_SCT\nSIMD_DECILE_2016_SCT\n\n\n\n\n1\n1\n12-10-1968\n4\n7\n\n\n2\n1\n15-04-2004\n1\n1\n\n\n3\n2\n08-03-1963\n5\n10\n\n\n4\n2\n02-09-2001\n5\n9\n\n\n5\n1\n12-04-1963\n3\n5\n\n\n6\n1\n16-11-1998\n5\n10\n\n\n7\n1\n28-08-1959\n3\n5\n\n\n8\n2\n31-03-1994\n2\n4\n\n\n9\n2\n18-04-1972\n4\n7\n\n\n10\n1\n30-03-2005\n1\n1\n\n\n11\n1\n12-04-1989\n2\n3\n\n\n12\n1\n08-12-1939\n4\n7\n\n\n13\n2\n17-08-1995\n2\n4\n\n\n14\n1\n14-09-1936\n5\n10\n\n\n15\n1\n18-04-1994\n4\n7\n\n\n\n\n\n\nmake_raw_ae2() %&gt;% knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTWELVE_MONTH_TIME_PERIOD\nADMISSION_DATE\nADMISSION_TIME\nTRANSFER_DISCHARGE_DATE\nTRANSFER_DISCHARGE_TIME\nDIAGNOSIS_1\nDIAGNOSIS_2\nDIAGNOSIS_3\nDISCHARGE_DESTINATION\nLOCATION_CODE\nREFERRAL_SOURCE\nUNIQUE_STUDY_ID\n\n\n\n\ny4\n17-03-2016\n6:7\n27-03-2016\n6:26\n73\n76\n\n01O\nI967U\n07E\n12\n\n\ny1\n15-09-2019\n20:48\n24-09-2019\n16:9\n19\n93\n\n02H\nC494I\n06Z\n9\n\n\ny3\n18-06-2019\n15:36\n23-06-2019\n18:6\n64\n83\n\n09J\nG953Q\n01T\n3\n\n\ny1\n01-11-2015\n16:15\n11-11-2015\n13:42\n84\n36\n\n05S\nE430D\n07E\n10\n\n\ny2\n14-10-2016\n1:54\n19-10-2016\n6:6\n5\n42\n\n04E\nQ584H\n03P\n13\n\n\ny4\n08-02-2018\n10:32\n12-02-2018\n19:49\n97\n25\n\n09O\nP557W\n03P\n7\n\n\n\n\n\n\nmake_raw_smr00() %&gt;% knitr::kable()\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nATTENDANCE_FOLLOW_UP\nCLINIC_ATTENDANCE\nCLINIC_DATE\nDOB\nDATE_OF_MAIN_OPERATION\nDATE_OF_OTHER_OPERATION_1\nDATE_OF_OTHER_OPERATION_2\nDATE_OF_OTHER_OPERATION_3\nGP_PRACTICE_CODE\nHBRES_CURRENT_DATE\nHBTREAT_CURRENT_DATE\nLOCATION\nMAIN_CONDITION\nOTHER_CONDITION_1\nOTHER_CONDITION_2\nOTHER_CONDITION_3\nOTHER_CONDITION_4\nOTHER_CONDITION_5\nMAIN_OPERATION\nMODE_OF_CONTACT\nOTHER_OPERATION_1\nOTHER_OPERATION_2\nOTHER_OPERATION_3\nPATIENT_CATEGORY\nREFERRAL_TYPE\nSEX\nSIGNIFICANT_FACILITY\nSPECIALTY\nTWELVE_MONTH_TIME_PERIOD\nsimd2016_sc_decile\nsimd2016_sc_quintile\nsimd2016_HB2014_decile\nsimd2016_HB2014_quintile\nsimd2016tp15\nsimd2016bt15\nUNIQUE_STUDY_ID\n\n\n\n\n4\n8\n20-09-2016\n30-03-2005\nNA\nNA\nNA\nNA\n2902\nS08000073\nS08000087\nS48C\nH691\n\n\n\n\n\nE818\n\n\n\n\n3\n2\n1\n11\nE62\ny3\n7\n4\n7\n4\nFALSE\nFALSE\n4\n\n\n\n5\n12-11-2012\n30-09-1968\nNA\nNA\nNA\nNA\n1952\nS08000017\nS08000062\nS12R\nF1\nG705\n\n\n\n\nU973\n1\n\n\n\n5\n3\n1\n36\nO85\ny4\n9\n5\n9\n5\nTRUE\nFALSE\n13\n\n\n3\n1\n30-05-2015\n17-08-1995\nNA\nNA\nNA\nNA\n1991\nS08000061\nS08000086\nE51D\nB261\n\n\n\n\n\nI525\n3\nV930\n\n\n5\n1\n1\n34\nS19\ny3\n7\n4\n7\n4\nFALSE\nFALSE\n7\n\n\n5\n5\n16-08-2017\n28-08-1959\n02-01-2017\n01-07-2013\nNA\nNA\n1984\nS08000068\nS08000029\nZ55J\nO103\nT664\n\n\n\n\nI822\n\nA466\n\n\n3\n2\n2\n34\nX43\ny1\n10=least deprived\n5\n10=least deprived\n5\nTRUE\nFALSE\n1\n\n\n4\n1\n26-01-2017\n09-07-1983\n07-03-2016\nNA\nNA\nNA\n9701\nS08000040\nS08000097\nT79L\nX707\nY642\n\n\n\n\nF386\n\n\n\n\n3\n1\n1\n34\nC94\ny1\n7\n4\n7\n4\nFALSE\nFALSE\n10\n\n\n1\n1\n22-09-2013\n27-01-1990\nNA\nNA\nNA\nNA\n7381\nS08000087\nS08000048\nE84R\nK802\n\n\n\n\n\nJ727\n2\nS472\n\n\n4\n3\n2\n34\nH49\ny2\n4\n2\n4\n2\nFALSE\nFALSE\n15\n\n\n\n\n\nThe following section is disabled for now because it relies on temporary files, and I don’t want to edit the library right now.\n\n# clean_rawData_ae2() %&gt;% knitr::kable()\n\n# This is SMR00, we should probably change the function name\n# clean_rawData() %&gt;% knitr::kable()"
+  }
+]
