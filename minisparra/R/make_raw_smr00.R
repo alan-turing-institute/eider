@@ -1,3 +1,4 @@
+#' @export
 make_raw_smr00 <- function(){
   library(dplyr)
   n <- 6

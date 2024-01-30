@@ -1,3 +1,4 @@
+#' @export
 make_lookup <- function(){
   library(dplyr)
   n <- 6

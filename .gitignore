@@ -2,3 +2,11 @@
 .DS_Store
 tmp_*
 .Rproj.user
+
+# Quarto
+.quarto
+_site
+
+# Intermediate files
+*.fst
+*.zsav

@@ -1,3 +1,4 @@
+#' @export
 make_raw_ae2 <- function(){
   library(dplyr)
   n <- 6

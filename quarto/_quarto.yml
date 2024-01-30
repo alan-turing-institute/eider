@@ -1,0 +1,18 @@
+project:
+  type: website
+  preview:
+    port: 4680
+
+website:
+  title: "SPARRA"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: minty
+    css: styles.css
+    toc: true

@@ -4,6 +4,7 @@
 ##' @param dir_rawData directory containing raw data tables (from EHRs)
 ##' @param dir_cleanData directory to which clean data tables will be written
 ##' @returns NULL
+##' @export
 clean_rawData <- function(force_redo = TRUE,
                           dir_rawData = ".",
                           dir_cleanData = "."){
@@ -43,6 +44,7 @@ clean_rawData <- function(force_redo = TRUE,
   smr00_filepath_clean <- file.path(dir_cleanData,"SMR00.fst")
   cat(paste0("... cleaning file: ", smr00_filepath_clean, "\n"))
   table_SMR00 <- haven::read_sav(file.path(dir_rawData, data_filenames[["SMR00"]]))
+  library(tidyverse)
   glimpse(table_SMR00)
 
   # Parse the useful information
@@ -61,6 +63,7 @@ clean_rawData <- function(force_redo = TRUE,
     numerise_columns() %>%
     filter(!is.na(id)) # No point keeping records with no ID. Typically very few.
 
+  library(tidyverse)
   glimpse(table_SMR00)
 
   return(table_SMR00)
