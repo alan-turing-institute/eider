@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [package-organisation]
+    branches: [main]
   workflow_dispatch:
 
 name: Publish docs and Quarto pages
