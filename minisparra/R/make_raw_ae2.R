@@ -1,6 +1,5 @@
 #' @export
 make_raw_ae2 <- function(){
-  library(dplyr)
   n <- 6
   nid <- 15
   seed <- 468
@@ -30,6 +29,3 @@ make_raw_ae2 <- function(){
 
   return(ae2_df)
 }
-
-
-

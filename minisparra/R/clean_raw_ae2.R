@@ -22,7 +22,7 @@ clean_rawData_ae2 <- function(force_redo = TRUE,
   # Helper function to turn "numerise-able" columns into real numeric columns
   numerise_columns <- function(.data) {
     .data %>%
-      mutate_if(
+      dplyr::mutate_if(
         ~(is.character(.) | is.factor(.)),
         function(x){
           if (all(varhandle::check.numeric(x))){
@@ -42,12 +42,10 @@ clean_rawData_ae2 <- function(force_redo = TRUE,
   ae2_filepath_clean <- file.path(dir_cleanData,"AE2.fst")
   cat(paste0("... cleaning file: ", ae2_filepath_clean, "\n"))
   table_AE2 <- haven::read_sav(file.path(dir_rawData, data_filenames[["AE2"]]))
-  library(tidyverse)
-  glimpse(table_AE2)
 
   # Parse the times
   table_AE2 <- table_AE2 %>%
-    mutate(
+    dplyr::mutate(
       id = as.integer(UNIQUE_STUDY_ID),
       source_table = factor("AE2", levels = source_names),
       source_row = as.integer(row_number()),
@@ -60,13 +58,10 @@ clean_rawData_ae2 <- function(force_redo = TRUE,
         orders = c("d m Y H M")
       )
     ) %>%
-    select(-c(UNIQUE_STUDY_ID, ADMISSION_DATE, ADMISSION_TIME, TRANSFER_DISCHARGE_DATE, TRANSFER_DISCHARGE_TIME)) %>%
-    mutate_if(is.character, ~ifelse(nchar(.)==0, NA, .)) %>%
+    dplyr::select(-c(UNIQUE_STUDY_ID, ADMISSION_DATE, ADMISSION_TIME, TRANSFER_DISCHARGE_DATE, TRANSFER_DISCHARGE_TIME)) %>%
+    dplyr::mutate_if(is.character, ~ifelse(nchar(.)==0, NA, .)) %>%
     numerise_columns() %>%
     filter(!is.na(id)) # No point keeping records with no ID. Typically very few.
-
-  library(tidyverse)
-  glimpse(table_AE2)
 
   return(table_AE2)
 
@@ -74,4 +69,3 @@ clean_rawData_ae2 <- function(force_redo = TRUE,
   rm(table_AE2)
 
 }
-
