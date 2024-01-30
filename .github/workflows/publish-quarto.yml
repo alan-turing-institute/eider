@@ -1,0 +1,59 @@
+on:
+  push:
+    branches: [package-organisation]
+  workflow_dispatch:
+
+name: Publish docs and Quarto pages
+
+# workflow must have permissions to push to gh-pages branch
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3.2'
+
+      - name: Install R packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages:
+            any::pkgdown
+            local::minisparra
+            any::rmarkdown
+            any::knitr
+            any::magrittr
+
+      - name: Build package docs
+        working-directory: minisparra
+        run: pkgdown::build_site()
+        shell: Rscript {0}
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Build Quarto project
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html
+          path: quarto
+
+      - name: Copy both outputs to the same folder
+        run: |
+          mkdir web_files
+          cp -r minisparra/docs web_files/docs
+          cp -r quarto/_site web_files/quarto
+
+      - name: Deploy built files to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./web_files
