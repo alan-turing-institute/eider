@@ -8,8 +8,3 @@ adjust_date_format <- function(dx) {
   }
   dx
 }
-
-#' @export
-print_hello <- function(){
-  print("Hello world")
-}

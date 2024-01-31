@@ -1,7 +1,5 @@
 #' @export
 make_lookup <- function(){
-  library(dplyr)
-  n <- 6
   nid <- 15
   seed <- 468
   set.seed(seed)

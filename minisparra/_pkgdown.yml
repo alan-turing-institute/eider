@@ -1,0 +1,9 @@
+url: https://alan-turing-institute.github.io/SPARRA/docs
+template:
+  bootstrap: 5
+  bootswatch: zephyr
+  bslib:
+    pkgdown-nav-height: 80px
+    base_font: {google: "Fira Sans"}
+    heading_font: {google: "Fira Sans"}
+    code_font: {google: "Fira Mono"}
