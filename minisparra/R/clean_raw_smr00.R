@@ -23,7 +23,7 @@ clean_rawData <- function(force_redo = TRUE,
   # Helper function to turn "numerise-able" columns into real numeric columns
   numerise_columns <- function(.data) {
     .data %>%
-      mutate_if(
+      dplyr::mutate_if(
         ~(is.character(.) | is.factor(.)),
         function(x){
           if (all(varhandle::check.numeric(x))){
@@ -44,12 +44,10 @@ clean_rawData <- function(force_redo = TRUE,
   smr00_filepath_clean <- file.path(dir_cleanData,"SMR00.fst")
   cat(paste0("... cleaning file: ", smr00_filepath_clean, "\n"))
   table_SMR00 <- haven::read_sav(file.path(dir_rawData, data_filenames[["SMR00"]]))
-  library(tidyverse)
-  glimpse(table_SMR00)
 
   # Parse the useful information
   table_SMR00 <- table_SMR00 %>%
-    mutate(
+    dplyr::mutate(
       id = as.integer(UNIQUE_STUDY_ID),
       source_table = factor("SMR00", levels = source_names),
       source_row = as.integer(row_number()),
@@ -58,24 +56,15 @@ clean_rawData <- function(force_redo = TRUE,
       time = as_datetime(lubridate::dmy(CLINIC_DATE)),
       main_condition = as.character(MAIN_CONDITION)
     ) %>%
-    select(-c(UNIQUE_STUDY_ID, DOB, CLINIC_DATE, SEX, MAIN_CONDITION)) %>%
-    mutate_if(is.character, ~ifelse(nchar(.)==0, NA, .)) %>%
+    dplyr::select(-c(UNIQUE_STUDY_ID, DOB, CLINIC_DATE, SEX, MAIN_CONDITION)) %>%
+    dplyr::mutate_if(is.character, ~ifelse(nchar(.)==0, NA, .)) %>%
     numerise_columns() %>%
     filter(!is.na(id)) # No point keeping records with no ID. Typically very few.
 
-  library(tidyverse)
-  glimpse(table_SMR00)
-
   return(table_SMR00)
-
-  # Save the parsed table to compressed RData
-#  fst::write.fst(table_SMR00,path = smr00_filepath_clean, compress = 100)
 
   # Remove from memory
   rm(table_SMR00)
   gc()
 
 }
-
-
-clean_rawData()
