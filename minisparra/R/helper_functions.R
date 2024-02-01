@@ -26,3 +26,20 @@ join_feature_df <- function(current_df, new_df, join_by="id"){
   }
   return(current_df)
 }
+
+
+# Get dictionary key by value
+get_key <- function(dict, value) {
+  keys <- names(dict)
+  for (key in keys) {
+    if (dict[[key]] == value) {
+      return(key)
+    }
+  }
+  return(NULL)
+}
+
+# Get dictionary value by key
+get_value <- function(dict, key) {
+  return(dict[[key]])
+}
