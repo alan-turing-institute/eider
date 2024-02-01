@@ -18,7 +18,7 @@ make_raw_ae2 <- function(n = 6, nid = 15, seed = 468) {
   discharge_destination <- paste0("0", sample(9, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
   location_code <- paste0(toupper(sample(letters, n, rep = TRUE)), sample(100:999, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
   referral_source <- paste0("0", sample(9, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
-  unique_study_id <- sample(nid, n, rep = FALSE)
+  unique_study_id <- sample(nid, n, rep = TRUE)
 
   data.frame(twelve_month_time_period, admission_date, admission_time,
     transfer_discharge_date, transfer_discharge_time,

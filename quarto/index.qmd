@@ -15,14 +15,25 @@ library(miniSPARRA01)
 
 -----
 
+## Raw AE2
 ```{r}
-make_raw_ae2() %>%
-  clean_ae2() %>%
+raw_ae2 <- make_raw_ae2(n = 20, nid = 10)
+raw_ae2 %>%
   knitr::kable()
 ```
 
+## Cleaned AE2
 ```{r}
-make_raw_ae2() %>%
-  clean_ae2_jl() %>%
+raw_ae2 %>%
+  clean_ae2(patient_id_col = "unique_study_id") %>%
+  knitr::kable()
+```
+
+## AE2 features
+
+```{r}
+raw_ae2 %>%
+  clean_ae2(patient_id_col = "unique_study_id") %>%
+  count_ae2_attendance_features() %>%
   knitr::kable()
 ```
