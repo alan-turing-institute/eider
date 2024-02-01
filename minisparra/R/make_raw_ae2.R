@@ -1,31 +1,31 @@
+#' Generate a raw AE2 table.
+#'
+#' @param n Number of rows to generate.
+#' @param nid Number of unique study IDs to generate.
+#' @param seed Seed for random number generation.
 #' @export
-make_raw_ae2 <- function(){
-  n <- 6
-  nid <- 15
-  seed <- 468
+make_raw_ae2 <- function(n = 6, nid = 15, seed = 468) {
   set.seed(seed)
 
-  ## AE2 table table. This ordinarily gets saved as
-  ## Final_AE2_extract_incl_UniqueStudyID.zsav
-  TWELVE_MONTH_TIME_PERIOD <- paste0("y", sample(4, n, rep = TRUE))
-  ADMISSION_DATE <- as.Date.numeric(sample(7 * 365, n, rep = TRUE), origin = "2013-01-01")
-  ADMISSION_TIME <- paste0(sample(0:23, n, rep = TRUE), ":", sample(0:59, n, rep = TRUE))
-  TRANSFER_DISCHARGE_DATE <- as.Date(ADMISSION_DATE + sample(10, n, rep = TRUE))
-  TRANSFER_DISCHARGE_TIME <- paste0(sample(0:23, n, rep = TRUE), ":", sample(0:59, n, rep = TRUE))
-  DIAGNOSIS_1 <- sample(99, n, rep = TRUE)
-  DIAGNOSIS_2 <- sample(99, n, rep = TRUE)
-  DIAGNOSIS_3 <- rep("", n)
-  DISCHARGE_DESTINATION <- paste0("0", sample(9, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
-  LOCATION_CODE <- paste0(toupper(sample(letters, n, rep = TRUE)), sample(100:999, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
-  REFERRAL_SOURCE <- paste0("0", sample(9, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
-  UNIQUE_STUDY_ID <- sample(nid, n, rep = FALSE)
+  twelve_month_time_period <- paste0("y", sample(4, n, rep = TRUE))
+  admission_date <- as.Date.numeric(sample(7 * 365, n, rep = TRUE), origin = "2013-01-01")
+  admission_time <- paste0(sample(0:23, n, rep = TRUE), ":", sample(0:59, n, rep = TRUE))
+  transfer_discharge_date <- as.Date(admission_date + sample(10, n, rep = TRUE))
+  transfer_discharge_time <- paste0(sample(0:23, n, rep = TRUE), ":", sample(0:59, n, rep = TRUE))
+  diagnosis_1 <- sample(99, n, rep = TRUE)
+  diagnosis_2 <- sample(99, n, rep = TRUE)
+  diagnosis_3 <- rep("", n)
+  discharge_destination <- paste0("0", sample(9, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
+  location_code <- paste0(toupper(sample(letters, n, rep = TRUE)), sample(100:999, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
+  referral_source <- paste0("0", sample(9, n, rep = TRUE), toupper(sample(letters, n, rep = TRUE)))
+  unique_study_id <- sample(nid, n, rep = TRUE)
 
-  ae2_df <- data.frame(TWELVE_MONTH_TIME_PERIOD, ADMISSION_DATE, ADMISSION_TIME,
-                       TRANSFER_DISCHARGE_DATE, TRANSFER_DISCHARGE_TIME,
-                       DIAGNOSIS_1, DIAGNOSIS_2, DIAGNOSIS_3,
-                       DISCHARGE_DESTINATION, LOCATION_CODE, REFERRAL_SOURCE,
-                       UNIQUE_STUDY_ID, stringsAsFactors = FALSE) %>%
-  adjust_date_format()
-
-  return(ae2_df)
+  data.frame(twelve_month_time_period, admission_date, admission_time,
+    transfer_discharge_date, transfer_discharge_time,
+    diagnosis_1, diagnosis_2, diagnosis_3,
+    discharge_destination, location_code, referral_source,
+    unique_study_id,
+    stringsasfactors = FALSE
+  ) %>%
+    adjust_date_format()
 }

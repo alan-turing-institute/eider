@@ -15,25 +15,25 @@ library(miniSPARRA01)
 
 -----
 
-## Looking at the data
-
+## Raw AE2
 ```{r}
-make_lookup() %>% knitr::kable()
+raw_ae2 <- make_raw_ae2(n = 20, nid = 10)
+raw_ae2 %>%
+  knitr::kable()
 ```
 
+## Cleaned AE2
 ```{r}
-make_raw_ae2() %>% knitr::kable()
+raw_ae2 %>%
+  clean_ae2(patient_id_col = "unique_study_id") %>%
+  knitr::kable()
 ```
 
-```{r}
-make_raw_smr00() %>% knitr::kable()
-```
-
-The following section is disabled for now because it relies on temporary files, and I don't want to edit the library right now.
+## AE2 features
 
 ```{r}
-# clean_rawData_ae2() %>% knitr::kable()
-
-# This is SMR00, we should probably change the function name
-# clean_rawData() %>% knitr::kable()
+raw_ae2 %>%
+  clean_ae2(patient_id_col = "unique_study_id") %>%
+  count_ae2_attendance_features() %>%
+  knitr::kable()
 ```
