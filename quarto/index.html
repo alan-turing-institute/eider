@@ -146,7 +146,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#looking-at-the-data" id="toc-looking-at-the-data" class="nav-link active" data-scroll-target="#looking-at-the-data">Looking at the data</a></li>
+  <li><a href="#raw-ae2" id="toc-raw-ae2" class="nav-link active" data-scroll-target="#raw-ae2">Raw AE2</a></li>
+  <li><a href="#cleaned-ae2" id="toc-cleaned-ae2" class="nav-link" data-scroll-target="#cleaned-ae2">Cleaned AE2</a></li>
+  <li><a href="#ae2-features" id="toc-ae2-features" class="nav-link" data-scroll-target="#ae2-features">AE2 features</a></li>
   </ul>
 </nav>
     </div>
@@ -185,596 +187,647 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(miniSPARRA01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<section id="looking-at-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="looking-at-the-data">Looking at the data</h2>
+<section id="raw-ae2" class="level2">
+<h2 class="anchored" data-anchor-id="raw-ae2">Raw AE2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_lookup</span>() <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="ot">&lt;-</span> <span class="fu">make_raw_ae2</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">nid =</span> <span class="dv">10</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 8%">
-<col style="width: 14%">
-<col style="width: 29%">
-<col style="width: 26%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">UNIQUE_STUDY_ID</th>
-<th style="text-align: right;">GENDER</th>
-<th style="text-align: left;">DOB</th>
-<th style="text-align: right;">SIMD_QUINTILE_2016_SCT</th>
-<th style="text-align: right;">SIMD_DECILE_2016_SCT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">12-10-1968</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">15-04-2004</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">08-03-1963</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">02-09-2001</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">12-04-1963</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">16-11-1998</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">28-08-1959</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">31-03-1994</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">18-04-1972</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">30-03-2005</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">12-04-1989</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">3</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">08-12-1939</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">7</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">17-08-1995</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">14-09-1936</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">18-04-1994</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">7</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_raw_ae2</span>() <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 7%">
-<col style="width: 7%">
 <col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 6%">
 <col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 9%">
 <col style="width: 6%">
 <col style="width: 7%">
 <col style="width: 7%">
+<col style="width: 7%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">TWELVE_MONTH_TIME_PERIOD</th>
-<th style="text-align: left;">ADMISSION_DATE</th>
-<th style="text-align: left;">ADMISSION_TIME</th>
-<th style="text-align: left;">TRANSFER_DISCHARGE_DATE</th>
-<th style="text-align: left;">TRANSFER_DISCHARGE_TIME</th>
-<th style="text-align: right;">DIAGNOSIS_1</th>
-<th style="text-align: right;">DIAGNOSIS_2</th>
-<th style="text-align: left;">DIAGNOSIS_3</th>
-<th style="text-align: left;">DISCHARGE_DESTINATION</th>
-<th style="text-align: left;">LOCATION_CODE</th>
-<th style="text-align: left;">REFERRAL_SOURCE</th>
-<th style="text-align: right;">UNIQUE_STUDY_ID</th>
+<th style="text-align: left;">twelve_month_time_period</th>
+<th style="text-align: left;">admission_date</th>
+<th style="text-align: left;">admission_time</th>
+<th style="text-align: left;">transfer_discharge_date</th>
+<th style="text-align: left;">transfer_discharge_time</th>
+<th style="text-align: right;">diagnosis_1</th>
+<th style="text-align: right;">diagnosis_2</th>
+<th style="text-align: left;">diagnosis_3</th>
+<th style="text-align: left;">discharge_destination</th>
+<th style="text-align: left;">location_code</th>
+<th style="text-align: left;">referral_source</th>
+<th style="text-align: right;">unique_study_id</th>
+<th style="text-align: left;">stringsasfactors</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">y4</td>
-<td style="text-align: left;">17-03-2016</td>
-<td style="text-align: left;">6:7</td>
-<td style="text-align: left;">27-03-2016</td>
-<td style="text-align: left;">6:26</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">76</td>
+<td style="text-align: left;">30-07-2017</td>
+<td style="text-align: left;">3:35</td>
+<td style="text-align: left;">06-08-2017</td>
+<td style="text-align: left;">18:20</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">53</td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">01O</td>
-<td style="text-align: left;">I967U</td>
-<td style="text-align: left;">07E</td>
-<td style="text-align: right;">12</td>
+<td style="text-align: left;">08P</td>
+<td style="text-align: left;">Z152M</td>
+<td style="text-align: left;">02K</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">y1</td>
-<td style="text-align: left;">15-09-2019</td>
-<td style="text-align: left;">20:48</td>
-<td style="text-align: left;">24-09-2019</td>
-<td style="text-align: left;">16:9</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">93</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">02H</td>
-<td style="text-align: left;">C494I</td>
-<td style="text-align: left;">06Z</td>
+<td style="text-align: left;">18-09-2015</td>
+<td style="text-align: left;">6:41</td>
+<td style="text-align: left;">23-09-2015</td>
+<td style="text-align: left;">4:55</td>
+<td style="text-align: right;">52</td>
 <td style="text-align: right;">9</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">07V</td>
+<td style="text-align: left;">X459O</td>
+<td style="text-align: left;">03M</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">y3</td>
-<td style="text-align: left;">18-06-2019</td>
-<td style="text-align: left;">15:36</td>
-<td style="text-align: left;">23-06-2019</td>
-<td style="text-align: left;">18:6</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">83</td>
+<td style="text-align: left;">01-01-2017</td>
+<td style="text-align: left;">16:24</td>
+<td style="text-align: left;">02-01-2017</td>
+<td style="text-align: left;">19:4</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">41</td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">09J</td>
-<td style="text-align: left;">G953Q</td>
-<td style="text-align: left;">01T</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">01F</td>
+<td style="text-align: left;">F252U</td>
+<td style="text-align: left;">06J</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">y1</td>
-<td style="text-align: left;">01-11-2015</td>
-<td style="text-align: left;">16:15</td>
-<td style="text-align: left;">11-11-2015</td>
-<td style="text-align: left;">13:42</td>
-<td style="text-align: right;">84</td>
-<td style="text-align: right;">36</td>
+<td style="text-align: left;">07-07-2017</td>
+<td style="text-align: left;">18:31</td>
+<td style="text-align: left;">11-07-2017</td>
+<td style="text-align: left;">4:29</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">38</td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">05S</td>
-<td style="text-align: left;">E430D</td>
-<td style="text-align: left;">07E</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: left;">02E</td>
+<td style="text-align: left;">F646J</td>
+<td style="text-align: left;">04L</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">y2</td>
-<td style="text-align: left;">14-10-2016</td>
-<td style="text-align: left;">1:54</td>
-<td style="text-align: left;">19-10-2016</td>
-<td style="text-align: left;">6:6</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">42</td>
+<td style="text-align: left;">29-02-2016</td>
+<td style="text-align: left;">13:25</td>
+<td style="text-align: left;">02-03-2016</td>
+<td style="text-align: left;">15:6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">50</td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">04E</td>
-<td style="text-align: left;">Q584H</td>
-<td style="text-align: left;">03P</td>
-<td style="text-align: right;">13</td>
+<td style="text-align: left;">05O</td>
+<td style="text-align: left;">Z399F</td>
+<td style="text-align: left;">07K</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">y4</td>
-<td style="text-align: left;">08-02-2018</td>
-<td style="text-align: left;">10:32</td>
-<td style="text-align: left;">12-02-2018</td>
-<td style="text-align: left;">19:49</td>
-<td style="text-align: right;">97</td>
-<td style="text-align: right;">25</td>
+<td style="text-align: left;">19-10-2016</td>
+<td style="text-align: left;">6:48</td>
+<td style="text-align: left;">25-10-2016</td>
+<td style="text-align: left;">15:39</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">77</td>
 <td style="text-align: left;"></td>
-<td style="text-align: left;">09O</td>
-<td style="text-align: left;">P557W</td>
-<td style="text-align: left;">03P</td>
+<td style="text-align: left;">06S</td>
+<td style="text-align: left;">M246S</td>
+<td style="text-align: left;">04A</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y3</td>
+<td style="text-align: left;">25-11-2013</td>
+<td style="text-align: left;">19:44</td>
+<td style="text-align: left;">02-12-2013</td>
+<td style="text-align: left;">11:37</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">06X</td>
+<td style="text-align: left;">C469Y</td>
+<td style="text-align: left;">06O</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y1</td>
+<td style="text-align: left;">08-07-2017</td>
+<td style="text-align: left;">9:33</td>
+<td style="text-align: left;">13-07-2017</td>
+<td style="text-align: left;">8:1</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">02C</td>
+<td style="text-align: left;">C526E</td>
+<td style="text-align: left;">09F</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y4</td>
+<td style="text-align: left;">22-03-2014</td>
+<td style="text-align: left;">6:40</td>
+<td style="text-align: left;">01-04-2014</td>
+<td style="text-align: left;">18:46</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">05H</td>
+<td style="text-align: left;">M218B</td>
+<td style="text-align: left;">03Y</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y2</td>
+<td style="text-align: left;">28-06-2016</td>
+<td style="text-align: left;">10:4</td>
+<td style="text-align: left;">03-07-2016</td>
+<td style="text-align: left;">18:23</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">03U</td>
+<td style="text-align: left;">Z162N</td>
+<td style="text-align: left;">01I</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y3</td>
+<td style="text-align: left;">16-02-2019</td>
+<td style="text-align: left;">6:51</td>
+<td style="text-align: left;">25-02-2019</td>
+<td style="text-align: left;">22:42</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">08S</td>
+<td style="text-align: left;">B640R</td>
+<td style="text-align: left;">04I</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y4</td>
+<td style="text-align: left;">12-01-2015</td>
+<td style="text-align: left;">17:40</td>
+<td style="text-align: left;">13-01-2015</td>
+<td style="text-align: left;">14:50</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">08K</td>
+<td style="text-align: left;">C154T</td>
+<td style="text-align: left;">05K</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y1</td>
+<td style="text-align: left;">02-01-2014</td>
+<td style="text-align: left;">8:14</td>
+<td style="text-align: left;">06-01-2014</td>
+<td style="text-align: left;">16:0</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">08Q</td>
+<td style="text-align: left;">A733H</td>
+<td style="text-align: left;">05B</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y4</td>
+<td style="text-align: left;">13-05-2016</td>
+<td style="text-align: left;">18:39</td>
+<td style="text-align: left;">21-05-2016</td>
+<td style="text-align: left;">19:4</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">06W</td>
+<td style="text-align: left;">Y170P</td>
+<td style="text-align: left;">01E</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y3</td>
+<td style="text-align: left;">16-05-2017</td>
+<td style="text-align: left;">19:9</td>
+<td style="text-align: left;">23-05-2017</td>
+<td style="text-align: left;">2:38</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">06L</td>
+<td style="text-align: left;">R684O</td>
+<td style="text-align: left;">03Z</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y3</td>
+<td style="text-align: left;">11-02-2017</td>
+<td style="text-align: left;">4:50</td>
+<td style="text-align: left;">18-02-2017</td>
+<td style="text-align: left;">17:2</td>
 <td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">09K</td>
+<td style="text-align: left;">B631Y</td>
+<td style="text-align: left;">07N</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y3</td>
+<td style="text-align: left;">12-08-2019</td>
+<td style="text-align: left;">0:4</td>
+<td style="text-align: left;">18-08-2019</td>
+<td style="text-align: left;">3:33</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">02Y</td>
+<td style="text-align: left;">O311X</td>
+<td style="text-align: left;">03M</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y2</td>
+<td style="text-align: left;">11-10-2019</td>
+<td style="text-align: left;">11:46</td>
+<td style="text-align: left;">12-10-2019</td>
+<td style="text-align: left;">9:11</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">08Y</td>
+<td style="text-align: left;">Y416D</td>
+<td style="text-align: left;">01W</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">y2</td>
+<td style="text-align: left;">28-05-2018</td>
+<td style="text-align: left;">9:40</td>
+<td style="text-align: left;">04-06-2018</td>
+<td style="text-align: left;">11:23</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">06J</td>
+<td style="text-align: left;">W615B</td>
+<td style="text-align: left;">07X</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">y4</td>
+<td style="text-align: left;">27-07-2014</td>
+<td style="text-align: left;">18:34</td>
+<td style="text-align: left;">30-07-2014</td>
+<td style="text-align: left;">17:20</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">06J</td>
+<td style="text-align: left;">V399N</td>
+<td style="text-align: left;">06K</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">FALSE</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</section>
+<section id="cleaned-ae2" class="level2">
+<h2 class="anchored" data-anchor-id="cleaned-ae2">Cleaned AE2</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">make_raw_smr00</span>() <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_ae2</span>(<span class="at">patient_id_col =</span> <span class="st">"unique_study_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "attendance_category column not in AE2; adding with default value of 1"</code></pre>
 </div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
 <col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 1%">
-<col style="width: 1%">
-<col style="width: 3%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 3%">
-<col style="width: 1%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 0%">
-<col style="width: 3%">
-<col style="width: 1%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 3%">
-<col style="width: 2%">
-<col style="width: 2%">
-<col style="width: 2%">
+<col style="width: 13%">
+<col style="width: 24%">
+<col style="width: 15%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">ATTENDANCE_FOLLOW_UP</th>
-<th style="text-align: right;">CLINIC_ATTENDANCE</th>
-<th style="text-align: left;">CLINIC_DATE</th>
-<th style="text-align: left;">DOB</th>
-<th style="text-align: left;">DATE_OF_MAIN_OPERATION</th>
-<th style="text-align: left;">DATE_OF_OTHER_OPERATION_1</th>
-<th style="text-align: left;">DATE_OF_OTHER_OPERATION_2</th>
-<th style="text-align: left;">DATE_OF_OTHER_OPERATION_3</th>
-<th style="text-align: right;">GP_PRACTICE_CODE</th>
-<th style="text-align: left;">HBRES_CURRENT_DATE</th>
-<th style="text-align: left;">HBTREAT_CURRENT_DATE</th>
-<th style="text-align: left;">LOCATION</th>
-<th style="text-align: left;">MAIN_CONDITION</th>
-<th style="text-align: left;">OTHER_CONDITION_1</th>
-<th style="text-align: left;">OTHER_CONDITION_2</th>
-<th style="text-align: left;">OTHER_CONDITION_3</th>
-<th style="text-align: left;">OTHER_CONDITION_4</th>
-<th style="text-align: left;">OTHER_CONDITION_5</th>
-<th style="text-align: left;">MAIN_OPERATION</th>
-<th style="text-align: left;">MODE_OF_CONTACT</th>
-<th style="text-align: left;">OTHER_OPERATION_1</th>
-<th style="text-align: left;">OTHER_OPERATION_2</th>
-<th style="text-align: left;">OTHER_OPERATION_3</th>
-<th style="text-align: right;">PATIENT_CATEGORY</th>
-<th style="text-align: right;">REFERRAL_TYPE</th>
-<th style="text-align: right;">SEX</th>
-<th style="text-align: left;">SIGNIFICANT_FACILITY</th>
-<th style="text-align: left;">SPECIALTY</th>
-<th style="text-align: left;">TWELVE_MONTH_TIME_PERIOD</th>
-<th style="text-align: left;">simd2016_sc_decile</th>
-<th style="text-align: right;">simd2016_sc_quintile</th>
-<th style="text-align: left;">simd2016_HB2014_decile</th>
-<th style="text-align: right;">simd2016_HB2014_quintile</th>
-<th style="text-align: left;">simd2016tp15</th>
-<th style="text-align: left;">simd2016bt15</th>
-<th style="text-align: right;">UNIQUE_STUDY_ID</th>
+<th style="text-align: left;">id</th>
+<th style="text-align: left;">time</th>
+<th style="text-align: right;">attendance_category</th>
+<th style="text-align: left;">source_table</th>
+<th style="text-align: right;">diagnosis_1</th>
+<th style="text-align: right;">diagnosis_2</th>
+<th style="text-align: right;">diagnosis_3</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">20-09-2016</td>
-<td style="text-align: left;">30-03-2005</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">2902</td>
-<td style="text-align: left;">S08000073</td>
-<td style="text-align: left;">S08000087</td>
-<td style="text-align: left;">S48C</td>
-<td style="text-align: left;">H691</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">E818</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">2017-07-30</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">11</td>
-<td style="text-align: left;">E62</td>
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">4</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">12-11-2012</td>
-<td style="text-align: left;">30-09-1968</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">1952</td>
-<td style="text-align: left;">S08000017</td>
-<td style="text-align: left;">S08000062</td>
-<td style="text-align: left;">S12R</td>
-<td style="text-align: left;">F1</td>
-<td style="text-align: left;">G705</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">U973</td>
 <td style="text-align: left;">1</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">3</td>
+<td style="text-align: left;">2015-09-18</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">36</td>
-<td style="text-align: left;">O85</td>
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">9</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">9</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">13</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2017-01-01</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">2017-07-07</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2016-02-29</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">2016-10-19</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2013-11-25</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2017-07-08</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">2014-03-22</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">3</td>
+<td style="text-align: left;">2016-06-28</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">30-05-2015</td>
-<td style="text-align: left;">17-08-1995</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">1991</td>
-<td style="text-align: left;">S08000061</td>
-<td style="text-align: left;">S08000086</td>
-<td style="text-align: left;">E51D</td>
-<td style="text-align: left;">B261</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">I525</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">V930</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: right;">5</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2019-02-16</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2015-01-12</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">34</td>
-<td style="text-align: left;">S19</td>
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">7</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2014-01-02</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">5</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">16-08-2017</td>
-<td style="text-align: left;">28-08-1959</td>
-<td style="text-align: left;">02-01-2017</td>
-<td style="text-align: left;">01-07-2013</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">1984</td>
-<td style="text-align: left;">S08000068</td>
-<td style="text-align: left;">S08000029</td>
-<td style="text-align: left;">Z55J</td>
-<td style="text-align: left;">O103</td>
-<td style="text-align: left;">T664</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">I822</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">A466</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">34</td>
-<td style="text-align: left;">X43</td>
-<td style="text-align: left;">y1</td>
-<td style="text-align: left;">10=least deprived</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">10=least deprived</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">TRUE</td>
-<td style="text-align: left;">FALSE</td>
+<td style="text-align: left;">2016-05-13</td>
 <td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">2017-05-16</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">2017-02-11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">2019-08-12</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">2019-10-11</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">4</td>
+<td style="text-align: left;">2018-05-28</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">26-01-2017</td>
-<td style="text-align: left;">09-07-1983</td>
-<td style="text-align: left;">07-03-2016</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">9701</td>
-<td style="text-align: left;">S08000040</td>
-<td style="text-align: left;">S08000097</td>
-<td style="text-align: left;">T79L</td>
-<td style="text-align: left;">X707</td>
-<td style="text-align: left;">Y642</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">F386</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">34</td>
-<td style="text-align: left;">C94</td>
-<td style="text-align: left;">y1</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">7</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">10</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">NA</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">1</td>
+<td style="text-align: left;">2014-07-27</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">22-09-2013</td>
-<td style="text-align: left;">27-01-1990</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">7381</td>
-<td style="text-align: left;">S08000087</td>
-<td style="text-align: left;">S08000048</td>
-<td style="text-align: left;">E84R</td>
-<td style="text-align: left;">K802</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">J727</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">S472</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">34</td>
-<td style="text-align: left;">H49</td>
-<td style="text-align: left;">y2</td>
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">15</td>
+<td style="text-align: left;">AE2</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">NA</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<p>The following section is disabled for now because it relies on temporary files, and I don’t want to edit the library right now.</p>
+</section>
+<section id="ae2-features" class="level2">
+<h2 class="anchored" data-anchor-id="ae2-features">AE2 features</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clean_rawData_ae2() %&gt;% knitr::kable()</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># This is SMR00, we should probably change the function name</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># clean_rawData() %&gt;% knitr::kable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_ae2</span>(<span class="at">patient_id_col =</span> <span class="st">"unique_study_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count_ae2_attendance_features</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "attendance_category column not in AE2; adding with default value of 1"</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 27%">
+<col style="width: 39%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">id</th>
+<th style="text-align: right;">num_ae2_attendances</th>
+<th style="text-align: right;">num_alcohol_drug_attendances</th>
+<th style="text-align: right;">num_psych_attendances</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 

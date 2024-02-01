@@ -47,14 +47,48 @@
 
       <dl><dt>
           
+          <code><a href="adjust_date_format.html">adjust_date_format()</a></code> 
+        </dt>
+        <dd>Adjust date formats to DD-MM-YYYY</dd>
+      </dl><dl><dt>
+          
+          <code><a href="clean_ae2.html">clean_ae2()</a></code> 
+        </dt>
+        <dd>Cleans the AE2 table. Adds the attendance_category column and populates it
+with 1 if it doesn't exist.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="clean_ae2_jl.html">clean_ae2_jl()</a></code> 
+        </dt>
+        <dd>James's version of AE2 cleaning, tidied up to avoid using files.
+Mostly kept here for posterity.</dd>
+      </dl><dl><dt>
+          
           <code><a href="clean_rawData.html">clean_rawData()</a></code> 
         </dt>
         <dd>Clean raw data and generate tidy versions of data tables. Will only update episodes table if force_redo = TRUE.</dd>
       </dl><dl><dt>
           
-          <code><a href="clean_rawData_ae2.html">clean_rawData_ae2()</a></code> 
+          <code><a href="count_ae2_attendance_features.html">count_ae2_attendance_features()</a></code> 
         </dt>
-        <dd>Clean raw data and generate tidy versions of data tables. Will only update episodes table if force_redo = TRUE.</dd>
+        <dd>Computes features from the AE2 table, including the count of AE2 records per
+id, number of drug and alcohol attendances, and number of psych attendances.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="count_matching_diagnoses.html">count_matching_diagnoses()</a></code> 
+        </dt>
+        <dd>Computes the number of AE2 attendances with a given diagnosis.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="join_feature_df.html">join_feature_df()</a></code> 
+        </dt>
+        <dd>Used when we are adding sets of features one at a time to a single
+data.frame</dd>
+      </dl><dl><dt>
+          
+          <code><a href="make_raw_ae2.html">make_raw_ae2()</a></code> 
+        </dt>
+        <dd>Generate a raw AE2 table.</dd>
       </dl><dl><dt>
           
           <code><a href="miniSPARRA01-package.html">miniSPARRA01</a></code> <code><a href="miniSPARRA01-package.html">miniSPARRA01-package</a></code> 

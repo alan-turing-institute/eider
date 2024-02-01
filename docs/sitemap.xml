@@ -10,13 +10,31 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/index.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/adjust_date_format.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/clean_ae2.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/clean_ae2_jl.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/clean_rawData.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/clean_rawData_ae2.html</loc>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/count_ae2_attendance_features.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/count_matching_diagnoses.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/join_feature_df.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/make_raw_ae2.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/miniSPARRA01-package.html</loc>
