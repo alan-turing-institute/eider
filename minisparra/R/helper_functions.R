@@ -2,7 +2,7 @@
 #'
 #' @export
 adjust_date_format <- function(dx) {
-  for (i in seq_len(dim(dx))[2]) {
+  for (i in seq_len(dim(dx)[2])) {
     if (class(dx[1, i]) == "Date") {
       dx[, i] <- format(dx[, i], "%d-%m-%Y")
     }
