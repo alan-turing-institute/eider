@@ -16,14 +16,14 @@ count_ae2_attendance_features <- function(ae2) {
     summarise(num_ae2_attendances = n())
 
   # Number of alcohol and drug attendances
-  alcohol_drug_diagnoses <- 73
+  alcohol_drug_diagnoses <- 14
   feature_df <- join_feature_df(
     feature_df,
     count_matching_diagnoses(ae2, alcohol_drug_diagnoses, "num_alcohol_drug_attendances")
   )
 
   # Number of psychiatric attendances
-  psych_diagnoses <- 16
+  psych_diagnoses <- 9
   feature_df <- join_feature_df(
     feature_df,
     count_matching_diagnoses(ae2, psych_diagnoses, "num_psych_attendances")

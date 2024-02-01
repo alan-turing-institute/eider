@@ -27,7 +27,6 @@ join_feature_df <- function(current_df, new_df, join_by = "id") {
   } else {
     current_df %>% dplyr::full_join(new_df, by = join_by)
   }
-  return(current_df)
 }
 
 
