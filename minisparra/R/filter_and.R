@@ -1,0 +1,54 @@
+#' Filter table rows based on a logical conjunction of multiple filters (i.e.
+#' filter1 AND filter2 AND ...)
+#'
+#' @param table A data frame
+#' @param filter_obj A list containing the following elements:
+#'               - type: must be 'and'
+#'               - subfilters: a list of filter objects
+#' @return A list with the following elements:
+#'               - passed: data frame with the rows that passed the filter
+#'               - rejected: all other rows
+#' @export
+filter_or <- function(table, filter_obj) {
+  if (filter_obj$type != "and") {
+    stop("Filter type must be 'and'")
+  }
+
+  # Move row names to a column if present
+  has_row_names <- tibble::has_rownames(table)
+  if (has_row_names) {
+    table <- tibble::rownames_to_column(table, "SPARRA_PRIVATE_ROW_NAMES")
+  }
+
+  # Attach an index column to label the rows. This step gets rid of preexisting
+  # row names hence the check above
+  table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
+
+  # Pass the input table through each subfilter in turn. To avoid doing more work
+  # than necessary, once a row fails any of the subfilters, it is added to the
+  # 'failed' table and we don't need to check it against the remaining subfilters.
+  not_yet_failed <- tibble()
+  failed <- table
+  for (subfilter in filter_obj$subfilters) {
+    subfilter_result <- filter_all(not_yet_failed, subfilter)
+    not_yet_failed <- subfilter_result$passed
+    failed <- bind_rows(failed, subfilter_result$rejected)
+  }
+
+  # Sort by the index column (to restore the input order) and remove it
+  passed <- not_yet_failed %>%
+    arrange(SPARRA_PRIVATE_INDEX) %>%
+    select(-SPARRA_PRIVATE_INDEX)
+
+  rejected <- failed %>%
+    arrange(SPARRA_PRIVATE_INDEX) %>%
+    select(-SPARRA_PRIVATE_INDEX)
+
+  # Restore row names if present
+  if (has_row_names) {
+    passed <- tibble::column_to_rownames(passed, "SPARRA_PRIVATE_ROW_NAMES")
+    rejected <- tibble::column_to_rownames(rejected, "SPARRA_PRIVATE_ROW_NAMES")
+  }
+
+  list(passed = passed, rejected = rejected)
+}

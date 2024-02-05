@@ -3,7 +3,7 @@
 #'
 #' @param all_tables List of all input tables (passed in from read_all_tables).
 #' @param source_table_file Filename of the source table to read from.
-#' @param target_diagnoses Vector of diagnosis codes to count.
+#' @param filter_obj A filter object to apply to the source table.
 #' @param id_column_name Name of the patient ID column.
 #' @param missing_value The value to use for patients who have no matching rows
 #' in the source table.
@@ -15,20 +15,17 @@
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
-#'
-#' TODO: Further generalise over (Column, Value) pairs
 featurise_count_per_id <- function(all_tables,
                                    source_table_file,
-                                   target_diagnoses,
+                                   filter_obj,
                                    id_column_name = "id",
                                    missing_value = 0,
                                    output_column_name) {
   source_table <- all_tables[[source_table_file]]
 
   feature_table <- source_table %>%
-    filter(diagnosis_1 %in% target_diagnoses |
-      diagnosis_2 %in% target_diagnoses |
-      diagnosis_3 %in% target_diagnoses) %>%
+    filter_all(filter_obj) %>%
+    magrittr::extract2("passed") %>%
     group_by(.data[[id_column_name]]) %>%
     summarise("{output_column_name}" := n())
 
