@@ -20,4 +20,4 @@ Imports:
     varhandle,
     fst,
     haven,
-    rjson
+    jsonlite
