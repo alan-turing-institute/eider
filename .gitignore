@@ -2,6 +2,7 @@
 .DS_Store
 tmp_*
 .Rproj.user
+*.Rcheck
 
 # Quarto
 .quarto
@@ -11,4 +12,5 @@ _site
 *.fst
 *.zsav
 
-.Rhistory
+# Build output
+*.tar.gz
