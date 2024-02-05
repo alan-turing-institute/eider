@@ -19,4 +19,5 @@ Imports:
     magrittr,
     varhandle,
     fst,
-    haven
+    haven,
+    rjson
