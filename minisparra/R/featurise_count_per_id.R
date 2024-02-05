@@ -1,20 +1,39 @@
-#' Computes the number of rows per patient ID which contain a specific
-#' diagnosis code.
+#' Computes the number of rows per patient ID which contain specific values in
+#' specific columns.
 #'
-#' @param ae2 Cleaned AE2 data.frame.
+#' @param all_tables List of all input tables (passed in from read_all_tables).
+#' @param source_table_file Filename of the source table to read from.
 #' @param target_diagnoses Vector of diagnosis codes to count.
+#' @param id_column_name Name of the patient ID column.
+#' @param missing_value The value to use for patients who have no matching rows
+#' in the source table.
+#' @param output_column_name Name of the output column.
 #'
-#' TODO: Generalise over the following:
-#' - 'diagnosis_x' column names
-#' - 'id' column name
-#' - source table name
-featurise_count_per_id <- function(ae2,
+#' @return A list with the following elements:
+#' - feature_table: A data frame with one row per patient ID and one column
+#'                  containing the count of matching rows in the source table.
+#' - missing_value: The value to use for patients who have no matching rows in
+#'                  the source table. This value is passed downstream to the
+#'                  function which joins all the feature tables together.
+#'
+#' TODO: Further generalise over (Column, Value) pairs
+featurise_count_per_id <- function(all_tables,
+                                   source_table_file,
                                    target_diagnoses,
+                                   id_column_name = "id",
+                                   missing_value = 0,
                                    output_column_name) {
-  ae2 %>%
+  source_table <- all_tables[[source_table_file]]
+
+  feature_table <- source_table %>%
     filter(diagnosis_1 %in% target_diagnoses |
       diagnosis_2 %in% target_diagnoses |
       diagnosis_3 %in% target_diagnoses) %>%
-    group_by(id) %>%
+    group_by(.data[[id_column_name]]) %>%
     summarise("{output_column_name}" := n())
+
+  list(
+    feature_table = feature_table,
+    missing_value = missing_value
+  )
 }
