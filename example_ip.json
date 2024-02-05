@@ -1,0 +1,21 @@
+{
+    "source_file": "ae2.csv",
+    "target_date": "01-01-1970",
+    "lookback_period_days": 1096,
+    "output_column_name": "ae2_op_01",
+    "transformation_type": "count_per_id",
+    "filter_type": "AND",
+    "filters": [
+        {
+            "data_column_name": "column_of_interest_01",
+            "filter_instruction": "in",
+            "filter_values": ["1", "2"]
+        },
+        {
+            "data_column_name": "column_of_interest_02",
+            "filter_instruction": "in",
+            "filter_values": ["A", "B", "C"]
+        }
+
+    ]
+}
