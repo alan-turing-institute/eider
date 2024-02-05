@@ -1,2 +1,5 @@
 ^miniSPARRA01\.Rproj$
 ^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

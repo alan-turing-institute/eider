@@ -1,0 +1,96 @@
+[
+    {
+        "name": "num_outpatient_total",
+        "data_source": "example_smr00.csv",
+        "type": "count_per_id"
+    },
+    {
+        "name": "num_outpatient_appointment_general",
+        "data_source": "example_smr00.csv",
+        "type": "count_per_id",
+        "filter": {
+            "AND": 
+            [
+                {
+                    "column": "referral_type",
+                    "in": [1, 2]
+                },
+                {
+                    "column": "specialty",
+                    "in": [
+                        "A1", "A2", "A3", "A6", "A7", "A8", "A81", "A82", "A9", "AB",
+                        "AD", "H2", "AF", "CA", "AG", "AH", "AM", "AP", "AQ", "AR", "C1",
+                        "C11", "C12", "C13", "C3", "C31", "C4", "C41", "C42", "C5", "C51",
+                        "C6", "C7", "C8", "C9", "CB", "D3", "D4", "D6", "E12", "F2", "G1",
+                        "G1A", "G2", "G21", "G22", "G3", "G4", "G5", "G6", "H1", "J3", "J4",
+                        "J5"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": "num_outpatient_appointment_psych",
+        "data_source": "example_smr00.csv",
+        "type": "count_per_id",
+        "filter": {
+            "AND": 
+            [
+                {
+                    "column": "referral_type",
+                    "in": [1, 2]
+                },
+                {
+                    "column": "specialty",
+                    "in": [
+                        "G1", "G1A", "G2", "G21", "G22", "G3", "G4", "G5", "G6"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": "num_outpatient_appointment_general_followup",
+        "data_source": "example_smr00.csv",
+        "type": "count_per_id",
+        "filter": {
+            "AND": 
+            [
+                {
+                    "column": "referral_type",
+                    "in": [3]
+                },
+                {
+                    "column": "specialty",
+                    "in": [
+                        "A1", "A2", "A3", "A6", "A7", "A8", "A81", "A82", "A9", "AB",
+                        "AD", "H2", "AF", "CA", "AG", "AH", "AM", "AP", "AQ", "AR", "C1",
+                        "C11", "C12", "C13", "C3", "C31", "C4", "C41", "C42", "C5", "C51",
+                        "C6", "C7", "C8", "C9", "CB", "D3", "D4", "D6", "E12", "F2", "G1",
+                        "G1A", "G2", "G21", "G22", "G3", "G4", "G5", "G6", "H1", "J3", "J4",
+                        "J5"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "name": "num_outpatient_appointment_psych_followup",
+        "type": "count_per_id",
+        "filter": {
+            "AND": 
+            [
+                {
+                    "column": "referral_type",
+                    "in": [3]
+                },
+                {
+                    "column": "specialty",
+                    "in": [
+                        "G1", "G1A", "G2", "G21", "G22", "G3", "G4", "G5", "G6"
+                    ]
+                }
+            ]
+        }
+    }
+]

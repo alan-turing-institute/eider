@@ -10,3 +10,5 @@ _site
 # Intermediate files
 *.fst
 *.zsav
+
+.Rhistory
