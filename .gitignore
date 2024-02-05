@@ -3,6 +3,7 @@
 tmp_*
 .Rproj.user
 *.Rcheck
+.Rhistory
 
 # Quarto
 .quarto
