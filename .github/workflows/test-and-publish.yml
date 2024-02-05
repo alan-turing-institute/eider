@@ -3,7 +3,7 @@ on:
     branches: [main]
   workflow_dispatch:
 
-name: Publish docs and Quarto pages
+name: Test, then publish docs and Quarto pages
 
 # workflow must have permissions to push to gh-pages branch
 permissions:
@@ -31,6 +31,12 @@ jobs:
             any::rmarkdown
             any::knitr
             any::magrittr
+
+      - name: Build and test package
+        run: |
+          R CMD build minisparra
+          # building manual requires pdflatex
+          R CMD check *.tar.gz --no-manual
 
       - name: Build package docs
         working-directory: minisparra
