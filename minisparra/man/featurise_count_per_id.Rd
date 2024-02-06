@@ -21,7 +21,7 @@ featurise_count_per_id(
 
 \item{filter_obj}{A filter object to apply to the source table.}
 
-\item{id_column_name}{Name of the patient ID column.}
+\item{id_column_name}{Name of the patient ID column in the source table.}
 
 \item{missing_value}{The value to use for patients who have no matching rows
 in the source table.}
@@ -33,6 +33,9 @@ A list with the following elements:
 \itemize{
 \item feature_table: A data frame with one row per patient ID and one column
 containing the count of matching rows in the source table.
+The column names are 'id' for the ID (this is standardised
+across all feature tables), and the value of
+output_column_name.
 \item missing_value: The value to use for patients who have no matching rows in
 the source table. This value is passed downstream to the
 function which joins all the feature tables together.
