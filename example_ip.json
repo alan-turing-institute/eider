@@ -7,24 +7,35 @@
         "subfilter": {
             "data_column_name": "attendance_type",
             "type": "IN",
-            "values": [7]
-                    },
+            "values": [
+                7
+            ]
+        },
         "subfilter": {
             "type": "OR",
-                "subfilter": {
-                    "data_column_name": "diagnosis_1",
-                    "type": "IN",
-                    "values": [1,2]
-                },
-                "subfilter" :{
-                    "data_column_name": "diagnosis_2",
-                    "type": "IN",
-                    "values": [1,2]
-                },
-                "subfilter" :{
-                    "data_column_name": "diagnosis_3",
-                    "type": "IN",
-                    "values": [1,2]
+            "subfilter": {
+                "data_column_name": "diagnosis_1",
+                "type": "IN",
+                "values": [
+                    1,
+                    2
+                ]
+            },
+            "subfilter": {
+                "data_column_name": "diagnosis_2",
+                "type": "IN",
+                "values": [
+                    1,
+                    2
+                ]
+            },
+            "subfilter": {
+                "data_column_name": "diagnosis_3",
+                "type": "IN",
+                "values": [
+                    1,
+                    2
+                ]
             }
         },
         "subfilter": {
@@ -33,9 +44,9 @@
             "value": "2020-02-01"
         },
         "subfilter": {
-        "type": "LESS_THAN",
-        "data_column_name": "attendance_date",
-        "value": "2024-02-01"
+            "type": "LESS_THAN",
+            "data_column_name": "attendance_date",
+            "value": "2024-02-01"
         }
     }
 }
