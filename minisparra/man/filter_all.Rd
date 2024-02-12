@@ -9,8 +9,7 @@ filter_all(table, filter_obj)
 \arguments{
 \item{table}{A table to filter.}
 
-\item{filter_obj}{A filter to apply to the table. This is a list
-which can have 'type' = any of 'basic', 'or', 'and', or 'not'.}
+\item{filter_obj}{A filter to apply to the table.}
 }
 \value{
 A list with the following elements:

@@ -1,5 +1,5 @@
 test_that("filter_less_than_equal", {
-  filtered_data <- filter_less_than_equal(
+  filtered_data <- filter_all(
     iris,
     list(
       type = "less_than_equal",

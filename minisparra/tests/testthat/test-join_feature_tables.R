@@ -10,19 +10,19 @@ test_that("join_feature_tables", {
       type = "or",
       subfilters = list(
         list(
-          type = "basic",
+          type = "in",
           column = "diagnosis_1",
-          values = c(1)
+          value = c(1)
         ),
         list(
-          type = "basic",
+          type = "in",
           column = "diagnosis_2",
-          values = c(1)
+          value = c(1)
         ),
         list(
-          type = "basic",
+          type = "in",
           column = "diagnosis_3",
-          values = c(1)
+          value = c(1)
         )
       )
     ),
@@ -37,19 +37,19 @@ test_that("join_feature_tables", {
       type = "or",
       subfilters = list(
         list(
-          type = "basic",
+          type = "in",
           column = "diagnosis_1",
-          values = c(76)
+          value = c(76)
         ),
         list(
-          type = "basic",
+          type = "in",
           column = "diagnosis_2",
-          values = c(76)
+          value = c(76)
         ),
         list(
-          type = "basic",
+          type = "in",
           column = "diagnosis_3",
-          values = c(76)
+          value = c(76)
         )
       )
     ),
