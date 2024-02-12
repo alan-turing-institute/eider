@@ -8,8 +8,12 @@
 #'               - rejected: all other rows
 #' @export
 filter_all <- function(table, filter_obj) {
-  if (filter_obj$type == "basic") {
-    filter_results <- filter_basic(table, filter_obj)
+  if (filter_obj$type == "in") {
+    filter_results <- filter_in(table, filter_obj)
+  } else if (filter_obj$type == "less_than") {
+    filter_results <- filter_less_than(table, filter_obj)
+  } else if (filter_obj$type == "less_than_equal") {
+    filter_results <- filter_less_than_equal(table, filter_obj)
   } else if (filter_obj$type == "or") {
     filter_results <- filter_or(table, filter_obj)
   } else if (filter_obj$type == "and") {
