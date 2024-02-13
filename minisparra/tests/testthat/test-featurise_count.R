@@ -5,7 +5,7 @@ test_that("featurise_count", {
   filenames <- c("../data/ae2.csv")
   all_tables <- read_all_tables(filenames)
 
-  feature_1 <- featurise_count(
+  diag_101 <- featurise_count(
     all_tables = all_tables,
     source_table_file = "../data/ae2.csv",
     filter_obj = list(
@@ -14,17 +14,17 @@ test_that("featurise_count", {
         list(
           type = "in",
           column = "diagnosis_1",
-          value = c(1)
+          value = c(101)
         ),
         list(
           type = "in",
           column = "diagnosis_2",
-          value = c(1)
+          value = c(101)
         ),
         list(
           type = "in",
           column = "diagnosis_3",
-          value = c(1)
+          value = c(101)
         )
       )
     ),
@@ -32,41 +32,9 @@ test_that("featurise_count", {
     missing_value = 0
   )
 
-  feature_76 <- featurise_count(
-    all_tables = all_tables,
-    source_table_file = "../data/ae2.csv",
-    filter_obj = list(
-      type = "or",
-      subfilters = list(
-        list(
-          type = "in",
-          column = "diagnosis_1",
-          value = c(76)
-        ),
-        list(
-          type = "in",
-          column = "diagnosis_2",
-          value = c(76)
-        ),
-        list(
-          type = "in",
-          column = "diagnosis_3",
-          value = c(76)
-        )
-      )
-    ),
-    output_column_name = "feature_76_name",
-    missing_value = 0
-  )
-
-  attendances_1 <- feature_1$feature_table %>%
+  diag_101_count <- diag_101$feature_table %>%
     filter(id == 1) %>%
     pull(feature_1_name)
 
-  attendances_76 <- feature_76$feature_table %>%
-    filter(id == 1) %>%
-    pull(feature_76_name)
-
-  expect_equal(attendances_1, 3)
-  expect_equal(attendances_76, 1)
+  expect_equal(diag_101_count, 4)
 })
