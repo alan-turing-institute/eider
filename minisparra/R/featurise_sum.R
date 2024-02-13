@@ -40,7 +40,6 @@ featurise_sum <- function(all_tables,
 
   list(
     feature_table = feature_table,
-    output_column_name = output_column_name,
     missing_value = missing_value
   )
 }

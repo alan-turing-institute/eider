@@ -30,6 +30,7 @@ jobs:
             local::minisparra
             any::rmarkdown
             any::knitr
+            any::kableExtra
             any::magrittr
 
       - name: Build and test package

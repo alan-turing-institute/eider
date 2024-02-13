@@ -22,7 +22,7 @@ join_feature_tables <- function(calculated_features) {
     feature <- calculated_features[[i]]
     feature_table <- feature$feature_table
     missing_value <- feature$missing_value
-    output_column_name <- feature$output_column_name
+    output_column_name <- setdiff(names(feature$feature_table), "id")
 
     # Join the feature table to the main table and replace any NAs with the
     # specified missing value
