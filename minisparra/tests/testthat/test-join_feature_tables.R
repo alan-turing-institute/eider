@@ -3,7 +3,7 @@ test_that("join_feature_tables", {
   filenames <- c("../data/ae2.csv")
   all_tables <- read_all_tables(filenames)
 
-  feature_1 <- featurise_count_per_id(
+  feature_1 <- featurise_count(
     all_tables = all_tables,
     source_table_file = "../data/ae2.csv",
     filter_obj = list(
@@ -30,7 +30,7 @@ test_that("join_feature_tables", {
     missing_value = 0
   )
 
-  feature_76 <- featurise_count_per_id(
+  feature_76 <- featurise_count(
     all_tables = all_tables,
     source_table_file = "../data/ae2.csv",
     filter_obj = list(

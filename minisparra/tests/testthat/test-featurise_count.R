@@ -1,11 +1,11 @@
-test_that("featurise_count_per_id", {
+test_that("featurise_count", {
   # Read in data. Right now only one table but in principle we would have more
   # and we want to read them all in at the same time (with one function) to
   # avoid doing more work than necessary, hence this setup.
   filenames <- c("../data/ae2.csv")
   all_tables <- read_all_tables(filenames)
 
-  feature_1 <- featurise_count_per_id(
+  feature_1 <- featurise_count(
     all_tables = all_tables,
     source_table_file = "../data/ae2.csv",
     filter_obj = list(
@@ -32,7 +32,7 @@ test_that("featurise_count_per_id", {
     missing_value = 0
   )
 
-  feature_76 <- featurise_count_per_id(
+  feature_76 <- featurise_count(
     all_tables = all_tables,
     source_table_file = "../data/ae2.csv",
     filter_obj = list(
