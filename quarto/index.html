@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>SPARRA</title>
+<title>SPARRA - minisparra</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,6 +100,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -146,9 +148,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#raw-ae2" id="toc-raw-ae2" class="nav-link active" data-scroll-target="#raw-ae2">Raw AE2</a></li>
-  <li><a href="#cleaned-ae2" id="toc-cleaned-ae2" class="nav-link" data-scroll-target="#cleaned-ae2">Cleaned AE2</a></li>
-  <li><a href="#ae2-features" id="toc-ae2-features" class="nav-link" data-scroll-target="#ae2-features">AE2 features</a></li>
+  <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link active" data-scroll-target="#read-in-data">(1) Read in data</a></li>
+  <li><a href="#defining-filters" id="toc-defining-filters" class="nav-link" data-scroll-target="#defining-filters">(2) Defining filters</a></li>
+  <li><a href="#extracting-features" id="toc-extracting-features" class="nav-link" data-scroll-target="#extracting-features">(3) Extracting features</a></li>
+  <li><a href="#joining-features" id="toc-joining-features" class="nav-link" data-scroll-target="#joining-features">(4) Joining features</a></li>
   </ul>
 </nav>
     </div>
@@ -157,7 +160,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">SPARRA</h1>
+<h1 class="title">minisparra</h1>
 </div>
 
 
@@ -174,659 +177,369 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This Quarto book is a demo of the SPARRA package.</p>
+<p>This Quarto book serves as a demo of the minisparra package (for which we still don’t have a real name).</p>
 <p>First, we load the package from the local directory.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"../minisparra/"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type=</span><span class="st">"source"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"../minisparra/"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Installing package into '/home/runner/work/_temp/Library'
 (as 'lib' is unspecified)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(miniSPARRA01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Also, let’s set up a function to visualise tables nicely.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>, <span class="at">table.attr =</span> <span class="st">'data-quarto-disable-processing="true"'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <hr>
-<section id="raw-ae2" class="level2">
-<h2 class="anchored" data-anchor-id="raw-ae2">Raw AE2</h2>
+<section id="read-in-data" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-data">(1) Read in data</h2>
+<p>We begin by reading in all tables. Right now there’s only one.</p>
+<p>This step must be done before any feature extraction to avoid having to read the same table multiple times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="ot">&lt;-</span> <span class="fu">make_raw_ae2</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">nid =</span> <span class="dv">10</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 11%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 5%">
-<col style="width: 9%">
-<col style="width: 6%">
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 7%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">twelve_month_time_period</th>
-<th style="text-align: left;">admission_date</th>
-<th style="text-align: left;">admission_time</th>
-<th style="text-align: left;">transfer_discharge_date</th>
-<th style="text-align: left;">transfer_discharge_time</th>
-<th style="text-align: right;">diagnosis_1</th>
-<th style="text-align: right;">diagnosis_2</th>
-<th style="text-align: left;">diagnosis_3</th>
-<th style="text-align: left;">discharge_destination</th>
-<th style="text-align: left;">location_code</th>
-<th style="text-align: left;">referral_source</th>
-<th style="text-align: right;">unique_study_id</th>
-<th style="text-align: left;">stringsasfactors</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">30-07-2017</td>
-<td style="text-align: left;">3:35</td>
-<td style="text-align: left;">06-08-2017</td>
-<td style="text-align: left;">18:20</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">53</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">08P</td>
-<td style="text-align: left;">Z152M</td>
-<td style="text-align: left;">02K</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y1</td>
-<td style="text-align: left;">18-09-2015</td>
-<td style="text-align: left;">6:41</td>
-<td style="text-align: left;">23-09-2015</td>
-<td style="text-align: left;">4:55</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">07V</td>
-<td style="text-align: left;">X459O</td>
-<td style="text-align: left;">03M</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">01-01-2017</td>
-<td style="text-align: left;">16:24</td>
-<td style="text-align: left;">02-01-2017</td>
-<td style="text-align: left;">19:4</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">01F</td>
-<td style="text-align: left;">F252U</td>
-<td style="text-align: left;">06J</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y1</td>
-<td style="text-align: left;">07-07-2017</td>
-<td style="text-align: left;">18:31</td>
-<td style="text-align: left;">11-07-2017</td>
-<td style="text-align: left;">4:29</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">02E</td>
-<td style="text-align: left;">F646J</td>
-<td style="text-align: left;">04L</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y2</td>
-<td style="text-align: left;">29-02-2016</td>
-<td style="text-align: left;">13:25</td>
-<td style="text-align: left;">02-03-2016</td>
-<td style="text-align: left;">15:6</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">05O</td>
-<td style="text-align: left;">Z399F</td>
-<td style="text-align: left;">07K</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">19-10-2016</td>
-<td style="text-align: left;">6:48</td>
-<td style="text-align: left;">25-10-2016</td>
-<td style="text-align: left;">15:39</td>
-<td style="text-align: right;">62</td>
-<td style="text-align: right;">77</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">06S</td>
-<td style="text-align: left;">M246S</td>
-<td style="text-align: left;">04A</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">25-11-2013</td>
-<td style="text-align: left;">19:44</td>
-<td style="text-align: left;">02-12-2013</td>
-<td style="text-align: left;">11:37</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">06X</td>
-<td style="text-align: left;">C469Y</td>
-<td style="text-align: left;">06O</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y1</td>
-<td style="text-align: left;">08-07-2017</td>
-<td style="text-align: left;">9:33</td>
-<td style="text-align: left;">13-07-2017</td>
-<td style="text-align: left;">8:1</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">54</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">02C</td>
-<td style="text-align: left;">C526E</td>
-<td style="text-align: left;">09F</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">22-03-2014</td>
-<td style="text-align: left;">6:40</td>
-<td style="text-align: left;">01-04-2014</td>
-<td style="text-align: left;">18:46</td>
-<td style="text-align: right;">89</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">05H</td>
-<td style="text-align: left;">M218B</td>
-<td style="text-align: left;">03Y</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y2</td>
-<td style="text-align: left;">28-06-2016</td>
-<td style="text-align: left;">10:4</td>
-<td style="text-align: left;">03-07-2016</td>
-<td style="text-align: left;">18:23</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">87</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">03U</td>
-<td style="text-align: left;">Z162N</td>
-<td style="text-align: left;">01I</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">16-02-2019</td>
-<td style="text-align: left;">6:51</td>
-<td style="text-align: left;">25-02-2019</td>
-<td style="text-align: left;">22:42</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">08S</td>
-<td style="text-align: left;">B640R</td>
-<td style="text-align: left;">04I</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">12-01-2015</td>
-<td style="text-align: left;">17:40</td>
-<td style="text-align: left;">13-01-2015</td>
-<td style="text-align: left;">14:50</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">08K</td>
-<td style="text-align: left;">C154T</td>
-<td style="text-align: left;">05K</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y1</td>
-<td style="text-align: left;">02-01-2014</td>
-<td style="text-align: left;">8:14</td>
-<td style="text-align: left;">06-01-2014</td>
-<td style="text-align: left;">16:0</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">08Q</td>
-<td style="text-align: left;">A733H</td>
-<td style="text-align: left;">05B</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">13-05-2016</td>
-<td style="text-align: left;">18:39</td>
-<td style="text-align: left;">21-05-2016</td>
-<td style="text-align: left;">19:4</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">69</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">06W</td>
-<td style="text-align: left;">Y170P</td>
-<td style="text-align: left;">01E</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">16-05-2017</td>
-<td style="text-align: left;">19:9</td>
-<td style="text-align: left;">23-05-2017</td>
-<td style="text-align: left;">2:38</td>
-<td style="text-align: right;">87</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">06L</td>
-<td style="text-align: left;">R684O</td>
-<td style="text-align: left;">03Z</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">11-02-2017</td>
-<td style="text-align: left;">4:50</td>
-<td style="text-align: left;">18-02-2017</td>
-<td style="text-align: left;">17:2</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">09K</td>
-<td style="text-align: left;">B631Y</td>
-<td style="text-align: left;">07N</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y3</td>
-<td style="text-align: left;">12-08-2019</td>
-<td style="text-align: left;">0:4</td>
-<td style="text-align: left;">18-08-2019</td>
-<td style="text-align: left;">3:33</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">02Y</td>
-<td style="text-align: left;">O311X</td>
-<td style="text-align: left;">03M</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y2</td>
-<td style="text-align: left;">11-10-2019</td>
-<td style="text-align: left;">11:46</td>
-<td style="text-align: left;">12-10-2019</td>
-<td style="text-align: left;">9:11</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">94</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">08Y</td>
-<td style="text-align: left;">Y416D</td>
-<td style="text-align: left;">01W</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">y2</td>
-<td style="text-align: left;">28-05-2018</td>
-<td style="text-align: left;">9:40</td>
-<td style="text-align: left;">04-06-2018</td>
-<td style="text-align: left;">11:23</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">06J</td>
-<td style="text-align: left;">W615B</td>
-<td style="text-align: left;">07X</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">y4</td>
-<td style="text-align: left;">27-07-2014</td>
-<td style="text-align: left;">18:34</td>
-<td style="text-align: left;">30-07-2014</td>
-<td style="text-align: left;">17:20</td>
-<td style="text-align: right;">69</td>
-<td style="text-align: right;">91</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">06J</td>
-<td style="text-align: left;">V399N</td>
-<td style="text-align: left;">06K</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">FALSE</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="cleaned-ae2" class="level2">
-<h2 class="anchored" data-anchor-id="cleaned-ae2">Cleaned AE2</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_ae2</span>(<span class="at">patient_id_col =</span> <span class="st">"unique_study_id"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"../minisparra/tests/data/ae2.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>all_tables <span class="ot">&lt;-</span> <span class="fu">read_all_tables</span>(filenames)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_tables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "attendance_category column not in AE2; adding with default value of 1"</code></pre>
-</div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 3%">
-<col style="width: 13%">
-<col style="width: 24%">
-<col style="width: 15%">
-<col style="width: 14%">
-<col style="width: 14%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">id</th>
-<th style="text-align: left;">time</th>
-<th style="text-align: right;">attendance_category</th>
-<th style="text-align: left;">source_table</th>
-<th style="text-align: right;">diagnosis_1</th>
-<th style="text-align: right;">diagnosis_2</th>
-<th style="text-align: right;">diagnosis_3</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">2017-07-30</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">53</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">2015-09-18</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">52</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">2017-01-01</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">6</td>
-<td style="text-align: left;">2017-07-07</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">2016-02-29</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">12</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">2016-10-19</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">62</td>
-<td style="text-align: right;">77</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2013-11-25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2017-07-08</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">54</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">6</td>
-<td style="text-align: left;">2014-03-22</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">89</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">2016-06-28</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">87</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2019-02-16</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2015-01-12</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">2014-01-02</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">2016-05-13</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">69</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">2017-05-16</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">87</td>
-<td style="text-align: right;">33</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">9</td>
-<td style="text-align: left;">2017-02-11</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">9</td>
-<td style="text-align: left;">2019-08-12</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">2019-10-11</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">48</td>
-<td style="text-align: right;">94</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">2018-05-28</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">NA</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">2014-07-27</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">AE2</td>
-<td style="text-align: right;">69</td>
-<td style="text-align: right;">91</td>
-<td style="text-align: right;">NA</td>
-</tr>
-</tbody>
-</table>
+<pre><code>[1] "../minisparra/tests/data/ae2.csv"</code></pre>
 </div>
 </div>
-</section>
-<section id="ae2-features" class="level2">
-<h2 class="anchored" data-anchor-id="ae2-features">AE2 features</h2>
+<p><code>all_tables</code> is a list which associates each of the filenames with the data read from that file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>raw_ae2 <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_ae2</span>(<span class="at">patient_id_col =</span> <span class="st">"unique_study_id"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count_ae2_attendance_features</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "attendance_category column not in AE2; adding with default value of 1"</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>all_tables<span class="sc">$</span><span class="st">`</span><span class="at">../minisparra/tests/data/ae2.csv</span><span class="st">`</span> <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<colgroup>
-<col style="width: 4%">
-<col style="width: 27%">
-<col style="width: 39%">
-<col style="width: 29%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">id</th>
-<th style="text-align: right;">num_ae2_attendances</th>
-<th style="text-align: right;">num_alcohol_drug_attendances</th>
-<th style="text-align: right;">num_psych_attendances</th>
-</tr>
-</thead>
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> time </th>
+   <th style="text-align:right;"> attendance_category </th>
+   <th style="text-align:left;"> source_table </th>
+   <th style="text-align:right;"> diagnosis_1 </th>
+   <th style="text-align:right;"> diagnosis_2 </th>
+   <th style="text-align:left;"> diagnosis_3 </th>
+  </tr>
+ </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">3</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">5</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">6</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">8</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">9</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-</tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-18 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-19 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-20 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 2016-03-21 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
 </tbody>
 </table>
+
+</div>
+</div>
+<hr>
+</section>
+<section id="defining-filters" class="level2">
+<h2 class="anchored" data-anchor-id="defining-filters">(2) Defining filters</h2>
+<p>Now we can start extracting features. The most complicated part of the feature is to decide how to filter the rows of the data tables, so we discuss this first.</p>
+<p>We can have a ‘basic’ feature, which comprises an operator, a column name, and a vector of values. The operator can be <code>in</code>, <code>lt</code>, <code>gt</code>, …</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diag_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"in"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"diagnosis_1"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">101</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The filter object above selects for any row where the value in the <code>diagnosis_1</code> column is 101.</p>
+<p>Likewise we can have the following, which does the same for the <code>diagnosis_2</code> and <code>diagnosis_3</code> columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>diag_2 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"in"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"diagnosis_2"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">101</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>diag_3 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"in"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"diagnosis_3"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">101</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Basic filters can be combined using filters with type <code>or</code>, <code>and</code>, or <code>not</code>. For example, the following selects for any rows where 1 appears in any of the three diagnosis columns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>diag_1_or_2_or_3 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"or"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">subfilters =</span> <span class="fu">list</span>(diag_1, diag_2, diag_3)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll wrap this in a function for later reuse.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>make_filter <span class="ot">&lt;-</span> <span class="cf">function</span>(diagnosis_value) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  diag_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"in"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">"diagnosis_1"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(diagnosis_value)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  diag_2 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"in"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">"diagnosis_2"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(diagnosis_value)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  diag_3 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"in"</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">"diagnosis_3"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(diagnosis_value)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"or"</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subfilters =</span> <span class="fu">list</span>(diag_1, diag_2, diag_3)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="extracting-features" class="level2">
+<h2 class="anchored" data-anchor-id="extracting-features">(3) Extracting features</h2>
+<p>For reference, here’s the original data table again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>all_tables<span class="sc">$</span><span class="st">`</span><span class="at">../minisparra/tests/data/ae2.csv</span><span class="st">`</span> <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> time </th>
+   <th style="text-align:right;"> attendance_category </th>
+   <th style="text-align:left;"> source_table </th>
+   <th style="text-align:right;"> diagnosis_1 </th>
+   <th style="text-align:right;"> diagnosis_2 </th>
+   <th style="text-align:left;"> diagnosis_3 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-17 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-18 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-19 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2016-03-20 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 2016-03-21 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> AE2 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>We can now use this filter to extract a feature from the data table. Note that we must provide a ‘missing value’ to be used for patients with no data in the table, for example, patient 2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>diag_101_count <span class="ot">&lt;-</span> <span class="fu">featurise_count</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_tables =</span> all_tables,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">source_table_file =</span> <span class="st">"../minisparra/tests/data/ae2.csv"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_obj =</span> diag_1_or_2_or_3,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_column_name =</span> <span class="st">"diag_101"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_value =</span> <span class="dv">0</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(diag_101_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "feature_table" "missing_value"</code></pre>
+</div>
+</div>
+<p><code>diag_101_count$feature_table</code> is the data frame with the feature values for each patient ID. Since all rows with patient 2 were removed during the filtering step, <code>diag_101_count</code> must also carry the missing value forward to the next step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>diag_101_count<span class="sc">$</span>feature_table <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:right;"> diag_101 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<hr>
+</section>
+<section id="joining-features" class="level2">
+<h2 class="anchored" data-anchor-id="joining-features">(4) Joining features</h2>
+<p>For an example, let’s generate the same features but for diagnoses of 102 and 103 respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>diag_102_count <span class="ot">&lt;-</span> <span class="fu">featurise_count</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_tables =</span> all_tables,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">source_table_file =</span> <span class="st">"../minisparra/tests/data/ae2.csv"</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_obj =</span> <span class="fu">make_filter</span>(<span class="dv">102</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_column_name =</span> <span class="st">"diag_102"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_value =</span> <span class="dv">0</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>diag_103_count <span class="ot">&lt;-</span> <span class="fu">featurise_count</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_tables =</span> all_tables,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">source_table_file =</span> <span class="st">"../minisparra/tests/data/ae2.csv"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_obj =</span> <span class="fu">make_filter</span>(<span class="dv">103</span>),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_column_name =</span> <span class="st">"diag_103"</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_value =</span> <span class="dv">1000</span>   <span class="co"># For demonstration purposes</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s see what these feature tables look like:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>diag_102_count<span class="sc">$</span>feature_table <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:right;"> diag_102 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>diag_103_count<span class="sc">$</span>feature_table <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:right;"> diag_103 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>When we join them together, notice that the respective missing values for patient 2 are inserted into the final feature table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">join_feature_tables</span>(<span class="fu">list</span>(diag_101_count, diag_102_count, diag_103_count)) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:right;"> diag_101 </th>
+   <th style="text-align:right;"> diag_102 </th>
+   <th style="text-align:right;"> diag_103 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1000 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
 </div>
 

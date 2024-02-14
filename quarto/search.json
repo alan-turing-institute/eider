@@ -1,37 +1,44 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "minisparra",
+    "section": "",
+    "text": "This Quarto book serves as a demo of the minisparra package (for which we still don’t have a real name).\nFirst, we load the package from the local directory.\ninstall.packages(\"../minisparra/\", repos = NULL, type = \"source\")\n\nInstalling package into '/home/runner/work/_temp/Library'\n(as 'lib' is unspecified)\n\nlibrary(miniSPARRA01)\nAlso, let’s set up a function to visualise tables nicely.\nlibrary(knitr)\nlibrary(kableExtra)\nlibrary(magrittr)\nkbl &lt;- function(x) {\n  x %&gt;%\n    knitr::kable(format = 'html', table.attr = 'data-quarto-disable-processing=\"true\"') %&gt;%\n    kableExtra::kable_styling(bootstrap_options = \"striped\", full_width = FALSE)\n}"
+  },
+  {
+    "objectID": "index.html#read-in-data",
+    "href": "index.html#read-in-data",
+    "title": "minisparra",
+    "section": "(1) Read in data",
+    "text": "(1) Read in data\nWe begin by reading in all tables. Right now there’s only one.\nThis step must be done before any feature extraction to avoid having to read the same table multiple times.\n\nfilenames &lt;- c(\"../minisparra/tests/data/ae2.csv\")\nall_tables &lt;- read_all_tables(filenames)\n\nnames(all_tables)\n\n[1] \"../minisparra/tests/data/ae2.csv\"\n\n\nall_tables is a list which associates each of the filenames with the data read from that file.\n\nall_tables$`../minisparra/tests/data/ae2.csv` %&gt;% kbl()\n\n\n \n  \n    id \n    time \n    attendance_category \n    source_table \n    diagnosis_1 \n    diagnosis_2 \n    diagnosis_3 \n  \n \n\n  \n    1 \n    2016-03-17 \n    1 \n    AE2 \n    101 \n    NA \n    NA \n  \n  \n    1 \n    2016-03-18 \n    1 \n    AE2 \n    101 \n    102 \n    NA \n  \n  \n    1 \n    2016-03-19 \n    1 \n    AE2 \n    101 \n    103 \n    NA \n  \n  \n    1 \n    2016-03-20 \n    1 \n    AE2 \n    102 \n    101 \n    NA \n  \n  \n    2 \n    2016-03-21 \n    1 \n    AE2 \n    102 \n    NA \n    NA"
+  },
+  {
+    "objectID": "index.html#defining-filters",
+    "href": "index.html#defining-filters",
+    "title": "minisparra",
+    "section": "(2) Defining filters",
+    "text": "(2) Defining filters\nNow we can start extracting features. The most complicated part of the feature is to decide how to filter the rows of the data tables, so we discuss this first.\nWe can have a ‘basic’ feature, which comprises an operator, a column name, and a vector of values. The operator can be in, lt, gt, …\n\ndiag_1 &lt;- list(\n  type = \"in\",\n  column = \"diagnosis_1\",\n  value = c(101)\n)\n\nThe filter object above selects for any row where the value in the diagnosis_1 column is 101.\nLikewise we can have the following, which does the same for the diagnosis_2 and diagnosis_3 columns.\n\ndiag_2 &lt;- list(\n  type = \"in\",\n  column = \"diagnosis_2\",\n  value = c(101)\n)\ndiag_3 &lt;- list(\n  type = \"in\",\n  column = \"diagnosis_3\",\n  value = c(101)\n)\n\nBasic filters can be combined using filters with type or, and, or not. For example, the following selects for any rows where 1 appears in any of the three diagnosis columns:\n\ndiag_1_or_2_or_3 &lt;- list(\n  type = \"or\",\n  subfilters = list(diag_1, diag_2, diag_3)\n)\n\nWe’ll wrap this in a function for later reuse.\n\nmake_filter &lt;- function(diagnosis_value) {\n  diag_1 &lt;- list(\n    type = \"in\",\n    column = \"diagnosis_1\",\n    value = c(diagnosis_value)\n  )\n  diag_2 &lt;- list(\n    type = \"in\",\n    column = \"diagnosis_2\",\n    value = c(diagnosis_value)\n  )\n  diag_3 &lt;- list(\n    type = \"in\",\n    column = \"diagnosis_3\",\n    value = c(diagnosis_value)\n  )\n  list(\n    type = \"or\",\n    subfilters = list(diag_1, diag_2, diag_3)\n  )\n}"
+  },
+  {
+    "objectID": "index.html#extracting-features",
+    "href": "index.html#extracting-features",
+    "title": "minisparra",
+    "section": "(3) Extracting features",
+    "text": "(3) Extracting features\nFor reference, here’s the original data table again.\n\nall_tables$`../minisparra/tests/data/ae2.csv` %&gt;% kbl()\n\n\n \n  \n    id \n    time \n    attendance_category \n    source_table \n    diagnosis_1 \n    diagnosis_2 \n    diagnosis_3 \n  \n \n\n  \n    1 \n    2016-03-17 \n    1 \n    AE2 \n    101 \n    NA \n    NA \n  \n  \n    1 \n    2016-03-18 \n    1 \n    AE2 \n    101 \n    102 \n    NA \n  \n  \n    1 \n    2016-03-19 \n    1 \n    AE2 \n    101 \n    103 \n    NA \n  \n  \n    1 \n    2016-03-20 \n    1 \n    AE2 \n    102 \n    101 \n    NA \n  \n  \n    2 \n    2016-03-21 \n    1 \n    AE2 \n    102 \n    NA \n    NA \n  \n\n\n\n\n\nWe can now use this filter to extract a feature from the data table. Note that we must provide a ‘missing value’ to be used for patients with no data in the table, for example, patient 2.\n\ndiag_101_count &lt;- featurise_count(\n  all_tables = all_tables,\n  source_table_file = \"../minisparra/tests/data/ae2.csv\",\n  filter_obj = diag_1_or_2_or_3,\n  output_column_name = \"diag_101\",\n  missing_value = 0\n)\n\nnames(diag_101_count)\n\n[1] \"feature_table\" \"missing_value\"\n\n\ndiag_101_count$feature_table is the data frame with the feature values for each patient ID. Since all rows with patient 2 were removed during the filtering step, diag_101_count must also carry the missing value forward to the next step.\n\ndiag_101_count$feature_table %&gt;% kbl()\n\n\n \n  \n    id \n    diag_101 \n  \n \n\n  \n    1 \n    4"
+  },
+  {
+    "objectID": "index.html#joining-features",
+    "href": "index.html#joining-features",
+    "title": "minisparra",
+    "section": "(4) Joining features",
+    "text": "(4) Joining features\nFor an example, let’s generate the same features but for diagnoses of 102 and 103 respectively.\n\ndiag_102_count &lt;- featurise_count(\n  all_tables = all_tables,\n  source_table_file = \"../minisparra/tests/data/ae2.csv\",\n  filter_obj = make_filter(102),\n  output_column_name = \"diag_102\",\n  missing_value = 0\n)\n\ndiag_103_count &lt;- featurise_count(\n  all_tables = all_tables,\n  source_table_file = \"../minisparra/tests/data/ae2.csv\",\n  filter_obj = make_filter(103),\n  output_column_name = \"diag_103\",\n  missing_value = 1000   # For demonstration purposes\n)\n\nLet’s see what these feature tables look like:\n\ndiag_102_count$feature_table %&gt;% kbl()\n\n\n \n  \n    id \n    diag_102 \n  \n \n\n  \n    1 \n    2 \n  \n  \n    2 \n    1 \n  \n\n\n\n\n\n\ndiag_103_count$feature_table %&gt;% kbl()\n\n\n \n  \n    id \n    diag_103 \n  \n \n\n  \n    1 \n    1 \n  \n\n\n\n\n\nWhen we join them together, notice that the respective missing values for patient 2 are inserted into the final feature table.\n\njoin_feature_tables(list(diag_101_count, diag_102_count, diag_103_count)) %&gt;% kbl()\n\n\n \n  \n    id \n    diag_101 \n    diag_102 \n    diag_103 \n  \n \n\n  \n    1 \n    4 \n    2 \n    1 \n  \n  \n    2 \n    0 \n    1 \n    1000"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "About this site"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "SPARRA",
-    "section": "",
-    "text": "This Quarto book is a demo of the SPARRA package.\nFirst, we load the package from the local directory.\nlibrary(knitr)\nlibrary(magrittr)\ninstall.packages(\"../minisparra/\", repos = NULL, type=\"source\")\n\nInstalling package into '/home/runner/work/_temp/Library'\n(as 'lib' is unspecified)\n\nlibrary(miniSPARRA01)"
-  },
-  {
-    "objectID": "index.html#raw-ae2",
-    "href": "index.html#raw-ae2",
-    "title": "SPARRA",
-    "section": "Raw AE2",
-    "text": "Raw AE2\n\nraw_ae2 &lt;- make_raw_ae2(n = 20, nid = 10)\nraw_ae2 %&gt;%\n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntwelve_month_time_period\nadmission_date\nadmission_time\ntransfer_discharge_date\ntransfer_discharge_time\ndiagnosis_1\ndiagnosis_2\ndiagnosis_3\ndischarge_destination\nlocation_code\nreferral_source\nunique_study_id\nstringsasfactors\n\n\n\n\ny4\n30-07-2017\n3:35\n06-08-2017\n18:20\n14\n53\n\n08P\nZ152M\n02K\n3\nFALSE\n\n\ny1\n18-09-2015\n6:41\n23-09-2015\n4:55\n52\n9\n\n07V\nX459O\n03M\n1\nFALSE\n\n\ny3\n01-01-2017\n16:24\n02-01-2017\n19:4\n39\n41\n\n01F\nF252U\n06J\n5\nFALSE\n\n\ny1\n07-07-2017\n18:31\n11-07-2017\n4:29\n24\n38\n\n02E\nF646J\n04L\n6\nFALSE\n\n\ny2\n29-02-2016\n13:25\n02-03-2016\n15:6\n12\n50\n\n05O\nZ399F\n07K\n5\nFALSE\n\n\ny4\n19-10-2016\n6:48\n25-10-2016\n15:39\n62\n77\n\n06S\nM246S\n04A\n8\nFALSE\n\n\ny3\n25-11-2013\n19:44\n02-12-2013\n11:37\n56\n13\n\n06X\nC469Y\n06O\n2\nFALSE\n\n\ny1\n08-07-2017\n9:33\n13-07-2017\n8:1\n29\n54\n\n02C\nC526E\n09F\n2\nFALSE\n\n\ny4\n22-03-2014\n6:40\n01-04-2014\n18:46\n89\n2\n\n05H\nM218B\n03Y\n6\nFALSE\n\n\ny2\n28-06-2016\n10:4\n03-07-2016\n18:23\n2\n87\n\n03U\nZ162N\n01I\n3\nFALSE\n\n\ny3\n16-02-2019\n6:51\n25-02-2019\n22:42\n15\n33\n\n08S\nB640R\n04I\n2\nFALSE\n\n\ny4\n12-01-2015\n17:40\n13-01-2015\n14:50\n14\n10\n\n08K\nC154T\n05K\n2\nFALSE\n\n\ny1\n02-01-2014\n8:14\n06-01-2014\n16:0\n71\n48\n\n08Q\nA733H\n05B\n1\nFALSE\n\n\ny4\n13-05-2016\n18:39\n21-05-2016\n19:4\n65\n69\n\n06W\nY170P\n01E\n5\nFALSE\n\n\ny3\n16-05-2017\n19:9\n23-05-2017\n2:38\n87\n33\n\n06L\nR684O\n03Z\n8\nFALSE\n\n\ny3\n11-02-2017\n4:50\n18-02-2017\n17:2\n7\n7\n\n09K\nB631Y\n07N\n9\nFALSE\n\n\ny3\n12-08-2019\n0:4\n18-08-2019\n3:33\n24\n46\n\n02Y\nO311X\n03M\n9\nFALSE\n\n\ny2\n11-10-2019\n11:46\n12-10-2019\n9:11\n48\n94\n\n08Y\nY416D\n01W\n5\nFALSE\n\n\ny2\n28-05-2018\n9:40\n04-06-2018\n11:23\n24\n40\n\n06J\nW615B\n07X\n4\nFALSE\n\n\ny4\n27-07-2014\n18:34\n30-07-2014\n17:20\n69\n91\n\n06J\nV399N\n06K\n1\nFALSE"
-  },
-  {
-    "objectID": "index.html#cleaned-ae2",
-    "href": "index.html#cleaned-ae2",
-    "title": "SPARRA",
-    "section": "Cleaned AE2",
-    "text": "Cleaned AE2\n\nraw_ae2 %&gt;%\n  clean_ae2(patient_id_col = \"unique_study_id\") %&gt;%\n  knitr::kable()\n\n[1] \"attendance_category column not in AE2; adding with default value of 1\"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nid\ntime\nattendance_category\nsource_table\ndiagnosis_1\ndiagnosis_2\ndiagnosis_3\n\n\n\n\n3\n2017-07-30\n1\nAE2\n14\n53\nNA\n\n\n1\n2015-09-18\n1\nAE2\n52\n9\nNA\n\n\n5\n2017-01-01\n1\nAE2\n39\n41\nNA\n\n\n6\n2017-07-07\n1\nAE2\n24\n38\nNA\n\n\n5\n2016-02-29\n1\nAE2\n12\n50\nNA\n\n\n8\n2016-10-19\n1\nAE2\n62\n77\nNA\n\n\n2\n2013-11-25\n1\nAE2\n56\n13\nNA\n\n\n2\n2017-07-08\n1\nAE2\n29\n54\nNA\n\n\n6\n2014-03-22\n1\nAE2\n89\n2\nNA\n\n\n3\n2016-06-28\n1\nAE2\n2\n87\nNA\n\n\n2\n2019-02-16\n1\nAE2\n15\n33\nNA\n\n\n2\n2015-01-12\n1\nAE2\n14\n10\nNA\n\n\n1\n2014-01-02\n1\nAE2\n71\n48\nNA\n\n\n5\n2016-05-13\n1\nAE2\n65\n69\nNA\n\n\n8\n2017-05-16\n1\nAE2\n87\n33\nNA\n\n\n9\n2017-02-11\n1\nAE2\n7\n7\nNA\n\n\n9\n2019-08-12\n1\nAE2\n24\n46\nNA\n\n\n5\n2019-10-11\n1\nAE2\n48\n94\nNA\n\n\n4\n2018-05-28\n1\nAE2\n24\n40\nNA\n\n\n1\n2014-07-27\n1\nAE2\n69\n91\nNA"
-  },
-  {
-    "objectID": "index.html#ae2-features",
-    "href": "index.html#ae2-features",
-    "title": "SPARRA",
-    "section": "AE2 features",
-    "text": "AE2 features\n\nraw_ae2 %&gt;%\n  clean_ae2(patient_id_col = \"unique_study_id\") %&gt;%\n  count_ae2_attendance_features() %&gt;%\n  knitr::kable()\n\n[1] \"attendance_category column not in AE2; adding with default value of 1\"\n\n\n\n\n\n\n\n\n\n\n\nid\nnum_ae2_attendances\nnum_alcohol_drug_attendances\nnum_psych_attendances\n\n\n\n\n1\n3\n0\n1\n\n\n2\n4\n1\n0\n\n\n3\n2\n1\n0\n\n\n4\n1\n0\n0\n\n\n5\n4\n0\n0\n\n\n6\n2\n0\n0\n\n\n8\n2\n0\n0\n\n\n9\n2\n0\n0"
   }
 ]

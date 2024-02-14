@@ -52,6 +52,11 @@
         <dd>Adjust date formats to DD-MM-YYYY</dd>
       </dl><dl><dt>
           
+          <code><a href="ae2_attendances.html">ae2_attendances()</a></code> 
+        </dt>
+        <dd>ae2_attendances</dd>
+      </dl><dl><dt>
+          
           <code><a href="clean_ae2.html">clean_ae2()</a></code> 
         </dt>
         <dd>Cleans the AE2 table. Adds the attendance_category column and populates it
@@ -69,21 +74,49 @@ Mostly kept here for posterity.</dd>
         <dd>Clean raw data and generate tidy versions of data tables. Will only update episodes table if force_redo = TRUE.</dd>
       </dl><dl><dt>
           
-          <code><a href="count_ae2_attendance_features.html">count_ae2_attendance_features()</a></code> 
+          <code><a href="featurise_count.html">featurise_count()</a></code> 
         </dt>
-        <dd>Computes features from the AE2 table, including the count of AE2 records per
-id, number of drug and alcohol attendances, and number of psych attendances.</dd>
+        <dd>Computes the number of rows per patient ID which contain specific values in
+specific columns.</dd>
       </dl><dl><dt>
           
-          <code><a href="count_matching_diagnoses.html">count_matching_diagnoses()</a></code> 
+          <code><a href="featurise_sum.html">featurise_sum()</a></code> 
         </dt>
-        <dd>Computes the number of AE2 attendances with a given diagnosis.</dd>
+        <dd>Groups by ID and computes the sum of the values in all rows which pass a
+given filter.</dd>
       </dl><dl><dt>
           
-          <code><a href="join_feature_df.html">join_feature_df()</a></code> 
+          <code><a href="filter_all.html">filter_all()</a></code> 
         </dt>
-        <dd>Used when we are adding sets of features one at a time to a single
-data.frame</dd>
+        <dd>Pass table through any type of filter.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_and.html">filter_and()</a></code> 
+        </dt>
+        <dd>Filter table rows based on a logical conjunction of multiple filters (i.e.
+filter1 AND filter2 AND ...)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_basic.html">filter_basic()</a></code> 
+        </dt>
+        <dd>Generic function for a basic filter, parametrised over the type of
+comparison operator used to select rows.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_not.html">filter_not()</a></code> 
+        </dt>
+        <dd>Filter table rows based on a logical negation of a filter (i.e. NOT filter1)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_or.html">filter_or()</a></code> 
+        </dt>
+        <dd>Filter table rows based on a logical disjunction of multiple filters (i.e.
+filter1 OR filter2 OR ...)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="join_feature_tables.html">join_feature_tables()</a></code> 
+        </dt>
+        <dd>Join feature tables together.</dd>
       </dl><dl><dt>
           
           <code><a href="make_raw_ae2.html">make_raw_ae2()</a></code> 
@@ -94,6 +127,11 @@ data.frame</dd>
           <code><a href="miniSPARRA01-package.html">miniSPARRA01</a></code> <code><a href="miniSPARRA01-package.html">miniSPARRA01-package</a></code> 
         </dt>
         <dd>miniSPARRA01: What the Package Does (One Line, Title Case)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="read_all_tables.html">read_all_tables()</a></code> 
+        </dt>
+        <dd>Read in all tables from a list of filenames.</dd>
       </dl></div>
   </main></div>
 
