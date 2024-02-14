@@ -4,7 +4,14 @@
 #' @return A list of data frames.
 #' @export
 read_all_tables <- function(filenames) {
-  tables <- lapply(filenames, read.csv, header = TRUE)
+  tables <- lapply(filenames, read_one_table)
   names(tables) <- filenames
   tables
+}
+
+#' Helper function
+read_one_table <- function(filename) {
+  filename %>% 
+    read.csv(header = TRUE) %>%
+    coerce_dates()
 }

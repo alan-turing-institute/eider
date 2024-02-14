@@ -45,6 +45,12 @@ names(all_tables)
 all_tables$`../minisparra/tests/data/ae2.csv` %>% kbl()
 ```
 
+Note that the `time` column has been automatically corrected to a date.
+
+```{r}
+str(all_tables$`../minisparra/tests/data/ae2.csv`)
+```
+
 -----
 
 ## (2) Defining filters
