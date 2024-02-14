@@ -193,3 +193,22 @@ When we join them together, notice that the respective missing values for patien
 ```{r}
 join_feature_tables(list(diag_101_count, diag_102_count, diag_103_count)) %>% kbl()
 ```
+
+
+---
+
+## Just testing, everything below this should be ignored
+
+```{r}
+library(tidyverse)
+output_column_name <- "years_since_first_entry"
+cutoff_date <- lubridate::ymd("2023-03-19")
+date_column_name <- "time"
+
+all_tables$`../minisparra/tests/data/ae2.csv` %>%
+  mutate(!!output_column_name := (cutoff_date - .data[[date_column_name]]) %/% lubridate::ddays(365.25)) %>%
+  group_by(id) %>%
+  slice_max(.data[[output_column_name]], n = 1, with_ties = FALSE) %>%
+  select(id, !!output_column_name) %>%
+  kbl()
+```
