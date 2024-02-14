@@ -13,6 +13,6 @@ website:
 
 format:
   html:
-    theme: minty
+    theme: yeti
     css: styles.css
     toc: true
