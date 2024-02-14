@@ -10,11 +10,15 @@ Thursdays, usually 10:30 - 11:30. Notes [here](https://hackmd.io/@hdduncan/BJRce
 https://alan-turing-institute.github.io/SPARRA/docs/
 
 
-## setting up pre-commit
+## Setting up pre-commit
+
+Installation is:
 
 ```bash
 pip install pre-commit   # or brew install
 pre-commit install
 ```
 
-then it should automatically run `document()` before each commit
+Once this is done, every time you commit, it will automatically run `devtools::document()`.
+If `document()` generated new files (i.e. if you hadn't run `document()` yourself before committing), the commit will not go through:
+you have to manually `git add` the new files and then commit again.
