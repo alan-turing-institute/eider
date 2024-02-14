@@ -43,7 +43,7 @@ featurise_years_since_first <- function(all_tables,
     rename(id = !!id_column_name) %>%
     mutate(!!output_column_name := (cutoff_date - .data[[date_column_name]]) %/% lubridate::ddays(365.25)) %>%
     group_by(id) %>%
-    slice_max(.data[[output_column_name]], n = 1, with_ties = FALSE) %>%
+    summarise(!!output_column_name := max(.data[[output_column_name]])) %>%
     select(id, !!output_column_name)
 
   list(

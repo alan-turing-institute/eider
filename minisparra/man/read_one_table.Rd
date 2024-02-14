@@ -2,10 +2,10 @@
 % Please edit documentation in R/read_all_tables.R
 \name{read_one_table}
 \alias{read_one_table}
-\title{Helper function}
+\title{Helper function to read a singlet able.}
 \usage{
 read_one_table(filename)
 }
 \description{
-Helper function
+Helper function to read a singlet able.
 }

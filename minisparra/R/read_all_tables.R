@@ -9,7 +9,9 @@ read_all_tables <- function(filenames) {
   tables
 }
 
-#' Helper function
+#' Helper function to read a singlet able.
+#'
+#' @export
 read_one_table <- function(filename) {
   filename %>% 
     read.csv(header = TRUE) %>%
