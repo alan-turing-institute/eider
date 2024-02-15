@@ -57,6 +57,11 @@
         <dd>ae2_attendances</dd>
       </dl><dl><dt>
           
+          <code><a href="check_for_nested.html">check_for_nested()</a></code> 
+        </dt>
+        <dd>Check if a filter is nested or single</dd>
+      </dl><dl><dt>
+          
           <code><a href="clean_ae2.html">clean_ae2()</a></code> 
         </dt>
         <dd>Cleans the AE2 table. Adds the attendance_category column and populates it
@@ -119,6 +124,12 @@ filter1 OR filter2 OR ...)</dd>
         <dd>Join feature tables together.</dd>
       </dl><dl><dt>
           
+          <code><a href="json_to_feature.html">json_to_feature()</a></code> 
+        </dt>
+        <dd>Take the json input file and produce a formatted R object which can direct
+the filters</dd>
+      </dl><dl><dt>
+          
           <code><a href="make_raw_ae2.html">make_raw_ae2()</a></code> 
         </dt>
         <dd>Generate a raw AE2 table.</dd>
@@ -127,6 +138,28 @@ filter1 OR filter2 OR ...)</dd>
           <code><a href="miniSPARRA01-package.html">miniSPARRA01</a></code> <code><a href="miniSPARRA01-package.html">miniSPARRA01-package</a></code> 
         </dt>
         <dd>miniSPARRA01: What the Package Does (One Line, Title Case)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="parse_header_info.html">parse_header_info()</a></code> 
+        </dt>
+        <dd>Parse the header information from the json file to our targed feature object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="parse_nested_filter.html">parse_nested_filter()</a></code> 
+        </dt>
+        <dd>Parse a nested filter, returns a list of type (AND/OR) followed by lists
+of the singular filters</dd>
+      </dl><dl><dt>
+          
+          <code><a href="parse_single_filter.html">parse_single_filter()</a></code> 
+        </dt>
+        <dd>Parse a single (un-nested) filter and return a list with data column name
+filter type, and the limiting values</dd>
+      </dl><dl><dt>
+          
+          <code><a href="parse_single_or_nested.html">parse_single_or_nested()</a></code> 
+        </dt>
+        <dd>Check if a filter is nested or single and parse accordingly</dd>
       </dl><dl><dt>
           
           <code><a href="read_all_tables.html">read_all_tables()</a></code> 

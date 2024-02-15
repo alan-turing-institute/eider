@@ -16,6 +16,9 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/ae2_attendances.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/check_for_nested.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/clean_ae2.html</loc>
   </url>
   <url>
@@ -52,10 +55,25 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/join_feature_tables.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/json_to_feature.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/make_raw_ae2.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/miniSPARRA01-package.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/parse_header_info.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/parse_nested_filter.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/parse_single_filter.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/parse_single_or_nested.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/read_all_tables.html</loc>
