@@ -10,8 +10,8 @@
 #'               - rejected: all other rows
 #' @export
 filter_not <- function(table, filter_obj) {
-  if (filter_obj$type != "and") {
-    stop("Filter type must be 'not'")
+  if (filter_obj$type != "NOT") {
+    stop("Filter type must be 'NOT'")
   }
 
   subfilter_results <- filter_all(table, filter_obj)

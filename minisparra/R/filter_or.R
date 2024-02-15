@@ -10,8 +10,8 @@
 #'               - rejected: all other rows
 #' @export
 filter_or <- function(table, filter_obj) {
-  if (filter_obj$type != "or") {
-    stop("Filter type must be 'or'")
+  if (filter_obj$type != "OR") {
+    stop("Filter type must be 'OR'")
   }
 
   # Move row names to a column if present

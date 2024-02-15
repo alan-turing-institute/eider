@@ -1,0 +1,44 @@
+{
+  "source_file": ["ae2.csv"],
+  "transformation_type": ["your_transformation_type"],
+  "primary_filter": {
+    "type": ["AND"],
+    "subfilters": {
+      "subfilter_1": {
+        "column": ["attendance_type"],
+        "type": ["IN"],
+        "value": [7]
+      },
+      "subfilter_2": {
+        "type": ["OR"],
+        "subfilters": {
+          "subfilter_21": {
+            "column": ["diagnosis_1"],
+            "type": ["IN"],
+            "value": [1, 2]
+          },
+          "subfilter_22": {
+            "column": ["diagnosis_2"],
+            "type": ["IN"],
+            "value": [1, 2]
+          },
+          "subfilter_23": {
+            "column": ["diagnosis_3"],
+            "type": ["IN"],
+            "value": [1, 2]
+          }
+        }
+      },
+      "subfilter_3": {
+        "column": ["attendance_date"],
+        "type": ["GT_EQ"],
+        "value": ["2022-01-01"]
+      },
+      "subfilter_4": {
+        "column": ["attendance_date"],
+        "type": ["LT"],
+        "value": ["2024-02-01"]
+      }
+    }
+  }
+}

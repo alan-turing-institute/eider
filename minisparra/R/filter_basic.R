@@ -13,7 +13,7 @@
 #'               - rejected: all other rows
 #' @export
 filter_basic <- function(table, filter_obj) {
-  valid_filter_types <- c("in", "less_than", "less_than_equal", "greater_than", "greater_than_equal")
+  valid_filter_types <- c("IN", "LT", "LT_EQ", "GT", "GT_EQ")
   if (!(filter_obj$type %in% valid_filter_types)) {
     stop("Filter type must be one of ", valid_filter_types)
   }
@@ -24,11 +24,11 @@ filter_basic <- function(table, filter_obj) {
 
   # Choose the appropriate comparison operator
   operator <- switch(filter_obj$type,
-    "in" = `%in%`,
-    "less_than" = `<`,
-    "less_than_equal" = `<=`,
-    "greater_than" = `>`,
-    "greater_than_equal" = `>=`
+    "IN" = `%in%`,
+    "LT" = `<`,
+    "LT_EQ" = `<=`,
+    "GT" = `>`,
+    "GT_EQ" = `>=`
   )
 
   # Add a sentinel column indicating whether the row passed the filter
