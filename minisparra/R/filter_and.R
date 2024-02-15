@@ -10,8 +10,8 @@
 #'               - rejected: all other rows
 #' @export
 filter_and <- function(table, filter_obj) {
-  if (filter_obj$type != "and") {
-    stop("Filter type must be 'and'")
+  if (filter_obj$type != "AND") {
+    stop("Filter type must be 'AND'")
   }
 
   # Move row names to a column if present
