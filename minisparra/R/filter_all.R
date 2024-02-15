@@ -7,13 +7,13 @@
 #'               - rejected: all other rows
 #' @export
 filter_all <- function(table, filter_obj) {
-  if (filter_obj$type %in% c("in", "less_than", "less_than_equal", "greater_than", "greater_than_equal")) {
+  if (filter_obj$type %in% c("IN", "LT", "LT_EQ", "GT", "GT_EQ")) {
     filter_results <- filter_basic(table, filter_obj)
-  } else if (filter_obj$type == "or") {
+  } else if (filter_obj$type == "OR") {
     filter_results <- filter_or(table, filter_obj)
-  } else if (filter_obj$type == "and") {
+  } else if (filter_obj$type == "AND") {
     filter_results <- filter_and(table, filter_obj)
-  } else if (filter_obj$type == "not") {
+  } else if (filter_obj$type == "NOT") {
     filter_results <- filter_not(table, filter_obj)
   } else {
     stop(paste("Filter type '", filter_obj$type, "' not implemented."))
