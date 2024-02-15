@@ -2,7 +2,7 @@ test_that("filter_less_than", {
   filtered_data <- filter_all(
     iris,
     list(
-      type = "less_than",
+      type = "LT",
       value = 5,
       column = "Sepal.Length"
     )

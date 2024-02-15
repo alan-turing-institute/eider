@@ -1,21 +1,21 @@
 make_filter <- function(diagnosis_value) {
   diag_1 <- list(
-    type = "in",
+    type = "IN",
     column = "diagnosis_1",
     value = c(diagnosis_value)
   )
   diag_2 <- list(
-    type = "in",
+    type = "IN",
     column = "diagnosis_2",
     value = c(diagnosis_value)
   )
   diag_3 <- list(
-    type = "in",
+    type = "IN",
     column = "diagnosis_3",
     value = c(diagnosis_value)
   )
   list(
-    type = "or",
+    type = "OR",
     subfilters = list(diag_1, diag_2, diag_3)
   )
 }
