@@ -15,9 +15,9 @@ repos:
     always_run: true
     pass_filenames: false
 
-#   - id: lint
-#     name: Lint
-#     language: system
-#     entry: make -C minisparra lint
-#     always_run: true
-#     pass_filenames: false
+  - id: lint
+    name: Lint source code
+    language: system
+    entry: make -C minisparra lint
+    always_run: true
+    pass_filenames: false
