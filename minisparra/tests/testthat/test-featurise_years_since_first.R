@@ -12,20 +12,20 @@ test_that("featurise_years_since_first", {
     all_tables = all_tables,
     source_table_file = ae2_table_name,
     filter_obj = list(
-      type = "or",
+      type = "OR",
       subfilters = list(
         list(
-          type = "in",
+          type = "IN",
           column = "diagnosis_1",
           value = c(101)
         ),
         list(
-          type = "in",
+          type = "IN",
           column = "diagnosis_2",
           value = c(101)
         ),
         list(
-          type = "in",
+          type = "IN",
           column = "diagnosis_3",
           value = c(101)
         )
