@@ -41,7 +41,10 @@ test_that("featurise_years_since_first", {
   orig_table <- read_one_table(ae2_table_name)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
-    mutate(years_since_101_diag = (cutoff_date - time) %/% lubridate::ddays(365.25)) %>%
+    mutate(
+      years_since_101_diag =
+        (cutoff_date - time) %/% lubridate::ddays(365.25)
+    ) %>%
     group_by(id) %>%
     summarise(years_since_101_diag = max(years_since_101_diag)) %>%
     select(id, years_since_101_diag)

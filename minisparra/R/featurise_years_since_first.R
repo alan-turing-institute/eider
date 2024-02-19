@@ -41,7 +41,10 @@ featurise_years_since_first <- function(all_tables,
     filter_all(filter_obj) %>%
     magrittr::extract2("passed") %>%
     rename(id = !!id_column_name) %>%
-    mutate(!!output_column_name := (cutoff_date - .data[[date_column_name]]) %/% lubridate::ddays(365.25)) %>%
+    mutate(
+      !!output_column_name :=
+        (cutoff_date - .data[[date_column_name]]) %/% lubridate::ddays(365.25)
+    ) %>%
     group_by(id) %>%
     summarise(!!output_column_name := max(.data[[output_column_name]])) %>%
     select(id, !!output_column_name)

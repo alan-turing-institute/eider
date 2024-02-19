@@ -33,9 +33,13 @@ filter_basic <- function(table, filter_obj) {
 
   # Add a sentinel column indicating whether the row passed the filter
   table <- table %>%
-    mutate(SPARRA_PRIVATE_FILTERED = operator(.data[[filter_obj$column]], filter_obj$value))
+    mutate(
+      SPARRA_PRIVATE_FILTERED =
+        operator(.data[[filter_obj$column]], filter_obj$value)
+    )
 
-  # Split the table into passed and rejected rows, and remove the sentinel column
+  # Split the table into passed and rejected rows, and remove the sentinel
+  # column
   list(
     passed = table %>%
       filter(SPARRA_PRIVATE_FILTERED) %>%
