@@ -11,6 +11,9 @@ parse_header_info(feature_object, json_data)
 
 \item{json_data}{The parsed json data}
 }
+\value{
+A feature object
+}
 \description{
 Parse the header information from the json file to our targed feature object
 }

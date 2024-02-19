@@ -2,10 +2,8 @@
 #'
 #' @param filter A filter as defined in the origin json file
 #'
-#' @return
+#' @return TRUE if the filter is nested, FALSE if it is not
 #' @export
-#'
-#' @examples
 check_for_nested <- function(filter) {
   # For a given filter, check to see if it is nested or not
   # Return TRUE if it is nested, FALSE if it is not
@@ -21,14 +19,14 @@ check_for_nested <- function(filter) {
 #' @param feature_object The R object which will define the filtering
 #' @param json_data The parsed json data
 #'
-#' @return
+#' @return A feature object
 #' @export
-#'
-#' @examples
 parse_header_info <- function(feature_object, json_data) {
   feature_object$source_file <- json_data$source_file
   feature_object$transformation_type <- json_data$transformation_type
-  feature_object$primary_filter <- parse_single_or_nested(json_data$primary_filter)
+  feature_object$primary_filter <- parse_single_or_nested(
+    json_data$primary_filter
+  )
   return(feature_object)
 }
 
@@ -37,10 +35,8 @@ parse_header_info <- function(feature_object, json_data) {
 #'
 #' @param filter A filter as defined in the origin json file
 #'
-#' @return
+#' @return A filter object
 #' @export
-#'
-#' @examples
 parse_single_filter <- function(filter) {
   print("Parsing single filter")
   parsed_single_filter <- list()
@@ -55,10 +51,8 @@ parse_single_filter <- function(filter) {
 #'
 #' @param nested_filter A nested filter as defined in the origin json file
 #'
-#' @return
+#' @return A nested filter object
 #' @export
-#'
-#' @examples
 parse_nested_filter <- function(nested_filter) {
   print("Parsing nested filter")
   op_nested_filter <- list()
@@ -84,10 +78,8 @@ parse_single_or_nested <- function(filter) {
 #'
 #' @param filename The relative filepath to the json file
 #'
-#' @return
+#' @return A feature object
 #' @export
-#'
-#' @examples
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
   parse_header_info(list(), json_data)
