@@ -10,6 +10,9 @@ parse_nested_filter(nested_filter)
 \arguments{
 \item{nested_filter}{A nested filter as defined in the origin json file}
 }
+\value{
+A nested filter object
+}
 \description{
 Parse a nested filter, returns a list of type (AND/OR) followed by lists
 of the singular filters

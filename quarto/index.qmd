@@ -45,6 +45,12 @@ names(all_tables)
 all_tables$`../minisparra/tests/data/ae2.csv` %>% kbl()
 ```
 
+Note that the `time` column has been automatically corrected to a date.
+
+```{r}
+str(all_tables$`../minisparra/tests/data/ae2.csv`)
+```
+
 -----
 
 ## (2) Defining filters
@@ -212,4 +218,32 @@ When we join them together, notice that the respective missing values for patien
 
 ```{r}
 join_feature_tables(list(diag_101_count, diag_102_count, diag_103_count)) %>% kbl()
+```
+
+
+---
+
+## (5) A different type of feature
+
+The original data table (again).
+
+```{r}
+all_tables$`../minisparra/tests/data/ae2.csv` %>% kbl()
+```
+
+The `featurise_years_since_first` function here counts the number of years since a patient's first diagnosis with code 102.
+(In principle it is not hard to generalise this to any unit of time.)
+
+```{r}
+years_since_first_diag_102 <- featurise_years_since_first(
+  all_tables = all_tables,
+  source_table_file = "../minisparra/tests/data/ae2.csv",
+  filter_obj = make_filter(102),
+  cutoff_date = "2020-03-19",
+  date_column_name = "time",
+  output_column_name = "years_since_diag_102",
+  missing_value = 100
+)
+
+years_since_first_diag_102$feature_table %>% kbl()
 ```

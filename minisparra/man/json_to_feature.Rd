@@ -10,6 +10,9 @@ json_to_feature(filename)
 \arguments{
 \item{filename}{The relative filepath to the json file}
 }
+\value{
+A feature object
+}
 \description{
 Take the json input file and produce a formatted R object which can direct
 the filters

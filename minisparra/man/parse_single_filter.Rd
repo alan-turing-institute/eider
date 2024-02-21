@@ -10,6 +10,9 @@ parse_single_filter(filter)
 \arguments{
 \item{filter}{A filter as defined in the origin json file}
 }
+\value{
+A filter object
+}
 \description{
 Parse a single (un-nested) filter and return a list with data column name
 filter type, and the limiting values
