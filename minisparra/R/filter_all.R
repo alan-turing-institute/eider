@@ -7,13 +7,20 @@
 #'               - rejected: all other rows
 #' @export
 filter_all <- function(table, filter_obj) {
-  if (filter_obj$type %in% c("IN", "LT", "LT_EQ", "GT", "GT_EQ")) {
+  t <- filter_obj$type
+  if (is.null(t)) {
+    # Filter type was not found. Assuming no filtering desired
+    # TODO: Log this
+    return(list(passed = table, rejected = data.frame()))
+  }
+
+  if (t %in% c("IN", "LT", "LT_EQ", "GT", "GT_EQ")) {
     filter_results <- filter_basic(table, filter_obj)
-  } else if (filter_obj$type == "OR") {
+  } else if (t == "OR") {
     filter_results <- filter_or(table, filter_obj)
-  } else if (filter_obj$type == "AND") {
+  } else if (t == "AND") {
     filter_results <- filter_and(table, filter_obj)
-  } else if (filter_obj$type == "NOT") {
+  } else if (t == "NOT") {
     filter_results <- filter_not(table, filter_obj)
   } else {
     stop(paste("Filter type '", filter_obj$type, "' not implemented."))
