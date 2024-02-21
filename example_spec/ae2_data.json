@@ -1,6 +1,9 @@
 {
   "source_file": ["ae2.csv"],
-  "transformation_type": ["your_transformation_type"],
+  "transformation_type": ["COUNT"],
+  "grouping_column(s)": ["user_id"],
+  "absent_data_flag": [0],
+  "output_feature_name": ["user_defined_name"],
   "primary_filter": {
     "type": ["AND"],
     "subfilters": {
