@@ -1,15 +1,12 @@
 {
     "source_file": ["pis_data.csv"],
     "transformation_type": ["SUM"],
+    "aggregation_column": ["num_items"],
     "grouping_column(s)": ["user_id"],
+    "absent_data_flag": [0],
     "primary_filter" : {
         "type": ["AND"],
         "subfilters":{
-            "subfilter_1": {
-                "column": ["num_items"],
-                "type": ["IN"],
-                "value": ["All"]
-            },
             "subfilter_2": {
                 "column": ["paid_date"],
                 "type": ["DATE_GT_EQ"],
