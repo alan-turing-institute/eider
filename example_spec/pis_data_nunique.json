@@ -2,7 +2,7 @@
     "source_file": ["random_pis_data.csv"],
     "transformation_type": ["NUNIQUE"],
     "aggregation_column": ["bnf_section"],
-    "grouping_column(s)": ["user_id"],
+    "grouping_columns": ["user_id"],
     "absent_data_flag": [0],
     "output_feature_name": ["user_defined_name"],
     "primary_filter" : {

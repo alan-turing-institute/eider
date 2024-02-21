@@ -1,7 +1,7 @@
 {
   "source_file": ["ae2.csv"],
   "transformation_type": ["COUNT"],
-  "grouping_column(s)": ["user_id"],
+  "grouping_columns": ["user_id"],
   "absent_data_flag": [0],
   "output_feature_name": ["user_defined_name"],
   "primary_filter": {
@@ -34,12 +34,12 @@
       },
       "subfilter_3": {
         "column": ["attendance_date"],
-        "type": ["GT_EQ"],
+        "type": ["DATE_GT_EQ"],
         "value": ["2022-01-01"]
       },
       "subfilter_4": {
         "column": ["attendance_date"],
-        "type": ["LT"],
+        "type": ["DATE_LT"],
         "value": ["2024-02-01"]
       }
     }
