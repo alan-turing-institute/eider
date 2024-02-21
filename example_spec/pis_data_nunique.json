@@ -1,5 +1,5 @@
 {
-    "source_file": ["pis_data.csv"],
+    "source_file": ["random_pis_data.csv"],
     "transformation_type": ["NUNIQUE"],
     "aggregation_column": ["bnf_section"],
     "grouping_column(s)": ["user_id"],

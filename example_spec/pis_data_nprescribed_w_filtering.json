@@ -1,5 +1,5 @@
 {
-    "source_file": ["pis_data.csv"],
+    "source_file": ["random_pis_data.csv"],
     "transformation_type": ["SUM"],
     "aggregation_column": ["num_items"],
     "grouping_column(s)": ["user_id"],
