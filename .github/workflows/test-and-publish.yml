@@ -32,6 +32,7 @@ jobs:
             any::knitr
             any::kableExtra
             any::magrittr
+            any::lintr
 
       - name: Lint source code
         run: make -C minisparra lint

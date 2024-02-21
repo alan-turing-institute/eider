@@ -5,33 +5,26 @@
 \title{Groups by ID and computes the sum of the values in all rows which pass a
 given filter.}
 \usage{
-featurise_sum(
-  all_tables,
-  source_table_file,
-  filter_obj,
-  column_to_sum_name,
-  output_column_name,
-  id_column_name = "id",
-  missing_value = 0
-)
+featurise_sum(all_tables, spec)
 }
 \arguments{
 \item{all_tables}{List of all input tables (passed in from read_all_tables).}
 
-\item{source_table_file}{Filename of the source table to read from.}
+\item{spec}{A list containing the following elements:
+\itemize{
+\item source_file:         Filename of the source table to read from.
+\item primary_filter:      A filter object to apply to the source table.
+\item aggregation_column:  Name of the column which provides the values to be
+\item 
 
-\item{filter_obj}{A filter object to apply to the source table.}
-
-\item{column_to_sum_name}{Name of the column which provides the values to be
-summed.}
-
-\item{output_column_name}{Name of the output column.}
-
-\item{id_column_name}{Name of the patient ID column in the source table.
-Defaults to 'id'.}
-
-\item{missing_value}{The value to use for patients who have no matching rows
-in the source table. Defaults to 0.}
+\if{html}{\out{<div class="sourceCode">}}\preformatted{                 summed over.
+}\if{html}{\out{</div>}}
+\item output_feature_name: Name of the output column.
+\item grouping_columns:    Name of the columns to group the source table by
+before summation.
+\item absent_data_flag:    The value to use for patients who have no matching
+rows in the source table.
+}}
 }
 \value{
 A list with the following elements:

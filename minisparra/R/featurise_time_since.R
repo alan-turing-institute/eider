@@ -2,22 +2,25 @@
 #' date and the first OR last date in the filtered table.
 #'
 #' @param all_tables List of all input tables (passed in from read_all_tables).
-#' @param source_table_file Filename of the source table to read from.
-#' @param filter_obj A filter object to apply to the source table.
-#' @param date_column_name Name of the date column in the source table to
-#' calculate the time since.
-#' @param cutoff_date The date to calculate the time since from.
-#' @param from_first If TRUE, calculate the time since the first date in the
-#' filtered table. If FALSE, calculate the time since the last (most recent)
-#' date in the filtered table.
-#' @param time_units Either "days" or "years". The number of years is defined as
-#' the number of full 365.25 day periods between the two dates (and is rounded
-#' down to the nearest whole number).
-#' @param output_column_name Name of the output column.
-#' @param id_column_name Name of the patient ID column in the source table.
-#' Defaults to 'id'.
-#' @param missing_value The value to use for patients who have no matching rows
-#' in the source table. Defaults to 0.
+#' @param spec A list containing the following elements:
+#'  - source_file:         Filename of the source table to read from.
+#'  - primary_filter:      A filter object to apply to the source table.
+#'  - date_column:         Name of the date column in the source table to
+#'                         calculate the time since.
+#'  - cutoff_date:         The date to calculate the time since from.
+#'  - from_first:          If TRUE, calculate the time since the first date in
+#'                         the filtered table. If FALSE, calculate the time
+#'                         since the last (most recent) date in the filtered
+#'                         table.
+#'  - time_units:          Either "days" or "years". The number of years is
+#'                         defined as the number of full 365.25 day periods
+#'                         between the two dates (and is rounded down to the
+#'                         nearest whole number).
+#'  - output_feature_name: Name of the output column.
+#'  - grouping_columns:    Name of the columns in the source table over which
+#'                         to group by.
+#'  - absent_data_flag:    The value to use for patients who have no matching
+#'                         rows in the source table.
 #'
 #' @return A list with the following elements:
 #' - feature_table: A data frame with one row per patient ID and one column
@@ -29,24 +32,23 @@
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
 #' @export
-featurise_time_since <- function(all_tables,
-                                 source_table_file,
-                                 filter_obj,
-                                 date_column_name,
-                                 cutoff_date,
-                                 from_first,
-                                 time_units,
-                                 output_column_name,
-                                 id_column_name = "id",
-                                 missing_value = 0) {
-  source_table <- all_tables[[source_table_file]]
+featurise_time_since <- function(all_tables, spec) {
+  # Validate spec
+  source_table <- all_tables[[spec$source_file]]
+  filter_obj <- spec$primary_filter
+  date_column <- spec$date_column
+  cutoff_date <- lubridate::ymd(spec$cutoff_date)
+  from_first <- spec$from_first
+  time_units <- spec$time_units
+  output_feature_name <- spec$output_feature_name
+  grouping_columns <- spec$grouping_columns
+  missing_value <- spec$absent_data_flag
 
-  cutoff_date <- lubridate::ymd(cutoff_date)
-
+  # Calculate feature
   feature_table <- source_table %>%
     filter_all(filter_obj) %>%
     magrittr::extract2("passed") %>%
-    rename(id = !!id_column_name)
+    rename(id = !!grouping_columns)
 
   if (time_units == "years") {
     ndays <- lubridate::ddays(365.25)
@@ -58,20 +60,20 @@ featurise_time_since <- function(all_tables,
 
   feature_table <- feature_table %>%
     mutate(
-      !!output_column_name :=
-        (cutoff_date - .data[[date_column_name]]) %/% ndays
+      !!output_feature_name :=
+        (cutoff_date - .data[[date_column]]) %/% ndays
     ) %>%
     group_by(id)
 
   if (from_first) {
     feature_table <- feature_table %>%
-      summarise(!!output_column_name := max(.data[[output_column_name]]))
+      summarise(!!output_feature_name := max(.data[[output_feature_name]]))
   } else {
     feature_table <- feature_table %>%
-      summarise(!!output_column_name := min(.data[[output_column_name]]))
+      summarise(!!output_feature_name := min(.data[[output_feature_name]]))
   }
 
-  feature_table <- feature_table %>% select(id, !!output_column_name)
+  feature_table <- feature_table %>% select(id, !!output_feature_name)
 
   list(
     feature_table = feature_table,

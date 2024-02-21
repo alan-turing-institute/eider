@@ -16,22 +16,26 @@ check_for_nested <- function(filter) {
 
 #' Parse the header information from the json file to our targed feature object
 #'
-#' @param feature_object The R object which will define the filtering
 #' @param json_data The parsed json data
 #'
 #' @return A feature object
 #' @export
-parse_header_info <- function(feature_object, json_data) {
-  feature_object$source_file <- json_data$source_file
-  feature_object$transformation_type <- json_data$transformation_type
-  feature_object$aggregation_column <- json_data$aggregation_column
-  feature_object$grouping_columns <- json_data$grouping_columns
-  feature_object$absent_data_flag <- json_data$absent_data_flag
-  feature_object$output_feature_name <- json_data$output_feature_name
-  feature_object$primary_filter <- parse_single_or_nested(
-    json_data$primary_filter
-  )
-  return(feature_object)
+parse_feature <- function(json_data) {
+  # Initialise empty list
+  feature_object <- list()
+
+  # Read in all keys, using the special filter parser for the "primary_filter"
+  # key
+  for (key in names(json_data)) {
+    if (key == "primary_filter") {
+      feature_object$primary_filter <- parse_single_or_nested(
+        json_data$primary_filter
+      )
+    } else {
+      feature_object[[key]] <- json_data[[key]]
+    }
+  }
+  feature_object
 }
 
 # TODO - when parsing header check that only COUNT is allowed to exist without
@@ -92,5 +96,5 @@ parse_single_or_nested <- function(filter) {
 #' @export
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
-  parse_header_info(list(), json_data)
+  parse_feature(json_data)
 }
