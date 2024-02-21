@@ -7,32 +7,7 @@ test_that("featurise_count", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
 
-  diag_101 <- featurise_count(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    filter_obj = list(
-      type = "OR",
-      subfilters = list(
-        list(
-          type = "IN",
-          column = "diagnosis_1",
-          value = c(101)
-        ),
-        list(
-          type = "IN",
-          column = "diagnosis_2",
-          value = c(101)
-        ),
-        list(
-          type = "IN",
-          column = "diagnosis_3",
-          value = c(101)
-        )
-      )
-    ),
-    output_column_name = "diag_101_count",
-    missing_value = 0
-  )
+  diag_101 <- featurise(all_tables, "../spec/test_count.json")
 
   # Check the result
   orig_table <- read.csv(ae2_table_name)

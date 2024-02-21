@@ -1,44 +1,11 @@
 ae2_table_name <- "../data/ae2.csv"
 cutoff_date <- lubridate::ymd("2023-03-18")
-filter_obj <- list(
-  type = "OR",
-  subfilters = list(
-    list(
-      type = "IN",
-      column = "diagnosis_1",
-      value = c(101)
-    ),
-    list(
-      type = "IN",
-      column = "diagnosis_2",
-      value = c(101)
-    ),
-    list(
-      type = "IN",
-      column = "diagnosis_3",
-      value = c(101)
-    )
-  )
-)
 
 test_that("featurise_time_since (first,years)", {
-  # Read in data. Right now only one table but in principle we would have more
-  # and we want to read them all in at the same time (with one function) to
-  # avoid doing more work than necessary, hence this setup.
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
 
-  diag_101 <- featurise_time_since(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    filter_obj = filter_obj,
-    date_column_name = "time",
-    cutoff_date = cutoff_date,
-    from_first = TRUE,
-    time_units = "years",
-    output_column_name = "years_since_first_101_diag",
-    missing_value = 40
-  )
+  diag_101 <- featurise(all_tables, "../spec/test_time_since_firstyears.json")
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)
@@ -56,23 +23,10 @@ test_that("featurise_time_since (first,years)", {
 })
 
 test_that("featurise_time_since (last,years)", {
-  # Read in data. Right now only one table but in principle we would have more
-  # and we want to read them all in at the same time (with one function) to
-  # avoid doing more work than necessary, hence this setup.
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
 
-  diag_101 <- featurise_time_since(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    filter_obj = filter_obj,
-    date_column_name = "time",
-    cutoff_date = cutoff_date,
-    from_first = FALSE,
-    time_units = "years",
-    output_column_name = "years_since_last_101_diag",
-    missing_value = 40
-  )
+  diag_101 <- featurise(all_tables, "../spec/test_time_since_lastyears.json")
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)
@@ -90,23 +44,10 @@ test_that("featurise_time_since (last,years)", {
 })
 
 test_that("featurise_time_since (first,days)", {
-  # Read in data. Right now only one table but in principle we would have more
-  # and we want to read them all in at the same time (with one function) to
-  # avoid doing more work than necessary, hence this setup.
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
 
-  diag_101 <- featurise_time_since(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    filter_obj = filter_obj,
-    date_column_name = "time",
-    cutoff_date = cutoff_date,
-    from_first = TRUE,
-    time_units = "days",
-    output_column_name = "days_since_first_101_diag",
-    missing_value = 40
-  )
+  diag_101 <- featurise(all_tables, "../spec/test_time_since_firstdays.json")
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)

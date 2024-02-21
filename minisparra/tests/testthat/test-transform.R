@@ -1,15 +1,15 @@
-ae2_table_name <- "../data/ae2.csv"
+test_that("transform", {
+  ae2_table_name <- "../data/ae2.csv"
 
-test_that("join_feature_tables", {
-  # Read in and process some data
-  filenames <- c(ae2_table_name)
-  all_tables <- read_all_tables(filenames)
-
-  diag_101 <- featurise(all_tables, "../spec/test_join1.json")
-  diag_102 <- featurise(all_tables, "../spec/test_join2.json")
-
-  # Join the feature tables
-  joined_feature_table <- join_feature_tables(list(diag_101, diag_102))
+  all_table_filenames <- c(ae2_table_name)
+  all_feature_json_filenames <- c(
+    "../spec/test_join1.json",
+    "../spec/test_join2.json"
+  )
+  joined_feature_table <- transform(
+    all_table_filenames,
+    all_feature_json_filenames
+  )
 
   # Check the result
   orig_table <- read.csv(ae2_table_name)

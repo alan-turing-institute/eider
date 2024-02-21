@@ -2,35 +2,26 @@
 % Please edit documentation in R/featurise_unique.R
 \name{featurise_unique}
 \alias{featurise_unique}
-\title{Groups by ID, filters for rows that obey certain conditions, and computes
-the number of unique values in a given column.}
+\title{Groups by ID and computes the number of distinct values in all rows which
+pass a given filter.}
 \usage{
-featurise_unique(
-  all_tables,
-  source_table_file,
-  filter_obj,
-  aggregate_column_name,
-  output_column_name,
-  id_column_name = "id",
-  missing_value = 0
-)
+featurise_unique(all_tables, spec)
 }
 \arguments{
 \item{all_tables}{List of all input tables (passed in from read_all_tables).}
 
-\item{source_table_file}{Filename of the source table to read from.}
-
-\item{filter_obj}{A filter object to apply to the source table.}
-
-\item{aggregate_column_name}{Name of the column over which to aggregate.}
-
-\item{output_column_name}{Name of the output column.}
-
-\item{id_column_name}{Name of the patient ID column in the source table.
-Defaults to 'id'.}
-
-\item{missing_value}{The value to use for patients who have no matching rows
-in the source table. Defaults to 0.}
+\item{spec}{A list containing the following elements:
+\itemize{
+\item source_file:         Filename of the source table to read from.
+\item primary_filter:      A filter object to apply to the source table.
+\item aggregation_column:  Name of the column which provides the distinct
+values to be counted.
+\item output_feature_name: Name of the output column.
+\item grouping_columns:    Name of the columns to group the source table by
+before summation.
+\item absent_data_flag:    The value to use for patients who have no matching
+rows in the source table.
+}}
 }
 \value{
 A list with the following elements:
@@ -46,6 +37,6 @@ function which joins all the feature tables together.
 }
 }
 \description{
-Groups by ID, filters for rows that obey certain conditions, and computes
-the number of unique values in a given column.
+Groups by ID and computes the number of distinct values in all rows which
+pass a given filter.
 }
