@@ -18,6 +18,7 @@ library(knitr)
 library(kableExtra)
 library(magrittr)
 kbl <- function(x) {
+  x <- head(x, 10)
   x %>%
     knitr::kable(format = 'html', table.attr = 'data-quarto-disable-processing="true"') %>%
     kableExtra::kable_styling(bootstrap_options = "striped", full_width = FALSE)
@@ -33,217 +34,34 @@ We begin by reading in all tables. Right now there's only one.
 This step must be done before any feature extraction to avoid having to read the same table multiple times.
 
 ```{r}
-filenames <- c("../minisparra/tests/data/ae2.csv")
+filenames <- c("../example_data/random_ae_data.csv")
 all_tables <- read_all_tables(filenames)
-
-names(all_tables)
+all_tables$`../example_data/random_ae_data.csv` %>% kbl()
 ```
 
 `all_tables` is a list which associates each of the filenames with the data read from that file.
 
+In this example, patient 18 was admitted on the 3rd of July 2016, they had 3 unique diagnoses, 104, 103, and 102.
+
+## (2) Look at an example input JSON file
+
 ```{r}
-all_tables$`../minisparra/tests/data/ae2.csv` %>% kbl()
+writeLines(readLines("../example_spec/ae2_data.json"))
 ```
 
-Note that the `time` column has been automatically corrected to a date.
+This spec is for A&E data, it defines the source file, the transformation type (count), and which column to group on (user_id). It specifies how absent data should be reported and also allows the user to define the name for the output feature. 
+The primary filter is an AND filter. It requires attendance type to be 1, and filters for diagnosis_1, diagnosis_2 OR diagnosis_3 equalling 101 or 102 within the date range of of the year 2015.
 
+## (3) Trying the transformation pipeline
 ```{r}
-str(all_tables$`../minisparra/tests/data/ae2.csv`)
-```
-
------
-
-## (2) Defining filters
-
-Now we can start extracting features.
-The most complicated part of the feature is to decide how to filter the rows of the data tables, so we discuss this first.
-
-We can have a 'basic' feature, which comprises an operator, a column name, and a vector of values.
-The operator can be `in`, `lt`, `gt`, ...
-
-```{r}
-diag_1 <- list(
-  column = "diagnosis_1",
-  type = "IN",
-  value = c(101)
-)
-```
-
-The filter object above selects for any row where the value in the `diagnosis_1` column is 101.
-
-Likewise we can have the following, which does the same for the `diagnosis_2` and `diagnosis_3` columns.
-
-```{r}
-diag_2 <- list(
-  column = "diagnosis_2",
-  type = "IN",
-  value = c(101)
-)
-diag_3 <- list(
-  column = "diagnosis_3",
-  type = "IN",
-  value = c(101)
-)
-```
-
-Basic filters can be combined using filters with type `or`, `and`, or `not`.
-For example, the following selects for any rows where 1 appears in any of the three diagnosis columns:
-
-```{r}
-diag_1_or_2_or_3 <- list(
-  type = "OR",
-  subfilters = list(diag_1, diag_2, diag_3)
-)
-```
-
-We'll wrap this in a function for later reuse.
-
-```{r}
-make_filter <- function(diagnosis_value) {
-  diag_1 <- list(
-    column = "diagnosis_1",
-    type = "IN",
-    value = c(diagnosis_value)
-  )
-  diag_2 <- list(
-    column = "diagnosis_2",
-    type = "IN",
-    value = c(diagnosis_value)
-  )
-  diag_3 <- list(
-    column = "diagnosis_3",
-    type = "IN",
-    value = c(diagnosis_value)
-  )
-  list(
-    type = "OR",
-    subfilters = list(diag_1, diag_2, diag_3)
-  )
-}
-```
-
----
-
-## (2b) Reading in filters from JSON
-
-Filters (technically entire feature definitions; but the filter is the most complicated part of that) can also be read in from JSON files:
-
-```{r}
-writeLines(readLines("example_101.json"))
-```
-
-This gets parsed to the following:
-
-```{r}
-json_feature <- json_to_feature("example_101.json")
-
-json_feature$primary_filter
-```
-
-and we can compare it to the filter we defined earlier.
-The only difference is that the JSON feature has integer data types, while the R feature has double data types, which has no downstream effect.
-
-```{r}
-library(waldo)
-compare(json_feature$primary_filter, make_filter(101))
-```
-
----
-
-## (3) Extracting features
-
-For reference, here's the original data table again.
-
-```{r}
-all_tables$`../minisparra/tests/data/ae2.csv` %>% kbl()
-```
-
-We can now use this filter to extract a feature from the data table.
-Note that we must provide a 'missing value' to be used for patients with no data in the table, for example, patient 2.
-
-```{r}
-diag_101_count <- featurise_count(
-  all_tables = all_tables,
-  source_table_file = "../minisparra/tests/data/ae2.csv",
-  filter_obj = diag_1_or_2_or_3,
-  output_column_name = "diag_101",
-  missing_value = 0
+ae2_table_name <- "../minisparra/tests/data/ae2.csv"
+all_table_filenames <- c(ae2_table_name)
+all_feature_json_filenames <- c(
+  "../minisparra/tests/spec/test_join1.json",
+  "../minisparra/tests/spec/test_join2.json"
 )
 
-names(diag_101_count)
+# joined_feature_table <- transform(all_table_filenames, all_feature_json_filenames)
+
 ```
 
-`diag_101_count$feature_table` is the data frame with the feature values for each patient ID.
-Since all rows with patient 2 were removed during the filtering step, `diag_101_count` must also carry the missing value forward to the next step.
-
-```{r}
-diag_101_count$feature_table %>% kbl()
-```
-
----
-
-## (4) Joining features
-
-For an example, let's generate the same features but for diagnoses of 102 and 103 respectively.
-
-```{r}
-diag_102_count <- featurise_count(
-  all_tables = all_tables,
-  source_table_file = "../minisparra/tests/data/ae2.csv",
-  filter_obj = make_filter(102),
-  output_column_name = "diag_102",
-  missing_value = 0
-)
-
-diag_103_count <- featurise_count(
-  all_tables = all_tables,
-  source_table_file = "../minisparra/tests/data/ae2.csv",
-  filter_obj = make_filter(103),
-  output_column_name = "diag_103",
-  missing_value = 1000   # For demonstration purposes
-)
-```
-
-Let's see what these feature tables look like:
-
-```{r}
-diag_102_count$feature_table %>% kbl()
-```
-
-```{r}
-diag_103_count$feature_table %>% kbl()
-```
-
-When we join them together, notice that the respective missing values for patient 2 are inserted into the final feature table.
-
-```{r}
-join_feature_tables(list(diag_101_count, diag_102_count, diag_103_count)) %>% kbl()
-```
-
-
----
-
-## (5) A different type of feature
-
-The original data table (again).
-
-```{r}
-all_tables$`../minisparra/tests/data/ae2.csv` %>% kbl()
-```
-
-The `featurise_years_since_first` function here counts the number of years since a patient's first diagnosis with code 102.
-(In principle it is not hard to generalise this to any unit of time.)
-
-```{r}
-years_since_first_diag_102 <- featurise_years_since_first(
-  all_tables = all_tables,
-  source_table_file = "../minisparra/tests/data/ae2.csv",
-  filter_obj = make_filter(102),
-  cutoff_date = "2020-03-19",
-  date_column_name = "time",
-  output_column_name = "years_since_diag_102",
-  missing_value = 100
-)
-
-years_since_first_diag_102$feature_table %>% kbl()
-```

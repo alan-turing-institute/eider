@@ -1,5 +1,5 @@
 {
-  "source_file": ["ae2.csv"],
+  "source_file": ["ae2_data.csv"],
   "transformation_type": ["COUNT"],
   "grouping_columns": ["user_id"],
   "absent_data_flag": [0],
@@ -18,29 +18,29 @@
           "subfilter_21": {
             "column": ["diagnosis_1"],
             "type": ["IN"],
-            "value": [1, 2]
+            "value": [101, 102]
           },
           "subfilter_22": {
             "column": ["diagnosis_2"],
             "type": ["IN"],
-            "value": [1, 2]
+            "value": [101, 102]
           },
           "subfilter_23": {
             "column": ["diagnosis_3"],
             "type": ["IN"],
-            "value": [1, 2]
+            "value": [101, 102]
           }
         }
       },
       "subfilter_3": {
         "column": ["attendance_date"],
         "type": ["DATE_GT_EQ"],
-        "value": ["2022-01-01"]
+        "value": ["2015-01-01"]
       },
       "subfilter_4": {
         "column": ["attendance_date"],
         "type": ["DATE_LT"],
-        "value": ["2024-02-01"]
+        "value": ["2016-01-01"]
       }
     }
   }
