@@ -24,11 +24,21 @@ check_for_nested <- function(filter) {
 parse_header_info <- function(feature_object, json_data) {
   feature_object$source_file <- json_data$source_file
   feature_object$transformation_type <- json_data$transformation_type
+  feature_object$aggregation_column <- json_data$aggregation_column
+  feature_object$grouping_columns <- json_data$grouping_columns
+  feature_object$absent_data_flag <- json_data$absent_data_flag
+  feature_object$output_feature_name <- json_data$output_feature_name
   feature_object$primary_filter <- parse_single_or_nested(
     json_data$primary_filter
   )
   return(feature_object)
 }
+
+# TODO - when parsing header check that only COUNT is allowed to exist without
+# an aggreation column
+# TODO set a log warning/info level that the absent data flag is set to
+# whatever user has specified
+# TODO - put in a warning if expected/mandatory flags are missing
 
 #' Parse a single (un-nested) filter and return a list with data column name
 #' filter type, and the limiting values
