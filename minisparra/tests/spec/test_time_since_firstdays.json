@@ -1,0 +1,31 @@
+{
+  "source_file": ["../data/ae2.csv"],
+  "transformation_type": ["TIME_SINCE"],
+  "grouping_columns": ["id"],
+  "output_feature_name": ["days_since_first_101_diag"],
+  "date_column": ["time"],
+  "time_units": ["days"],
+  "from_first": [true],
+  "cutoff_date": ["2023-03-18"],
+  "absent_data_flag": [40],
+  "primary_filter": {
+    "type": ["OR"],
+    "subfilters": {
+      "subfilter_1": {
+        "column": ["diagnosis_1"],
+        "type": ["IN"],
+        "value": [101]
+      },
+      "subfilter_2": {
+        "column": ["diagnosis_2"],
+        "type": ["IN"],
+        "value": [101]
+      },
+      "subfilter_3": {
+        "column": ["diagnosis_3"],
+        "type": ["IN"],
+        "value": [101]
+      }
+    }
+  }
+}

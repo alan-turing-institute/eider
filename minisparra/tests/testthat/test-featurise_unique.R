@@ -4,14 +4,7 @@ test_that("featurise_unique", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
 
-  diag_1_unique <- featurise_unique(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    aggregate_column_name = "diagnosis_1",
-    filter_obj = list(),
-    output_column_name = "diag_1_unique",
-    missing_value = 0
-  )
+  diag_1_unique <- featurise(all_tables, "../spec/test_unique.json")
 
   # Check the result
   orig_table <- read.csv(ae2_table_name)

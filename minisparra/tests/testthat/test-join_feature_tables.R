@@ -1,25 +1,3 @@
-make_filter <- function(diagnosis_value) {
-  diag_1 <- list(
-    type = "IN",
-    column = "diagnosis_1",
-    value = c(diagnosis_value)
-  )
-  diag_2 <- list(
-    type = "IN",
-    column = "diagnosis_2",
-    value = c(diagnosis_value)
-  )
-  diag_3 <- list(
-    type = "IN",
-    column = "diagnosis_3",
-    value = c(diagnosis_value)
-  )
-  list(
-    type = "OR",
-    subfilters = list(diag_1, diag_2, diag_3)
-  )
-}
-
 ae2_table_name <- "../data/ae2.csv"
 
 test_that("join_feature_tables", {
@@ -27,21 +5,8 @@ test_that("join_feature_tables", {
   filenames <- c(ae2_table_name)
   all_tables <- read_all_tables(filenames)
 
-  diag_101 <- featurise_count(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    filter_obj = make_filter(101),
-    output_column_name = "diag_101_count",
-    missing_value = 0
-  )
-
-  diag_102 <- featurise_count(
-    all_tables = all_tables,
-    source_table_file = ae2_table_name,
-    filter_obj = make_filter(102),
-    output_column_name = "diag_102_count",
-    missing_value = 0
-  )
+  diag_101 <- featurise(all_tables, "../spec/test_join1.json")
+  diag_102 <- featurise(all_tables, "../spec/test_join2.json")
 
   # Join the feature tables
   joined_feature_table <- join_feature_tables(list(diag_101, diag_102))
