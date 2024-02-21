@@ -5,7 +5,6 @@
 #' @return A data frame with the feature tables joined together
 #' @export
 join_feature_tables <- function(calculated_features) {
-
   if (length(calculated_features) == 0) {
     stop("No feature tables to join")
   }
@@ -28,7 +27,10 @@ join_feature_tables <- function(calculated_features) {
     # specified missing value
     df <- df %>%
       left_join(feature_table, by = "id") %>%
-      mutate(!!output_column_name := coalesce(.data[[output_column_name]], missing_value))
+      mutate(
+        !!output_column_name :=
+          coalesce(.data[[output_column_name]], missing_value)
+      )
   }
 
   df

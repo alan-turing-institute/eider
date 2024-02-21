@@ -33,6 +33,10 @@ jobs:
             any::kableExtra
             any::magrittr
 
+      - name: Lint source code
+        run: make -C minisparra lint
+
+      # Note: this step also runs the unit tests, so no need to separately test
       - name: Build and test package
         run: |
           R CMD build minisparra

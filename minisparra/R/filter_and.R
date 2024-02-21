@@ -24,9 +24,10 @@ filter_and <- function(table, filter_obj) {
   # row names hence the check above
   table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
 
-  # Pass the input table through each subfilter in turn. To avoid doing more work
-  # than necessary, once a row fails any of the subfilters, it is added to the
-  # 'failed' table and we don't need to check it against the remaining subfilters.
+  # Pass the input table through each subfilter in turn. To avoid doing more
+  # work than necessary, once a row fails any of the subfilters, it is added to
+  # the 'failed' table and we don't need to check it against the remaining
+  # subfilters.
   not_yet_failed <- tibble()
   failed <- table
   for (subfilter in filter_obj$subfilters) {

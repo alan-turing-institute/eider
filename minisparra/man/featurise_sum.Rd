@@ -10,9 +10,9 @@ featurise_sum(
   source_table_file,
   filter_obj,
   column_to_sum_name,
+  output_column_name,
   id_column_name = "id",
-  missing_value = 0,
-  output_column_name
+  missing_value = 0
 )
 }
 \arguments{
@@ -25,13 +25,13 @@ featurise_sum(
 \item{column_to_sum_name}{Name of the column which provides the values to be
 summed.}
 
+\item{output_column_name}{Name of the output column.}
+
 \item{id_column_name}{Name of the patient ID column in the source table.
 Defaults to 'id'.}
 
 \item{missing_value}{The value to use for patients who have no matching rows
 in the source table. Defaults to 0.}
-
-\item{output_column_name}{Name of the output column.}
 }
 \value{
 A list with the following elements:
