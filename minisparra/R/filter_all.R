@@ -16,6 +16,11 @@ filter_all <- function(table, filter_obj) {
 
   if (t %in% c("IN", "LT", "LT_EQ", "GT", "GT_EQ")) {
     filter_results <- filter_basic(table, filter_obj)
+  } else if (t %in% c(
+    "DATE_IN", "DATE_LT",
+    "DATE_LT_EQ", "DATE_GT", "DATE_GT_EQ"
+  )) {
+    filter_results <- filter_basic_date(table, filter_obj)
   } else if (t == "OR") {
     filter_results <- filter_or(table, filter_obj)
   } else if (t == "AND") {
