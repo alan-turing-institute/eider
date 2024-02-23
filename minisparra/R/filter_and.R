@@ -28,8 +28,8 @@ filter_and <- function(table, filter_obj) {
   # work than necessary, once a row fails any of the subfilters, it is added to
   # the 'failed' table and we don't need to check it against the remaining
   # subfilters.
-  not_yet_failed <- tibble()
-  failed <- table
+  not_yet_failed <- table
+  failed <- tibble()
   for (subfilter in filter_obj$subfilters) {
     subfilter_result <- filter_all(not_yet_failed, subfilter)
     not_yet_failed <- subfilter_result$passed
