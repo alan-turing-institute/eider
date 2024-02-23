@@ -14,7 +14,6 @@
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
-#' @export
 featurise <- function(all_tables,
                       feature_json_file,
                       context = NULL) {

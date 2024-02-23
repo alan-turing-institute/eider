@@ -11,7 +11,6 @@
 #' @return A list with the following elements:
 #'               - passed: data frame with the rows that passed the filter
 #'               - rejected: all other rows
-#' @export
 filter_or <- function(table, filter_obj, context = NULL) {
   context <- c(context, "filter_or")
   trace_context(context)
