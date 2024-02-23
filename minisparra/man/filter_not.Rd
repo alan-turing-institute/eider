@@ -10,7 +10,7 @@ filter_not(table, filter_obj, context = NULL)
 \item{table}{A data frame}
 
 \item{filter_obj}{A list containing the following elements:
-- type: must be 'not'
+- type: must be 'not' (case-insensitive)
 - subfilter: a single filter object}
 
 \item{context}{A string to be used in logging or error messages. Defaults to

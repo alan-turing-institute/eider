@@ -4,8 +4,8 @@
 #'
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
-#'               - type: must be 'in', 'less_than', 'less_than_equal',
-#'                      'greater_than', or 'greater_than_equal'
+#'               - type: must be 'date_in', 'date_lt', 'date_lt_eq', 'date_gt',
+#'                       or 'date_gt_eq' (case-insensitive)
 #'               - column: the name of the column to filter on
 #'               - value: a vector of values to filter on (for type 'in'), or
 #'                 a single value (for all other types)
@@ -21,16 +21,30 @@ filter_basic_date <- function(table,
   context <- c(context, "filter_basic_date")
   trace_context(context)
 
+  t <- tolower(filter_obj$type)
   valid_filter_types <- c(
-    "DATE_IN", "DATE_LT",
-    "DATE_LT_EQ", "DATE_GT", "DATE_GT_EQ"
+    "date_in", "date_lt",
+    "date_lt_eq", "date_gt", "date_gt_eq"
   )
-  if (!(filter_obj$type %in% valid_filter_types)) {
-    stop("Filter type must be one of ", valid_filter_types)
+  if (!(t %in% valid_filter_types)) {
+    error_context(
+      paste0(
+        "Expected filter type to be one of ",
+        paste(
+          sapply(valid_filter_types, function(x) paste0("'", x, "'")),
+          collapse = ", "
+        ),
+        ", but got '", filter_obj$type, "'."
+      ),
+      context
+    )
   }
 
   if (!filter_obj$column %in% colnames(table)) {
-    stop("Column not found in table")
+    error_context(
+      paste0("Column '", filter_obj$column, "' not found in the table."),
+      context
+    )
   }
 
   # Choose the appropriate comparison operator

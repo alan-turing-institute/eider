@@ -61,7 +61,7 @@ featurise_time_since <- function(all_tables,
   } else if (time_units == "days") {
     ndays <- lubridate::ddays(1)
   } else {
-    stop("time_units must be either 'days' or 'years'")
+    error_context("Time_units must be either 'days' or 'years'", context)
   }
 
   feature_table <- feature_table %>%

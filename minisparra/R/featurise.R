@@ -25,7 +25,6 @@ featurise <- function(all_tables,
   t <- spec$transformation_type %>% tolower()
 
   # Check the transformation type and dispatch to the appropriate function
-  # TODO: validate fields
   if (t == "count") {
     feature <- featurise_count(all_tables, spec, context)
   } else if (t == "sum") {
@@ -35,7 +34,10 @@ featurise <- function(all_tables,
   } else if (t == "time_since") {
     feature <- featurise_time_since(all_tables, spec, context)
   } else {
-    stop("Unknown transformation type: ", t)
+    error_context(
+      paste0("Unknown transformation type: ", t),
+      context
+    )
   }
 
   feature

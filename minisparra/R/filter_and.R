@@ -3,7 +3,7 @@
 #'
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
-#'               - type: must be 'and'
+#'               - type: must be 'and' (case-insensitive)
 #'               - subfilters: a list of filter objects
 #' @param context A string to be used in logging or error messages. Defaults to
 #' NULL.
@@ -17,8 +17,11 @@ filter_and <- function(table,
   context <- c(context, "filter_and")
   trace_context(context)
 
-  if (filter_obj$type != "AND") {
-    stop("Filter type must be 'AND'")
+  if (tolower(filter_obj$type) != "and") {
+    error_context(
+      "Expected filter type 'and', but got '", filter_obj$type, "'.",
+      context
+    )
   }
 
   # Move row names to a column if present

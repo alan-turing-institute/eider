@@ -2,11 +2,17 @@
 #'
 #' @param calculated_features A list of calculated features, each of which is
 #' produced by the featurise_... functions
+#' @param context A string to be used in logging or error messages. Defaults to
+#j NULL.
+#'
 #' @return A data frame with the feature tables joined together
 #' @export
-join_feature_tables <- function(calculated_features) {
+join_feature_tables <- function(calculated_features, context = NULL) {
+  context <- c(context, "join_feature_tables")
+  trace_context(context)
+
   if (length(calculated_features) == 0) {
-    stop("No feature tables to join")
+    error_context("No feature tables to join.", context)
   }
 
   # First collect the set of IDs across all tables

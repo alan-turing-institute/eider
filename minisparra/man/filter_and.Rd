@@ -11,7 +11,7 @@ filter_and(table, filter_obj, context = NULL)
 \item{table}{A data frame}
 
 \item{filter_obj}{A list containing the following elements:
-- type: must be 'and'
+- type: must be 'and' (case-insensitive)
 - subfilters: a list of filter objects}
 
 \item{context}{A string to be used in logging or error messages. Defaults to

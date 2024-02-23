@@ -2,7 +2,7 @@
 #'
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
-#'               - type: must be 'not'
+#'               - type: must be 'not' (case-insensitive)
 #'               - subfilter: a single filter object
 #' @param context A string to be used in logging or error messages. Defaults to
 #' NULL.
@@ -17,8 +17,11 @@ filter_not <- function(table,
   context <- c(context, "filter_not")
   trace_context(context)
 
-  if (filter_obj$type != "NOT") {
-    stop("Filter type must be 'NOT'")
+  if (tolower(filter_obj$type) != "not") {
+    error_context(
+      "Expected filter type 'not', but got '", filter_obj$type, "'.",
+      context
+    )
   }
 
   subfilter_results <- filter_all(table, filter_obj$subfilter)

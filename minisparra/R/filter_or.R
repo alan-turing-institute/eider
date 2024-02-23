@@ -3,7 +3,7 @@
 #'
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
-#'               - type: must be 'or'
+#'               - type: must be 'or' (case-insensitive)
 #'               - subfilters: a list of filter objects
 #' @param context A string to be used in logging or error messages. Defaults to
 #' NULL.
@@ -15,8 +15,11 @@ filter_or <- function(table, filter_obj, context = NULL) {
   context <- c(context, "filter_or")
   trace_context(context)
 
-  if (filter_obj$type != "OR") {
-    stop("Filter type must be 'OR'")
+  if (tolower(filter_obj$type) != "or") {
+    error_context(
+      "Expected filter type 'or', but got '", filter_obj$type, "'.",
+      context
+    )
   }
 
   # Move row names to a column if present

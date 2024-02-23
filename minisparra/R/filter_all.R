@@ -11,28 +11,32 @@
 filter_all <- function(table,
                        filter_obj,
                        context = NULL) {
-  t <- filter_obj$type
-  if (is.null(t)) {
+  if (is.null(filter_obj$type)) {
     # Filter type was not found. Assuming no filtering desired
     # TODO: Log this
     return(list(passed = table, rejected = data.frame()))
   }
 
-  if (t %in% c("IN", "LT", "LT_EQ", "GT", "GT_EQ")) {
+  t <- tolower(filter_obj$type)
+
+  if (t %in% c("in", "lt", "lt_eq", "gt", "gt_eq")) {
     filter_results <- filter_basic(table, filter_obj, context)
   } else if (t %in% c(
-    "DATE_IN", "DATE_LT",
-    "DATE_LT_EQ", "DATE_GT", "DATE_GT_EQ"
+    "date_in", "date_lt",
+    "date_lt_eq", "date_gt", "date_gt_eq"
   )) {
     filter_results <- filter_basic_date(table, filter_obj, context)
-  } else if (t == "OR") {
+  } else if (t == "or") {
     filter_results <- filter_or(table, filter_obj, context)
-  } else if (t == "AND") {
+  } else if (t == "and") {
     filter_results <- filter_and(table, filter_obj, context)
-  } else if (t == "NOT") {
+  } else if (t == "not") {
     filter_results <- filter_not(table, filter_obj, context)
   } else {
-    stop(paste("Filter type '", filter_obj$type, "' not implemented."))
+    error_context(
+      paste0("Filter type '", filter_obj$type, "' not implemented."),
+      context
+    )
   }
   filter_results
 }
