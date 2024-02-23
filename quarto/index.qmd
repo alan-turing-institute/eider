@@ -79,3 +79,44 @@ Check the log:
 ```{r}
 readLines(t)
 ```
+
+## Errors with context
+
+### Example 1
+
+```{r}
+lines <- readLines("./ae2_data_wrong1.json")
+lines[3]
+```
+
+```{r error=TRUE}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = "./ae2_data_wrong1.json")
+```
+
+### Example 2
+
+```{r}
+lines <- readLines("./ae2_data_wrong2.json")
+lines[4]
+```
+
+```{r error=TRUE}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = "./ae2_data_wrong2.json")
+```
+
+### Example 3
+
+```{r}
+lines <- readLines("./ae2_data_wrong3.json")
+lines[11]
+```
+
+```{r error=TRUE}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = "./ae2_data_wrong3.json")
+```
