@@ -51,10 +51,17 @@ featurise_time_since <- function(all_tables,
   missing_value <- spec$absent_data_flag
 
   # Calculate feature
-  feature_table <- source_table %>%
-    filter_all(filter_obj, context) %>%
-    magrittr::extract2("passed") %>%
-    rename(id = !!grouping_columns)
+  feature_table <- source_table %>% filter_all(filter_obj, context)
+  feature_table <- tryCatch(
+    {
+      feature_table %>%
+        magrittr::extract2("passed") %>%
+        rename(id = !!grouping_columns)
+    },
+    error = function(e) {
+      error_context(e, context)
+    }
+  )
 
   if (time_units == "years") {
     ndays <- lubridate::ddays(365.25)
@@ -64,22 +71,28 @@ featurise_time_since <- function(all_tables,
     error_context("Time_units must be either 'days' or 'years'", context)
   }
 
-  feature_table <- feature_table %>%
-    mutate(
-      !!output_feature_name :=
-        (cutoff_date - .data[[date_column]]) %/% ndays
-    ) %>%
-    group_by(id)
+  feature_table <- tryCatch(
+    {
+      tbl <- feature_table %>%
+        mutate(
+          !!output_feature_name :=
+            (cutoff_date - .data[[date_column]]) %/% ndays
+        ) %>%
+        group_by(id)
 
-  if (from_first) {
-    feature_table <- feature_table %>%
-      summarise(!!output_feature_name := max(.data[[output_feature_name]]))
-  } else {
-    feature_table <- feature_table %>%
-      summarise(!!output_feature_name := min(.data[[output_feature_name]]))
-  }
-
-  feature_table <- feature_table %>% select(id, !!output_feature_name)
+      if (from_first) {
+        tbl <- tbl %>%
+          summarise(!!output_feature_name := max(.data[[output_feature_name]]))
+      } else {
+        tbl <- tbl %>%
+          summarise(!!output_feature_name := min(.data[[output_feature_name]]))
+      }
+      tbl %>% select(id, !!output_feature_name)
+    },
+    error = function(e) {
+      error_context(e, context)
+    }
+  )
 
   list(
     feature_table = feature_table,

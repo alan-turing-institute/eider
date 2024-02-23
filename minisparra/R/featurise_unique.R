@@ -44,14 +44,21 @@ featurise_unique <- function(all_tables,
   }
 
   # Calculate feature
-  feature_table <- source_table %>%
-    filter_all(filter_obj, context) %>%
-    magrittr::extract2("passed") %>%
-    rename(id = !!grouping_columns) %>%
-    group_by(id) %>%
-    summarise(
-      !!output_feature_name := n_distinct(.data[[column_to_ndistinct_over]])
-    )
+  feature_table <- source_table %>% filter_all(filter_obj, context)
+  feature_table <- tryCatch(
+    {
+      feature_table %>%
+        magrittr::extract2("passed") %>%
+        rename(id = !!grouping_columns) %>%
+        group_by(id) %>%
+        summarise(
+          !!output_feature_name := n_distinct(.data[[column_to_ndistinct_over]])
+        )
+    },
+    error = function(e) {
+      error_context(e, context)
+    }
+  )
 
   list(
     feature_table = feature_table,
