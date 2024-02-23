@@ -14,7 +14,7 @@ filter_not <- function(table, filter_obj) {
     stop("Filter type must be 'NOT'")
   }
 
-  subfilter_results <- filter_all(table, filter_obj)
+  subfilter_results <- filter_all(table, filter_obj$subfilter)
   list(
     passed = subfilter_results$rejected,
     rejected = subfilter_results$passed
