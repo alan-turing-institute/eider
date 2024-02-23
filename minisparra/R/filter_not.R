@@ -4,12 +4,20 @@
 #' @param filter_obj A list containing the following elements:
 #'               - type: must be 'not'
 #'               - subfilter: a single filter object
+#' @param context A string to be used in logging or error messages. Defaults to
+#' NULL.
+#'
 #' @return A list with the following elements:
 #'               - passed: data frame with the rows that satisfies the NOT
 #'                         filter
 #'               - rejected: all other rows
 #' @export
-filter_not <- function(table, filter_obj) {
+filter_not <- function(table,
+                       filter_obj,
+                       context = NULL) {
+  context <- c(context, "filter_not")
+  trace_context(context)
+
   if (filter_obj$type != "NOT") {
     stop("Filter type must be 'NOT'")
   }

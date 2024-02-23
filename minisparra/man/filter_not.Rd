@@ -4,7 +4,7 @@
 \alias{filter_not}
 \title{Filter table rows based on a logical negation of a filter (i.e. NOT filter1)}
 \usage{
-filter_not(table, filter_obj)
+filter_not(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
@@ -12,6 +12,9 @@ filter_not(table, filter_obj)
 \item{filter_obj}{A list containing the following elements:
 - type: must be 'not'
 - subfilter: a single filter object}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:

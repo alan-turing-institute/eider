@@ -5,7 +5,7 @@
 \title{Generic function for a basic filter, parametrised over the type of
 comparison operator used to select rows.}
 \usage{
-filter_basic(table, filter_obj)
+filter_basic(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
@@ -16,6 +16,9 @@ filter_basic(table, filter_obj)
 - column: the name of the column to filter on
 - value: a vector of values to filter on (for type 'in'), or
 a single value (for all other types)}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:

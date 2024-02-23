@@ -8,11 +8,19 @@
 #'               - column: the name of the column to filter on
 #'               - value: a vector of values to filter on (for type 'in'), or
 #'                 a single value (for all other types)
+#' @param context A string to be used in logging or error messages. Defaults to
+#' NULL.
+#'
 #' @return A list with the following elements:
 #'               - passed: data frame with the rows that passed the filter
 #'               - rejected: all other rows
 #' @export
-filter_basic <- function(table, filter_obj) {
+filter_basic <- function(table,
+                         filter_obj,
+                         context = NULL) {
+  context <- c(context, "filter_basic")
+  trace_context(context)
+
   valid_filter_types <- c("IN", "LT", "LT_EQ", "GT", "GT_EQ")
   if (!(filter_obj$type %in% valid_filter_types)) {
     stop("Filter type must be one of ", valid_filter_types)

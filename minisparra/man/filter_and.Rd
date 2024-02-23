@@ -5,7 +5,7 @@
 \title{Filter table rows based on a logical conjunction of multiple filters (i.e.
 filter1 AND filter2 AND ...)}
 \usage{
-filter_and(table, filter_obj)
+filter_and(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
@@ -13,6 +13,9 @@ filter_and(table, filter_obj)
 \item{filter_obj}{A list containing the following elements:
 - type: must be 'and'
 - subfilters: a list of filter objects}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:

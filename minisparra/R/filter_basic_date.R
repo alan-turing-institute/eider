@@ -9,11 +9,19 @@
 #'               - column: the name of the column to filter on
 #'               - value: a vector of values to filter on (for type 'in'), or
 #'                 a single value (for all other types)
+#' @param context A string to be used in logging or error messages. Defaults to
+#' NULL.
+#'
 #' @return A list with the following elements:
 #'               - passed: data frame with the rows that passed the filter
 #'               - rejected: all other rows
 #' @export
-filter_basic_date <- function(table, filter_obj) {
+filter_basic_date <- function(table,
+                              filter_obj,
+                              context = NULL) {
+  context <- c(context, "filter_basic_date")
+  trace_context(context)
+
   valid_filter_types <- c(
     "DATE_IN", "DATE_LT",
     "DATE_LT_EQ", "DATE_GT", "DATE_GT_EQ"

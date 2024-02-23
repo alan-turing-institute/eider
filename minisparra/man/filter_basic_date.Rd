@@ -6,7 +6,7 @@
 comparison operator used to select rows. The values to be taken are
 dates instead of numbers, though.}
 \usage{
-filter_basic_date(table, filter_obj)
+filter_basic_date(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
@@ -17,6 +17,9 @@ filter_basic_date(table, filter_obj)
 - column: the name of the column to filter on
 - value: a vector of values to filter on (for type 'in'), or
 a single value (for all other types)}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:
