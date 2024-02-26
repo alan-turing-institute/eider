@@ -27,6 +27,48 @@ kbl <- function(x) {
 
 ---------
 
+# Process pipeline
+## 0. Decide what you want to filter for
+MINISPARRA is designed to process (Scottish) medical data and collate using a range of filter functions to allow users to easily extract tables for ML pipelines. 
+
+Argubly the first step should be to decide which data you will use, and how you will filter it. MINISPARRA allows users to specify a range of data sources (files/tables) and to define which features they want to extract data via a specification json. MINISPARRA will filter and join the data as per the spec.
+
+
+## 1. Read in data
+In this example we will use some random A&E-type data stored in a csv file, and filter based on 2 categories. The `attendance_type` column and the `diagnosis_1` column. But data can be derived from multiple sources, and joined subsequently.
+
+This step must be done before any feature extraction to avoid having to read the same table multiple times.
+
+```{r}
+filenames <- c("../example_data/random_ae_data.csv")
+all_tables <- read_all_tables(filenames)
+all_tables$`../example_data/random_ae_data.csv` %>% kbl()
+```
+
+`all_tables` is a list which associates each of the filenames with the data read from that file, and in this example it corresponds to just the random A&E data.
+
+The table has 6 columns, a patient id `id`, a `date` TODO update header at which the admission occured, an `attendance_type`, and three diagnosis categories, `diagnosis_1`, `diagnosis_2`, and `diagnosis_3`
+
+From the first row in this example we can see that patient 18 was admitted on the 3rd of July 2016, they had 3 unique diagnoses, 104, 103, and 102.
+
+## 2. Define a feature to extract
+Users then specify which features they would like to extract from which data. A simple specification file is given below.
+
+`source_file` is a relative path to the data (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. MINISPARRA has N different transformation types, X, Y, and Z.
+The user specifies how the data will be grouped via `grouping_columns`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
+
+```{r}
+writeLines(readLines("../example_spec/basic_ae_data.json"))
+```
+
+The `primary_filter` is AND, and there are two `subfilters`. The first subfilter - `subfilter_1` specifies that the user wants to filter based on the `attendance_category` column of the random A&E-type data, and that the value that they are interested in is 1. That is only return results where the `attendance_category` is 1.
+
+The second subfilter `subfilter_2` filters based on the `diagnosis_1` column and should only return results where `diagnosis_1` is 101.
+
+As the primary filter is AND, the resultant dataframe will be a count, grouped by patient `id` of A&E data with `attendance_category` = 1 AND `diagnosos_1` = 101.
+
+
+
 ## Library usage (as of 23 Feb 2024)
 
 Here's the JSON:
