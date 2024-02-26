@@ -5,14 +5,17 @@
 \title{Filter table rows based on a logical disjunction of multiple filters (i.e.
 filter1 OR filter2 OR ...)}
 \usage{
-filter_or(table, filter_obj)
+filter_or(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
 
 \item{filter_obj}{A list containing the following elements:
-- type: must be 'or'
+- type: must be 'or' (case-insensitive)
 - subfilters: a list of filter objects}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:

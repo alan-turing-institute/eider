@@ -5,7 +5,7 @@
 \title{Computes the number of rows per patient ID which contain specific values in
 specific columns.}
 \usage{
-featurise_count(all_tables, spec)
+featurise_count(all_tables, spec, context = NULL)
 }
 \arguments{
 \item{all_tables}{List of all input tables (passed in from read_all_tables).}
@@ -19,6 +19,9 @@ featurise_count(all_tables, spec)
 \item absent_data_flag:    The value to use for patients who have no matching
 rows in the source table.
 }}
+
+\item{context}{A character vector to be used in logging or error messages.
+Defaults to NULL.}
 }
 \value{
 A list with the following elements:

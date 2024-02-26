@@ -5,17 +5,20 @@
 \title{Generic function for a basic filter, parametrised over the type of
 comparison operator used to select rows.}
 \usage{
-filter_basic(table, filter_obj)
+filter_basic(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
 
 \item{filter_obj}{A list containing the following elements:
-- type: must be 'in', 'less_than', 'less_than_equal',
-'greater_than', or 'greater_than_equal'
+- type: must be 'in', 'lt', 'lt_eq', 'gt', or 'gt_eq' (case-
+insensitive)
 - column: the name of the column to filter on
 - value: a vector of values to filter on (for type 'in'), or
 a single value (for all other types)}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:

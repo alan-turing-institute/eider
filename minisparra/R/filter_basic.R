@@ -3,32 +3,53 @@
 #'
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
-#'               - type: must be 'in', 'less_than', 'less_than_equal',
-#'                      'greater_than', or 'greater_than_equal'
+#'               - type: must be 'in', 'lt', 'lt_eq', 'gt', or 'gt_eq' (case-
+#'                       insensitive)
 #'               - column: the name of the column to filter on
 #'               - value: a vector of values to filter on (for type 'in'), or
 #'                 a single value (for all other types)
+#' @param context A string to be used in logging or error messages. Defaults to
+#' NULL.
+#'
 #' @return A list with the following elements:
 #'               - passed: data frame with the rows that passed the filter
 #'               - rejected: all other rows
-#' @export
-filter_basic <- function(table, filter_obj) {
-  valid_filter_types <- c("IN", "LT", "LT_EQ", "GT", "GT_EQ")
-  if (!(filter_obj$type %in% valid_filter_types)) {
-    stop("Filter type must be one of ", valid_filter_types)
+filter_basic <- function(table,
+                         filter_obj,
+                         context = NULL) {
+  context <- c(context, "filter_basic")
+  trace_context(context)
+
+  t <- tolower(filter_obj$type)
+  valid_filter_types <- c("in", "lt", "lt_eq", "gt", "gt_eq")
+  if (!(t %in% valid_filter_types)) {
+    error_context(
+      paste0(
+        "Expected filter type to be one of ",
+        paste(
+          sapply(valid_filter_types, function(x) paste0("'", x, "'")),
+          collapse = ", "
+        ),
+        ", but got '", filter_obj$type, "'."
+      ),
+      context
+    )
   }
 
   if (!filter_obj$column %in% colnames(table)) {
-    stop("Column not found in table")
+    error_context(
+      paste0("Column '", filter_obj$column, "' not found in the table."),
+      context
+    )
   }
 
   # Choose the appropriate comparison operator
-  operator <- switch(filter_obj$type,
-    "IN" = `%in%`,
-    "LT" = `<`,
-    "LT_EQ" = `<=`,
-    "GT" = `>`,
-    "GT_EQ" = `>=`
+  operator <- switch(t,
+    "in" = `%in%`,
+    "lt" = `<`,
+    "lt_eq" = `<=`,
+    "gt" = `>`,
+    "gt_eq" = `>=`
   )
 
   # Add a sentinel column indicating whether the row passed the filter

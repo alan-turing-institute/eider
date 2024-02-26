@@ -6,17 +6,20 @@
 comparison operator used to select rows. The values to be taken are
 dates instead of numbers, though.}
 \usage{
-filter_basic_date(table, filter_obj)
+filter_basic_date(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A data frame}
 
 \item{filter_obj}{A list containing the following elements:
-- type: must be 'in', 'less_than', 'less_than_equal',
-'greater_than', or 'greater_than_equal'
+- type: must be 'date_in', 'date_lt', 'date_lt_eq', 'date_gt',
+or 'date_gt_eq' (case-insensitive)
 - column: the name of the column to filter on
 - value: a vector of values to filter on (for type 'in'), or
 a single value (for all other types)}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:
