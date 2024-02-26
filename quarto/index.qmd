@@ -16,7 +16,7 @@ Also, let's set up a function to visualise tables nicely.
 ```{r}
 library(knitr)
 library(kableExtra)
-library(magrittr)
+library(tidyverse)
 kbl <- function(x) {
   x <- head(x, 10)
   x %>%
@@ -25,43 +25,113 @@ kbl <- function(x) {
 }
 ```
 
------
+---------
 
-## (1) Read in data
+## Library usage (as of 23 Feb 2024)
 
-We begin by reading in all tables. Right now there's only one.
-
-This step must be done before any feature extraction to avoid having to read the same table multiple times.
+Here's the JSON:
 
 ```{r}
-filenames <- c("../example_data/random_ae_data.csv")
-all_tables <- read_all_tables(filenames)
-all_tables$`../example_data/random_ae_data.csv` %>% kbl()
+writeLines(readLines("../example_spec/ae2_data.json"))
 ```
 
-`all_tables` is a list which associates each of the filenames with the data read from that file.
+Here's the CSV:
 
 In this example, patient 18 was admitted on the 3rd of July 2016, they had 3 unique diagnoses, 104, 103, and 102.
 
 ## (2) Look at an example input JSON file
 
 ```{r}
+
 writeLines(readLines("../example_spec/ae2_data.json"))
 ```
 
 This spec is for A&E data, it defines the source file, the transformation type (count), and which column to group on (user_id). It specifies how absent data should be reported and also allows the user to define the name for the output feature. 
 The primary filter is an AND filter. It requires attendance type to be 1, and filters for diagnosis_1, diagnosis_2 OR diagnosis_3 equalling 101 or 102 within the date range of of the year 2015.
+=======
+tbl <- read.csv("../example_data/random_ae_data.csv")
+glimpse(tbl)
+```
+
+And here's what we can do with it:
+>>>>>>> main
 
 ## (3) Trying the transformation pipeline
 ```{r}
-ae2_table_name <- "../minisparra/tests/data/ae2.csv"
-all_table_filenames <- c(ae2_table_name)
-all_feature_json_filenames <- c(
-  "../minisparra/tests/spec/test_join1.json",
-  "../minisparra/tests/spec/test_join2.json"
+all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
+all_table_filenames <- c("../example_data/random_ae_data.csv")
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = all_feature_json_filenames
 )
-
-# joined_feature_table <- transform(all_table_filenames, all_feature_json_filenames)
-
 ```
 
+## Logging
+
+Set up logging.
+By default this is printed to the console.
+In order to see the log output in Quarto, we need to capture it in a temporary file.
+
+```{r}
+library(logger)
+t <- tempfile()
+log_threshold(TRACE)
+log_appender(appender_file(t))
+```
+
+Then run the same code again:
+
+```{r}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = all_feature_json_filenames
+)
+```
+
+Check the log:
+
+```{r}
+readLines(t)
+```
+
+## Errors with context
+
+### Example 1
+
+```{r}
+lines <- readLines("./ae2_data_wrong1.json")
+lines[3]
+```
+
+```{r error=TRUE}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = "./ae2_data_wrong1.json")
+```
+
+### Example 2
+
+```{r}
+lines <- readLines("./ae2_data_wrong2.json")
+lines[4]
+```
+
+```{r error=TRUE}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = "./ae2_data_wrong2.json")
+```
+
+### Example 3
+
+```{r}
+lines <- readLines("./ae2_data_wrong3.json")
+lines[11]
+```
+
+```{r error=TRUE}
+transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = "./ae2_data_wrong3.json")
+```
+>>>>>>> main

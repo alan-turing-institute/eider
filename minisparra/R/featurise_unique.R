@@ -12,6 +12,8 @@
 #'                         before summation.
 #'  - absent_data_flag:    The value to use for patients who have no matching
 #'                         rows in the source table.
+#' @param context A character vector to be used in logging or error messages.
+#' Defaults to NULL.
 #'
 #' @return A list with the following elements:
 #' - feature_table: A data frame with one row per patient ID and one column
@@ -22,8 +24,12 @@
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
-#' @export
-featurise_unique <- function(all_tables, spec) {
+featurise_unique <- function(all_tables,
+                             spec,
+                             context = NULL) {
+  context <- c(context, "featurise_unique")
+  trace_context(context)
+
   # Validate spec
   source_table <- all_tables[[spec$source_file]]
   filter_obj <- spec$primary_filter
@@ -38,14 +44,21 @@ featurise_unique <- function(all_tables, spec) {
   }
 
   # Calculate feature
-  feature_table <- source_table %>%
-    filter_all(filter_obj) %>%
-    magrittr::extract2("passed") %>%
-    rename(id = !!grouping_columns) %>%
-    group_by(id) %>%
-    summarise(
-      !!output_feature_name := n_distinct(.data[[column_to_ndistinct_over]])
-    )
+  feature_table <- source_table %>% filter_all(filter_obj, context)
+  feature_table <- tryCatch(
+    {
+      feature_table %>%
+        magrittr::extract2("passed") %>%
+        rename(id = !!grouping_columns) %>%
+        group_by(id) %>%
+        summarise(
+          !!output_feature_name := n_distinct(.data[[column_to_ndistinct_over]])
+        )
+    },
+    error = function(e) {
+      error_context(e, context)
+    }
+  )
 
   list(
     feature_table = feature_table,

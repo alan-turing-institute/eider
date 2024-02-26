@@ -4,11 +4,13 @@
 \alias{join_feature_tables}
 \title{Join feature tables together.}
 \usage{
-join_feature_tables(calculated_features)
+join_feature_tables(calculated_features, context = NULL)
 }
 \arguments{
 \item{calculated_features}{A list of calculated features, each of which is
 produced by the featurise_... functions}
+
+\item{context}{A string to be used in logging or error messages. Defaults to}
 }
 \value{
 A data frame with the feature tables joined together

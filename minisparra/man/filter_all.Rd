@@ -4,12 +4,15 @@
 \alias{filter_all}
 \title{Pass table through any type of filter.}
 \usage{
-filter_all(table, filter_obj)
+filter_all(table, filter_obj, context = NULL)
 }
 \arguments{
 \item{table}{A table to filter.}
 
 \item{filter_obj}{A filter to apply to the table.}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A list with the following elements:
