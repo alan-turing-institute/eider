@@ -42,11 +42,11 @@ filter_and <- function(table,
   not_yet_failed <- table
   failed <- tibble()
   for (i in seq_along(filter_obj$subfilters)) {
-    subfilter <- filter_obj$subfilters[[i]]
-    extra_ctx <- paste0("(", i, "/", n, ")")
+    nm <- names(filter_obj$subfilters)[[i]]
+    extra_ctx <- paste0("(", i, "/", n, ": ", nm, ")")
     subfilter_result <- filter_all(
       not_yet_failed,
-      subfilter,
+      filter_obj$subfilters[[i]],
       c(context, extra_ctx)
     )
     not_yet_failed <- subfilter_result$passed
