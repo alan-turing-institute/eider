@@ -17,7 +17,7 @@ filter_or <- function(table, filter_obj, context = NULL) {
 
   if (tolower(filter_obj$type) != "or") {
     error_context(
-      "Expected filter type 'or', but got '", filter_obj$type, "'.",
+      paste0("Expected filter type 'or', but got '", filter_obj$type, "'."),
       context
     )
   }
