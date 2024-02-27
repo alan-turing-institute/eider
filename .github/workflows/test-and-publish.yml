@@ -31,7 +31,7 @@ jobs:
             any::rmarkdown
             any::knitr
             any::kableExtra
-            any::magrittr
+            any::tidyverse
             any::lintr
 
       - name: Lint source code
