@@ -48,12 +48,12 @@ filter_basic_date <- function(table,
   }
 
   # Choose the appropriate comparison operator
-  operator <- switch(filter_obj$type,
-    "IN" = `%in%`,
-    "LT" = `<`,
-    "LT_EQ" = `<=`,
-    "GT" = `>`,
-    "GT_EQ" = `>=`
+  operator <- switch(t,
+    "date_in" = `%in%`,
+    "date_lt" = `<`,
+    "date_lt_eq" = `<=`,
+    "date_gt" = `>`,
+    "date_gt_eq" = `>=`
   )
 
   # Add a sentinel column indicating whether the row passed the filter
