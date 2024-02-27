@@ -67,64 +67,54 @@ The second subfilter `subfilter_2` filters based on the `diagnosis_1` column and
 
 As the primary filter is AND, the resultant dataframe will be a count, grouped by patient `id` of A&E data with `attendance_category` = 1 AND `diagnosos_1` = 101.
 
+## 3. Extract the feature
+Now we can use MINISPARRA to run the transformation pipeline. We specify the path to the data via `all_table_filenames` and the path the the specification via `all_feature_json_filenames`.
 
-
-## Library usage (as of 23 Feb 2024)
-
-Here's the JSON:
-
-```{r}
-writeLines(readLines("../example_spec/ae2_data.json"))
-```
-
-Here's the CSV:
-
-In this example, patient 18 was admitted on the 3rd of July 2016, they had 3 unique diagnoses, 104, 103, and 102.
-
-## (2) Look at an example input JSON file
-
+We then run the transformation which will produce the resultant dataframe.
 ```{r}
 
-writeLines(readLines("../example_spec/ae2_data.json"))
-```
-
-This spec is for A&E data, it defines the source file, the transformation type (count), and which column to group on (user_id). It specifies how absent data should be reported and also allows the user to define the name for the output feature. 
-The primary filter is an AND filter. It requires attendance type to be 1, and filters for diagnosis_1, diagnosis_2 OR diagnosis_3 equalling 101 or 102 within the date range of of the year 2015.
-=======
-tbl <- read.csv("../example_data/random_ae_data.csv")
-glimpse(tbl)
-```
-
-And here's what we can do with it:
->>>>>>> main
-
-## (3) Trying the transformation pipeline
-```{r}
-all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
 all_table_filenames <- c("../example_data/random_ae_data.csv")
-transform(
+all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
+
+tf <- transform(
   all_table_filenames = all_table_filenames,
   all_feature_json_filenames = all_feature_json_filenames
 )
+
+tf
 ```
 
-## Logging
+Above is the resultant dataframe. Patient with ID 0 had 2 instances where their `diagnosis_1` was 101, patient with ID 1 had just one, and so on...
 
-Set up logging.
-By default this is printed to the console.
-In order to see the log output in Quarto, we need to capture it in a temporary file.
+
+In this example, patient 18 was admitted on the 3rd of July 2016, they had 3 unique diagnoses, 104, 103, and 102.
+
+## 4. Using date filtering
+In the above example the returned dataframe spanned all the dates over which the input data csv spanned. However this can be refined in the specification. 
+
+## 5. Using OR filter
+
+## 6.Logging
+
+By default the log is currently printed to the console. In order to see the log output in Quarto, we need to capture it in a temporary file.
+
+The log is set up
 
 ```{r}
 library(logger)
-t <- tempfile()
+tmp <- tempfile()
 log_threshold(TRACE)
-log_appender(appender_file(t))
+log_appender(appender_file(tmp))
 ```
 
-Then run the same code again:
+And the same code is run again
 
 ```{r}
-transform(
+
+all_table_filenames <- c("../example_data/random_ae_data.csv")
+all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
+
+tf <- transform(
   all_table_filenames = all_table_filenames,
   all_feature_json_filenames = all_feature_json_filenames
 )
@@ -133,7 +123,7 @@ transform(
 Check the log:
 
 ```{r}
-readLines(t)
+readLines(tmp)
 ```
 
 ## Errors with context
@@ -176,4 +166,4 @@ transform(
   all_table_filenames = all_table_filenames,
   all_feature_json_filenames = "./ae2_data_wrong3.json")
 ```
->>>>>>> main
+
