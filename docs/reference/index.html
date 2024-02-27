@@ -52,31 +52,26 @@
         <dd>Adjust date formats to DD-MM-YYYY</dd>
       </dl><dl><dt>
           
-          <code><a href="ae2_attendances.html">ae2_attendances()</a></code> 
-        </dt>
-        <dd>ae2_attendances</dd>
-      </dl><dl><dt>
-          
           <code><a href="check_for_nested.html">check_for_nested()</a></code> 
         </dt>
         <dd>Check if a filter is nested or single</dd>
       </dl><dl><dt>
           
-          <code><a href="clean_ae2.html">clean_ae2()</a></code> 
+          <code><a href="coerce_dates.html">coerce_dates()</a></code> 
         </dt>
-        <dd>Cleans the AE2 table. Adds the attendance_category column and populates it
-with 1 if it doesn't exist.</dd>
+        <dd>Coerce YYYYMMDD columns in a data frame to dates where possible, using
+lubridate::ymd. This function only converts columns where every value
+successfully coerces to a date.</dd>
       </dl><dl><dt>
           
-          <code><a href="clean_ae2_jl.html">clean_ae2_jl()</a></code> 
+          <code><a href="error_context.html">error_context()</a></code> 
         </dt>
-        <dd>James's version of AE2 cleaning, tidied up to avoid using files.
-Mostly kept here for posterity.</dd>
+        <dd>Issue an error with a context and stop</dd>
       </dl><dl><dt>
           
-          <code><a href="clean_rawData.html">clean_rawData()</a></code> 
+          <code><a href="featurise.html">featurise()</a></code> 
         </dt>
-        <dd>Clean raw data and generate tidy versions of data tables. Will only update episodes table if force_redo = TRUE.</dd>
+        <dd>Extract a feature table using a feature JSON file.</dd>
       </dl><dl><dt>
           
           <code><a href="featurise_count.html">featurise_count()</a></code> 
@@ -89,6 +84,18 @@ specific columns.</dd>
         </dt>
         <dd>Groups by ID and computes the sum of the values in all rows which pass a
 given filter.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="featurise_time_since.html">featurise_time_since()</a></code> 
+        </dt>
+        <dd>First passes a table through a filter, then counts the time between a given
+date and the first OR last date in the filtered table.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="featurise_unique.html">featurise_unique()</a></code> 
+        </dt>
+        <dd>Groups by ID and computes the number of distinct values in all rows which
+pass a given filter.</dd>
       </dl><dl><dt>
           
           <code><a href="filter_all.html">filter_all()</a></code> 
@@ -106,6 +113,13 @@ filter1 AND filter2 AND ...)</dd>
         </dt>
         <dd>Generic function for a basic filter, parametrised over the type of
 comparison operator used to select rows.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_basic_date.html">filter_basic_date()</a></code> 
+        </dt>
+        <dd>Generic function for a basic filter, parametrised over the type of
+comparison operator used to select rows. The values to be taken are
+dates instead of numbers, though.</dd>
       </dl><dl><dt>
           
           <code><a href="filter_not.html">filter_not()</a></code> 
@@ -130,17 +144,12 @@ filter1 OR filter2 OR ...)</dd>
 the filters</dd>
       </dl><dl><dt>
           
-          <code><a href="make_raw_ae2.html">make_raw_ae2()</a></code> 
-        </dt>
-        <dd>Generate a raw AE2 table.</dd>
-      </dl><dl><dt>
-          
           <code><a href="miniSPARRA01-package.html">miniSPARRA01</a></code> <code><a href="miniSPARRA01-package.html">miniSPARRA01-package</a></code> 
         </dt>
         <dd>miniSPARRA01: What the Package Does (One Line, Title Case)</dd>
       </dl><dl><dt>
           
-          <code><a href="parse_header_info.html">parse_header_info()</a></code> 
+          <code><a href="parse_feature.html">parse_feature()</a></code> 
         </dt>
         <dd>Parse the header information from the json file to our targed feature object</dd>
       </dl><dl><dt>
@@ -165,6 +174,21 @@ filter type, and the limiting values</dd>
           <code><a href="read_all_tables.html">read_all_tables()</a></code> 
         </dt>
         <dd>Read in all tables from a list of filenames.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="read_one_table.html">read_one_table()</a></code> 
+        </dt>
+        <dd>Helper function to read a singlet able.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="trace_context.html">trace_context()</a></code> 
+        </dt>
+        <dd>Log a TRACE message showing the current execution context</dd>
+      </dl><dl><dt>
+          
+          <code><a href="transform.html">transform()</a></code> 
+        </dt>
+        <dd>Perform the entire feature transformation process.</dd>
       </dl></div>
   </main></div>
 

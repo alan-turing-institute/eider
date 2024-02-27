@@ -48,7 +48,7 @@ comparison operator used to select rows.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_basic</span><span class="op">(</span><span class="va">table</span>, <span class="va">filter_obj</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filter_basic</span><span class="op">(</span><span class="va">table</span>, <span class="va">filter_obj</span>, context <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -59,11 +59,16 @@ comparison operator used to select rows.</p>
 
 <dt>filter_obj</dt>
 <dd><p>A list containing the following elements:
-- type: must be 'in', 'less_than', 'less_than_equal',
-'greater_than', or 'greater_than_equal'
+- type: must be 'in', 'lt', 'lt_eq', 'gt', or 'gt_eq' (case-
+insensitive)
 - column: the name of the column to filter on
 - value: a vector of values to filter on (for type 'in'), or
 a single value (for all other types)</p></dd>
+
+
+<dt>context</dt>
+<dd><p>A string to be used in logging or error messages. Defaults to
+NULL.</p></dd>
 
 </dl></div>
     <div class="section level2">

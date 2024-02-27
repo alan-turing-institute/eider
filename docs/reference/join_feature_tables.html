@@ -42,7 +42,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">join_feature_tables</span><span class="op">(</span><span class="va">calculated_features</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">join_feature_tables</span><span class="op">(</span><span class="va">calculated_features</span>, context <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -50,6 +50,10 @@
     <dl><dt>calculated_features</dt>
 <dd><p>A list of calculated features, each of which is
 produced by the featurise_... functions</p></dd>
+
+
+<dt>context</dt>
+<dd><p>A string to be used in logging or error messages. Defaults to</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -100,8 +100,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -148,11 +146,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link active" data-scroll-target="#read-in-data">(1) Read in data</a></li>
-  <li><a href="#defining-filters" id="toc-defining-filters" class="nav-link" data-scroll-target="#defining-filters">(2) Defining filters</a></li>
-  <li><a href="#b-reading-in-filters-from-json" id="toc-b-reading-in-filters-from-json" class="nav-link" data-scroll-target="#b-reading-in-filters-from-json">(2b) Reading in filters from JSON</a></li>
-  <li><a href="#extracting-features" id="toc-extracting-features" class="nav-link" data-scroll-target="#extracting-features">(3) Extracting features</a></li>
-  <li><a href="#joining-features" id="toc-joining-features" class="nav-link" data-scroll-target="#joining-features">(4) Joining features</a></li>
+  <li><a href="#library-usage-as-of-23-feb-2024" id="toc-library-usage-as-of-23-feb-2024" class="nav-link active" data-scroll-target="#library-usage-as-of-23-feb-2024">Library usage (as of 23 Feb 2024)</a></li>
+  <li><a href="#logging" id="toc-logging" class="nav-link" data-scroll-target="#logging">Logging</a></li>
+  <li><a href="#errors-with-context" id="toc-errors-with-context" class="nav-link" data-scroll-target="#errors-with-context">Errors with context</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3">Example 3</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -187,461 +188,259 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 (as 'lib' is unspecified)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(miniSPARRA01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'miniSPARRA01'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:base':
+
+    transform</code></pre>
+</div>
 </div>
 <p>Also, let’s set up a function to visualise tables nicely.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>, <span class="at">table.attr =</span> <span class="st">'data-quarto-disable-processing="true"'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()     masks stats::filter()
+✖ dplyr::group_rows() masks kableExtra::group_rows()
+✖ dplyr::lag()        masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>, <span class="at">table.attr =</span> <span class="st">'data-quarto-disable-processing="true"'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<section id="read-in-data" class="level2">
-<h2 class="anchored" data-anchor-id="read-in-data">(1) Read in data</h2>
-<p>We begin by reading in all tables. Right now there’s only one.</p>
-<p>This step must be done before any feature extraction to avoid having to read the same table multiple times.</p>
+<section id="library-usage-as-of-23-feb-2024" class="level2">
+<h2 class="anchored" data-anchor-id="library-usage-as-of-23-feb-2024">Library usage (as of 23 Feb 2024)</h2>
+<p>Here’s the JSON:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>filenames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"../minisparra/tests/data/ae2.csv"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>all_tables <span class="ot">&lt;-</span> <span class="fu">read_all_tables</span>(filenames)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_tables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "../minisparra/tests/data/ae2.csv"</code></pre>
-</div>
-</div>
-<p><code>all_tables</code> is a list which associates each of the filenames with the data read from that file.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>all_tables<span class="sc">$</span><span class="st">`</span><span class="at">../minisparra/tests/data/ae2.csv</span><span class="st">`</span> <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> id </th>
-   <th style="text-align:left;"> time </th>
-   <th style="text-align:right;"> attendance_category </th>
-   <th style="text-align:left;"> source_table </th>
-   <th style="text-align:right;"> diagnosis_1 </th>
-   <th style="text-align:right;"> diagnosis_2 </th>
-   <th style="text-align:left;"> diagnosis_3 </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-17 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-18 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-19 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:right;"> 103 </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-20 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 2016-03-21 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-</tbody>
-</table>
-
-</div>
-</div>
-<hr>
-</section>
-<section id="defining-filters" class="level2">
-<h2 class="anchored" data-anchor-id="defining-filters">(2) Defining filters</h2>
-<p>Now we can start extracting features. The most complicated part of the feature is to decide how to filter the rows of the data tables, so we discuss this first.</p>
-<p>We can have a ‘basic’ feature, which comprises an operator, a column name, and a vector of values. The operator can be <code>in</code>, <code>lt</code>, <code>gt</code>, …</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>diag_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"diagnosis_1"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"IN"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">101</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The filter object above selects for any row where the value in the <code>diagnosis_1</code> column is 101.</p>
-<p>Likewise we can have the following, which does the same for the <code>diagnosis_2</code> and <code>diagnosis_3</code> columns.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>diag_2 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"diagnosis_2"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"IN"</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">101</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>diag_3 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">column =</span> <span class="st">"diagnosis_3"</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"IN"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">value =</span> <span class="fu">c</span>(<span class="dv">101</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Basic filters can be combined using filters with type <code>or</code>, <code>and</code>, or <code>not</code>. For example, the following selects for any rows where 1 appears in any of the three diagnosis columns:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>diag_1_or_2_or_3 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"OR"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">subfilters =</span> <span class="fu">list</span>(diag_1, diag_2, diag_3)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>We’ll wrap this in a function for later reuse.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>make_filter <span class="ot">&lt;-</span> <span class="cf">function</span>(diagnosis_value) {</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  diag_1 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">"diagnosis_1"</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"IN"</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(diagnosis_value)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  diag_2 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">"diagnosis_2"</span>,</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"IN"</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(diagnosis_value)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  diag_3 <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">column =</span> <span class="st">"diagnosis_3"</span>,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"IN"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">value =</span> <span class="fu">c</span>(diagnosis_value)</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"OR"</span>,</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">subfilters =</span> <span class="fu">list</span>(diag_1, diag_2, diag_3)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<hr>
-</section>
-<section id="b-reading-in-filters-from-json" class="level2">
-<h2 class="anchored" data-anchor-id="b-reading-in-filters-from-json">(2b) Reading in filters from JSON</h2>
-<p>Filters (technically entire feature definitions; but the filter is the most complicated part of that) can also be read in from JSON files:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">readLines</span>(<span class="st">"example_101.json"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">readLines</span>(<span class="st">"../example_spec/ae2_data.json"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{
-  "source_file": "ae2.csv",
-  "transformation_type": "count",
+  "source_file": ["ae2.csv"],
+  "transformation_type": ["COUNT"],
+  "grouping_columns": ["user_id"],
+  "absent_data_flag": [0],
+  "output_feature_name": ["user_defined_name"],
   "primary_filter": {
-    "type": ["OR"],
+    "type": ["AND"],
     "subfilters": {
-      "subfilter_21": {
-        "column": "diagnosis_1",
-        "type": "IN",
-        "value": [101]
+      "subfilter_1": {
+        "column": ["attendance_type"],
+        "type": ["IN"],
+        "value": [7]
       },
-      "subfilter_22": {
-        "column": "diagnosis_2",
-        "type": "IN",
-        "value": [101]
+      "subfilter_2": {
+        "type": ["OR"],
+        "subfilters": {
+          "subfilter_21": {
+            "column": ["diagnosis_1"],
+            "type": ["IN"],
+            "value": [1, 2]
+          },
+          "subfilter_22": {
+            "column": ["diagnosis_2"],
+            "type": ["IN"],
+            "value": [1, 2]
+          },
+          "subfilter_23": {
+            "column": ["diagnosis_3"],
+            "type": ["IN"],
+            "value": [1, 2]
+          }
+        }
       },
-      "subfilter_23": {
-        "column": "diagnosis_3",
-        "type": "IN",
-        "value": [101]
+      "subfilter_3": {
+        "column": ["attendance_date"],
+        "type": ["DATE_GT_EQ"],
+        "value": ["2022-01-01"]
+      },
+      "subfilter_4": {
+        "column": ["attendance_date"],
+        "type": ["DATE_LT"],
+        "value": ["2024-02-01"]
       }
     }
   }
 }</code></pre>
 </div>
 </div>
-<p>This gets parsed to the following:</p>
+<p>Here’s the CSV:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>json_feature <span class="ot">&lt;-</span> <span class="fu">json_to_feature</span>(<span class="st">"example_101.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../example_data/random_ae_data.csv"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Parsing nested filter"
-[1] "Parsing single filter"
-[1] "Parsing single filter"
-[1] "Parsing single filter"</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>json_feature<span class="sc">$</span>primary_filter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$type
-[1] "OR"
-
-$subfilters
-$subfilters[[1]]
-$subfilters[[1]]$column
-[1] "diagnosis_1"
-
-$subfilters[[1]]$type
-[1] "IN"
-
-$subfilters[[1]]$value
-[1] 101
-
-
-$subfilters[[2]]
-$subfilters[[2]]$column
-[1] "diagnosis_2"
-
-$subfilters[[2]]$type
-[1] "IN"
-
-$subfilters[[2]]$value
-[1] 101
-
-
-$subfilters[[3]]
-$subfilters[[3]]$column
-[1] "diagnosis_3"
-
-$subfilters[[3]]$type
-[1] "IN"
-
-$subfilters[[3]]$value
-[1] 101</code></pre>
+<pre><code>Rows: 100
+Columns: 6
+$ id                  &lt;int&gt; 18, 1, 7, 17, 12, 14, 7, 15, 7, 10, 11, 7, 15, 7, …
+$ time                &lt;chr&gt; "2016-07-03", "2016-09-27", "2015-06-09", "2017-07…
+$ attendance_category &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ diagnosis_1         &lt;int&gt; 104, 103, 104, 103, 104, 101, 104, 103, 101, 103, …
+$ diagnosis_2         &lt;int&gt; 103, 103, 101, 102, 102, 102, 104, NA, 104, 102, 1…
+$ diagnosis_3         &lt;int&gt; 102, 103, NA, NA, 102, 101, NA, 103, 101, NA, 102,…</code></pre>
 </div>
 </div>
-<p>and we can compare it to the filter we defined earlier. The only difference is that the JSON feature has integer data types, while the R feature has double data types, which has no downstream effect.</p>
+<p>And here’s what we can do with it:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(waldo)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare</span>(json_feature<span class="sc">$</span>primary_filter, <span class="fu">make_filter</span>(<span class="dv">101</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>all_feature_json_filenames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"../example_spec/basic_ae_data.json"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>all_table_filenames <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"../example_data/random_ae_data.csv"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> all_feature_json_filenames</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>`old$subfilters[[1]]$value` is an integer vector (101)
-`new$subfilters[[1]]$value` is a double vector (101)
-
-`old$subfilters[[2]]$value` is an integer vector (101)
-`new$subfilters[[2]]$value` is a double vector (101)
-
-`old$subfilters[[3]]$value` is an integer vector (101)
-`new$subfilters[[3]]$value` is a double vector (101)</code></pre>
+<pre><code>   id user_defined_name
+1   0                 3
+2   1                 1
+3   2                 1
+4   3                 2
+5   4                 1
+6   5                 1
+7   7                 3
+8   9                 1
+9  10                 2
+10 11                 1
+11 12                 1
+12 14                 1
+13 17                 1
+14 19                 1</code></pre>
 </div>
 </div>
-<hr>
 </section>
-<section id="extracting-features" class="level2">
-<h2 class="anchored" data-anchor-id="extracting-features">(3) Extracting features</h2>
-<p>For reference, here’s the original data table again.</p>
+<section id="logging" class="level2">
+<h2 class="anchored" data-anchor-id="logging">Logging</h2>
+<p>Set up logging. By default this is printed to the console. In order to see the log output in Quarto, we need to capture it in a temporary file.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>all_tables<span class="sc">$</span><span class="st">`</span><span class="at">../minisparra/tests/data/ae2.csv</span><span class="st">`</span> <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> id </th>
-   <th style="text-align:left;"> time </th>
-   <th style="text-align:right;"> attendance_category </th>
-   <th style="text-align:left;"> source_table </th>
-   <th style="text-align:right;"> diagnosis_1 </th>
-   <th style="text-align:right;"> diagnosis_2 </th>
-   <th style="text-align:left;"> diagnosis_3 </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-17 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-18 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-19 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:right;"> 103 </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 2016-03-20 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 2016-03-21 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> AE2 </td>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-</tbody>
-</table>
-
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(logger)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">log_threshold</span>(TRACE)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">log_appender</span>(<span class="fu">appender_file</span>(t))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>We can now use this filter to extract a feature from the data table. Note that we must provide a ‘missing value’ to be used for patients with no data in the table, for example, patient 2.</p>
+<p>Then run the same code again:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>diag_101_count <span class="ot">&lt;-</span> <span class="fu">featurise_count</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_tables =</span> all_tables,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">source_table_file =</span> <span class="st">"../minisparra/tests/data/ae2.csv"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_obj =</span> diag_1_or_2_or_3,</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_column_name =</span> <span class="st">"diag_101"</span>,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_value =</span> <span class="dv">0</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(diag_101_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> all_feature_json_filenames</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "feature_table" "missing_value"</code></pre>
+<pre><code>   id user_defined_name
+1   0                 3
+2   1                 1
+3   2                 1
+4   3                 2
+5   4                 1
+6   5                 1
+7   7                 3
+8   9                 1
+9  10                 2
+10 11                 1
+11 12                 1
+12 14                 1
+13 17                 1
+14 19                 1</code></pre>
 </div>
 </div>
-<p><code>diag_101_count$feature_table</code> is the data frame with the feature values for each patient ID. Since all rows with patient 2 were removed during the filtering step, <code>diag_101_count</code> must also carry the missing value forward to the next step.</p>
+<p>Check the log:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>diag_101_count<span class="sc">$</span>feature_table <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> id </th>
-   <th style="text-align:right;"> diag_101 </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-  </tr>
-</tbody>
-</table>
-
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "TRACE [2024-02-27 22:26:28] context: featurise:../example_spec/basic_ae_data.json"                                                      
+[2] "DEBUG [2024-02-27 22:26:28] Parsing nested filter"                                                                                      
+[3] "DEBUG [2024-02-27 22:26:28] Parsing single filter"                                                                                      
+[4] "DEBUG [2024-02-27 22:26:28] Parsing single filter"                                                                                      
+[5] "TRACE [2024-02-27 22:26:28] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count"                                    
+[6] "TRACE [2024-02-27 22:26:28] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and"                       
+[7] "TRACE [2024-02-27 22:26:28] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2) &gt; filter_basic"
+[8] "TRACE [2024-02-27 22:26:28] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2) &gt; filter_basic"
+[9] "TRACE [2024-02-27 22:26:28] context: join_feature_tables"                                                                               </code></pre>
 </div>
 </div>
-<hr>
 </section>
-<section id="joining-features" class="level2">
-<h2 class="anchored" data-anchor-id="joining-features">(4) Joining features</h2>
-<p>For an example, let’s generate the same features but for diagnoses of 102 and 103 respectively.</p>
+<section id="errors-with-context" class="level2">
+<h2 class="anchored" data-anchor-id="errors-with-context">Errors with context</h2>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>diag_102_count <span class="ot">&lt;-</span> <span class="fu">featurise_count</span>(</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_tables =</span> all_tables,</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">source_table_file =</span> <span class="st">"../minisparra/tests/data/ae2.csv"</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_obj =</span> <span class="fu">make_filter</span>(<span class="dv">102</span>),</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_column_name =</span> <span class="st">"diag_102"</span>,</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_value =</span> <span class="dv">0</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>diag_103_count <span class="ot">&lt;-</span> <span class="fu">featurise_count</span>(</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_tables =</span> all_tables,</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">source_table_file =</span> <span class="st">"../minisparra/tests/data/ae2.csv"</span>,</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter_obj =</span> <span class="fu">make_filter</span>(<span class="dv">103</span>),</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">output_column_name =</span> <span class="st">"diag_103"</span>,</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_value =</span> <span class="dv">1000</span>   <span class="co"># For demonstration purposes</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Let’s see what these feature tables look like:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>diag_102_count<span class="sc">$</span>feature_table <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> id </th>
-   <th style="text-align:right;"> diag_102 </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-</tbody>
-</table>
-
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./ae2_data_wrong1.json"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>lines[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "  \"transformation_type\": [\"COUNT DRACULA\"],"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>diag_103_count<span class="sc">$</span>feature_table <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> id </th>
-   <th style="text-align:right;"> diag_103 </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-</tbody>
-</table>
-
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> <span class="st">"./ae2_data_wrong1.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: Unknown transformation type: count dracula
+Context:
+ &gt; featurise:./ae2_data_wrong1.json</code></pre>
 </div>
 </div>
-<p>When we join them together, notice that the respective missing values for patient 2 are inserted into the final feature table.</p>
+</section>
+<section id="example-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">join_feature_tables</span>(<span class="fu">list</span>(diag_101_count, diag_102_count, diag_103_count)) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> id </th>
-   <th style="text-align:right;"> diag_101 </th>
-   <th style="text-align:right;"> diag_102 </th>
-   <th style="text-align:right;"> diag_103 </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1000 </td>
-  </tr>
-</tbody>
-</table>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./ae2_data_wrong2.json"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>lines[<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "  \"grouping_columns\": [\"this_column_doesnt_exist\"],"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> <span class="st">"./ae2_data_wrong2.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: Error in `rename()`:
+! Can't rename columns that don't exist.
+✖ Column `this_column_doesnt_exist` doesn't exist.
 
+Context:
+ &gt; featurise:./ae2_data_wrong2.json
+ &gt; featurise_count</code></pre>
+</div>
+</div>
+</section>
+<section id="example-3" class="level3">
+<h3 class="anchored" data-anchor-id="example-3">Example 3</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./ae2_data_wrong3.json"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lines[<span class="dv">11</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "        \"column\": [\"at_ten_dance_category\"],"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> <span class="st">"./ae2_data_wrong3.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: Column 'at_ten_dance_category' not found in the table.
+Context:
+ &gt; featurise:./ae2_data_wrong3.json
+ &gt; featurise_count
+ &gt; filter_and
+ &gt; (1/2)
+ &gt; filter_basic</code></pre>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
