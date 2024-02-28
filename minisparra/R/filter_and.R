@@ -32,7 +32,10 @@ filter_and <- function(table,
 
   # Attach an index column to label the rows. This step gets rid of preexisting
   # row names hence the check above
-  table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
+  has_indices <- "SPARRA_PRIVATE_INDEX" %in% names(table)
+  if (!has_indices) {
+    table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
+  }
 
   # Pass the input table through each subfilter in turn. To avoid doing more
   # work than necessary, once a row fails any of the subfilters, it is added to
@@ -54,19 +57,26 @@ filter_and <- function(table,
   }
 
   # Sort by the index column (to restore the input order) and remove it
-  passed <- not_yet_failed %>%
-    arrange(SPARRA_PRIVATE_INDEX) %>%
-    select(-SPARRA_PRIVATE_INDEX)
-
-  rejected <- failed %>%
-    arrange(SPARRA_PRIVATE_INDEX) %>%
-    select(-SPARRA_PRIVATE_INDEX)
+  if (!has_indices) {
+    not_yet_failed <- not_yet_failed %>%
+      arrange(SPARRA_PRIVATE_INDEX) %>%
+      select(-SPARRA_PRIVATE_INDEX)
+    failed <- failed %>%
+      arrange(SPARRA_PRIVATE_INDEX) %>%
+      select(-SPARRA_PRIVATE_INDEX)
+  }
 
   # Restore row names if present
   if (has_row_names) {
-    passed <- tibble::column_to_rownames(passed, "SPARRA_PRIVATE_ROW_NAMES")
-    rejected <- tibble::column_to_rownames(rejected, "SPARRA_PRIVATE_ROW_NAMES")
+    not_yet_failed <- tibble::column_to_rownames(
+      not_yet_failed,
+      "SPARRA_PRIVATE_ROW_NAMES"
+    )
+    failed <- tibble::column_to_rownames(
+      failed,
+      "SPARRA_PRIVATE_ROW_NAMES"
+    )
   }
 
-  list(passed = passed, rejected = rejected)
+  list(passed = not_yet_failed, rejected = failed)
 }
