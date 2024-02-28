@@ -90,8 +90,27 @@ Above is the resultant dataframe. Patient with ID 0 had 2 instances where their 
 In this example, patient 18 was admitted on the 3rd of July 2016, they had 3 unique diagnoses, 104, 103, and 102.
 
 ## 4. Using date filtering
-In the above example the returned dataframe spanned all the dates over which the input data csv spanned. However this can be refined in the specification. 
+In the above example the returned dataframe spanned all the dates over which the input data csv spanned. However this can be refined in the specification.
+```{r}
+writeLines(readLines("quarto_examples/basic_ae_data_w_date.json"))
+```
+An additonal subfilter has been added. Subfilter_3 is applied to the `time` column and filters based on dates that are greater than the 31st of December 2015. This means an event which happened on new-years-eve 2015 will not be included in the data, but events which occured on new-years-day 2016 would be.
 
+We can again run this transformation pipeline with the same A&E data:
+
+```{r}
+
+all_table_filenames <- c("../example_data/random_ae_data.csv")
+all_feature_json_filenames <- c("quarto_examples/basic_ae_data_w_date.json")
+
+tf_w_date <- transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = all_feature_json_filenames
+)
+
+tf_w_date
+
+```
 ## 5. Using OR filter
 
 ## 6.Logging
@@ -167,3 +186,4 @@ transform(
   all_feature_json_filenames = "./ae2_data_wrong3.json")
 ```
 
+## Glossary
