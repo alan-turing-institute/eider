@@ -8,12 +8,31 @@ check_for_nested <- function(filter) {
   !is.null(filter$subfilters)
 }
 
+parse_feature <- function(json_data) {
+  if (json_data$transformation_type == "COMBINE") {
+    # Handle COMBINE features separately
+    feature_object <- list()
+    feature_object$transformation_type <- json_data$transformation_type
+    feature_object$output_feature_name <- json_data$output_feature_name
+    feature_object$grouping_columns <- json_data$grouping_columns
+    feature_object$feature_list <- list()
+    for (i in seq_along(json_data$feature_list)) {
+      feature_name <- names(json_data$feature_list)[[i]]
+      feature <- parse_feature(json_data$feature_list[[i]])
+      feature_object$feature_list[[feature_name]] <- feature
+    }
+    feature_object
+  } else {
+    parse_single_feature(json_data)
+  }
+}
+
 #' Parse the header information from the json file to our targed feature object
 #'
 #' @param json_data The parsed json data
 #'
 #' @return A feature object
-parse_feature <- function(json_data) {
+parse_single_feature <- function(json_data) {
   # Initialise empty list
   feature_object <- list()
 
@@ -67,7 +86,7 @@ parse_nested_filter <- function(nested_filter) {
     target <- nested_filter$subfilters[[nm]]
     op_nested_filter$subfilters[[nm]] <- parse_single_or_nested(target)
   }
-  return(op_nested_filter)
+  op_nested_filter
 }
 
 #' Check if a filter is nested or single and parse accordingly
@@ -88,5 +107,5 @@ parse_single_or_nested <- function(filter) {
 #' @export
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
-  parse_feature(json_data)
+  parse_single_feature(json_data)
 }
