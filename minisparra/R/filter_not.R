@@ -19,7 +19,7 @@ filter_not <- function(table,
 
   if (tolower(filter_obj$type) != "not") {
     error_context(
-      "Expected filter type 'not', but got '", filter_obj$type, "'.",
+      paste0("Expected filter type 'not', but got '", filter_obj$type, "'."),
       context
     )
   }

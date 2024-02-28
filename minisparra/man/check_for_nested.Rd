@@ -10,7 +10,8 @@ check_for_nested(filter)
 \item{filter}{A filter as defined in the origin json file}
 }
 \value{
-TRUE if the filter is nested, FALSE if it is not
+TRUE if the filter is nested (as determined by it having the
+'subfilters' key), FALSE if it is not
 }
 \description{
 Check if a filter is nested or single

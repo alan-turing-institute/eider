@@ -2,16 +2,10 @@
 #'
 #' @param filter A filter as defined in the origin json file
 #'
-#' @return TRUE if the filter is nested, FALSE if it is not
-#' @export
+#' @return TRUE if the filter is nested (as determined by it having the
+#' 'subfilters' key), FALSE if it is not
 check_for_nested <- function(filter) {
-  # For a given filter, check to see if it is nested or not
-  # Return TRUE if it is nested, FALSE if it is not
-  if (is.null(filter$subfilters)) {
-    return(FALSE)
-  } else {
-    return(TRUE)
-  }
+  !is.null(filter$subfilters)
 }
 
 #' Parse the header information from the json file to our targed feature object
@@ -19,7 +13,6 @@ check_for_nested <- function(filter) {
 #' @param json_data The parsed json data
 #'
 #' @return A feature object
-#' @export
 parse_feature <- function(json_data) {
   # Initialise empty list
   feature_object <- list()
@@ -50,7 +43,6 @@ parse_feature <- function(json_data) {
 #' @param filter A filter as defined in the origin json file
 #'
 #' @return A filter object
-#' @export
 parse_single_filter <- function(filter) {
   log_debug("Parsing single filter")
   parsed_single_filter <- list()
@@ -66,14 +58,14 @@ parse_single_filter <- function(filter) {
 #' @param nested_filter A nested filter as defined in the origin json file
 #'
 #' @return A nested filter object
-#' @export
 parse_nested_filter <- function(nested_filter) {
   log_debug("Parsing nested filter")
   op_nested_filter <- list()
   op_nested_filter$type <- nested_filter$type
-  for (i in seq_along(nested_filter$subfilters)) {
-    target <- nested_filter$subfilters[[i]]
-    op_nested_filter$subfilters[[i]] <- parse_single_or_nested(target)
+  op_nested_filter$subfilters <- list()
+  for (nm in names(nested_filter$subfilters)) {
+    target <- nested_filter$subfilters[[nm]]
+    op_nested_filter$subfilters[[nm]] <- parse_single_or_nested(target)
   }
   return(op_nested_filter)
 }

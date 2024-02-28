@@ -1,16 +1,15 @@
 on:
   push:
     branches: [main]
-  workflow_dispatch:
 
-name: Test, then publish docs and Quarto pages
+name: Publish docs and Quarto pages
 
 # workflow must have permissions to push to gh-pages branch
 permissions:
   contents: write
 
 jobs:
-  build-deploy:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,18 +30,8 @@ jobs:
             any::rmarkdown
             any::knitr
             any::kableExtra
-            any::magrittr
+            any::tidyverse
             any::lintr
-
-      - name: Lint source code
-        run: make -C minisparra lint
-
-      # Note: this step also runs the unit tests, so no need to separately test
-      - name: Build and test package
-        run: |
-          R CMD build minisparra
-          # building manual requires pdflatex
-          R CMD check *.tar.gz --no-manual
 
       - name: Build package docs
         working-directory: minisparra

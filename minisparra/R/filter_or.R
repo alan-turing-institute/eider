@@ -17,7 +17,7 @@ filter_or <- function(table, filter_obj, context = NULL) {
 
   if (tolower(filter_obj$type) != "or") {
     error_context(
-      "Expected filter type 'or', but got '", filter_obj$type, "'.",
+      paste0("Expected filter type 'or', but got '", filter_obj$type, "'."),
       context
     )
   }
@@ -40,11 +40,11 @@ filter_or <- function(table, filter_obj, context = NULL) {
   passed <- tibble()
   not_yet_passed <- table
   for (i in seq_along(filter_obj$subfilters)) {
-    subfilter <- filter_obj$subfilters[[i]]
-    extra_ctx <- paste0("(", i, "/", n, ")")
+    nm <- names(filter_obj$subfilters)[[i]]
+    extra_ctx <- paste0("(", i, "/", n, ": ", nm, ")")
     subfilter_result <- filter_all(
       not_yet_passed,
-      subfilter,
+      filter_obj$subfilters[[i]],
       c(context, extra_ctx)
     )
     passed <- bind_rows(passed, subfilter_result$passed)

@@ -1,0 +1,33 @@
+on: [push]
+
+name: CI
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3.2'
+
+      - name: Install R packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages:
+            any::lintr
+            local::minisparra
+
+      - name: Lint source code
+        run: make -C minisparra lint
+
+      # Note: this step also runs the unit tests, so no need to separately test
+      - name: Build and test package
+        run: |
+          R CMD build minisparra
+          # building manual requires pdflatex, so use --no-manual
+          R CMD check *.tar.gz --no-manual
