@@ -30,7 +30,10 @@ filter_or <- function(table, filter_obj, context = NULL) {
 
   # Attach an index column to label the rows. This step gets rid of preexisting
   # row names hence the check above
-  table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
+  has_indices <- "SPARRA_PRIVATE_INDEX" %in% names(table)
+  if (!has_indices) {
+    table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
+  }
 
   # Pass the input table through each subfilter in turn. To avoid doing more
   # work than necessary, once a row passes any of the subfilters, it is added
@@ -52,19 +55,26 @@ filter_or <- function(table, filter_obj, context = NULL) {
   }
 
   # Sort by the index column (to restore the input order) and remove it
-  passed <- passed %>%
-    arrange(SPARRA_PRIVATE_INDEX) %>%
-    select(-SPARRA_PRIVATE_INDEX)
-
-  rejected <- not_yet_passed %>%
-    arrange(SPARRA_PRIVATE_INDEX) %>%
-    select(-SPARRA_PRIVATE_INDEX)
+  if (!has_indices) {
+    passed <- passed %>%
+      arrange(SPARRA_PRIVATE_INDEX) %>%
+      select(-SPARRA_PRIVATE_INDEX)
+    not_yet_passed <- not_yet_passed %>%
+      arrange(SPARRA_PRIVATE_INDEX) %>%
+      select(-SPARRA_PRIVATE_INDEX)
+  }
 
   # Restore row names if present
   if (has_row_names) {
-    passed <- tibble::column_to_rownames(passed, "SPARRA_PRIVATE_ROW_NAMES")
-    rejected <- tibble::column_to_rownames(rejected, "SPARRA_PRIVATE_ROW_NAMES")
+    passed <- tibble::column_to_rownames(
+      passed,
+      "SPARRA_PRIVATE_ROW_NAMES"
+    )
+    not_yet_passed <- tibble::column_to_rownames(
+      not_yet_passed,
+      "SPARRA_PRIVATE_ROW_NAMES"
+    )
   }
 
-  list(passed = passed, rejected = rejected)
+  list(passed = passed, rejected = not_yet_passed)
 }
