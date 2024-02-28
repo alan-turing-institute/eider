@@ -357,15 +357,15 @@ $ diagnosis_3         &lt;int&gt; 102, 103, NA, NA, 102, 101, NA, 103, 101, NA, 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "TRACE [2024-02-28 00:22:51] context: featurise:../example_spec/basic_ae_data.json"                                                      
-[2] "DEBUG [2024-02-28 00:22:51] Parsing nested filter"                                                                                      
-[3] "DEBUG [2024-02-28 00:22:51] Parsing single filter"                                                                                      
-[4] "DEBUG [2024-02-28 00:22:51] Parsing single filter"                                                                                      
-[5] "TRACE [2024-02-28 00:22:51] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count"                                    
-[6] "TRACE [2024-02-28 00:22:51] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and"                       
-[7] "TRACE [2024-02-28 00:22:51] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2) &gt; filter_basic"
-[8] "TRACE [2024-02-28 00:22:51] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2) &gt; filter_basic"
-[9] "TRACE [2024-02-28 00:22:51] context: join_feature_tables"                                                                               </code></pre>
+<pre><code>[1] "TRACE [2024-02-28 13:40:57] context: featurise:../example_spec/basic_ae_data.json"                                                                   
+[2] "DEBUG [2024-02-28 13:40:57] Parsing nested filter"                                                                                                   
+[3] "DEBUG [2024-02-28 13:40:57] Parsing single filter"                                                                                                   
+[4] "DEBUG [2024-02-28 13:40:57] Parsing single filter"                                                                                                   
+[5] "TRACE [2024-02-28 13:40:57] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count"                                                 
+[6] "TRACE [2024-02-28 13:40:57] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    
+[7] "TRACE [2024-02-28 13:40:57] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"
+[8] "TRACE [2024-02-28 13:40:57] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"
+[9] "TRACE [2024-02-28 13:40:57] context: join_feature_tables"                                                                                            </code></pre>
 </div>
 </div>
 </section>
@@ -434,7 +434,7 @@ Context:
  &gt; featurise:./ae2_data_wrong3.json
  &gt; featurise_count
  &gt; filter_and
- &gt; (1/2)
+ &gt; (1/2: subfilter_1)
  &gt; filter_basic</code></pre>
 </div>
 </div>
