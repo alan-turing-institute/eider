@@ -139,9 +139,12 @@ tf_or_w_date <- transform(
 
 tf_or_w_date
 ```
+
+Here we see patient 14 has 2 instances of either `diagnosis_1` or `diagnosis_2` being 101 when the `attendence_type` is 1, and for dates later than 31st December 2015.
+
 ## 6.Logging
 
-By default the log is currently printed to the console. In order to see the log output in Quarto, we need to capture it in a temporary file.
+Logging has also been introduced. By default the log is currently printed to the console. In order to see the log output in Quarto, we need to capture it in a temporary file.
 
 The log is set up
 
@@ -152,7 +155,10 @@ log_threshold(TRACE)
 log_appender(appender_file(tmp))
 ```
 
-And the same code is run again
+And the first basic example is run again. Reminder this is the specification"
+```{r}
+writeLines(readLines("../example_spec/basic_ae_data.json"))
+```
 
 ```{r}
 
@@ -170,6 +176,10 @@ Check the log:
 ```{r}
 readLines(tmp)
 ```
+
+
+Line 2 is when the primary filter is parsed. It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 3 and 4.
+Lines 5 - 8 give the context of what is being processed for debug purposes. 
 
 ## Errors with context
 
@@ -213,3 +223,17 @@ transform(
 ```
 
 ## Glossary
+* The following comparison operators can be used for the type of filter
+    + "in" = `%in%`
+    + "lt" = `<`
+    + "lt_eq" = `<=`
+    + "gt" = `>`
+    + "gt_eq" = `>=`
+    + "date_in" = `%in%`
+    + "date_lt" = `<`
+    + "date_lt_eq" = `<=`
+    + "date_gt" = `>`
+    + "date_gt_eq" = `>=`
+
+  
+
