@@ -1,7 +1,7 @@
 #' Extract a feature table using a feature JSON file.
 #'
 #' @param all_tables List of all input tables (passed in from read_all_tables).
-#' @param feature_json_file Path to the feature JSON file.
+#' @param spec Parsed JSON file containing the feature specification.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
 #'
@@ -15,13 +15,11 @@
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
 featurise <- function(all_tables,
-                      feature_json_file,
+                      spec,
                       context = NULL) {
-  context <- c(context, paste0("featurise:", feature_json_file))
   trace_context(context)
 
   # Read the feature JSON file
-  spec <- json_to_feature(feature_json_file)
   t <- spec$transformation_type %>% tolower()
 
   # Check the transformation type and dispatch to the appropriate function
@@ -33,6 +31,8 @@ featurise <- function(all_tables,
     feature <- featurise_unique(all_tables, spec, context)
   } else if (t == "time_since") {
     feature <- featurise_time_since(all_tables, spec, context)
+  } else if (t == "combine") {
+    feature <- featurise_combine(all_tables, spec, context)
   } else {
     error_context(
       paste0("Unknown transformation type: ", t),

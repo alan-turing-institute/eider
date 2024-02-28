@@ -4,8 +4,8 @@ cutoff_date <- lubridate::ymd("2023-03-18")
 test_that("featurise_time_since (first,years)", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
-
-  diag_101 <- featurise(all_tables, "../spec/test_time_since_firstyears.json")
+  spec <- json_to_feature("../spec/test_time_since_firstyears.json")
+  diag_101 <- featurise(all_tables, spec)
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)
@@ -25,8 +25,8 @@ test_that("featurise_time_since (first,years)", {
 test_that("featurise_time_since (last,years)", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
-
-  diag_101 <- featurise(all_tables, "../spec/test_time_since_lastyears.json")
+  spec <- json_to_feature("../spec/test_time_since_lastyears.json")
+  diag_101 <- featurise(all_tables, spec)
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)
@@ -46,8 +46,8 @@ test_that("featurise_time_since (last,years)", {
 test_that("featurise_time_since (first,days)", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
-
-  diag_101 <- featurise(all_tables, "../spec/test_time_since_firstdays.json")
+  spec <- json_to_feature("../spec/test_time_since_firstdays.json")
+  diag_101 <- featurise(all_tables, spec)
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)

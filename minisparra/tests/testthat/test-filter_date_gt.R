@@ -3,8 +3,8 @@ ae2_table_name <- "../data/ae2.csv"
 test_that("featurise_date_gt", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
-
-  diag_101 <- featurise(all_tables, "../spec/test_dates_gt.json")
+  spec <- json_to_feature("../spec/test_dates_gt.json")
+  diag_101 <- featurise(all_tables, spec)
 
   # Check the result
   orig_table <- read_one_table(ae2_table_name)

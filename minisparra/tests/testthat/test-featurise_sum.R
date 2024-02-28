@@ -6,9 +6,8 @@ test_that("featurise_count", {
   # avoid doing more work than necessary, hence this setup.
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
-
-  # This is a meaningless feature, but it is a serviceable test case
-  diag_101 <- featurise(all_tables, "../spec/test_sum.json")
+  spec <- json_to_feature("../spec/test_sum.json")
+  diag_101 <- featurise(all_tables, spec)
 
   # Check the result
   orig_table <- read.csv(ae2_table_name)

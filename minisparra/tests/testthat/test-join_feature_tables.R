@@ -4,9 +4,11 @@ test_that("join_feature_tables", {
   # Read in and process some data
   filenames <- c(ae2_table_name)
   all_tables <- read_all_tables(filenames)
+  spec_1 <- json_to_feature("../spec/test_join1.json")
+  spec_2 <- json_to_feature("../spec/test_join2.json")
 
-  diag_101 <- featurise(all_tables, "../spec/test_join1.json")
-  diag_102 <- featurise(all_tables, "../spec/test_join2.json")
+  diag_101 <- featurise(all_tables, spec_1)
+  diag_102 <- featurise(all_tables, spec_2)
 
   # Join the feature tables
   joined_feature_table <- join_feature_tables(list(diag_101, diag_102))
