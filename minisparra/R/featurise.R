@@ -31,8 +31,8 @@ featurise <- function(all_tables,
     feature <- featurise_unique(all_tables, spec, context)
   } else if (t == "time_since") {
     feature <- featurise_time_since(all_tables, spec, context)
-  } else if (t == "combine") {
-    feature <- featurise_combine(all_tables, spec, context)
+  } else if (t == "combine_linear") {
+    feature <- featurise_combine_linear(all_tables, spec, context)
   } else {
     error_context(
       paste0("Unknown transformation type: ", t),

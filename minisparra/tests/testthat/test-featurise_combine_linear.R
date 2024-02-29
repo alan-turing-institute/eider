@@ -1,9 +1,9 @@
 ae2_table_name <- "../data/ae2.csv"
 
-test_that("featurise_combine", {
+test_that("featurise_combine_linear", {
   filenames <- ae2_table_name
   all_tables <- read_all_tables(filenames)
-  spec <- json_to_feature("../spec/test_combine_sum.json")
+  spec <- json_to_feature("../spec/test_combine_linear.json")
   combination <- featurise(all_tables, spec)
 
   # Calculate through standard means

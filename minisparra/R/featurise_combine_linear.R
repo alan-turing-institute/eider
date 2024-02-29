@@ -17,10 +17,10 @@
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
-featurise_combine <- function(all_tables,
-                              spec,
-                              context = NULL) {
-  context <- c(context, "featurise_combine")
+featurise_combine_linear <- function(all_tables,
+                                     spec,
+                                     context = NULL) {
+  context <- c(context, "featurise_combine_linear")
   trace_context(context)
 
   # Validate spec
