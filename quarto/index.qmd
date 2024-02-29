@@ -18,6 +18,7 @@ library(knitr)
 library(kableExtra)
 library(tidyverse)
 kbl <- function(x) {
+  x <- head(x, 10)
   x %>%
     knitr::kable(format = 'html', table.attr = 'data-quarto-disable-processing="true"') %>%
     kableExtra::kable_styling(bootstrap_options = "striped", full_width = FALSE)
@@ -26,49 +27,145 @@ kbl <- function(x) {
 
 ---------
 
-## Library usage (as of 23 Feb 2024)
+# Process pipeline
+## 0. Decide what you want to filter for
+MINISPARRA is designed to process (Scottish) medical data and collate using a range of filter functions to allow users to easily extract tables for ML pipelines. 
 
-Here's the JSON:
+Argubly the first step should be to decide which data you will use, and how you will filter it. MINISPARRA allows users to specify a range of data sources (files/tables) and to define which features they want to extract data via a specification json. MINISPARRA will filter and join the data as per the spec.
+
+
+## 1. Read in data
+In this example we will use some random A&E-type data stored in a csv file, and filter based on 2 categories. The `attendance_type` column and the `diagnosis_1` column. But data can be derived from multiple sources, and joined subsequently.
+
+This step must be done before any feature extraction to avoid having to read the same table multiple times.
 
 ```{r}
-writeLines(readLines("../example_spec/ae2_data.json"))
+filenames <- c("../example_data/random_ae_data.csv")
+all_tables <- read_all_tables(filenames)
+all_tables$`../example_data/random_ae_data.csv` %>% kbl()
 ```
 
-Here's the CSV:
+`all_tables` is a list which associates each of the filenames with the data read from that file, and in this example it corresponds to just the random A&E data.
+
+A snippet of the table is shown above.
+
+The table has 6 columns, a patient id `id`, a `date` TODO update header at which the admission occured, an `attendance_type`, and three diagnosis categories, `diagnosis_1`, `diagnosis_2`, and `diagnosis_3`
+
+From the first row in this example we can see that patient 2 was admitted on the 16th of August 2016, they had 3 unique diagnoses, 104, 103, and 102. In the second row, the patient with the same id was admitted on the 28th July 2015, again they had 3 unique diagnosis, this time 101, 103, and 104.
+
+## 2. Define a feature to extract
+Users then specify which features they would like to extract from which data. A simple specification file is given below.
+
+`source_file` is a relative path to the data (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. MINISPARRA has N different transformation types, X, Y, and Z.
+The user specifies how the data will be grouped via `grouping_columns`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
 
 ```{r}
-tbl <- read.csv("../example_data/random_ae_data.csv")
-glimpse(tbl)
+writeLines(readLines("../example_spec/basic_ae_data.json"))
 ```
 
-And here's what we can do with it:
+The `primary_filter` is AND, and there are two `subfilters`. The first subfilter - `subfilter_1` specifies that the user wants to filter based on the `attendance_category` column of the random A&E-type data, and that the value that they are interested in is 1. That is only return results where the `attendance_category` is 1.
 
+The second subfilter `subfilter_2` filters based on the `diagnosis_1` column and should only return results where `diagnosis_1` is 101.
+
+As the primary filter is AND, the resultant dataframe will be a count, grouped by patient `id` of A&E data with `attendance_category` = 1 AND `diagnosos_1` = 101.
+
+
+## 3. Extract the feature
+Now we can use MINISPARRA to run the transformation pipeline. We specify the path to the data via `all_table_filenames` and the path the the specification via `all_feature_json_filenames`.
+
+We then run the transformation which will produce the resultant dataframe.
 ```{r}
-all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
+
 all_table_filenames <- c("../example_data/random_ae_data.csv")
-transform(
+all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
+
+tf <- transform(
   all_table_filenames = all_table_filenames,
   all_feature_json_filenames = all_feature_json_filenames
 )
+
+tf
 ```
 
-## Logging
 
-Set up logging.
-By default this is printed to the console.
-In order to see the log output in Quarto, we need to capture it in a temporary file.
+Above is the resultant dataframe. We can see that patient with id 2 had 1 instance where their `diagnosis_1` was 101, whereas patient with id 7 had 5 instances. It is also noted that patient with id 3 is not represented in this resultant dataframe. This could be because they had no occurences in the source data, or because they did not meet the filtering criteria of having an `attendance_type` of 1, and having a `diagnosis_1` of 101.
+
+
+## 4. Using date filtering
+In the above example the returned dataframe spanned all the dates over which the input data csv spanned. However this can be refined in the specification.
+```{r}
+writeLines(readLines("quarto_examples/basic_ae_data_w_date.json"))
+```
+An additonal subfilter has been added. Subfilter_3 is applied to the `time` column and filters based on dates that are greater than the 31st of December 2015. This means an event which happened on new-years-eve 2015 will not be included in the data, but events which occured on new-years-day 2016 would be.
+
+We can again run this transformation pipeline with the same A&E data:
+
+```{r}
+
+all_table_filenames <- c("../example_data/random_ae_data.csv")
+all_feature_json_filenames <- c("quarto_examples/basic_ae_data_w_date.json")
+
+tf_w_date <- transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = all_feature_json_filenames
+)
+
+tf_w_date
+
+```
+
+We note that patient with id 2 is now missing from the resultant dataframe. This is expected as noted above patient 2 only had one instance where their `diagnosis_1` was 101, and from inspection of the source data, we can see that it was on the 28th July 2015. 
+
+## 5. Using OR filter
+
+We can also expand the filters to return results if either `diagnosis_1` or `diagnosis_2` is 101.
+The specification file would look like this:
+
+```{r}
+writeLines(readLines("quarto_examples/basic_ae_data_or_w_date.json"))
+```
+
+Subfilter 2 has now been defined as an OR type, and it contains it's own subfilters, 21 and 22. `subfilter_21` is a filter that `diagnosis_1` column is 101, and `subfilter_22` is a filter that `diagnosis_2` column is 101. So the transformation will count an instance if either `diagnosis_1` OR `diagnosis_2` are 101. Subject to the other filters of the `attendence_type` being 1, and the date being later than 31st December 2015.
+
+```{r}
+
+all_table_filenames <- c("../example_data/random_ae_data.csv")
+all_feature_json_filenames <- c("quarto_examples/basic_ae_data_or_w_date.json")
+
+tf_or_w_date <- transform(
+  all_table_filenames = all_table_filenames,
+  all_feature_json_filenames = all_feature_json_filenames
+)
+
+tf_or_w_date
+```
+
+Here we see patient 14 has 2 instances of either `diagnosis_1` or `diagnosis_2` being 101 when the `attendence_type` is 1, and for dates later than 31st December 2015.
+
+## 6.Logging
+
+Logging has also been introduced. By default the log is currently printed to the console. In order to see the log output in Quarto, we need to capture it in a temporary file.
+
+The log is set up
 
 ```{r}
 library(logger)
-t <- tempfile()
+tmp <- tempfile()
 log_threshold(TRACE)
-log_appender(appender_file(t))
+log_appender(appender_file(tmp))
 ```
 
-Then run the same code again:
+And the first basic example is run again. Reminder this is the specification"
+```{r}
+writeLines(readLines("../example_spec/basic_ae_data.json"))
+```
 
 ```{r}
-transform(
+
+all_table_filenames <- c("../example_data/random_ae_data.csv")
+all_feature_json_filenames <- c("../example_spec/basic_ae_data.json")
+
+tf <- transform(
   all_table_filenames = all_table_filenames,
   all_feature_json_filenames = all_feature_json_filenames
 )
@@ -77,8 +174,12 @@ transform(
 Check the log:
 
 ```{r}
-readLines(t)
+readLines(tmp)
 ```
+
+
+Line 2 is when the primary filter is parsed. It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 3 and 4.
+Lines 5 - 8 give the context of what is being processed for debug purposes. 
 
 ## Errors with context
 
@@ -120,3 +221,19 @@ transform(
   all_table_filenames = all_table_filenames,
   all_feature_json_filenames = "./ae2_data_wrong3.json")
 ```
+
+## Glossary
+* The following comparison operators can be used for the type of filter
+    + "in" = `%in%`
+    + "lt" = `<`
+    + "lt_eq" = `<=`
+    + "gt" = `>`
+    + "gt_eq" = `>=`
+    + "date_in" = `%in%`
+    + "date_lt" = `<`
+    + "date_lt_eq" = `<=`
+    + "date_gt" = `>`
+    + "date_gt_eq" = `>=`
+
+  
+
