@@ -1,5 +1,8 @@
-#' Computes the linear combination of two or more features.
+#' Computes the combination of two or more features.
 #'
+#' @param mode 'linear' for linear combination of features, 'min' to take the
+#'             minimum of the features, 'max' to take the maximum of the
+#'             features.
 #' @param all_tables List of all input tables (passed in from read_all_tables).
 #' @param spec A list containing the following elements:
 #'  - output_feature_name: Name of the output column.
@@ -17,11 +20,18 @@
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
-featurise_combine_linear <- function(all_tables,
-                                     spec,
-                                     context = NULL) {
-  context <- c(context, "featurise_combine_linear")
+featurise_combine <- function(mode,
+                              all_tables,
+                              spec,
+                              context = NULL) {
+  context <- c(context, paste0("featurise_combine:", mode))
   trace_context(context)
+
+  mode <- tolower(mode)
+
+  if (!mode %in% c("combine_linear", "combine_min", "combine_max")) {
+    stop("Invalid combination mode: ", mode)
+  }
 
   # Validate spec
   output_feature_name <- spec$output_feature_name
@@ -30,7 +40,13 @@ featurise_combine_linear <- function(all_tables,
     stop("Multiple groupings not yet implemented")
   }
 
-  missing_value <- 0
+  # Choose starting missing value
+  initial_missing_value <- switch(mode,
+    combine_linear = 0,
+    combine_min = Inf,
+    combine_max = -Inf
+  )
+  missing_value <- initial_missing_value
 
   # Loop over subfeatures
   n <- length(spec$feature_list)
@@ -43,9 +59,12 @@ featurise_combine_linear <- function(all_tables,
     subfeature_spec$grouping_columns <- grouping_columns
     subfeature_spec$output_feature_name <- subfeature_name
 
-    # Add the appropriately weighted missing value
-    missing_value <- missing_value + (
-      subfeature_spec$weight * subfeature_spec$absent_data_flag
+    # Update the missing value
+    missing_value <- switch(mode,
+      combine_linear = missing_value +
+        (subfeature_spec$weight * subfeature_spec$absent_data_flag),
+      combine_min = min(missing_value, subfeature_spec$absent_data_flag),
+      combine_max = max(missing_value, subfeature_spec$absent_data_flag)
     )
 
     # Calculate the feature
@@ -60,15 +79,24 @@ featurise_combine_linear <- function(all_tables,
   # Combine the subfeatures into a table
   joined_subfeatures <- join_feature_tables(subfeatures, context)
 
-  # Then take a linear combination of the subfeatures
+  # Then combine the subfeatures
   feature_table <- tibble(id = joined_subfeatures$id) %>%
-    mutate(!!output_feature_name := 0)
+    mutate(!!output_feature_name := initial_missing_value)
   for (i in seq_along(subfeatures)) {
     subfeature_name <- names(spec$feature_list)[i]
     weight <- spec$feature_list[[i]]$weight
-    feature_table[[output_feature_name]] <-
-      feature_table[[output_feature_name]] +
-      weight * joined_subfeatures[[subfeature_name]]
+    feature_table[[output_feature_name]] <- switch(mode,
+      combine_linear = feature_table[[output_feature_name]] +
+        (weight * joined_subfeatures[[subfeature_name]]),
+      combine_min = pmin(
+        feature_table[[output_feature_name]],
+        joined_subfeatures[[subfeature_name]]
+      ),
+      combine_max = pmax(
+        feature_table[[output_feature_name]],
+        joined_subfeatures[[subfeature_name]]
+      )
+    )
   }
 
   list(
