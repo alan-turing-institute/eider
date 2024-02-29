@@ -125,7 +125,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -157,12 +157,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#using-date-filtering" id="toc-using-date-filtering" class="nav-link" data-scroll-target="#using-date-filtering">4. Using date filtering</a></li>
   <li><a href="#using-or-filter" id="toc-using-or-filter" class="nav-link" data-scroll-target="#using-or-filter">5. Using OR filter</a></li>
   <li><a href="#logging" id="toc-logging" class="nav-link" data-scroll-target="#logging">6.Logging</a></li>
-  <li><a href="#errors-with-context" id="toc-errors-with-context" class="nav-link" data-scroll-target="#errors-with-context">Errors with context</a>
-  <ul class="collapse">
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
-  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
-  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3">Example 3</a></li>
-  </ul></li>
   <li><a href="#glossary" id="toc-glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
   </ul></li>
   </ul>
@@ -190,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This Quarto book serves as a demo of the minisparra package (for which we still don’t have a real name).</p>
+<p>This Quarto book serves as a demo of the minisparra package (for which we still don’t have a real name). Focussing on the A&amp;E data</p>
 <p>First, we load the package from the local directory.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"../minisparra/"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -617,89 +611,18 @@ Attaching package: 'miniSPARRA01'</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(tmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "TRACE [2024-02-29 16:44:10] context: featurise:../example_spec/basic_ae_data.json"                                                                   
-[2] "DEBUG [2024-02-29 16:44:10] Parsing nested filter"                                                                                                   
-[3] "DEBUG [2024-02-29 16:44:10] Parsing single filter"                                                                                                   
-[4] "DEBUG [2024-02-29 16:44:10] Parsing single filter"                                                                                                   
-[5] "TRACE [2024-02-29 16:44:10] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count"                                                 
-[6] "TRACE [2024-02-29 16:44:10] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    
-[7] "TRACE [2024-02-29 16:44:10] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"
-[8] "TRACE [2024-02-29 16:44:10] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"
-[9] "TRACE [2024-02-29 16:44:10] context: join_feature_tables"                                                                                            </code></pre>
+<pre><code>[1] "TRACE [2024-02-29 16:44:05] context: featurise:../example_spec/basic_ae_data.json"                                                                   
+[2] "DEBUG [2024-02-29 16:44:05] Parsing nested filter"                                                                                                   
+[3] "DEBUG [2024-02-29 16:44:05] Parsing single filter"                                                                                                   
+[4] "DEBUG [2024-02-29 16:44:05] Parsing single filter"                                                                                                   
+[5] "TRACE [2024-02-29 16:44:05] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count"                                                 
+[6] "TRACE [2024-02-29 16:44:05] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    
+[7] "TRACE [2024-02-29 16:44:05] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"
+[8] "TRACE [2024-02-29 16:44:05] context: featurise:../example_spec/basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"
+[9] "TRACE [2024-02-29 16:44:05] context: join_feature_tables"                                                                                            </code></pre>
 </div>
 </div>
 <p>Line 2 is when the primary filter is parsed. It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 3 and 4. Lines 5 - 8 give the context of what is being processed for debug purposes.</p>
-</section>
-<section id="errors-with-context" class="level2">
-<h2 class="anchored" data-anchor-id="errors-with-context">Errors with context</h2>
-<section id="example-1" class="level3">
-<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./ae2_data_wrong1.json"</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lines[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "  \"transformation_type\": [\"COUNT DRACULA\"],"</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> <span class="st">"./ae2_data_wrong1.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: Unknown transformation type: count dracula
-Context:
- &gt; featurise:./ae2_data_wrong1.json</code></pre>
-</div>
-</div>
-</section>
-<section id="example-2" class="level3">
-<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./ae2_data_wrong2.json"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>lines[<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "  \"grouping_columns\": [\"this_column_doesnt_exist\"],"</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> <span class="st">"./ae2_data_wrong2.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: Error in `rename()`:
-! Can't rename columns that don't exist.
-✖ Column `this_column_doesnt_exist` doesn't exist.
-
-Context:
- &gt; featurise:./ae2_data_wrong2.json
- &gt; featurise_count</code></pre>
-</div>
-</div>
-</section>
-<section id="example-3" class="level3">
-<h3 class="anchored" data-anchor-id="example-3">Example 3</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"./ae2_data_wrong3.json"</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>lines[<span class="dv">11</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "        \"column\": [\"at_ten_dance_category\"],"</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">transform</span>(</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_table_filenames =</span> all_table_filenames,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">all_feature_json_filenames =</span> <span class="st">"./ae2_data_wrong3.json"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error: Column 'at_ten_dance_category' not found in the table.
-Context:
- &gt; featurise:./ae2_data_wrong3.json
- &gt; featurise_count
- &gt; filter_and
- &gt; (1/2: subfilter_1)
- &gt; filter_basic</code></pre>
-</div>
-</div>
-</section>
 </section>
 <section id="glossary" class="level2">
 <h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
