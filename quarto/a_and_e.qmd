@@ -2,7 +2,7 @@
 title: "minisparra"
 ---
 
-This Quarto book serves as a demo of the minisparra package (for which we still don't have a real name).
+This Quarto book serves as a demo of the minisparra package (for which we still don't have a real name). Focussing on the A&E data
 
 First, we load the package from the local directory.
 
@@ -180,47 +180,6 @@ readLines(tmp)
 
 Line 2 is when the primary filter is parsed. It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 3 and 4.
 Lines 5 - 8 give the context of what is being processed for debug purposes. 
-
-## Errors with context
-
-### Example 1
-
-```{r}
-lines <- readLines("./ae2_data_wrong1.json")
-lines[3]
-```
-
-```{r error=TRUE}
-transform(
-  all_table_filenames = all_table_filenames,
-  all_feature_json_filenames = "./ae2_data_wrong1.json")
-```
-
-### Example 2
-
-```{r}
-lines <- readLines("./ae2_data_wrong2.json")
-lines[4]
-```
-
-```{r error=TRUE}
-transform(
-  all_table_filenames = all_table_filenames,
-  all_feature_json_filenames = "./ae2_data_wrong2.json")
-```
-
-### Example 3
-
-```{r}
-lines <- readLines("./ae2_data_wrong3.json")
-lines[11]
-```
-
-```{r error=TRUE}
-transform(
-  all_table_filenames = all_table_filenames,
-  all_feature_json_filenames = "./ae2_data_wrong3.json")
-```
 
 ## Glossary
 * The following comparison operators can be used for the type of filter
