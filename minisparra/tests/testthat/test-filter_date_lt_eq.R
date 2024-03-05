@@ -1,6 +1,6 @@
 ae2_table_path <- "../data/ae2.csv"
 
-test_that("featurise_date_lt_eq", {
+test_that("filter_date_lt_eq", {
   all_tables <- read_data(list(ae2 = ae2_table_path))
 
   diag_101 <- featurise(all_tables, "../spec/test_dates_lt_eq.json")
@@ -12,6 +12,12 @@ test_that("featurise_date_lt_eq", {
     group_by(id) %>%
     summarise(diag_101_count = n()) %>%
     select(c(id, diag_101_count))
+  for (id_num in orig_table$id) {
+    if (!id_num %in% diag_101_expected$id) {
+      diag_101_expected <- diag_101_expected %>%
+        dplyr::add_row(id = id_num, diag_101_count = 0)
+    }
+  }
 
   expect_equal(diag_101$feature_table, diag_101_expected)
 })

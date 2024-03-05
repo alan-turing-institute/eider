@@ -17,6 +17,12 @@ test_that("featurise_time_since (first,years)", {
     group_by(id) %>%
     summarise(years_since_first_101_diag = max(years_since_first_101_diag)) %>%
     select(id, years_since_first_101_diag)
+  for (id_num in orig_table$id) {
+    if (!id_num %in% diag_101_expected$id) {
+      diag_101_expected <- diag_101_expected %>%
+        dplyr::add_row(id = id_num, years_since_first_101_diag = 40)
+    }
+  }
 
   expect_equal(diag_101$feature_table, diag_101_expected)
 })
@@ -37,6 +43,12 @@ test_that("featurise_time_since (last,years)", {
     group_by(id) %>%
     summarise(years_since_last_101_diag = min(years_since_last_101_diag)) %>%
     select(id, years_since_last_101_diag)
+  for (id_num in orig_table$id) {
+    if (!id_num %in% diag_101_expected$id) {
+      diag_101_expected <- diag_101_expected %>%
+        dplyr::add_row(id = id_num, years_since_last_101_diag = 40)
+    }
+  }
 
   expect_equal(diag_101$feature_table, diag_101_expected)
 })
@@ -57,6 +69,12 @@ test_that("featurise_time_since (first,days)", {
     group_by(id) %>%
     summarise(days_since_first_101_diag = max(days_since_first_101_diag)) %>%
     select(id, days_since_first_101_diag)
+  for (id_num in orig_table$id) {
+    if (!id_num %in% diag_101_expected$id) {
+      diag_101_expected <- diag_101_expected %>%
+        dplyr::add_row(id = id_num, days_since_first_101_diag = 40)
+    }
+  }
 
   expect_equal(diag_101$feature_table, diag_101_expected)
 })

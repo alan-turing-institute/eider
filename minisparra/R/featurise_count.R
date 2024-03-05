@@ -53,6 +53,13 @@ featurise_count <- function(all_tables,
     }
   )
 
+  feature_table <- pad_missing_values(
+    source_table,
+    grouping_columns,
+    missing_value,
+    feature_table
+  )
+
   list(
     feature_table = feature_table,
     missing_value = missing_value
