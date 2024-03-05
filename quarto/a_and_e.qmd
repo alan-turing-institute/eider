@@ -40,12 +40,13 @@ In this example we will use some random A&E-type data stored in a csv file, and 
 This step must be done before any feature extraction to avoid having to read the same table multiple times.
 
 ```{r}
-filenames <- c("../example_data/random_ae_data.csv")
+ae_filepath <- minisparra_example("random_ae_data.csv")
+filenames <- c(ae_filepath)
 all_tables <- read_all_tables(filenames)
-all_tables$`../example_data/random_ae_data.csv` %>% kbl()
+all_tables[[ae_filepath]] %>% kbl()
 ```
 
-`all_tables` is a list which associates each of the filenames with the data read from that file, and in this example it corresponds to just the random A&E data.
+`all_tables` is a list which associates each of the filenames with the data read from that file, and in this example it corresponds to just the random A&E data which is provided with the package.
 
 A snippet of the table is shown above.
 
@@ -60,7 +61,8 @@ Users then specify which features they would like to extract from which data. A 
 The user specifies how the data will be grouped via `grouping_columns`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
 
 ```{r}
-writeLines(readLines("../example_spec/basic_ae_data.json"))
+basic_ae_spec_filepath <- minisparra_example("spec_basic_ae_data.json")
+writeLines(readLines(basic_ae_spec_filepath)) 
 ```
 
 The `primary_filter` is AND, and there are two `subfilters`. The first subfilter - `subfilter_1` specifies that the user wants to filter based on the `attendance_category` column of the random A&E-type data, and that the value that they are interested in is 1. That is only return results where the `attendance_category` is 1.
