@@ -1,0 +1,89 @@
+---
+title: "PACKAGE_NAME"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PACKAGE_NAME}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(miniSPARRA01)
+```
+
+PACKAGE_NAME is a lightweight package for processing tabular data in a declarative fashion.
+Users may specify a set of operations to be performed on a table using JSON, which are then executed by the package.
+The primary use case of PACKAGE_NAME is for extraction of machine learning features from health data, but PACKAGE_NAME can in principle be used for any kind of data.
+
+The usage of PACKAGE_NAME in R source code itself is straightforward, and consists of a single call to `transform()`.
+
+## Data
+
+To illustrate this, we will construct some very simplistic data, which may be, for example, a record of patients who attended their GP and their associated complaints.
+
+
+```{r}
+example_table <- data.frame(
+  patient_id        = c(1, 1, 1, 2, 2, 3, 3, 3),
+  attendance_reason = c(6, 6, 7, 6, 6, 7, 7, 7)
+)
+
+data_sources <- list(attendances = example_table)
+```
+
+In practice, it is more likely that you will be reading in data from a file instead.
+For example, if you had a CSV file called `attendances.csv` in the current working directory, you could just do:
+
+```{r}
+data_sources_2 <- list(attendances = "attendances.csv")
+```
+
+PACKAGE_NAME allows you to mix and match data sources, so you could have some data in a CSV file and some in an R data frame:
+
+```{r}
+data_sources_3 <- list(
+  attendances = example_table,   # A variable which has already been constructed
+  other_data = "other_data.csv"  # A file to be read in
+)
+```
+
+This allows the user to, for example, perform preprocessing on a portion of their data if so needed.
+
+## Feature specification
+
+Suppose we want to extract a feature corresponding to the total number of times a patient attended for reason 6.
+PACKAGE_NAME requires that the feature is specified as a JSON file, which looks like this:
+
+```{r}
+writeLines(readLines("example_attendances_6.json"))
+```
+
+- `transformation_type` tells you what kind of overall operation is being performed.
+  This determines which other fields are required in the JSON.
+- `source_file` specifies the name of the data source to be used in the list of data sources.
+- `grouping_columns` specifies the columns to group by.
+- `absent_data_flag` specifies what to do if there is no data for a particular patient ID.
+- `output_feature_name` specifies the name of the column to be created in the output table.
+- `primary_filter` is a filter object which is used to select rows from the input table which match particular conditions.
+
+Subsequent vignettes will go into more detail about the different types of transformations and the required JSON fields for each of them.
+
+## Performing the transformation
+
+To obtain the desired feature, we can simply do:
+
+```{r}
+transform(
+  data_sources = data_sources,
+  feature_filenames = "example_attendances_6.json"
+)
+```
+
+As expected, both patients 1 and 2 have attended for reason 6 twice, and patient 3 has not.

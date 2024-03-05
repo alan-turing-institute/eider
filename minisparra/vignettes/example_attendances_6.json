@@ -1,0 +1,14 @@
+{
+    "transformation_type": "count",
+    "source_file": "attendances",
+    "grouping_columns": "patient_id",
+    "absent_data_flag": 0,
+    "output_feature_name": "total_attendances",
+    "primary_filter": {
+        "column": "attendance_reason",
+        "type": "in",
+        "value": [
+            6
+        ]
+    }
+}
