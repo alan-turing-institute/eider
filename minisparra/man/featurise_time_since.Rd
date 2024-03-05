@@ -8,7 +8,7 @@ date and the first OR last date in the filtered table.}
 featurise_time_since(all_tables, spec, context = NULL)
 }
 \arguments{
-\item{all_tables}{List of all input tables (passed in from read_all_tables).}
+\item{all_tables}{List of all input tables (passed in from read_data).}
 
 \item{spec}{A list containing the following elements:
 \itemize{
