@@ -1,17 +1,13 @@
-ae2_table_name <- "../data/ae2.csv"
+ae2_table_path <- "../data/ae2.csv"
 
 test_that("featurise_count", {
-  # Read in data. Right now only one table but in principle we would have more
-  # and we want to read them all in at the same time (with one function) to
-  # avoid doing more work than necessary, hence this setup.
-  filenames <- ae2_table_name
-  all_tables <- read_all_tables(filenames)
+  all_tables <- read_data(list(ae2 = ae2_table_path))
 
   # This is a meaningless feature, but it is a serviceable test case
   diag_101 <- featurise(all_tables, "../spec/test_sum.json")
 
   # Check the result
-  orig_table <- read.csv(ae2_table_name)
+  orig_table <- read.csv(ae2_table_path)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
     group_by(id) %>%

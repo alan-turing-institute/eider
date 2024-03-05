@@ -1,14 +1,13 @@
-ae2_table_name <- "../data/ae2.csv"
+ae2_table_path <- "../data/ae2.csv"
 cutoff_date <- lubridate::ymd("2023-03-18")
 
 test_that("featurise_time_since (first,years)", {
-  filenames <- ae2_table_name
-  all_tables <- read_all_tables(filenames)
+  all_tables <- read_data(list(ae2 = ae2_table_path))
 
   diag_101 <- featurise(all_tables, "../spec/test_time_since_firstyears.json")
 
   # Check the result
-  orig_table <- read_one_table(ae2_table_name)
+  orig_table <- read_one_table(ae2_table_path)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
     mutate(
@@ -23,13 +22,12 @@ test_that("featurise_time_since (first,years)", {
 })
 
 test_that("featurise_time_since (last,years)", {
-  filenames <- ae2_table_name
-  all_tables <- read_all_tables(filenames)
+  all_tables <- read_data(list(ae2 = ae2_table_path))
 
   diag_101 <- featurise(all_tables, "../spec/test_time_since_lastyears.json")
 
   # Check the result
-  orig_table <- read_one_table(ae2_table_name)
+  orig_table <- read_one_table(ae2_table_path)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
     mutate(
@@ -44,13 +42,12 @@ test_that("featurise_time_since (last,years)", {
 })
 
 test_that("featurise_time_since (first,days)", {
-  filenames <- ae2_table_name
-  all_tables <- read_all_tables(filenames)
+  all_tables <- read_data(list(ae2 = ae2_table_path))
 
   diag_101 <- featurise(all_tables, "../spec/test_time_since_firstdays.json")
 
   # Check the result
-  orig_table <- read_one_table(ae2_table_name)
+  orig_table <- read_one_table(ae2_table_path)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
     mutate(

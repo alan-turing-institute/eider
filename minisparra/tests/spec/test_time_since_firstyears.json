@@ -1,5 +1,5 @@
 {
-  "source_file": ["../data/ae2.csv"],
+  "source_file": ["ae2"],
   "transformation_type": ["TIME_SINCE"],
   "grouping_columns": ["id"],
   "output_feature_name": ["years_since_first_101_diag"],

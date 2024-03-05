@@ -1,6 +1,6 @@
 #' Extract a feature table using a feature JSON file.
 #'
-#' @param all_tables List of all input tables (passed in from read_all_tables).
+#' @param all_tables List of all input tables (passed in from read_data).
 #' @param feature_json_file Path to the feature JSON file.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.

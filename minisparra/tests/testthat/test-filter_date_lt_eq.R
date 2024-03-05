@@ -1,13 +1,12 @@
-ae2_table_name <- "../data/ae2.csv"
+ae2_table_path <- "../data/ae2.csv"
 
 test_that("featurise_date_lt_eq", {
-  filenames <- ae2_table_name
-  all_tables <- read_all_tables(filenames)
+  all_tables <- read_data(list(ae2 = ae2_table_path))
 
   diag_101 <- featurise(all_tables, "../spec/test_dates_lt_eq.json")
 
   # Check the result
-  orig_table <- read_one_table(ae2_table_name)
+  orig_table <- read_one_table(ae2_table_path)
   diag_101_expected <- orig_table %>%
     filter(time <= lubridate::ymd("2016-03-19")) %>%
     group_by(id) %>%

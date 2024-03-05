@@ -1,18 +1,18 @@
 test_that("transform", {
-  ae2_table_name <- "../data/ae2.csv"
+  ae2_table_path <- "../data/ae2.csv"
 
-  all_table_filenames <- c(ae2_table_name)
+  all_table_filenames <- c(ae2_table_path)
   all_feature_json_filenames <- c(
     "../spec/test_join1.json",
     "../spec/test_join2.json"
   )
   joined_feature_table <- transform(
-    all_table_filenames,
+    data_sources = list(ae2 = ae2_table_path),
     all_feature_json_filenames
   )
 
   # Check the result
-  orig_table <- read.csv(ae2_table_name)
+  orig_table <- read.csv(ae2_table_path)
   ids <- data.frame(id = sort(unique(orig_table$id)))
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%

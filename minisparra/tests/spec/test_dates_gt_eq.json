@@ -1,5 +1,5 @@
 {
-  "source_file": ["../data/ae2.csv"],
+  "source_file": ["ae2"],
   "transformation_type": ["COUNT"],
   "grouping_columns": ["id"],
   "output_feature_name": ["diag_101_count"],

@@ -7,7 +7,7 @@
 featurise(all_tables, feature_json_file, context = NULL)
 }
 \arguments{
-\item{all_tables}{List of all input tables (passed in from read_all_tables).}
+\item{all_tables}{List of all input tables (passed in from read_data).}
 
 \item{feature_json_file}{Path to the feature JSON file.}
 

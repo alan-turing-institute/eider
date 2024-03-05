@@ -16,7 +16,8 @@ Imports:
     stringr,
     magrittr,
     jsonlite,
-    logger
+    logger,
+    purrr
 Suggests: 
     knitr,
     rmarkdown,
