@@ -14,7 +14,13 @@ transform <- function(data_sources, feature_filenames) {
   # Read in each feature JSON file and calculate each individual feature
   features <- lapply(
     feature_filenames,
-    function(json_fname) featurise(all_tables, json_fname)
+    function(json_fname) {
+      featurise(
+        all_tables,
+        json_to_feature(json_fname),
+        context = paste0("featurise: ", json_fname)
+      )
+    }
   )
 
   # Join all the features together

@@ -2,9 +2,11 @@ ae2_table_path <- "../data/ae2.csv"
 
 test_that("featurise_sum", {
   all_tables <- read_data(list(ae2 = ae2_table_path))
-
   # This is a meaningless feature, but it is a serviceable test case
-  diag_101 <- featurise(all_tables, "../spec/test_sum.json")
+  diag_101 <- featurise(
+    all_tables,
+    json_to_feature("../spec/test_sum.json")
+  )
 
   # Check the result
   orig_table <- read.csv(ae2_table_path)

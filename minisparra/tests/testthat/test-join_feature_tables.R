@@ -3,8 +3,14 @@ ae2_table_path <- "../data/ae2.csv"
 test_that("join_feature_tables", {
   all_tables <- read_data(list(ae2 = ae2_table_path))
 
-  diag_101 <- featurise(all_tables, "../spec/test_join1.json")
-  diag_102 <- featurise(all_tables, "../spec/test_join2.json")
+  diag_101 <- featurise(
+    all_tables,
+    json_to_feature("../spec/test_join1.json")
+  )
+  diag_102 <- featurise(
+    all_tables,
+    json_to_feature("../spec/test_join2.json")
+  )
 
   # Join the feature tables
   joined_feature_table <- join_feature_tables(list(diag_101, diag_102))

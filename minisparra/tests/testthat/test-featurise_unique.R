@@ -2,8 +2,10 @@ ae2_table_path <- "../data/ae2.csv"
 
 test_that("featurise_unique", {
   all_tables <- read_data(list(ae2 = ae2_table_path))
-
-  diag_1_unique <- featurise(all_tables, "../spec/test_unique.json")
+  diag_1_unique <- featurise(
+    all_tables,
+    json_to_feature("../spec/test_unique.json")
+  )
 
   # Check the result
   orig_table <- read.csv(ae2_table_path)
