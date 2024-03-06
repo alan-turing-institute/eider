@@ -4,12 +4,13 @@
 \alias{transform}
 \title{Perform the entire feature transformation process.}
 \usage{
-transform(all_table_filenames, all_feature_json_filenames)
+transform(data_sources, feature_filenames)
 }
 \arguments{
-\item{all_table_filenames}{A vector of file paths to the source tables.}
+\item{data_sources}{A list mapping unique table identifiers to either
+the file path from which they should be read from, or the data frame itself.}
 
-\item{all_feature_json_filenames}{A vector of file paths to the feature JSON
+\item{feature_filenames}{A vector of file paths to the feature JSON
 specifications.}
 }
 \value{

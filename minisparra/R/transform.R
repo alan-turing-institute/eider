@@ -1,19 +1,26 @@
 #' Perform the entire feature transformation process.
 #'
-#' @param all_table_filenames A vector of file paths to the source tables.
-#' @param all_feature_json_filenames A vector of file paths to the feature JSON
+#' @param data_sources A list mapping unique table identifiers to either
+#' the file path from which they should be read from, or the data frame itself.
+#' @param feature_filenames A vector of file paths to the feature JSON
 #' specifications.
 #'
 #' @return A data frame with the feature tables joined together
 #' @export
-transform <- function(all_table_filenames, all_feature_json_filenames) {
+transform <- function(data_sources, feature_filenames) {
   # Read all the tables
-  all_tables <- read_all_tables(all_table_filenames)
+  all_tables <- read_data(data_sources)
 
   # Read in each feature JSON file and calculate each individual feature
   features <- lapply(
-    all_feature_json_filenames,
-    function(json_fname) featurise(all_tables, json_fname)
+    feature_filenames,
+    function(json_fname) {
+      featurise(
+        all_tables,
+        json_to_feature(json_fname),
+        context = paste0("featurise: ", json_fname)
+      )
+    }
   )
 
   # Join all the features together

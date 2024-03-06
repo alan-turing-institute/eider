@@ -1,7 +1,7 @@
 #' Computes the number of rows per patient ID which contain specific values in
 #' specific columns.
 #'
-#' @param all_tables List of all input tables (passed in from read_all_tables).
+#' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
 #'  - source_file:         Filename of the source table to read from.
 #'  - primary_filter:      A filter object to apply to the source table.
@@ -51,6 +51,13 @@ featurise_count <- function(all_tables,
     error = function(e) {
       error_context(e, context)
     }
+  )
+
+  feature_table <- pad_missing_values(
+    source_table,
+    grouping_columns,
+    missing_value,
+    feature_table
   )
 
   list(

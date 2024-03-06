@@ -1,0 +1,24 @@
+{
+  "transformation_type": ["COMBINE_MAX"],
+  "output_feature_name": ["my_max"],
+  "grouping_columns": ["id"],
+  "feature_list": {
+    "count_of_101s_in_diagnosis_2": {
+      "source_file": ["ae2"],
+      "transformation_type": ["count"],
+      "absent_data_flag": [0],
+      "primary_filter": {
+          "column": ["diagnosis_2"],
+          "type": ["in"],
+          "value": [101]
+        }
+    },
+    "sum_of_all_diagnosis_1": {
+      "source_file": ["ae2"],
+      "transformation_type": ["sum"],
+      "aggregation_column": ["diagnosis_1"],
+      "absent_data_flag": [0],
+      "primary_filter": null
+    }
+  }
+}

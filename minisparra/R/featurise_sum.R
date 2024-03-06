@@ -1,7 +1,7 @@
 #' Groups by ID and computes the sum of the values in all rows which pass a
 #' given filter.
 #'
-#' @param all_tables List of all input tables (passed in from read_all_tables).
+#' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
 #'  - source_file:         Filename of the source table to read from.
 #'  - primary_filter:      A filter object to apply to the source table.
@@ -57,6 +57,14 @@ featurise_sum <- function(all_tables,
       error_context(e, context)
     }
   )
+
+  feature_table <- pad_missing_values(
+    source_table,
+    grouping_columns,
+    missing_value,
+    feature_table
+  )
+
 
   list(
     feature_table = feature_table,

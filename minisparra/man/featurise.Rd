@@ -4,12 +4,12 @@
 \alias{featurise}
 \title{Extract a feature table using a feature JSON file.}
 \usage{
-featurise(all_tables, feature_json_file, context = NULL)
+featurise(all_tables, spec, context = NULL)
 }
 \arguments{
-\item{all_tables}{List of all input tables (passed in from read_all_tables).}
+\item{all_tables}{List of all input tables (passed in from read_data).}
 
-\item{feature_json_file}{Path to the feature JSON file.}
+\item{spec}{Parsed JSON file containing the feature specification.}
 
 \item{context}{A character vector to be used in logging or error messages.
 Defaults to NULL.}

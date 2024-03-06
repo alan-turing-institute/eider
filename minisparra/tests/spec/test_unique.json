@@ -1,5 +1,5 @@
 {
-  "source_file": ["../data/ae2.csv"],
+  "source_file": ["ae2"],
   "transformation_type": ["NUNIQUE"],
   "aggregation_column": ["diagnosis_1"],
   "grouping_columns": ["id"],

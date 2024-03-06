@@ -3,7 +3,7 @@
 #' @param file Name of the file to be used from inst/extdata.
 #' If NULL all files will be listed
 #'
-#' @return
+#' @return A character string with the path to the file, or a vector of strings
 #' @export
 #'
 #' @examples

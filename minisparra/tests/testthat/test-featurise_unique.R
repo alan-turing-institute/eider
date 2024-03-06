@@ -1,13 +1,14 @@
-ae2_table_name <- "../data/ae2.csv"
+ae2_table_path <- "../data/ae2.csv"
 
 test_that("featurise_unique", {
-  filenames <- ae2_table_name
-  all_tables <- read_all_tables(filenames)
-
-  diag_1_unique <- featurise(all_tables, "../spec/test_unique.json")
+  all_tables <- read_data(list(ae2 = ae2_table_path))
+  diag_1_unique <- featurise(
+    all_tables,
+    json_to_feature("../spec/test_unique.json")
+  )
 
   # Check the result
-  orig_table <- read.csv(ae2_table_name)
+  orig_table <- read.csv(ae2_table_path)
   diag_1_unique_expected <- orig_table %>%
     group_by(id) %>%
     summarise(diag_1_unique = n_distinct(diagnosis_1)) %>%
