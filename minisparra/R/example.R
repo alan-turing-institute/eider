@@ -7,9 +7,8 @@
 #' @export
 #'
 #' @examples
-#' minisparra_example() Returns a list of all the random patient data
-#' minisparra_example("random_ae_data.csv") Returns path to the random
-#' A&E type file
+#' minisparra_example()
+#' minisparra_example("random_ae_data.csv")
 minisparra_example <- function(file = NULL) {
   current_package_name <- "miniSPARRA01"
   if (is.null(file)) {

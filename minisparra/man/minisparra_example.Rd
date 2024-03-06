@@ -7,12 +7,13 @@
 minisparra_example(file = NULL)
 }
 \arguments{
-\item{file}{Name of the file to be used from inst/extdata. If NULL all files will be listed}
+\item{file}{Name of the file to be used from inst/extdata.
+If NULL all files will be listed}
 }
 \description{
 Return path to the example datasets provided with the package
 }
 \examples{
-minisparra_example() Returns a list of all the random patient data
-minisparra_example("random_ae_data.csv") Returns path to the random A&E type file
+minisparra_example()
+minisparra_example("random_ae_data.csv")
 }
