@@ -1,0 +1,32 @@
+Package: eider
+Title: Todo Acronym Has Not Been Decided
+Version: 0.0.1.0
+Authors@R: c(
+    person("Catalina", "Vallejos", email = "catalina.vallejos@ed.ac.uk", role = c("ctb")),
+    person("Louis", "Aslett", email = "louis.aslett@durham.ac.uk", role = c("ctb")),
+    person("Simon", "Rogers", email = "simon.rogers@nhs.scot", role = c("ctb")),
+    person("Camila", "Rangel Smith", email = "crangelsmith@turing.ac.uk", role = c("cre", "ctb")),
+    person("Helen", "Duncan Little", email = "hduncan@turing.ac.uk", role = c("aut")),
+    person("Jonathan", "Yong", email = "jyong@turing.ac.uk", role = c("aut"))
+    )
+Description: Extract features from tabular data in a declarative fashion
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    dplyr,
+    glue,
+    lubridate,
+    stringr,
+    magrittr,
+    jsonlite,
+    logger,
+    purrr,
+    fs
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

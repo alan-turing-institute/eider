@@ -1,14 +1,14 @@
 ---
-title: "minisparra"
+title: "eider"
 ---
 
-This Quarto book serves as a demo of the minisparra package (for which we still don't have a real name).
+This Quarto book serves as a demo of the `eider` package.
 
 First, we load the package from the local directory.
 
 ```{r}
-install.packages("../minisparra/", repos = NULL, type = "source")
-library(miniSPARRA01)
+install.packages("../eider/", repos = NULL, type = "source")
+library(eider)
 ```
 
 Also, let's set up a function to visualise tables nicely.
@@ -29,9 +29,9 @@ kbl <- function(x) {
 
 # Process pipeline
 ## 0. Decide what you want to filter for
-MINISPARRA is designed to process (Scottish) medical data and collate using a range of filter functions to allow users to easily extract tables for ML pipelines. 
+`eider` is designed to process (Scottish) medical data and collate using a range of filter functions to allow users to easily extract tables for ML pipelines. 
 
-Argubly the first step should be to decide which data you will use, and how you will filter it. MINISPARRA allows users to specify a range of data sources (files/tables) and to define which features they want to extract data via a specification json. MINISPARRA will filter and join the data as per the spec.
+Argubly the first step should be to decide which data you will use, and how you will filter it. `eider` allows users to specify a range of data sources (files/tables) and to define which features they want to extract data via a specification json. `eider` will filter and join the data as per the spec.
 
 
 ## 1. Read in data
@@ -56,7 +56,7 @@ From the first row in this example we can see that patient 2 was admitted on the
 ## 2. Define a feature to extract
 Users then specify which features they would like to extract from which data. A simple specification file is given below.
 
-`source_file` is a relative path to the data (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. MINISPARRA has N different transformation types, X, Y, and Z.
+`source_file` is a relative path to the data (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. `eider` has N different transformation types, X, Y, and Z.
 The user specifies how the data will be grouped via `grouping_columns`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
 
 ```{r}
@@ -71,7 +71,8 @@ As the primary filter is AND, the resultant dataframe will be a count, grouped b
 
 
 ## 3. Extract the feature
-Now we can use MINISPARRA to run the transformation pipeline. We specify the path to the data via `all_table_filenames` and the path the the specification via `all_feature_json_filenames`.
+
+Now we can use `eider` to run the transformation pipeline. We specify the path to the data via `all_table_filenames` and the path the the specification via `all_feature_json_filenames`.
 
 We then run the transformation which will produce the resultant dataframe.
 ```{r}

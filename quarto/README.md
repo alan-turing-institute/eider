@@ -1,4 +1,4 @@
-# minisparra ❤️ quarto
+# eider ❤️ quarto
 
 Steps to build locally:
 

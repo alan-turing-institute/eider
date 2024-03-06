@@ -4,7 +4,7 @@ project:
     port: 4680
 
 website:
-  title: "SPARRA"
+  title: "eider"
   navbar:
     left:
       - href: index.qmd

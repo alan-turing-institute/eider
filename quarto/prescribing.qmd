@@ -6,8 +6,8 @@ Peamble for nice formatting
 
 ```{r}
 #| warning: false
-install.packages("../minisparra/", repos = NULL, type = "source")
-library(miniSPARRA01)
+install.packages("../eider/", repos = NULL, type = "source")
+library(eider)
 
 # Formatting
 library(knitr)

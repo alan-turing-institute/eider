@@ -25,14 +25,14 @@ filter_or <- function(table, filter_obj, context = NULL) {
   # Move row names to a column if present
   has_row_names <- tibble::has_rownames(table)
   if (has_row_names) {
-    table <- tibble::rownames_to_column(table, "SPARRA_PRIVATE_ROW_NAMES")
+    table <- tibble::rownames_to_column(table, "EIDER_PRIVATE_ROW_NAMES")
   }
 
   # Attach an index column to label the rows. This step gets rid of preexisting
   # row names hence the check above
-  has_indices <- "SPARRA_PRIVATE_INDEX" %in% names(table)
+  has_indices <- "EIDER_PRIVATE_INDEX" %in% names(table)
   if (!has_indices) {
-    table <- tibble::rowid_to_column(table, "SPARRA_PRIVATE_INDEX")
+    table <- tibble::rowid_to_column(table, "EIDER_PRIVATE_INDEX")
   }
 
   # Pass the input table through each subfilter in turn. To avoid doing more
@@ -57,22 +57,22 @@ filter_or <- function(table, filter_obj, context = NULL) {
   # Sort by the index column (to restore the input order) and remove it
   if (!has_indices) {
     passed <- passed %>%
-      arrange(SPARRA_PRIVATE_INDEX) %>%
-      select(-SPARRA_PRIVATE_INDEX)
+      arrange(EIDER_PRIVATE_INDEX) %>%
+      select(-EIDER_PRIVATE_INDEX)
     not_yet_passed <- not_yet_passed %>%
-      arrange(SPARRA_PRIVATE_INDEX) %>%
-      select(-SPARRA_PRIVATE_INDEX)
+      arrange(EIDER_PRIVATE_INDEX) %>%
+      select(-EIDER_PRIVATE_INDEX)
   }
 
   # Restore row names if present
   if (has_row_names) {
     passed <- tibble::column_to_rownames(
       passed,
-      "SPARRA_PRIVATE_ROW_NAMES"
+      "EIDER_PRIVATE_ROW_NAMES"
     )
     not_yet_passed <- tibble::column_to_rownames(
       not_yet_passed,
-      "SPARRA_PRIVATE_ROW_NAMES"
+      "EIDER_PRIVATE_ROW_NAMES"
     )
   }
 

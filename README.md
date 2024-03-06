@@ -1,5 +1,6 @@
-# SPARRA
-Turing-hosted repo for SPARRA
+# eider
+
+Reincarnation of SPARRA as a new bird
 
 # Weekly meetings
 Thursdays, usually 10:30 - 11:30. Notes [here](https://hackmd.io/@hdduncan/BJRce3fYa)
@@ -7,7 +8,7 @@ Thursdays, usually 10:30 - 11:30. Notes [here](https://hackmd.io/@hdduncan/BJRce
 
 ## Package documentation
 
-https://alan-turing-institute.github.io/SPARRA/docs/
+https://alan-turing-institute.github.io/eider/docs/
 
 
 ## Setting up pre-commit

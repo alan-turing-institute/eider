@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(miniSPARRA01)
+library(eider)
 
-test_check("miniSPARRA01")
+test_check("eider")
