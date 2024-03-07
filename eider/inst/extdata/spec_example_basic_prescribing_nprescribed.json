@@ -1,24 +1,19 @@
 {
-    "source_file": ["random_pis_data.csv"],
+    "source_file": ["prescribing"],
     "transformation_type": ["SUM"],
     "aggregation_column": ["num_items"],
-    "grouping_columns": ["user_id"],
+    "grouping_columns": ["id"],
     "absent_data_flag": [0],
-    "output_feature_name": ["user_defined_name"],
+    "output_feature_name": ["number_of_prescribed_items_goes_here"],
     "primary_filter" : {
         "type": ["AND"],
         "subfilters":{
             "subfilter_1": {
-                "column": ["bnf_section"],
-                "type": ["IN"],
-                "value": ["0203", "0204"]
-            },
-            "subfilter_2": {
                 "column": ["paid_date"],
                 "type": ["DATE_GT_EQ"],
                 "value": ["2015-01-01"]
             },
-            "subfilter_3": {
+            "subfilter_2": {
                 "column": ["paid_date"],
                 "type": ["DATE_LT_EQ"],
                 "value": ["2018-01-01"]

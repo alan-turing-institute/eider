@@ -1,10 +1,10 @@
 {
-    "source_file": ["../example_data/random_pis_data.csv"],
+    "source_file": ["prescribing"],
     "transformation_type": ["NUNIQUE"],
     "aggregation_column": ["bnf_section"],
     "grouping_columns": ["id"],
     "absent_data_flag": [0],
-    "output_feature_name": ["user_defined_name"],
+    "output_feature_name": ["N_unique_sections"],
     "primary_filter" : {
         "type": ["AND"],
         "subfilters":{

@@ -1,9 +1,9 @@
 {
-  "source_file": ["../example_data/random_ae_data.csv"],
+  "source_file": ["ae2"],
   "transformation_type": ["COUNT"],
   "grouping_columns": ["id"],
-  "absent_data_flag": [0],
-  "output_feature_name": ["user_defined_name"],
+  "absent_data_flag": ["NA"],
+  "output_feature_name": ["patients_w_diag_1_in_date_range"],
   "primary_filter": {
     "type": ["AND"],
     "subfilters": {
@@ -16,6 +16,11 @@
         "column": ["diagnosis_1"],
         "type": ["IN"],
         "value": [101]
+      },
+      "subfilter_3": {
+        "column": ["time"],
+        "type": ["date_gt"],
+        "value": ["2015-12-31"]
       }
     }
   }

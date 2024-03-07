@@ -1,0 +1,65 @@
+---
+ title: "Combine"
+---
+
+Peamble for nice formatting
+ 
+```{r}
+#| warning: false
+install.packages("../eider/", repos = NULL, type = "source")
+library(eider)
+# Formatting
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+kbl <- function(x) {
+  x <- head(x, 10)
+  x %>%
+    knitr::kable(format = 'html', 
+                 table.attr = 'data-quarto-disable-processing="true"') %>%
+    kableExtra::kable_styling(bootstrap_options = "striped", 
+                              full_width = FALSE)
+}
+```
+
+## 1. Read in data
+
+This time we will need 2 data sets, the A&E data and the Prescribing data
+
+```{r}
+ae_data_filepath <- eider_example("random_ae_data.csv")
+prescribing_data_filepath <- eider_example("random_pis_data.csv")
+```
+
+This is the A&E data
+```{r}
+read.csv(ae_data_filepath) %>% kbl()
+```
+
+and this is the prescription data
+```{r}
+read.csv(prescribing_data_filepath) %>% kbl()
+```
+
+## 2. Read in the specification
+This is what the specification looks like
+```{r}
+basic_combine_spec_filepath <- eider_example(
+  "spec_example_combine_linear.json"
+  )
+writeLines(readLines(basic_combine_spec_filepath)) 
+```
+
+
+## 3. Run the transformation
+```{r}
+all_data_path <- list(ae2 = ae_data_filepath, 
+                      prescribing = prescribing_data_filepath)
+# Note now there are two source files with aliases.
+
+tf <- transform(all_data_path, basic_combine_spec_filepath)
+
+tf
+```
+
+
