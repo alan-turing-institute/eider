@@ -77,7 +77,7 @@ featurise_combine <- function(mode,
   }
 
   # Combine the subfeatures into a table
-  joined_subfeatures <- join_feature_tables(subfeatures, context)
+  joined_subfeatures <- join_feature_tables(subfeatures, context = context)
 
   # Then combine the subfeatures
   feature_table <- tibble(id = joined_subfeatures$id) %>%
