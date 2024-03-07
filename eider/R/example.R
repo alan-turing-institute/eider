@@ -7,16 +7,17 @@
 #' @export
 #'
 #' @examples
-#' minisparra_example()
-#' minisparra_example("random_ae_data.csv")
-minisparra_example <- function(file = NULL) {
-  current_package_name <- "miniSPARRA01"
+#' eider_example()
+#' eider_example("random_ae_data.csv")
+eider_example <- function(file = NULL) {
+  current_package_name <- "eider"
   if (is.null(file)) {
     dir(system.file("extdata", package = current_package_name))
   } else {
     system.file("extdata",
-                file,
-                package = current_package_name,
-                mustWork = TRUE)
+      file,
+      package = current_package_name,
+      mustWork = TRUE
+    )
   }
 }

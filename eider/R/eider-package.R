@@ -1,5 +1,5 @@
 #' @description
-#' Minisparra.
+#' ooooooOOOOooooo!!
 #'
 #' @import dplyr
 #' @import logger

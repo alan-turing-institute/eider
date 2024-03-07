@@ -26,7 +26,7 @@ jobs:
         with:
           packages:
             any::pkgdown
-            local::minisparra
+            local::eider
             any::rmarkdown
             any::knitr
             any::kableExtra
@@ -34,7 +34,7 @@ jobs:
             any::lintr
 
       - name: Build package docs
-        working-directory: minisparra
+        working-directory: eider
         run: pkgdown::build_site()
         shell: Rscript {0}
 
@@ -50,7 +50,7 @@ jobs:
       - name: Copy both outputs to the same folder
         run: |
           mkdir web_files
-          cp -r minisparra/docs web_files/docs
+          cp -r eider/docs web_files/docs
           cp -r quarto/_site web_files/quarto
 
       - name: Deploy built files to gh-pages branch
