@@ -16,8 +16,10 @@ library(tidyverse)
 kbl <- function(x) {
   x <- head(x, 10)
   x %>%
-    knitr::kable(format = 'html', table.attr = 'data-quarto-disable-processing="true"') %>%
-    kableExtra::kable_styling(bootstrap_options = "striped", full_width = FALSE)
+    knitr::kable(format = 'html', 
+                 table.attr = 'data-quarto-disable-processing="true"') %>%
+    kableExtra::kable_styling(bootstrap_options = "striped", 
+                              full_width = FALSE)
 }
 ```
 
@@ -26,47 +28,47 @@ kbl <- function(x) {
 Here are some examples of errors with context using the A&E data
 
 ```{r}
-filenames <- c("../example_data/random_ae_data.csv")
-all_tables <- read_all_tables(filenames)
-all_tables$`../example_data/random_ae_data.csv` %>% kbl()
+#filenames <- c("../example_data/random_ae_data.csv")
+#all_tables <- read_all_tables(filenames)
+#all_tables$`../example_data/random_ae_data.csv` %>% kbl()
 ```
 
 ### Example 1
 
 ```{r}
-lines <- readLines("./ae2_data_wrong1.json")
-lines[3]
+#lines <- readLines("./ae2_data_wrong1.json")
+#lines[3]
 ```
 
 ```{r error=TRUE}
-transform(
-  all_table_filenames = all_table_filenames,
-  all_feature_json_filenames = "./ae2_data_wrong1.json")
+#transform(
+#  all_table_filenames = all_table_filenames,
+#  all_feature_json_filenames = "./ae2_data_wrong1.json")
 ```
 
 ### Example 2
 
 ```{r}
-lines <- readLines("./ae2_data_wrong2.json")
-lines[4]
+#lines <- readLines("./ae2_data_wrong2.json")
+#lines[4]
 ```
 
 ```{r error=TRUE}
-transform(
-  all_table_filenames = all_table_filenames,
-  all_feature_json_filenames = "./ae2_data_wrong2.json")
+#transform(
+#  all_table_filenames = all_table_filenames,
+#  all_feature_json_filenames = "./ae2_data_wrong2.json")
 ```
 
 ### Example 3
 
 ```{r}
-lines <- readLines("./ae2_data_wrong3.json")
-lines[11]
+#lines <- readLines("./ae2_data_wrong3.json")
+#lines[11]
 ```
 
 ```{r error=TRUE}
-transform(
-  all_table_filenames = all_table_filenames,
-  all_feature_json_filenames = "./ae2_data_wrong3.json")
+#transform(
+#  all_table_filenames = all_table_filenames,
+#  all_feature_json_filenames = "./ae2_data_wrong3.json")
 ```
 

@@ -41,12 +41,11 @@ In this example we will use some random A&E-type data stored in a csv file, and 
 
 This step must be done before any feature extraction to avoid having to read the same table multiple times.
 
-Here we are utilising MINISPARRA's example data which is accessed via `minisparra_examples("random_ae_data.csv")`
+Here we are utilising MINISPARRA's example data which is accessed via `eider_examples("random_ae_data.csv")`
 
 ```{r}
-ae_filepath <- eider_example("random_ae_data.csv")
+ae_data_filepath <- eider_example("random_ae_data.csv")
 read.csv(ae_data_filepath) %>% kbl()
-
 ```
 
 A snippet of the table is shown above.
@@ -58,7 +57,7 @@ From the first row in this example we can see that patient 2 was admitted on the
 ## 2. Define a feature to extract
 Users then specify which features they would like to extract from which data. A simple specification file is given below.
 
-`source_file` is a relative path to the data (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. `eider` has N different transformation types, X, Y, and Z.
+`source_file` is the name for the corresponding filepath in a named list (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. eider has N different transformation types, X, Y, and Z. 
 The user specifies how the data will be grouped via `grouping_columns`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
 
 ```{r}
@@ -94,7 +93,7 @@ Above is the resultant dataframe. We can see that patient with id 2 had 1 instan
 ## 4. Using date filtering
 In the above example the returned dataframe spanned all the dates over which the input data csv spanned. However this can be refined in the specification.
 ```{r}
-basic_ae_spec_w_date_filepath <- minisparra_example(
+basic_ae_spec_w_date_filepath <- eider_example(
   "spec_example_basic_ae_data_w_date.json"
   )
 writeLines(readLines(basic_ae_spec_w_date_filepath))
@@ -118,7 +117,7 @@ We can also expand the filters to return results if either `diagnosis_1` or `dia
 The specification file would look like this:
 
 ```{r}
-basic_ae_spec_or_w_date_filepath <- minisparra_example(
+basic_ae_spec_or_w_date_filepath <- eider_example(
   "spec_example_basic_ae_data_or_w_date.json"
   )
 writeLines(readLines(basic_ae_spec_or_w_date_filepath))

@@ -6,8 +6,8 @@ Peamble for nice formatting
  
 ```{r}
 #| warning: false
-install.packages("../minisparra/", repos = NULL, type = "source")
-library(miniSPARRA01)
+install.packages("../eider/", repos = NULL, type = "source")
+library(eider)
 # Formatting
 library(knitr)
 library(kableExtra)
@@ -27,8 +27,8 @@ kbl <- function(x) {
 This time we will need 2 data sets, the A&E data and the Prescribing data
 
 ```{r}
-ae_data_filepath <- minisparra_example("random_ae_data.csv")
-prescribing_data_filepath <- minisparra_example("random_pis_data.csv")
+ae_data_filepath <- eider_example("random_ae_data.csv")
+prescribing_data_filepath <- eider_example("random_pis_data.csv")
 ```
 
 This is the A&E data
@@ -44,7 +44,7 @@ read.csv(prescribing_data_filepath) %>% kbl()
 ## 2. Read in the specification
 This is what the specification looks like
 ```{r}
-basic_combine_spec_filepath <- minisparra_example(
+basic_combine_spec_filepath <- eider_example(
   "spec_example_combine_linear.json"
   )
 writeLines(readLines(basic_combine_spec_filepath)) 
