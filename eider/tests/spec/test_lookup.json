@@ -1,0 +1,8 @@
+{
+  "source_file": ["ae2"],
+  "transformation_type": ["LOOKUP"],
+  "source_column_name": ["diagnosis_1"],
+  "grouping_columns": ["id"],
+  "output_feature_name": ["first_diagnosis"],
+  "absent_data_flag": null
+}

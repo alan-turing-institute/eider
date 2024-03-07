@@ -27,6 +27,8 @@ featurise <- function(all_tables,
     feature <- featurise_count(all_tables, spec, context)
   } else if (t == "sum") {
     feature <- featurise_sum(all_tables, spec, context)
+  } else if (t == "lookup") {
+    feature <- featurise_lookup(all_tables, spec, context)
   } else if (t == "nunique") {
     feature <- featurise_unique(all_tables, spec, context)
   } else if (t == "time_since") {
