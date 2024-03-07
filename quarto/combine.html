@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>eider - Logging</title>
+<title>eider - Combine</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,6 +100,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -146,12 +148,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#errors-with-context" id="toc-errors-with-context" class="nav-link active" data-scroll-target="#errors-with-context">Errors with context</a>
-  <ul class="collapse">
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
-  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
-  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3">Example 3</a></li>
-  </ul></li>
+  <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link active" data-scroll-target="#read-in-data">1. Read in data</a></li>
+  <li><a href="#read-in-the-specification" id="toc-read-in-the-specification" class="nav-link" data-scroll-target="#read-in-the-specification">2. Read in the specification</a></li>
+  <li><a href="#run-the-transformation" id="toc-run-the-transformation" class="nav-link" data-scroll-target="#run-the-transformation">3. Run the transformation</a></li>
   </ul>
 </nav>
     </div>
@@ -160,7 +159,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Logging</h1>
+<h1 class="title">Combine</h1>
 </div>
 
 
@@ -181,66 +180,284 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"../eider/"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(eider)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Formatting</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">head</span>(x, <span class="dv">10</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>, </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">table.attr =</span> <span class="st">'data-quarto-disable-processing="true"'</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Formatting</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">head</span>(x, <span class="dv">10</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">'html'</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">table.attr =</span> <span class="st">'data-quarto-disable-processing="true"'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                              <span class="at">full_width =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="errors-with-context" class="level2">
-<h2 class="anchored" data-anchor-id="errors-with-context">Errors with context</h2>
-<p>Here are some examples of errors with context using the A&amp;E data</p>
+<section id="read-in-data" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-data">1. Read in data</h2>
+<p>This time we will need 2 data sets, the A&amp;E data and the Prescribing data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filenames &lt;- c("../example_data/random_ae_data.csv")</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#all_tables &lt;- read_all_tables(filenames)</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#all_tables$`../example_data/random_ae_data.csv` %&gt;% kbl()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ae_data_filepath <span class="ot">&lt;-</span> <span class="fu">eider_example</span>(<span class="st">"random_ae_data.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>prescribing_data_filepath <span class="ot">&lt;-</span> <span class="fu">eider_example</span>(<span class="st">"random_pis_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="example-1" class="level3">
-<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
+<p>This is the A&amp;E data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#lines &lt;- readLines("./ae2_data_wrong1.json")</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#lines[3]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(ae_data_filepath) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> time </th>
+   <th style="text-align:right;"> attendance_category </th>
+   <th style="text-align:right;"> diagnosis_1 </th>
+   <th style="text-align:right;"> diagnosis_2 </th>
+   <th style="text-align:right;"> diagnosis_3 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 2016-08-16 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 102 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 2015-07-28 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 104 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:left;"> 2017-09-20 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 104 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:left;"> 2016-03-25 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 101 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 2016-09-20 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 101 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> 2016-02-11 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 101 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:left;"> 2016-02-14 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 104 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:left;"> 2015-11-09 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 102 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 14 </td>
+   <td style="text-align:left;"> 2016-03-24 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:right;"> 104 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> 2015-07-01 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 101 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
+</div>
+<p>and this is the prescription data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transform(</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  all_table_filenames = all_table_filenames,</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  all_feature_json_filenames = "./ae2_data_wrong1.json")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(prescribing_data_filepath) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table data-quarto-disable-processing="true" class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> id </th>
+   <th style="text-align:left;"> paid_date </th>
+   <th style="text-align:right;"> bnf_section </th>
+   <th style="text-align:right;"> num_items </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:left;"> 2017-12-15 </td>
+   <td style="text-align:right;"> 106 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:left;"> 2016-08-11 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:left;"> 2015-07-07 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:left;"> 2017-03-14 </td>
+   <td style="text-align:right;"> 106 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> 2015-08-07 </td>
+   <td style="text-align:right;"> 105 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:left;"> 2016-05-07 </td>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 2016-09-29 </td>
+   <td style="text-align:right;"> 104 </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:left;"> 2015-12-01 </td>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> 2017-01-11 </td>
+   <td style="text-align:right;"> 105 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:left;"> 2017-11-04 </td>
+   <td style="text-align:right;"> 105 </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
 </div>
 </section>
-<section id="example-2" class="level3">
-<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
+<section id="read-in-the-specification" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-the-specification">2. Read in the specification</h2>
+<p>This is what the specification looks like</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#lines &lt;- readLines("./ae2_data_wrong2.json")</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#lines[4]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>basic_combine_spec_filepath <span class="ot">&lt;-</span> <span class="fu">eider_example</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"spec_example_combine_linear.json"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">readLines</span>(basic_combine_spec_filepath)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+    "transformation_type": "COMBINE_LINEAR",
+    "output_feature_name": "sum_of_feature_1_and_feature_2",
+    "grouping_columns": ["id"],
+    "feature_list": {
+        "feature_1": {
+            "weight": 1,
+            "source_file": ["ae2"],
+            "transformation_type": "COUNT",
+            "absent_data_flag": 0,
+            "primary_filter": {
+                "column": "attendance_category",
+                "type": "IN",
+                "value": [1]
+            }
+        },
+        "feature_2": {
+            "weight": 1,
+            "source_file": ["prescribing"],
+            "transformation_type": "COUNT",
+            "absent_data_flag": 0,
+            "primary_filter": {
+                "column": "bnf_section",
+                "type": "IN",
+                "value": [106]
+            }
+        }
+    }
+}</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transform(</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  all_table_filenames = all_table_filenames,</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  all_feature_json_filenames = "./ae2_data_wrong2.json")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="example-3" class="level3">
-<h3 class="anchored" data-anchor-id="example-3">Example 3</h3>
+<section id="run-the-transformation" class="level2">
+<h2 class="anchored" data-anchor-id="run-the-transformation">3. Run the transformation</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#lines &lt;- readLines("./ae2_data_wrong3.json")</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#lines[11]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>all_data_path <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">ae2 =</span> ae_data_filepath, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">prescribing =</span> prescribing_data_filepath)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note now there are two source files with aliases.</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>tf <span class="ot">&lt;-</span> <span class="fu">transform</span>(all_data_path, basic_combine_spec_filepath)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>tf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id sum_of_feature_1_and_feature_2
+1   0                              9
+2   1                              5
+3   2                              5
+4   3                              4
+5   4                              2
+6   5                              4
+7   6                              7
+8   7                              7
+9   8                              6
+10  9                              5
+11 10                              5
+12 11                              3
+13 12                              6
+14 13                              9
+15 14                              6
+16 15                              5
+17 16                              3
+18 17                              8
+19 18                              3
+20 19                             10</code></pre>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#transform(</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  all_table_filenames = all_table_filenames,</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  all_feature_json_filenames = "./ae2_data_wrong3.json")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
