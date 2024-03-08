@@ -1,0 +1,27 @@
+{
+  "source_file": ["ae2"],
+  "transformation_type": ["PRESENT"],
+  "grouping_columns": ["id"],
+  "output_feature_name": ["any_101_diagnosis"],
+  "absent_data_flag": [0],
+  "primary_filter": {
+    "type": ["OR"],
+    "subfilters": {
+      "subfilter_1": {
+        "column": ["diagnosis_1"],
+        "type": ["IN"],
+        "value": [101]
+      },
+      "subfilter_2": {
+        "column": ["diagnosis_2"],
+        "type": ["IN"],
+        "value": [101]
+      },
+      "subfilter_3": {
+        "column": ["diagnosis_3"],
+        "type": ["IN"],
+        "value": [101]
+      }
+    }
+  }
+}
