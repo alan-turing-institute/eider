@@ -28,15 +28,13 @@ featurise_count <- function(all_tables,
   trace_context(context)
 
   # Validate spec
-  source_table <- all_tables[[spec$source_file]]
+  source_table <- validate_source_file(spec, all_tables, context)
+  output_feature_name <- validate_output_feature_name(spec, context)
+  grouping_columns <- validate_column_present(
+    "grouping_columns", spec, source_table, context
+  )
+  missing_value <- validate_absent_default_value(spec, context)
   filter_obj <- spec$primary_filter
-  output_feature_name <- spec$output_feature_name
-  grouping_columns <- spec$grouping_columns
-  missing_value <- spec$absent_default_value
-
-  if (length(grouping_columns) > 1) {
-    stop("Multiple groupings not yet implemented")
-  }
 
   # Calculate feature
   feature_table <- source_table %>% filter_all(filter_obj, context)

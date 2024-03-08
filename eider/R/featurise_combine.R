@@ -29,16 +29,17 @@ featurise_combine <- function(mode,
 
   mode <- tolower(mode)
 
+  # featurise.R should already check this, so we use stop() instead of
+  # error_context() here
   if (!mode %in% c("combine_linear", "combine_min", "combine_max")) {
     stop("Invalid combination mode: ", mode)
   }
 
   # Validate spec
-  output_feature_name <- spec$output_feature_name
+  output_feature_name <- validate_output_feature_name(spec, context)
+
+  # TODO: make grouping column individual per child feature
   grouping_columns <- spec$grouping_columns
-  if (length(grouping_columns) > 1) {
-    stop("Multiple groupings not yet implemented")
-  }
 
   # Choose starting missing value
   initial_missing_value <- switch(mode,
