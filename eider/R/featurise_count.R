@@ -7,7 +7,7 @@
 #'  - primary_filter:      A filter object to apply to the source table.
 #'  - output_feature_name: Name of the output column.
 #'  - grouping_columns:    Name of the column(s) to group by.
-#'  - absent_data_flag:    The value to use for patients who have no matching
+#'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
@@ -32,7 +32,7 @@ featurise_count <- function(all_tables,
   filter_obj <- spec$primary_filter
   output_feature_name <- spec$output_feature_name
   grouping_columns <- spec$grouping_columns
-  missing_value <- spec$absent_data_flag
+  missing_value <- spec$absent_default_value
 
   if (length(grouping_columns) > 1) {
     stop("Multiple groupings not yet implemented")

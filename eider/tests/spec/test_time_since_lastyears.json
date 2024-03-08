@@ -7,7 +7,7 @@
   "time_units": ["years"],
   "from_first": [false],
   "cutoff_date": ["2023-03-18"],
-  "absent_data_flag": [40],
+  "absent_default_value": [40],
   "primary_filter": {
     "type": ["OR"],
     "subfilters": {

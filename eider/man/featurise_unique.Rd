@@ -19,7 +19,7 @@ values to be counted.
 \item output_feature_name: Name of the output column.
 \item grouping_columns:    Name of the columns to group the source table by
 before summation.
-\item absent_data_flag:    The value to use for patients who have no matching
+\item absent_default_value:The value to use for patients who have no matching
 rows in the source table.
 }}
 

@@ -7,7 +7,7 @@
       "weight": 1,
       "source_file": ["ae2"],
       "transformation_type": ["count"],
-      "absent_data_flag": [0],
+      "absent_default_value": [0],
       "primary_filter": {
           "column": ["diagnosis_2"],
           "type": ["in"],
@@ -19,7 +19,7 @@
       "source_file": ["ae2"],
       "transformation_type": ["sum"],
       "aggregation_column": ["diagnosis_1"],
-      "absent_data_flag": [0],
+      "absent_default_value": [0],
       "primary_filter": null
     }
   }

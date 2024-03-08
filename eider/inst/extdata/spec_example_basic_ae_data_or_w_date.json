@@ -2,7 +2,7 @@
   "source_file": ["ae2"],
   "transformation_type": ["COUNT"],
   "grouping_columns": ["id"],
-  "absent_data_flag": ["NA"],
+  "absent_default_value": ["NA"],
   "output_feature_name": ["using_or_filter"],
   "primary_filter": {
     "type": ["AND"],

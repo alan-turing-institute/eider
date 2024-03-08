@@ -88,7 +88,7 @@ tf
 ```
 
 
-Above is the resultant dataframe. We can see that patient with id 2 had 1 instance where their `diagnosis_1` was 101, whereas patient with id 7 had 5 instances. It is also noted that patients with id 3, 9, 15, and 16 either do not fit the given filtering criteria or had no occurences in the source data. These patient's resultant column value is the `absent_data_flag` from the specification.
+Above is the resultant dataframe. We can see that patient with id 2 had 1 instance where their `diagnosis_1` was 101, whereas patient with id 7 had 5 instances. It is also noted that patients with id 3, 9, 15, and 16 either do not fit the given filtering criteria or had no occurences in the source data. These patient's resultant column value is the `absent_default_value` from the specification.
 
 
 ## 4. Using date filtering
@@ -100,7 +100,7 @@ basic_ae_spec_w_date_filepath <- eider_example(
 writeLines(readLines(basic_ae_spec_w_date_filepath))
 ```
 An additonal subfilter has been added. Subfilter_3 is applied to the `time` column and filters based on dates that are greater than the 31st of December 2015. This means an event which happened on new-years-eve 2015 will not be included in the data, but events which occured on new-years-day 2016 would be.
-Also note the `absent_data_flag` has now been set to the string "NA", and a more descriptive `output_feature_name` has been given in the specification 
+Also note the `absent_default_value` has now been set to the string "NA", and a more descriptive `output_feature_name` has been given in the specification 
 
 We can again run this transformation pipeline with the same A&E data:
 

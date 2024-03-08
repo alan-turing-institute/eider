@@ -3,7 +3,7 @@
     "transformation_type": ["SUM"],
     "aggregation_column": ["num_items"],
     "grouping_columns": ["id"],
-    "absent_data_flag": [0],
+    "absent_default_value": [0],
     "output_feature_name": ["number_of_prescribed_items_goes_here"],
     "primary_filter" : {
         "type": ["AND"],

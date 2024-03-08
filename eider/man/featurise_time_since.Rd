@@ -28,7 +28,7 @@ nearest whole number).
 \item output_feature_name: Name of the output column.
 \item grouping_columns:    Name of the columns in the source table over which
 to group by.
-\item absent_data_flag:    The value to use for patients who have no matching
+\item absent_default_value:The value to use for patients who have no matching
 rows in the source table.
 }}
 

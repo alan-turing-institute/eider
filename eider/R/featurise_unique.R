@@ -10,7 +10,7 @@
 #'  - output_feature_name: Name of the output column.
 #'  - grouping_columns:    Name of the columns to group the source table by
 #'                         before summation.
-#'  - absent_data_flag:    The value to use for patients who have no matching
+#'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
@@ -36,7 +36,7 @@ featurise_unique <- function(all_tables,
   output_feature_name <- spec$output_feature_name
   column_to_ndistinct_over <- spec$aggregation_column
   grouping_columns <- spec$grouping_columns
-  missing_value <- spec$absent_data_flag
+  missing_value <- spec$absent_default_value
 
   if (length(grouping_columns) > 1) {
     # TODO: Issue #24

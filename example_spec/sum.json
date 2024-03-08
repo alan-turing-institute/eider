@@ -9,7 +9,7 @@
             "weight": 1,
             "source_file": "../example_data/random_ae_data.csv",
             "transformation_type": "COUNT",
-            "absent_data_flag": 0,
+            "absent_default_value": 0,
             "primary_filter": {
                 "column": "attendance_category",
                 "type": "IN",
@@ -22,7 +22,7 @@
             "weight": 1,
             "source_file": "../example_data/pis.csv",
             "transformation_type": "COUNT",
-            "absent_data_flag": 0,
+            "absent_default_value": 0,
             "primary_filter": {
                 "column": "prescription_type",
                 "type": "IN",

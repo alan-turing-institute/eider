@@ -10,7 +10,7 @@
 #'  - primary_filter:      A filter object to apply to the source table.
 #'  - source_column_name:  Name of the column in the source table to look up
 #'                         the feature value from.
-#'  - absent_data_flag:    The value to use for patients who have no matching
+#'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
@@ -36,7 +36,7 @@ featurise_lookup <- function(all_tables,
   source_column_name <- spec$source_column_name
   output_feature_name <- spec$output_feature_name
   grouping_columns <- spec$grouping_columns
-  missing_value <- spec$absent_data_flag
+  missing_value <- spec$absent_default_value
 
   if (length(grouping_columns) > 1) {
     stop("Multiple groupings not yet implemented")

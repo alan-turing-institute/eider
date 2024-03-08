@@ -19,7 +19,7 @@ featurise_lookup(all_tables, spec, context = NULL)
 \item primary_filter:      A filter object to apply to the source table.
 \item source_column_name:  Name of the column in the source table to look up
 the feature value from.
-\item absent_data_flag:    The value to use for patients who have no matching
+\item absent_default_value:The value to use for patients who have no matching
 rows in the source table.
 }}
 

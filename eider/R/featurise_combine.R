@@ -62,9 +62,9 @@ featurise_combine <- function(mode,
     # Update the missing value
     missing_value <- switch(mode,
       combine_linear = missing_value +
-        (subfeature_spec$weight * subfeature_spec$absent_data_flag),
-      combine_min = min(missing_value, subfeature_spec$absent_data_flag),
-      combine_max = max(missing_value, subfeature_spec$absent_data_flag)
+        (subfeature_spec$weight * subfeature_spec$absent_default_value),
+      combine_min = min(missing_value, subfeature_spec$absent_default_value),
+      combine_max = max(missing_value, subfeature_spec$absent_default_value)
     )
 
     # Calculate the feature
