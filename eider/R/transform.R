@@ -11,14 +11,22 @@ transform <- function(data_sources, feature_filenames) {
   # Read all the tables
   all_tables <- read_data(data_sources)
 
+  # Check if file or json string provided
+  file_or_string <- read_spec_type(feature_filenames)
+
   # Read in each feature JSON file and calculate each individual feature
   features <- lapply(
     feature_filenames,
     function(json_fname) {
+      if (file_or_string == "string") {
+        json_context <- "User defined string"
+      } else {
+        json_context <- json_fname
+      }
       featurise(
         all_tables,
         json_to_feature(json_fname),
-        context = paste0("featurise: ", json_fname)
+        context = paste0("featurise: ", json_context)
       )
     }
   )

@@ -101,7 +101,7 @@ parse_single_or_nested <- function(filter) {
 #' Take the json input file and produce a formatted R object which can direct
 #' the filters
 #'
-#' @param filename The relative filepath to the json file
+#' @param filename The relative filepath to the json file or a json string
 #'
 #' @return A feature object
 #' @export
