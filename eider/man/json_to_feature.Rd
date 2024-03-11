@@ -8,7 +8,7 @@ the filters}
 json_to_feature(filename)
 }
 \arguments{
-\item{filename}{The relative filepath to the json file}
+\item{filename}{The relative filepath to the json file or a json string}
 }
 \value{
 A feature object
