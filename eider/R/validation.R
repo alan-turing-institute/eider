@@ -79,3 +79,40 @@ validate_absent_default_value <- function(spec, context) {
 
   n
 }
+
+
+#' Checks that the column specified by a filter object exists in a table. If
+#' so, returns the column name.
+validate_filter_column <- function(filter_obj, tbl, context) {
+  n <- filter_obj$column
+
+  if (!(is.character(n) && length(n) == 1)) {
+    error_context(
+      "The 'column' field in a filter object must be a single string.",
+      context
+    )
+  }
+
+  if (!n %in% colnames(tbl)) {
+    error_context(
+      paste0(
+        "The column '",
+        n,
+        "' to be filtered on was not found in the table."
+      ),
+      context
+    )
+  }
+
+  n
+}
+
+#' Checks that the values specified by a filter object are of the same type as
+#' the column to be filtered on. If so, returns the values.
+validate_filter_value <- function(filter_obj, column, context) {
+  v <- filter_obj$value
+
+  # TODO: IMPLEMENT
+
+  v
+}
