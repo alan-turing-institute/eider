@@ -1,3 +1,6 @@
+#' Checks that `spec$source_file` is a single string and that it is a key in
+#' `all_tables`. If so, returns the table itself (or the file path of the
+#' table).
 validate_source_file <- function(spec, all_tables, context) {
   n <- spec$source_file
 
@@ -18,6 +21,8 @@ validate_source_file <- function(spec, all_tables, context) {
   all_tables[[n]]
 }
 
+#' Checks that `spec$output_feature_name` is a single string. If so, returns
+#' the string.
 validate_output_feature_name <- function(spec, context) {
   n <- spec$output_feature_name
 
@@ -28,8 +33,8 @@ validate_output_feature_name <- function(spec, context) {
   n
 }
 
-#' Checks that spec[[field_name]] is a single string and that it is a column
-#' in the table tbl.
+#' Checks that `spec[[field_name]]` is a single string and that it is a column
+#' in the table `tbl`. If so, returns the column name.
 validate_column_present <- function(field_name, spec, tbl, context) {
   n <- spec[[field_name]]
 
@@ -56,6 +61,8 @@ validate_column_present <- function(field_name, spec, tbl, context) {
 }
 
 
+#' Checks that `spec$absent_default_value` is a single number. If so, returns
+#' the number.
 validate_absent_default_value <- function(spec, context) {
   n <- spec$absent_default_value
 
