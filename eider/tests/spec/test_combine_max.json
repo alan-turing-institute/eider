@@ -1,11 +1,11 @@
 {
   "transformation_type": ["COMBINE_MAX"],
   "output_feature_name": ["my_max"],
-  "grouping_columns": ["id"],
   "feature_list": {
     "count_of_101s_in_diagnosis_2": {
       "source_file": ["ae2"],
       "transformation_type": ["count"],
+      "grouping_columns": ["id"],
       "absent_default_value": [0],
       "primary_filter": {
           "column": ["diagnosis_2"],
@@ -16,6 +16,7 @@
     "sum_of_all_diagnosis_1": {
       "source_file": ["ae2"],
       "transformation_type": ["sum"],
+      "grouping_columns": ["id"],
       "aggregation_column": ["diagnosis_1"],
       "absent_default_value": [0],
       "primary_filter": null

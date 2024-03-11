@@ -38,9 +38,6 @@ featurise_combine <- function(mode,
   # Validate spec
   output_feature_name <- validate_output_feature_name(spec, context)
 
-  # TODO: make grouping column individual per child feature
-  grouping_columns <- spec$grouping_columns
-
   # Choose starting missing value
   initial_missing_value <- switch(mode,
     combine_linear = 0,
@@ -55,9 +52,8 @@ featurise_combine <- function(mode,
   for (i in seq_along(spec$feature_list)) {
     subfeature_name <- names(spec$feature_list)[i]
 
-    # Pass in the grouping columns and output feature name from the parent spec
+    # Pass in the output feature name from the parent spec
     subfeature_spec <- spec$feature_list[[i]]
-    subfeature_spec$grouping_columns <- grouping_columns
     subfeature_spec$output_feature_name <- subfeature_name
 
     # Update the missing value
