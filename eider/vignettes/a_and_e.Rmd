@@ -1,13 +1,23 @@
 ---
-title: "eider"
+title: "A & E Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A & E Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 This Quarto book serves as a demo of the `eider` package. Focussing on the A&E data
 
 First, we load the package from the local directory.
 
 ```{r}
-install.packages("../eider/", repos = NULL, type = "source")
 library(eider)
 ```
 

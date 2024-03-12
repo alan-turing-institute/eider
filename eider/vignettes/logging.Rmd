@@ -1,26 +1,20 @@
 ---
-title: "Logging"
+title: "Logging Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Logging Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-Peamble for nice formatting
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ```{r}
-#| warning: false
-install.packages("../eider/", repos = NULL, type = "source")
 library(eider)
-
-# Formatting
-library(knitr)
-library(kableExtra)
-library(tidyverse)
-kbl <- function(x) {
-  x <- head(x, 10)
-  x %>%
-    knitr::kable(format = 'html', 
-                 table.attr = 'data-quarto-disable-processing="true"') %>%
-    kableExtra::kable_styling(bootstrap_options = "striped", 
-                              full_width = FALSE)
-}
 ```
 
 ## Errors with context

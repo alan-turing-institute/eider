@@ -1,14 +1,25 @@
 ---
- title: "Combine"
+title: "Combine Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Combine Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
 Peamble for nice formatting
  
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 ```{r}
-#| warning: false
-install.packages("../eider/", repos = NULL, type = "source")
 library(eider)
-# Formatting
+```
+
+```{r}
 library(knitr)
 library(kableExtra)
 library(tidyverse)
