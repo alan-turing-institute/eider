@@ -28,9 +28,9 @@ library(tidyverse)
 kbl <- function(x) {
   x <- head(x, 10)
   x %>%
-    knitr::kable(format = 'html', 
+    knitr::kable(format = "html",
                  table.attr = 'data-quarto-disable-processing="true"') %>%
-    kableExtra::kable_styling(bootstrap_options = "striped", 
+    kableExtra::kable_styling(bootstrap_options = "striped",
                               full_width = FALSE)
 }
 ```
@@ -44,10 +44,10 @@ Here we have a random example prescribing data file. From the first few rows we 
 
 ## 2. Specification file - Number of unique
 ```{r}
-basic_prescribing_spec_nunique_filepath <- eider_example(
+prescribing_spec_nunique_fp <- eider_example(
   "spec_example_basic_prescribing_nunique.json"
-  )
-writeLines(readLines(basic_prescribing_spec_nunique_filepath)) 
+)
+writeLines(readLines(prescribing_spec_nunique_fp))
 ```
 This specification file is for defining the number of unique instances in the `bnf_section` column (called the "aggregation_column" in the specification) grouped by patient id. So if there were no more entries for patient 19 in the data file, then they would have 2 unique entries.
 There is date filtering applied. In this case between 1st January 2015 and 1st January 2018 inclusive. 
@@ -56,7 +56,7 @@ There is date filtering applied. In this case between 1st January 2015 and 1st J
 ```{r}
 prescribing_data_path <- list(prescribing = prescribing_data_filepath)
 
-tf <- transform(prescribing_data_path, basic_prescribing_spec_nunique_filepath)
+tf <- transform(prescribing_data_path, prescribing_spec_nunique_fp)
 
 tf
 ```
@@ -66,16 +66,16 @@ The results of the transformation are shown above - here we patient with id 0 ha
 ## 4. Number of prescibed items
 The following specification can be used to return the number of prescribed items, per patient over a specified date range.
 ```{r}
-basic_prescribing_spec_nprescribed_filepath <- eider_example(
+prescribing_spec_npresc_fp <- eider_example(
   "spec_example_basic_prescribing_nprescribed.json"
-  )
-writeLines(readLines(basic_prescribing_spec_nprescribed_filepath)) 
+)
+writeLines(readLines(prescribing_spec_npresc_fp))
 ```
 
 With the corresponding transformation
 ```{r}
-tf_nitems <- transform(prescribing_data_path, 
-                basic_prescribing_spec_nprescribed_filepath)
+tf_nitems <- transform(prescribing_data_path,
+                       prescribing_spec_npresc_fp)
 
 tf_nitems
 ```

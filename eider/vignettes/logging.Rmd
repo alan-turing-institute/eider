@@ -22,47 +22,43 @@ library(eider)
 Here are some examples of errors with context using the A&E data
 
 ```{r}
-#filenames <- c("../example_data/random_ae_data.csv")
-#all_tables <- read_all_tables(filenames)
-#all_tables$`../example_data/random_ae_data.csv` %>% kbl()
+ae_data_filepath <- eider_example("random_ae_data.csv")
+ae_data_path <- list(ae2 = ae_data_filepath)
 ```
 
 ### Example 1
 
 ```{r}
-#lines <- readLines("./ae2_data_wrong1.json")
-#lines[3]
+wrong_spec1 <- eider_example("spec_wrong1_ae.json")
+lines <- readLines(wrong_spec1)
+lines[3]
 ```
 
 ```{r error=TRUE}
-#transform(
-#  all_table_filenames = all_table_filenames,
-#  all_feature_json_filenames = "./ae2_data_wrong1.json")
+tf <- transform(ae_data_path, wrong_spec1)
 ```
 
 ### Example 2
 
 ```{r}
-#lines <- readLines("./ae2_data_wrong2.json")
-#lines[4]
+wrong_spec2 <- eider_example("spec_wrong2_ae.json")
+lines <- readLines(wrong_spec2)
+lines[4]
 ```
 
 ```{r error=TRUE}
-#transform(
-#  all_table_filenames = all_table_filenames,
-#  all_feature_json_filenames = "./ae2_data_wrong2.json")
+tf <- transform(ae_data_path, wrong_spec2)
 ```
 
 ### Example 3
 
 ```{r}
-#lines <- readLines("./ae2_data_wrong3.json")
-#lines[11]
+wrong_spec3 <- eider_example("spec_wrong3_ae.json")
+lines <- readLines(wrong_spec3)
+lines[11]
 ```
 
 ```{r error=TRUE}
-#transform(
-#  all_table_filenames = all_table_filenames,
-#  all_feature_json_filenames = "./ae2_data_wrong3.json")
+tf <- transform(ae_data_path, wrong_spec3)
 ```
 
