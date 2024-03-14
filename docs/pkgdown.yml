@@ -2,8 +2,12 @@ pandoc: 2.9.2.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
+  a_and_e: a_and_e.html
+  combine: combine.html
   eider: eider.html
-last_built: 2024-03-07T10:43Z
+  logging: logging.html
+  prescribing: prescribing.html
+last_built: 2024-03-14T11:01Z
 urls:
   reference: https://alan-turing-institute.github.io/eider/docs/reference
   article: https://alan-turing-institute.github.io/eider/docs/articles
