@@ -6,7 +6,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-Peamble for nice formatting
  
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -15,45 +14,40 @@ knitr::opts_chunk$set(
 )
 ```
 
+This vignette demonstrates an example of a feature derived through the combination of two subfeatures, which in turn come from two different data sources.
+
 ```{r}
 library(eider)
 ```
 
-```{r}
-library(knitr)
-library(kableExtra)
-library(tidyverse)
-kbl <- function(x) {
-  x <- head(x, 10)
-  x %>%
-    knitr::kable(format = "html",
-                 table.attr = 'data-quarto-disable-processing="true"') %>%
-    kableExtra::kable_styling(bootstrap_options = "striped",
-                              full_width = FALSE)
-}
-```
-
 ## 1. Read in data
 
-This time we will need 2 data sets, the A&E data and the Prescribing data
+This time we will need two datasets, one for A&E data and one for prescribing data.
 
 ```{r}
 ae_data_filepath <- eider_example("random_ae_data.csv")
 prescribing_data_filepath <- eider_example("random_pis_data.csv")
 ```
 
-This is the A&E data
+This is the A&E data. Note that this is purely for illustration purposes, you don't need to call `read.csv` on the data file as `transform` will do that for you.
 ```{r}
-read.csv(ae_data_filepath) %>% kbl()
+read.csv(ae_data_filepath)
 ```
 
-and this is the prescription data
+and this is the prescription data:
 ```{r}
-read.csv(prescribing_data_filepath) %>% kbl()
+read.csv(prescribing_data_filepath)
 ```
 
 ## 2. Read in the specification
-This is what the specification looks like
+
+This is what the specification looks like.
+Notice that there are now two features, which each refer to different source tables.
+
+The `COMBINE_LINEAR` feature type here generates a linear combination of the two subfeatures, with the coefficients specified as the `weight` field.
+In this case, the weight of both subfeatures is 1, which means that the final feature is simply the sum of the two subfeatures.
+If one wanted the difference of the two subfeatures (for example), one would instead set the weight of the second subfeature to -1.
+
 ```{r}
 basic_combine_spec_filepath <- eider_example(
   "spec_example_combine_linear.json"
@@ -64,13 +58,9 @@ writeLines(readLines(basic_combine_spec_filepath))
 
 ## 3. Run the transformation
 ```{r}
-all_data_path <- list(ae2 = ae_data_filepath,
-                      prescribing = prescribing_data_filepath)
-# Note now there are two source files with aliases.
-
-tf <- transform(all_data_path, basic_combine_spec_filepath)
-
-tf
+all_data_paths <- list(
+  ae2 = ae_data_filepath,
+  prescribing = prescribing_data_filepath
+)
+transform(all_data_paths, basic_combine_spec_filepath)
 ```
-
-

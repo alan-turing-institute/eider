@@ -1,25 +1,24 @@
 {
-  "source_file": ["ae2"],
-  "transformation_type": ["COUNT"],
-  "grouping_columns": ["id"],
-  "absent_default_value": [0],
-  "output_feature_name": ["patients_w_diag_1_in_date_range"],
+  "source_file": "ae2",
+  "transformation_type": "COUNT",
+  "grouping_columns": "id",
+  "output_feature_name": "patients_w_diag_1_in_date_range",
   "primary_filter": {
-    "type": ["AND"],
+    "type": "AND",
     "subfilters": {
       "subfilter_1": {
-        "column": ["attendance_category"],
-        "type": ["IN"],
+        "column": "attendance_category",
+        "type": "IN",
         "value": [1]
       },
       "subfilter_2": {
-        "column": ["diagnosis_1"],
-        "type": ["IN"],
+        "column": "diagnosis_1",
+        "type": "IN",
         "value": [101]
       },
       "subfilter_3": {
-        "column": ["time"],
-        "type": ["date_gt"],
+        "column": "time",
+        "type": "date_gt",
         "value": ["2015-12-31"]
       }
     }

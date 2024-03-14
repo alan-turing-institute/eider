@@ -1,21 +1,21 @@
 {
-    "source_file": ["prescribing"],
-    "transformation_type": ["NUNIQUE"],
-    "aggregation_column": ["bnf_section"],
-    "grouping_columns": ["id"],
-    "absent_default_value": [0],
-    "output_feature_name": ["N_unique_sections"],
+    "source_file": "prescribing",
+    "transformation_type": "NUNIQUE",
+    "aggregation_column": "bnf_section",
+    "grouping_columns": "id",
+    "absent_default_value": 0,
+    "output_feature_name": "N_unique_sections",
     "primary_filter" : {
-        "type": ["AND"],
+        "type": "AND",
         "subfilters":{
             "subfilter_1": {
-                "column": ["paid_date"],
-                "type": ["DATE_GT_EQ"],
+                "column": "paid_date",
+                "type": "DATE_GT_EQ",
                 "value": ["2015-01-01"]
             },
             "subfilter_2": {
-                "column": ["paid_date"],
-                "type": ["DATE_LT_EQ"],
+                "column": "paid_date",
+                "type": "DATE_LT_EQ",
                 "value": ["2018-01-01"]
             }
         }

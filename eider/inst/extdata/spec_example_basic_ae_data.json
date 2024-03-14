@@ -1,20 +1,20 @@
 {
-  "source_file": ["ae2"],
-  "transformation_type": ["COUNT"],
-  "grouping_columns": ["id"],
-  "absent_default_value": ["No_data_here"],
-  "output_feature_name": ["user_defined_name"],
+  "source_file": "ae2",
+  "transformation_type": "COUNT",
+  "grouping_columns": "id",
+  "absent_default_value": "No_data_here",
+  "output_feature_name": "user_defined_name",
   "primary_filter": {
-    "type": ["AND"],
+    "type": "AND",
     "subfilters": {
       "subfilter_1": {
-        "column": ["attendance_category"],
-        "type": ["IN"],
+        "column": "attendance_category",
+        "type": "IN",
         "value": [1]
       },
       "subfilter_2": {
-        "column": ["diagnosis_1"],
-        "type": ["IN"],
+        "column": "diagnosis_1",
+        "type": "IN",
         "value": [101]
       }
     }
