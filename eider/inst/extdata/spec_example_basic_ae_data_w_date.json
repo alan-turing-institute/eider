@@ -2,7 +2,7 @@
   "source_file": ["ae2"],
   "transformation_type": ["COUNT"],
   "grouping_columns": ["id"],
-  "absent_default_value": ["NA"],
+  "absent_default_value": [0],
   "output_feature_name": ["patients_w_diag_1_in_date_range"],
   "primary_filter": {
     "type": ["AND"],

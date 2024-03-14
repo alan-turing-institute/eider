@@ -1,11 +1,11 @@
 {
     "transformation_type": "COMBINE_LINEAR",
     "output_feature_name": "sum_of_feature_1_and_feature_2",
-    "grouping_columns": ["id"],
     "feature_list": {
         "feature_1": {
             "weight": 1,
             "source_file": ["ae2"],
+            "grouping_columns": ["id"],
             "transformation_type": "COUNT",
             "absent_default_value": 0,
             "primary_filter": {
@@ -17,6 +17,7 @@
         "feature_2": {
             "weight": 1,
             "source_file": ["prescribing"],
+            "grouping_columns": ["id"],
             "transformation_type": "COUNT",
             "absent_default_value": 0,
             "primary_filter": {

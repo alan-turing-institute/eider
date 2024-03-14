@@ -5,7 +5,7 @@ validate_source_file <- function(spec, all_tables, context) {
   n <- spec$source_file
 
   if (!(is.character(n) && length(n) == 1)) {
-    error_context("'source_file' must be a single string.", context)
+    error_not_string(n, "source_file", context)
   }
 
   if (!(n %in% names(all_tables))) {
@@ -14,7 +14,8 @@ validate_source_file <- function(spec, all_tables, context) {
         "The name '",
         n,
         "' supplied for 'source_file' was not provided as an input table."
-      ), context
+      ),
+      context
     )
   }
 
@@ -27,7 +28,7 @@ validate_output_feature_name <- function(spec, context) {
   n <- spec$output_feature_name
 
   if (!(is.character(n) && length(n) == 1)) {
-    error_context("'output_feature_name' must be a single string.", context)
+    error_not_string(n, "output_feature_name", context)
   }
 
   n
@@ -39,10 +40,7 @@ validate_column_present <- function(field_name, spec, tbl, context) {
   n <- spec[[field_name]]
 
   if (!(is.character(n) && length(n) == 1)) {
-    error_context(
-      paste0("'", field_name, "' must be a single string."),
-      context
-    )
+    error_not_string(n, field_name, context)
   }
 
   if (!(n %in% names(tbl))) {
@@ -72,7 +70,14 @@ validate_absent_default_value <- function(spec, context) {
 
   if (!(is.numeric(n) && length(n) == 1)) {
     error_context(
-      "If provided, 'absent_default_value' must be a single number.",
+      paste0(
+        "If provided, 'absent_default_value' must be a single number. ",
+        "However, the value supplied (",
+        n,
+        ") is of type '",
+        typeof(n),
+        "'."
+      ),
       context
     )
   }
@@ -87,10 +92,7 @@ validate_filter_column <- function(filter_obj, tbl, context) {
   n <- filter_obj$column
 
   if (!(is.character(n) && length(n) == 1)) {
-    error_context(
-      "The 'column' field in a filter object must be a single string.",
-      context
-    )
+    error_not_string(n, "column", context)
   }
 
   if (!n %in% colnames(tbl)) {
@@ -115,4 +117,21 @@ validate_filter_value <- function(filter_obj, column, context) {
   # TODO: IMPLEMENT
 
   v
+}
+
+#' Helper function
+error_not_string <- function(value, name, context) {
+  error_context(
+    paste0(
+      "'",
+      name,
+      "' must be a single string, ",
+      "but the value supplied (",
+      value,
+      ") is of type '",
+      typeof(value),
+      "'."
+    ),
+    context
+  )
 }
