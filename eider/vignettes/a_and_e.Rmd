@@ -1,13 +1,23 @@
 ---
-title: "eider"
+title: "A & E Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A & E Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 This Quarto book serves as a demo of the `eider` package. Focussing on the A&E data
 
 First, we load the package from the local directory.
 
 ```{r}
-install.packages("../eider/", repos = NULL, type = "source")
 library(eider)
 ```
 
@@ -20,9 +30,9 @@ library(tidyverse)
 kbl <- function(x) {
   x <- head(x, 10)
   x %>%
-    knitr::kable(format = 'html', 
+    knitr::kable(format = "html",
                  table.attr = 'data-quarto-disable-processing="true"') %>%
-    kableExtra::kable_styling(bootstrap_options = "striped", 
+    kableExtra::kable_styling(bootstrap_options = "striped",
                               full_width = FALSE)
 }
 ```
@@ -62,7 +72,7 @@ The user specifies how the data will be grouped via `grouping_columns`, which in
 
 ```{r}
 basic_ae_spec_filepath <- eider_example("spec_basic_ae_data.json")
-writeLines(readLines(basic_ae_spec_filepath)) 
+writeLines(readLines(basic_ae_spec_filepath))
 ```
 
 The `primary_filter` is AND, and there are two `subfilters`. The first subfilter - `subfilter_1` specifies that the user wants to filter based on the `attendance_category` column of the random A&E-type data, and that the value that they are interested in is 1. That is only return results where the `attendance_category` is 1.
@@ -93,9 +103,8 @@ Above is the resultant dataframe. We can see that patient with id 2 had 1 instan
 ## 4. Using date filtering
 In the above example the returned dataframe spanned all the dates over which the input data csv spanned. However this can be refined in the specification.
 ```{r}
-basic_ae_spec_w_date_filepath <- eider_example(
-  "spec_example_basic_ae_data_w_date.json"
-  )
+basic_ae_spec_w_date_filepath <-
+  eider_example("spec_example_basic_ae_data_w_date.json")
 writeLines(readLines(basic_ae_spec_w_date_filepath))
 ```
 An additonal subfilter has been added. Subfilter_3 is applied to the `time` column and filters based on dates that are greater than the 31st of December 2015. This means an event which happened on new-years-eve 2015 will not be included in the data, but events which occured on new-years-day 2016 would be.
@@ -117,16 +126,16 @@ We can also expand the filters to return results if either `diagnosis_1` or `dia
 The specification file would look like this:
 
 ```{r}
-basic_ae_spec_or_w_date_filepath <- eider_example(
+ae_spec_or_w_date_fp <- eider_example(
   "spec_example_basic_ae_data_or_w_date.json"
-  )
-writeLines(readLines(basic_ae_spec_or_w_date_filepath))
+)
+writeLines(readLines(ae_spec_or_w_date_fp))
 ```
 
 Subfilter 2 has now been defined as an OR type, and it contains it's own subfilters, 21 and 22. `subfilter_21` is a filter that `diagnosis_1` column is 101, and `subfilter_22` is a filter that `diagnosis_2` column is 101. So the transformation will count an instance if either `diagnosis_1` OR `diagnosis_2` are 101. Subject to the other filters of the `attendence_type` being 1, and the date being later than 31st December 2015.
 
 ```{r}
-tf_or_w_date <- transform(ae_data_path, basic_ae_spec_or_w_date_filepath)
+tf_or_w_date <- transform(ae_data_path, ae_spec_or_w_date_fp)
 
 tf_or_w_date
 ```
