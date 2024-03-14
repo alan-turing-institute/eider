@@ -1,23 +1,34 @@
 ---
- title: "Combine"
+title: "Combine Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Combine Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
 Peamble for nice formatting
  
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 ```{r}
-#| warning: false
-install.packages("../eider/", repos = NULL, type = "source")
 library(eider)
-# Formatting
+```
+
+```{r}
 library(knitr)
 library(kableExtra)
 library(tidyverse)
 kbl <- function(x) {
   x <- head(x, 10)
   x %>%
-    knitr::kable(format = 'html', 
+    knitr::kable(format = "html",
                  table.attr = 'data-quarto-disable-processing="true"') %>%
-    kableExtra::kable_styling(bootstrap_options = "striped", 
+    kableExtra::kable_styling(bootstrap_options = "striped",
                               full_width = FALSE)
 }
 ```
@@ -46,14 +57,14 @@ This is what the specification looks like
 ```{r}
 basic_combine_spec_filepath <- eider_example(
   "spec_example_combine_linear.json"
-  )
-writeLines(readLines(basic_combine_spec_filepath)) 
+)
+writeLines(readLines(basic_combine_spec_filepath))
 ```
 
 
 ## 3. Run the transformation
 ```{r}
-all_data_path <- list(ae2 = ae_data_filepath, 
+all_data_path <- list(ae2 = ae_data_filepath,
                       prescribing = prescribing_data_filepath)
 # Note now there are two source files with aliases.
 
