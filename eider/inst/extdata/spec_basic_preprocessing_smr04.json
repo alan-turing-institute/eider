@@ -1,0 +1,22 @@
+{
+  "source_file": ["smr04"],
+  "transformation_type": ["COUNT"],
+  "grouping_columns": ["id"],
+  "absent_data_flag": [0],
+  "output_feature_name": ["smr04_op"],
+  "preprocess": {
+    "on": "cis_marker",
+    "retain_min": "admission_date",
+    "retain_max": "discharge_date"
+    },
+  "primary_filter": {
+    "type": ["AND"],
+    "subfilters": {
+      "subfilter_1": {
+        "column": ["episode_within_cis"],
+        "type": ["IN"],
+        "value": [1, 2]
+      }
+    }
+  }
+}

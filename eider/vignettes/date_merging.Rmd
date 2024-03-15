@@ -1,0 +1,81 @@
+---
+title: "Date Merging"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Date Merging}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eider)
+```
+
+Formatting
+
+```{r}
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+kbl <- function(x) {
+  x <- head(x, 10)
+  x %>%
+    knitr::kable(format = "html",
+                 table.attr = 'data-quarto-disable-processing="true"') %>%
+    kableExtra::kable_styling(bootstrap_options = "striped",
+                              full_width = FALSE)
+}
+```
+
+## 1. Read in data
+Here we are reading in data about patients stays where they can have multiple events(episodes?) in one stay
+
+This is the original dataframe
+```{r}
+smr04_data_filepath <- eider_example("random_smr04_data.csv")
+read.csv(smr04_data_filepath) %>% kbl()
+```
+
+Here we can see that patient with ID 4 has had a stay which started on 6th August. The first episode was a one day affair and had `SOME_CODE` of b, the second was a 3-day affair with `SOME_CODE` of d, starting on the 7th and ending on the 10th. The patient would have been in hospital from the 6th of August to the 10th August.
+
+It is necessary to include some pre-processing steps to deal with episodic data, in this case the whole stay is considered (from 6th August to 10th August for patient 4)
+
+## 2. Describe the pre-processing
+
+```{r}
+spec_filepath <- eider_example("spec_basic_preprocessing_smr04.json")
+writeLines(readLines(spec_filepath)) 
+```
+
+Here there are a few new features in the spec. Specifically the `grouping_columns`, the `preprocess$on` as well as the `preprocess$retain_min` and `preprocess$retain_max`. We can put these in a mini specification and call the preprocessing function directly
+
+## 3. Preprocessing only
+Here we define a mini specification with only the important features
+```{r}
+minispec <- list()
+minispec$grouping_columns <- "id"
+minispec$preprocess$on <- "cis_marker"
+minispec$preprocess$retain_min <- "admission_date"
+minispec$preprocess$retain_max <- "discharge_date"
+```
+
+Then we can run it with the example SMR04 data
+
+```{r}
+initial_table <- read_data(smr04_data_filepath)[[1]]
+initial_table %>% kbl()
+```
+
+```{r}
+
+```
+
+
+
