@@ -37,7 +37,7 @@ filter_basic <- function(table,
   }
 
   column_name <- validate_filter_column(filter_obj, table, context)
-  value <- validate_filter_value(filter_obj, table[[column_name]], context)
+  value <- validate_filter_value(filter_obj, table, context)
   operator <- switch(t,
     "in" = `%in%`,
     "lt" = `<`,

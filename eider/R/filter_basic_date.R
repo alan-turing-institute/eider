@@ -41,7 +41,7 @@ filter_basic_date <- function(table,
   }
 
   column_name <- validate_filter_column(filter_obj, table, context)
-  value <- validate_filter_value(filter_obj, table[[column_name]], context)
+  value <- validate_filter_date_value(filter_obj, table, context)
   operator <- switch(t,
     "date_in" = `%in%`,
     "date_lt" = `<`,
@@ -54,7 +54,7 @@ filter_basic_date <- function(table,
   table <- table %>%
     mutate(
       EIDER_PRIVATE_FILTERED =
-        operator(.data[[column_name]], lubridate::ymd(value))
+        operator(.data[[column_name]], value)
     )
 
   # Split the table into passed and rejected rows, and remove the sentinel

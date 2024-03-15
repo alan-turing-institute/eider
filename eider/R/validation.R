@@ -111,12 +111,100 @@ validate_filter_column <- function(filter_obj, tbl, context) {
 
 #' Checks that the values specified by a filter object are of the same type as
 #' the column to be filtered on. If so, returns the values.
-validate_filter_value <- function(filter_obj, column, context) {
+validate_filter_value <- function(filter_obj, table, context) {
   v <- filter_obj$value
+  val_type <- typeof(v)
 
-  # TODO: IMPLEMENT
+  # NOTE: It is assumed here that the column exists in the table because it has
+  # been verified by `validate_filter_column`
+  column_name <- filter_obj$column
+  column <- table[[column_name]]
+  col_type <- typeof(column)
+
+  if (length(v) == 0) {
+    error_context(
+      "The 'value' field of a filter object must contain at least one item",
+      context
+    )
+  }
+
+  # To pass validation, we require any of the following:
+  #  - the column is all NAs (in this case it will be read as 'logical')
+  #  - both value and column are numeric, or
+  #  - value and column have exactly the same type
+  compatible <- (
+    all(is.na(column)) ||
+      val_type == col_type ||
+      is.numeric(v) && is.numeric(column)
+  )
+  if (!compatible) {
+    error_context(
+      paste0(
+        "The 'value' field of a filter object must be of the same type as ",
+        "the column to be filtered on. However, the column '",
+        column_name,
+        "' is of type '",
+        col_type,
+        "', while the value given is of type '",
+        val_type,
+        "'."
+      ),
+      context
+    )
+  }
 
   v
+}
+
+validate_filter_date_value <- function(filter_obj, table, context) {
+  v <- filter_obj$value
+  val_type <- typeof(v)
+
+  # NOTE: It is assumed here that the column exists in the table because it has
+  # been verified by `validate_filter_column`
+  column_name <- filter_obj$column
+  column <- table[[column_name]]
+  col_type <- typeof(column)
+
+  if (length(v) == 0) {
+    error_context(
+      "The 'value' field of a filter object must contain at least one item",
+      context
+    )
+  }
+
+  ymd_with_check <- function(v) {
+    v2 <- lubridate::ymd(v)
+    if (is.na(v2)) {
+      error_context(
+        paste0(
+          "The 'value' field of a date filter object must be a date in the ",
+          "format 'YYYY-MM-DD'. However, the value supplied (",
+          v,
+          ") could not be parsed as a valid date."
+        ),
+        context
+      )
+    }
+    v2
+  }
+
+  # Check that the column consists of dates or NAs only
+  if (!all(sapply(column, function(x) is.na(x) || lubridate::is.Date(x)))) {
+    error_context(
+      paste0(
+        "The 'column' field of a date filter object must refer to a ",
+        "column which is of type 'date'. However, the column '",
+        column_name,
+        "' is of type '",
+        col_type,
+        "'."
+      ),
+      context
+    )
+  }
+
+  purrr::map_vec(v, ymd_with_check)
 }
 
 #' Helper function

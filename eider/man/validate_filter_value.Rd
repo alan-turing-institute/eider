@@ -5,7 +5,7 @@
 \title{Checks that the values specified by a filter object are of the same type as
 the column to be filtered on. If so, returns the values.}
 \usage{
-validate_filter_value(filter_obj, column, context)
+validate_filter_value(filter_obj, table, context)
 }
 \description{
 Checks that the values specified by a filter object are of the same type as
