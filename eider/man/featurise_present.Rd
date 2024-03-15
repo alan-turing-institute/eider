@@ -15,7 +15,7 @@ featurise_present(all_tables, spec, context = NULL)
 \item source_file:         Filename of the source table to read from.
 \item primary_filter:      A filter object to apply to the source table.
 \item output_feature_name: Name of the output column.
-\item grouping_columns:    Name of the column(s) to group by.
+\item grouping_column:     Name of the column to group by.
 }}
 
 \item{context}{A character vector to be used in logging or error messages.

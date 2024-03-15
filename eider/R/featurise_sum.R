@@ -8,8 +8,8 @@
 #'  - aggregation_column:  Name of the column which provides the values to be
 #'  -                      summed over.
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the columns to group the source table by
-#'                         before summation.
+#'  - grouping_column:     Name of the column to group the source table by
+#'                         before summation
 #'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
@@ -36,8 +36,8 @@ featurise_sum <- function(all_tables,
   column_to_sum_over <- validate_column_present(
     "aggregation_column", spec, source_table, context
   )
-  grouping_columns <- validate_column_present(
-    "grouping_columns", spec, source_table, context
+  grouping_column <- validate_column_present(
+    "grouping_column", spec, source_table, context
   )
   missing_value <- validate_absent_default_value(spec, context)
   filter_obj <- spec$primary_filter
@@ -48,7 +48,7 @@ featurise_sum <- function(all_tables,
     {
       feature_table %>%
         magrittr::extract2("passed") %>%
-        rename(id = !!grouping_columns) %>%
+        rename(id = !!grouping_column) %>%
         group_by(id) %>%
         summarise(!!output_feature_name := sum(.data[[column_to_sum_over]]))
     },
@@ -59,7 +59,7 @@ featurise_sum <- function(all_tables,
 
   feature_table <- pad_missing_values(
     source_table,
-    grouping_columns,
+    grouping_column,
     missing_value,
     feature_table
   )

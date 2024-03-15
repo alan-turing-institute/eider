@@ -2,7 +2,7 @@
   "source_file": ["ae2"],
   "transformation_type": ["NUNIQUE"],
   "aggregation_column": ["diagnosis_1"],
-  "grouping_columns": ["id"],
+  "grouping_column": ["id"],
   "output_feature_name": ["diag_1_unique"],
   "absent_default_value": [0],
   "primary_filter": null

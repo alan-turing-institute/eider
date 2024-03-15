@@ -6,7 +6,7 @@
 #' @param spec A list containing the following elements:
 #'  - source_file:         Filename of the source table to read from.
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the column(s) to group by.
+#'  - grouping_column:     Name of the column to group by.
 #'  - primary_filter:      A filter object to apply to the source table.
 #'  - source_column_name:  Name of the column in the source table to look up
 #'                         the feature value from.
@@ -33,8 +33,8 @@ featurise_lookup <- function(all_tables,
   # Validate spec
   source_table <- validate_source_file(spec, all_tables, context)
   output_feature_name <- validate_output_feature_name(spec, context)
-  grouping_columns <- validate_column_present(
-    "grouping_columns", spec, source_table, context
+  grouping_column <- validate_column_present(
+    "grouping_column", spec, source_table, context
   )
   source_column_name <- validate_column_present(
     "source_column_name", spec, source_table, context
@@ -48,7 +48,7 @@ featurise_lookup <- function(all_tables,
     {
       feature_table %>%
         magrittr::extract2("passed") %>%
-        rename(id = !!grouping_columns) %>%
+        rename(id = !!grouping_column) %>%
         group_by(id) %>%
         summarise(
           !!output_feature_name := first(.data[[source_column_name]])
@@ -63,7 +63,7 @@ featurise_lookup <- function(all_tables,
   # TODO: Verify that this is not needed. Logically, it shouldn't be
   feature_table <- pad_missing_values(
     source_table,
-    grouping_columns,
+    grouping_column,
     missing_value,
     feature_table
   )

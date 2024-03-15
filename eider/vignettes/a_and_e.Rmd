@@ -52,7 +52,7 @@ From the first row in this example we can see that patient 2 was admitted on the
 Users then specify which features they would like to extract from which data. A simple specification file is given below.
 
 `source_file` is the name for the corresponding filepath in a named list (in this case the random A&E data). `transformation_type` is the type of transformation which will take place. eider has N different transformation types, X, Y, and Z. 
-The user specifies how the data will be grouped via `grouping_columns`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
+The user specifies how the data will be grouped via `grouping_column`, which in this case is grouping by patient ID. An (optional) flag for what to do if data is absent is given - here it will be to report 0. `output_feature_name` defines the header for the column in the output dataframe which will contain the results of the specific transformation
 
 ```{r}
 basic_ae_spec_filepath <- eider_example("spec_basic_ae_data.json")

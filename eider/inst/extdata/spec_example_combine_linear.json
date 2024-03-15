@@ -5,7 +5,7 @@
         "feature_1": {
             "weight": 1,
             "source_file": "ae2",
-            "grouping_columns": "id",
+            "grouping_column": "id",
             "transformation_type": "COUNT",
             "absent_default_value": 0,
             "primary_filter": {
@@ -17,7 +17,7 @@
         "feature_2": {
             "weight": 1,
             "source_file": "prescribing",
-            "grouping_columns": "id",
+            "grouping_column": "id",
             "transformation_type": "COUNT",
             "absent_default_value": 0,
             "primary_filter": {

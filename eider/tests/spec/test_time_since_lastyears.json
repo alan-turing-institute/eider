@@ -1,7 +1,7 @@
 {
   "source_file": ["ae2"],
   "transformation_type": ["TIME_SINCE"],
-  "grouping_columns": ["id"],
+  "grouping_column": ["id"],
   "output_feature_name": ["years_since_last_101_diag"],
   "date_column": ["time"],
   "time_units": ["years"],

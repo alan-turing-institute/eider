@@ -2,7 +2,7 @@
   "source_file": ["ae2"],
   "transformation_type": ["LOOKUP"],
   "source_column_name": ["diagnosis_1"],
-  "grouping_columns": ["id"],
+  "grouping_column": ["id"],
   "output_feature_name": ["first_diagnosis"],
   "absent_default_value": null
 }

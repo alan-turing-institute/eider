@@ -6,7 +6,7 @@
 #' @param all_tables List of all input tables (passed in from read_all_tables).
 #' @param spec A list containing the following elements:
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the column(s) to group by.
+#'  - grouping_column:     Name of the column to group by.
 #'  - feature_list:        List of feature specs to combine.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.

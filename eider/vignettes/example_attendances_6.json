@@ -1,7 +1,7 @@
 {
     "transformation_type": "count",
     "source_file": "attendances",
-    "grouping_columns": "patient_id",
+    "grouping_column": "patient_id",
     "absent_default_value": 0,
     "output_feature_name": "total_attendances",
     "primary_filter": {

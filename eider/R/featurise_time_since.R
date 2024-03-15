@@ -17,7 +17,7 @@
 #'                         between the two dates (and is rounded down to the
 #'                         nearest whole number).
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the columns in the source table over which
+#'  - grouping_column:     Name of the column in the source table over which
 #'                         to group by.
 #'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
@@ -42,8 +42,8 @@ featurise_time_since <- function(all_tables,
   # Validate spec
   source_table <- validate_source_file(spec, all_tables, context)
   output_feature_name <- validate_output_feature_name(spec, context)
-  grouping_columns <- validate_column_present(
-    "grouping_columns", spec, source_table, context
+  grouping_column <- validate_column_present(
+    "grouping_column", spec, source_table, context
   )
   date_column <- validate_column_present(
     "date_column", spec, source_table, context
@@ -62,7 +62,7 @@ featurise_time_since <- function(all_tables,
     {
       feature_table %>%
         magrittr::extract2("passed") %>%
-        rename(id = !!grouping_columns)
+        rename(id = !!grouping_column)
     },
     error = function(e) {
       error_context(e, context)
@@ -102,7 +102,7 @@ featurise_time_since <- function(all_tables,
 
   feature_table <- pad_missing_values(
     source_table,
-    grouping_columns,
+    grouping_column,
     missing_value,
     feature_table
   )

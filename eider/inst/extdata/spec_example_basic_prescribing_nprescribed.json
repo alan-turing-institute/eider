@@ -2,7 +2,7 @@
     "source_file": "prescribing",
     "transformation_type": "SUM",
     "aggregation_column": "num_items",
-    "grouping_columns": "id",
+    "grouping_column": "id",
     "absent_default_value": 0,
     "output_feature_name": "number_of_prescribed_items_goes_here",
     "primary_filter" : {
