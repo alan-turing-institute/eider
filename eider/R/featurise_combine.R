@@ -54,14 +54,17 @@ featurise_combine <- function(mode,
 
     # Pass in the output feature name from the parent spec
     subfeature_spec <- spec$feature_list[[i]]
-    subfeature_spec$output_feature_name <- subfeature_name
+    this_absent_default_value <- validate_absent_default_value(
+      subfeature_spec, context
+    )
+    subfeature_spec$output_feature_name <- subfeature_name # validated later
 
     # Update the missing value
     missing_value <- switch(mode,
       combine_linear = missing_value +
-        (subfeature_spec$weight * subfeature_spec$absent_default_value),
-      combine_min = min(missing_value, subfeature_spec$absent_default_value),
-      combine_max = max(missing_value, subfeature_spec$absent_default_value)
+        (validate_weight(subfeature_spec, context) * this_absent_default_value),
+      combine_min = min(missing_value, this_absent_default_value),
+      combine_max = max(missing_value, this_absent_default_value)
     )
 
     # Calculate the feature

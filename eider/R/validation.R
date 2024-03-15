@@ -207,6 +207,16 @@ validate_filter_date_value <- function(filter_obj, table, context) {
   purrr::map_vec(v, ymd_with_check)
 }
 
+validate_weight <- function(spec, context) {
+  w <- spec$weight
+
+  if (!(is.numeric(w) && length(w) == 1)) {
+    error_not_number(w, "weight", context)
+  }
+
+  w
+}
+
 #' Helper function
 error_not_string <- function(value, name, context) {
   error_context(
@@ -214,6 +224,22 @@ error_not_string <- function(value, name, context) {
       "'",
       name,
       "' must be a single string, ",
+      "but the value supplied (",
+      value,
+      ") is of type '",
+      typeof(value),
+      "'."
+    ),
+    context
+  )
+}
+
+error_not_number <- function(value, name, context) {
+  error_context(
+    paste0(
+      "'",
+      name,
+      "' must be a single number, ",
       "but the value supplied (",
       value,
       ") is of type '",
