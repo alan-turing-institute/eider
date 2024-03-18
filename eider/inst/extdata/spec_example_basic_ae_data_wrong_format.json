@@ -15,7 +15,7 @@
       "subfilter_2": {
         "column": "diagnosis_1",
         "type": "IN",
-        "value": [101]
+        "value": ["101"]
       }
     }
   }
