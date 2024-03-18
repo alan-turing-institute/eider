@@ -39,6 +39,7 @@ featurise_lookup <- function(all_tables,
   source_column_name <- validate_column_present(
     "source_column_name", spec, source_table, context
   )
+  trace_context(paste0("featurise_lookup applied to ", source_column_name, " column"))
   missing_value <- validate_absent_default_value(spec, context)
   filter_obj <- spec$primary_filter
 
