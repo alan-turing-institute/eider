@@ -4,6 +4,7 @@
 #' @param spec The specification which dictates the changes
 #'
 #' @return A mutated version of the initial input table
+#' @export
 preprocess_table <- function(input_table,
                              spec) {
   log_debug("Mutating original data table")
