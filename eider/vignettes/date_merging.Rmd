@@ -51,7 +51,7 @@ It is necessary to include some pre-processing steps to deal with episodic data,
 
 ```{r}
 spec_filepath <- eider_example("spec_basic_preprocessing_smr04.json")
-writeLines(readLines(spec_filepath)) 
+writeLines(readLines(spec_filepath))
 ```
 
 Here there are a few new features in the spec. Specifically the `grouping_columns`, the `preprocess$on` as well as the `preprocess$retain_min` and `preprocess$retain_max`. We can put these in a mini specification and call the preprocessing function directly
@@ -74,7 +74,7 @@ initial_table %>% kbl()
 ```
 
 ```{r}
-
+op <- preprocess_table(input_table = initial_table, spec = minispec)
 ```
 
 
