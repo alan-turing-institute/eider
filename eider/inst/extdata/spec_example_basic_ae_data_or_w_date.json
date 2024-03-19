@@ -1,35 +1,34 @@
 {
-  "source_file": ["ae2"],
-  "transformation_type": ["COUNT"],
-  "grouping_columns": ["id"],
-  "absent_data_flag": ["NA"],
-  "output_feature_name": ["using_or_filter"],
+  "source_file": "ae2",
+  "transformation_type": "COUNT",
+  "grouping_column": "id",
+  "output_feature_name": "using_or_filter",
   "primary_filter": {
-    "type": ["AND"],
+    "type": "AND",
     "subfilters": {
       "subfilter_1": {
-        "column": ["attendance_category"],
-        "type": ["IN"],
+        "column": "attendance_category",
+        "type": "IN",
         "value": [1]
       },
       "subfilter_2": {
-        "type": ["OR"],
+        "type": "OR",
         "subfilters": {
           "subfilter_21": {
-            "column": ["diagnosis_1"],
-            "type": ["IN"],
+            "column": "diagnosis_1",
+            "type": "IN",
             "value": [101]
           },
           "subfilter_22": {
-            "column": ["diagnosis_2"],
-            "type": ["IN"],
+            "column": "diagnosis_2",
+            "type": "IN",
             "value": [101]
           }
         }
       },
       "subfilter_3": {
-        "column": ["time"],
-        "type": ["date_gt"],
+        "column": "time",
+        "type": "date_gt",
         "value": ["2015-12-31"]
       }
     }

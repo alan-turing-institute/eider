@@ -1,0 +1,64 @@
+---
+title: "Logging Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Logging Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+library(eider)
+```
+
+## Errors with context
+
+Here are some examples of errors with context using the A&E data
+
+```{r}
+ae_data_filepath <- eider_example("random_ae_data.csv")
+ae_data_path <- list(ae2 = ae_data_filepath)
+```
+
+### Example 1
+
+```{r}
+wrong_spec1 <- eider_example("spec_wrong1_ae.json")
+lines <- readLines(wrong_spec1)
+lines[3]
+```
+
+```{r error=TRUE}
+tf <- transform(ae_data_path, wrong_spec1)
+```
+
+### Example 2
+
+```{r}
+wrong_spec2 <- eider_example("spec_wrong2_ae.json")
+lines <- readLines(wrong_spec2)
+lines[4]
+```
+
+```{r error=TRUE}
+tf <- transform(ae_data_path, wrong_spec2)
+```
+
+### Example 3
+
+```{r}
+wrong_spec3 <- eider_example("spec_wrong3_ae.json")
+lines <- readLines(wrong_spec3)
+lines[11]
+```
+
+```{r error=TRUE}
+tf <- transform(ae_data_path, wrong_spec3)
+```
+

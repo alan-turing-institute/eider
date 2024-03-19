@@ -4,13 +4,18 @@
 \alias{join_feature_tables}
 \title{Join feature tables together.}
 \usage{
-join_feature_tables(calculated_features, context = NULL)
+join_feature_tables(calculated_features, all_ids = NULL, context = NULL)
 }
 \arguments{
 \item{calculated_features}{A list of calculated features, each of which is
 produced by the featurise_... functions}
 
-\item{context}{A string to be used in logging or error messages. Defaults to}
+\item{all_ids}{A vector of all the unique identifiers that should be in the
+final feature table. If not given, will generate a feature table containing
+all unique identifiers found in input tables used by at least one feature.}
+
+\item{context}{A string to be used in logging or error messages. Defaults to
+NULL.}
 }
 \value{
 A data frame with the feature tables joined together

@@ -1,21 +1,21 @@
 {
-    "source_file": ["prescribing"],
-    "transformation_type": ["SUM"],
-    "aggregation_column": ["num_items"],
-    "grouping_columns": ["id"],
-    "absent_data_flag": [0],
-    "output_feature_name": ["number_of_prescribed_items_goes_here"],
+    "source_file": "prescribing",
+    "transformation_type": "SUM",
+    "aggregation_column": "num_items",
+    "grouping_column": "id",
+    "absent_default_value": 0,
+    "output_feature_name": "number_of_prescribed_items_goes_here",
     "primary_filter" : {
-        "type": ["AND"],
+        "type": "AND",
         "subfilters":{
             "subfilter_1": {
-                "column": ["paid_date"],
-                "type": ["DATE_GT_EQ"],
+                "column": "paid_date",
+                "type": "DATE_GT_EQ",
                 "value": ["2015-01-01"]
             },
             "subfilter_2": {
-                "column": ["paid_date"],
-                "type": ["DATE_LT_EQ"],
+                "column": "paid_date",
+                "type": "DATE_LT_EQ",
                 "value": ["2018-01-01"]
             }
         }

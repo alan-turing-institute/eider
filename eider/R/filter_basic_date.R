@@ -40,14 +40,8 @@ filter_basic_date <- function(table,
     )
   }
 
-  if (!filter_obj$column %in% colnames(table)) {
-    error_context(
-      paste0("Column '", filter_obj$column, "' not found in the table."),
-      context
-    )
-  }
-
-  # Choose the appropriate comparison operator
+  column_name <- validate_filter_column(filter_obj, table, context)
+  value <- validate_filter_date_value(filter_obj, table, context)
   operator <- switch(t,
     "date_in" = `%in%`,
     "date_lt" = `<`,
@@ -60,7 +54,7 @@ filter_basic_date <- function(table,
   table <- table %>%
     mutate(
       EIDER_PRIVATE_FILTERED =
-        operator(.data[[filter_obj$column]], lubridate::ymd(filter_obj$value))
+        operator(.data[[column_name]], value)
     )
 
   # Split the table into passed and rejected rows, and remove the sentinel

@@ -4,7 +4,7 @@
 \alias{transform}
 \title{Perform the entire feature transformation process.}
 \usage{
-transform(data_sources, feature_filenames)
+transform(data_sources, feature_filenames, all_ids = NULL)
 }
 \arguments{
 \item{data_sources}{A list mapping unique table identifiers to either
@@ -12,6 +12,10 @@ the file path from which they should be read from, or the data frame itself.}
 
 \item{feature_filenames}{A vector of file paths to the feature JSON
 specifications.}
+
+\item{all_ids}{A vector of all the unique identifiers that should be in the
+final feature table. If not given, will generate a feature table containing
+all unique identifiers found in input tables used by at least one feature.}
 }
 \value{
 A data frame with the feature tables joined together
