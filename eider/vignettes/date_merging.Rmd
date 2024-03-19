@@ -64,7 +64,7 @@ The key features outlined here are: The `grouping_column`, the `preprocess$on` a
 Here we define a mini specification with only the important features
 ```{r}
 minispec <- list()
-minispec$grouping_columns <- "id"
+minispec$grouping_column <- "id"
 minispec$preprocess$on <- "cis_marker"
 minispec$preprocess$retain_min <- "admission_date"
 minispec$preprocess$retain_max <- "discharge_date"
