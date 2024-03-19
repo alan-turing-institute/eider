@@ -1,9 +1,9 @@
 {
   "source_file": ["ae2"],
   "transformation_type": ["COUNT"],
-  "grouping_columns": ["id"],
+  "grouping_column": ["id"],
   "output_feature_name": ["diag_101_count"],
-  "absent_data_flag": [0],
+  "absent_default_value": [0],
   "primary_filter": {
     "type": ["OR"],
     "subfilters": {

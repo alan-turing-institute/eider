@@ -19,9 +19,9 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Catalina Vallejos \email{catalina.vallejos@ed.ac.uk} [contributor]
-  \item Louis Aslett \email{louis.aslett@durham.ac.uk} [contributor]
-  \item Simon Rogers \email{simon.rogers@nhs.scot} [contributor]
+  \item Catalina Vallejos \email{catalina.vallejos@ed.ac.uk} (\href{https://orcid.org/0000-0003-3638-1960}{ORCID}) [contributor]
+  \item Louis Aslett \email{louis.aslett@durham.ac.uk} (\href{https://orcid.org/0000-0003-2211-233X}{ORCID}) [contributor]
+  \item Simon Rogers \email{simon.rogers@nhs.scot} (\href{https://orcid.org/0000-0003-3578-4477}{ORCID}) [contributor]
 }
 
 }

@@ -36,14 +36,8 @@ filter_basic <- function(table,
     )
   }
 
-  if (!filter_obj$column %in% colnames(table)) {
-    error_context(
-      paste0("Column '", filter_obj$column, "' not found in the table."),
-      context
-    )
-  }
-
-  # Choose the appropriate comparison operator
+  column_name <- validate_filter_column(filter_obj, table, context)
+  value <- validate_filter_value(filter_obj, table, context)
   operator <- switch(t,
     "in" = `%in%`,
     "lt" = `<`,
@@ -54,10 +48,7 @@ filter_basic <- function(table,
 
   # Add a sentinel column indicating whether the row passed the filter
   table <- table %>%
-    mutate(
-      EIDER_PRIVATE_FILTERED =
-        operator(.data[[filter_obj$column]], filter_obj$value)
-    )
+    mutate(EIDER_PRIVATE_FILTERED = operator(.data[[column_name]], value))
 
   # Split the table into passed and rejected rows, and remove the sentinel
   # column
