@@ -154,7 +154,11 @@ Lines 7 -11 give the context of what is being processed for debug purposes inclu
 The specification can also be provided as a string instead of a path to a JSON file, as shown below.
 
 ```{r}
-json_string <- '{"source_file":["ae2"],"transformation_type":["COUNT"],"grouping_column":["id"],"absent_default_value":[0],"output_feature_name":["user_defined_name"],"primary_filter":{"type":["AND"],"subfilters":{"subfilter_1":{"column":["attendance_category"],"type":["IN"],"value":[1]},"subfilter_2":{"column":["diagnosis_1"],"type":["IN"],"value":[101]}}}}'
+json_string <- '{"source_file":["ae2"],"transformation_type":["COUNT"],
+"grouping_column":["id"],"absent_default_value":[0],"output_feature_name"
+:["user_defined_name"],"primary_filter":{"type":["AND"],"subfilters"
+:{"subfilter_1":{"column":["attendance_category"],"type":["IN"],"value":[1]},
+"subfilter_2":{"column":["diagnosis_1"],"type":["IN"],"value":[101]}}}}'
 ```
  
 Apply the transformation
