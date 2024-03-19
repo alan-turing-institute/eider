@@ -6,7 +6,7 @@
 #' @param all_tables List of all input tables (passed in from read_all_tables).
 #' @param spec A list containing the following elements:
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the column(s) to group by.
+#'  - grouping_column:     Name of the column to group by.
 #'  - feature_list:        List of feature specs to combine.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
@@ -29,16 +29,14 @@ featurise_combine <- function(mode,
 
   mode <- tolower(mode)
 
+  # featurise.R should already check this, so we use stop() instead of
+  # error_context() here
   if (!mode %in% c("combine_linear", "combine_min", "combine_max")) {
     stop("Invalid combination mode: ", mode)
   }
 
   # Validate spec
-  output_feature_name <- spec$output_feature_name
-  grouping_columns <- spec$grouping_columns
-  if (length(grouping_columns) > 1) {
-    stop("Multiple groupings not yet implemented")
-  }
+  output_feature_name <- validate_output_feature_name(spec, context)
 
   # Choose starting missing value
   initial_missing_value <- switch(mode,
@@ -54,17 +52,19 @@ featurise_combine <- function(mode,
   for (i in seq_along(spec$feature_list)) {
     subfeature_name <- names(spec$feature_list)[i]
 
-    # Pass in the grouping columns and output feature name from the parent spec
+    # Pass in the output feature name from the parent spec
     subfeature_spec <- spec$feature_list[[i]]
-    subfeature_spec$grouping_columns <- grouping_columns
-    subfeature_spec$output_feature_name <- subfeature_name
+    this_absent_default_value <- validate_absent_default_value(
+      subfeature_spec, context
+    )
+    subfeature_spec$output_feature_name <- subfeature_name # validated later
 
     # Update the missing value
     missing_value <- switch(mode,
       combine_linear = missing_value +
-        (subfeature_spec$weight * subfeature_spec$absent_data_flag),
-      combine_min = min(missing_value, subfeature_spec$absent_data_flag),
-      combine_max = max(missing_value, subfeature_spec$absent_data_flag)
+        (validate_weight(subfeature_spec, context) * this_absent_default_value),
+      combine_min = min(missing_value, this_absent_default_value),
+      combine_max = max(missing_value, this_absent_default_value)
     )
 
     # Calculate the feature
@@ -77,7 +77,7 @@ featurise_combine <- function(mode,
   }
 
   # Combine the subfeatures into a table
-  joined_subfeatures <- join_feature_tables(subfeatures, context)
+  joined_subfeatures <- join_feature_tables(subfeatures, context = context)
 
   # Then combine the subfeatures
   feature_table <- tibble(id = joined_subfeatures$id) %>%

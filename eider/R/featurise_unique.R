@@ -8,9 +8,9 @@
 #'  - aggregation_column:  Name of the column which provides the distinct
 #'                         values to be counted.
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the columns to group the source table by
+#'  - grouping_column:     Name of the column to group the source table by
 #'                         before summation.
-#'  - absent_data_flag:    The value to use for patients who have no matching
+#'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
@@ -35,10 +35,10 @@ featurise_unique <- function(all_tables,
   filter_obj <- spec$primary_filter
   output_feature_name <- spec$output_feature_name
   column_to_ndistinct_over <- spec$aggregation_column
-  grouping_columns <- spec$grouping_columns
-  missing_value <- spec$absent_data_flag
+  grouping_column <- spec$grouping_column
+  missing_value <- spec$absent_default_value
 
-  if (length(grouping_columns) > 1) {
+  if (length(grouping_column) > 1) {
     # TODO: Issue #24
     stop("Multiple groupings not yet implemented")
   }
@@ -49,7 +49,7 @@ featurise_unique <- function(all_tables,
     {
       feature_table %>%
         magrittr::extract2("passed") %>%
-        rename(id = !!grouping_columns) %>%
+        rename(id = !!grouping_column) %>%
         group_by(id) %>%
         summarise(
           !!output_feature_name := n_distinct(.data[[column_to_ndistinct_over]])
@@ -62,7 +62,7 @@ featurise_unique <- function(all_tables,
 
   feature_table <- pad_missing_values(
     source_table,
-    grouping_columns,
+    grouping_column,
     missing_value,
     feature_table
   )

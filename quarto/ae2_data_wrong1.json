@@ -2,7 +2,7 @@
   "source_file": ["../example_data/random_ae_data.csv"],
   "transformation_type": ["COUNT DRACULA"],
   "grouping_columns": ["id"],
-  "absent_data_flag": [0],
+  "absent_default_value": [0],
   "output_feature_name": ["user_defined_name"],
   "primary_filter": {
     "type": ["AND"],

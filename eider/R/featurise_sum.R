@@ -8,9 +8,9 @@
 #'  - aggregation_column:  Name of the column which provides the values to be
 #'  -                      summed over.
 #'  - output_feature_name: Name of the output column.
-#'  - grouping_columns:    Name of the columns to group the source table by
-#'                         before summation.
-#'  - absent_data_flag:    The value to use for patients who have no matching
+#'  - grouping_column:     Name of the column to group the source table by
+#'                         before summation
+#'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
@@ -31,17 +31,16 @@ featurise_sum <- function(all_tables,
   trace_context(context)
 
   # Validate spec
-  source_table <- all_tables[[spec$source_file]]
+  source_table <- validate_source_file(spec, all_tables, context)
+  output_feature_name <- validate_output_feature_name(spec, context)
+  column_to_sum_over <- validate_column_present(
+    "aggregation_column", spec, source_table, context
+  )
+  grouping_column <- validate_column_present(
+    "grouping_column", spec, source_table, context
+  )
+  missing_value <- validate_absent_default_value(spec, context)
   filter_obj <- spec$primary_filter
-  output_feature_name <- spec$output_feature_name
-  column_to_sum_over <- spec$aggregation_column
-  grouping_columns <- spec$grouping_columns
-  missing_value <- spec$absent_data_flag
-
-  if (length(grouping_columns) > 1) {
-    # TODO: Issue #24
-    stop("Multiple groupings not yet implemented")
-  }
 
   # Calculate feature
   feature_table <- source_table %>% filter_all(filter_obj, context)
@@ -49,7 +48,7 @@ featurise_sum <- function(all_tables,
     {
       feature_table %>%
         magrittr::extract2("passed") %>%
-        rename(id = !!grouping_columns) %>%
+        rename(id = !!grouping_column) %>%
         group_by(id) %>%
         summarise(!!output_feature_name := sum(.data[[column_to_sum_over]]))
     },
@@ -60,7 +59,7 @@ featurise_sum <- function(all_tables,
 
   feature_table <- pad_missing_values(
     source_table,
-    grouping_columns,
+    grouping_column,
     missing_value,
     feature_table
   )

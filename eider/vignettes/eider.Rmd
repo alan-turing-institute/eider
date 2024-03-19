@@ -68,8 +68,8 @@ writeLines(readLines("example_attendances_6.json"))
 - `transformation_type` tells you what kind of overall operation is being performed.
   This determines which other fields are required in the JSON.
 - `source_file` specifies the name of the data source to be used in the list of data sources.
-- `grouping_columns` specifies the columns to group by.
-- `absent_data_flag` specifies what to do if there is no data for a particular patient ID.
+- `grouping_column` specifies the columns to group by.
+- `absent_default_value` specifies what to do if there is no data for a particular patient ID.
 - `output_feature_name` specifies the name of the column to be created in the output table.
 - `primary_filter` is a filter object which is used to select rows from the input table which match particular conditions.
 

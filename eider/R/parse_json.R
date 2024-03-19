@@ -14,7 +14,7 @@ parse_feature <- function(json_data) {
     feature_object <- list()
     feature_object$transformation_type <- json_data$transformation_type
     feature_object$output_feature_name <- json_data$output_feature_name
-    feature_object$grouping_columns <- json_data$grouping_columns
+    feature_object$grouping_column <- json_data$grouping_column
     feature_object$feature_list <- list()
     for (i in seq_along(json_data$feature_list)) {
       feature_name <- names(json_data$feature_list)[[i]]

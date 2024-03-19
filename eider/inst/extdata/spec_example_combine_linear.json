@@ -1,13 +1,13 @@
 {
     "transformation_type": "COMBINE_LINEAR",
     "output_feature_name": "sum_of_feature_1_and_feature_2",
-    "grouping_columns": ["id"],
     "feature_list": {
         "feature_1": {
             "weight": 1,
-            "source_file": ["ae2"],
+            "source_file": "ae2",
+            "grouping_column": "id",
             "transformation_type": "COUNT",
-            "absent_data_flag": 0,
+            "absent_default_value": 0,
             "primary_filter": {
                 "column": "attendance_category",
                 "type": "IN",
@@ -16,9 +16,10 @@
         },
         "feature_2": {
             "weight": 1,
-            "source_file": ["prescribing"],
+            "source_file": "prescribing",
+            "grouping_column": "id",
             "transformation_type": "COUNT",
-            "absent_data_flag": 0,
+            "absent_default_value": 0,
             "primary_filter": {
                 "column": "bnf_section",
                 "type": "IN",

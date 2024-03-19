@@ -16,7 +16,7 @@ features.}
 \item{spec}{A list containing the following elements:
 \itemize{
 \item output_feature_name: Name of the output column.
-\item grouping_columns:    Name of the column(s) to group by.
+\item grouping_column:     Name of the column to group by.
 \item feature_list:        List of feature specs to combine.
 }}
 

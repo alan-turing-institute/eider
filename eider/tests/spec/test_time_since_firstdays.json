@@ -1,13 +1,13 @@
 {
   "source_file": ["ae2"],
   "transformation_type": ["TIME_SINCE"],
-  "grouping_columns": ["id"],
+  "grouping_column": ["id"],
   "output_feature_name": ["days_since_first_101_diag"],
   "date_column": ["time"],
   "time_units": ["days"],
   "from_first": [true],
   "cutoff_date": ["2023-03-18"],
-  "absent_data_flag": [40],
+  "absent_default_value": [40],
   "primary_filter": {
     "type": ["OR"],
     "subfilters": {
