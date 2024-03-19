@@ -6,7 +6,7 @@ Authors@R: c(
     person("Louis", "Aslett", email = "louis.aslett@durham.ac.uk", role = c("ctb"), comment = c(ORCID = "0000-0003-2211-233X")),
     person("Simon", "Rogers", email = "simon.rogers@nhs.scot", role = c("ctb"), comment = c(ORCID = "0000-0003-3578-4477")),
     person("Camila", "Rangel Smith", email = "crangelsmith@turing.ac.uk", role = c("cre", "ctb")),
-    person("Helen", "Duncan Little", email = "hduncan@turing.ac.uk", role = c("aut")),
+    person("Helen", "Duncan Little", email = "hduncan@turing.ac.uk", role = c("aut"), comment = c(ORCID = "0000-0002-0897-7188")),
     person("Jonathan", "Yong", email = "jyong@turing.ac.uk", role = c("aut"))
     )
 Description: Extract features from tabular data in a declarative fashion
