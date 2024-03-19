@@ -75,7 +75,7 @@ Then we can run it with the example SMR04 data
 
 
 ```{r}
-processed_table <- preprocess_table(input_table = initial_table, 
+processed_table <- preprocess_table(input_table = initial_table,
                                     spec = minispec)
 processed_table %>% kbl()
 ```
