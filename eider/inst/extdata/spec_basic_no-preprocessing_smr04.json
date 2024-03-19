@@ -4,11 +4,6 @@
   "grouping_column": ["id"],
   "absent_default_value": 0,
   "output_feature_name": ["smr04_op"],
-  "preprocess": {
-    "on": "cis_marker",
-    "retain_min": "admission_date",
-    "retain_max": "discharge_date"
-    },
   "primary_filter": {
     "type": ["AND"],
     "subfilters": {

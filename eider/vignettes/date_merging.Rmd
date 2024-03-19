@@ -25,7 +25,7 @@ library(knitr)
 library(kableExtra)
 library(tidyverse)
 kbl <- function(x) {
-  x <- head(x, 10)
+  x <- head(x, 20)
   x %>%
     knitr::kable(format = "html",
                  table.attr = 'data-quarto-disable-processing="true"') %>%
@@ -83,4 +83,36 @@ processed_table %>% kbl()
 The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date. So now patient 14 still shows 2 episodes for summer 2016, but now both start on the same day and end on the same day, allowing filtering to account for a whole stay rather than an episode within a stay.
 
 ## 4 With and Without preprocessing
+
+```{r}
+with_preprocessing <- eider_example("spec_basic_preprocessing_smr04.json")
+writeLines(readLines(with_preprocessing))
+```
+
+This spec is requesting a count of the number of times episode 1 or 2 from `episode_within_cis` occurs for discharge dates earlier than 31st July 2015. 
+
+```{r}
+without_preprocessing <- eider_example("spec_basic_no-preprocessing_smr04.json")
+writeLines(readLines(without_preprocessing))
+```
+This spec has the pre-processing step removed
+
+```{r}
+smr04_data <- list(smr04 = eider_example("random_smr04_data.csv"))
+with_preprocessing <- transform(
+  data_sources = smr04_data,
+  feature_filenames = with_preprocessing
+)
+with_preprocessing %>% kbl()
+```
+
+
+```{r}
+smr04_data <- list(smr04 = eider_example("random_smr04_data.csv"))
+w_out_preprocessing <- transform(
+  data_sources = smr04_data,
+  feature_filenames = without_preprocessing
+)
+w_out_preprocessing %>% kbl()
+```
 
