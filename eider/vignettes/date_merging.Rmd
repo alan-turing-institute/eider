@@ -35,17 +35,19 @@ kbl <- function(x) {
 ```
 
 ## 1. Read in data
-Here we are reading in data about patients stays where they can have multiple events(episodes?) in one stay
+Here we are reading in data about patients stays where they can have multiple episodes in one stay
 
 This is the original dataframe
 ```{r}
 smr04_data_filepath <- eider_example("random_smr04_data.csv")
-read.csv(smr04_data_filepath) %>% kbl()
+initial_table <- read_data(smr04_data_filepath)[[1]]
+initial_table %>% kbl()
 ```
 
-Here we can see that patient with ID 4 has had a stay which started on 6th August. The first episode was a one day affair and had `SOME_CODE` of b, the second was a 3-day affair with `SOME_CODE` of d, starting on the 7th and ending on the 10th. The patient would have been in hospital from the 6th of August to the 10th August.
+Each row is an episode. Multiple episodes make up a stay. The `cis_marker` field can be used to group episodes from one id into a stay. I.e. all rows for a (`id`, `cis_marker`) tuple correspond to a single stay. `episode_within_cis` tells us the order of the episodes within a stay. So in this example, patient with ID 14 had a 2 day stay from 31st July 2016 to 1st August 2016. The first episode occured on 31st July only and had `SOME_CODE` of "b". This could correspond to the admitting event. The second episode also started on the 31st July, but didn't conclude until the next day. It has a `EPISODE_WITHIN_CIS` of 2, identifying it as the second episode. 
 
-It is necessary to include some pre-processing steps to deal with episodic data, in this case the whole stay is considered (from 6th August to 10th August for patient 4)
+With episodic data is could be necessary to filter on dates. If in the example of patient with ID 14 the cut-off-date was set as 1st August, then the first episode in their stay would be omitted, and potentially the second episode would be assumed to be the first. 
+
 
 ## 2. Describe the pre-processing
 
@@ -54,7 +56,9 @@ spec_filepath <- eider_example("spec_basic_preprocessing_smr04.json")
 writeLines(readLines(spec_filepath))
 ```
 
-Here there are a few new features in the spec. Specifically the `grouping_columns`, the `preprocess$on` as well as the `preprocess$retain_min` and `preprocess$retain_max`. We can put these in a mini specification and call the preprocessing function directly
+The way `eider` has approached this, is to allow users to pre-process their data, to merge episodes into stays. In this case by specifying that they can select the earliest admission date for each stay and the latest discharge date for each stay and replace each episode with the stay-related span.
+
+The key features outlined here are: The `grouping_column`, the `preprocess$on` as well as the `preprocess$retain_min` and `preprocess$retain_max`. We can put these in a mini specification and call the preprocessing function directly
 
 ## 3. Preprocessing only
 Here we define a mini specification with only the important features
@@ -66,16 +70,17 @@ minispec$preprocess$retain_min <- "admission_date"
 minispec$preprocess$retain_max <- "discharge_date"
 ```
 
+This mini-specification will use the `cis_marker` column to identify which episodes belong with a given patient stay, and then the minimum `admission_date` and maximum `discharge_date` are replaced in the initial data
 Then we can run it with the example SMR04 data
 
-```{r}
-initial_table <- read_data(smr04_data_filepath)[[1]]
-initial_table %>% kbl()
-```
 
 ```{r}
-op <- preprocess_table(input_table = initial_table, spec = minispec)
+processed_table <- preprocess_table(input_table = initial_table, 
+                                    spec = minispec)
+processed_table %>% kbl()
 ```
 
+The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date. So now patient 14 still shows 2 episodes for summer 2016, but now both start on the same day and end on the same day, allowing filtering to account for a whole stay rather than an episode within a stay.
 
+## 4 With and Without preprocessing
 
