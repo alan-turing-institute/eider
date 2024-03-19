@@ -28,7 +28,7 @@ featurise <- function(all_tables,
     updated_table <- preprocess_table(
       input_table = all_tables[[spec$source_file]],
       spec = spec
-      )
+    )
     all_tables[[spec$source_file]] <- updated_table
   }
   # Check the transformation type and dispatch to the appropriate function
