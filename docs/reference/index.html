@@ -76,6 +76,11 @@ lubridate::ymd. This function only converts columns where every value
 successfully coerces to a date.</dd>
       </dl><dl><dt>
           
+          <code><a href="context_message.html">context_message()</a></code> 
+        </dt>
+        <dd>Concatenate context into string and append a message</dd>
+      </dl><dl><dt>
+          
           <code><a href="eider-package.html">eider</a></code> <code><a href="eider-package.html">eider-package</a></code> 
         </dt>
         <dd>eider: Todo Acronym Has Not Been Decided</dd>
@@ -89,6 +94,11 @@ successfully coerces to a date.</dd>
           <code><a href="error_context.html">error_context()</a></code> 
         </dt>
         <dd>Issue an error with a context and stop</dd>
+      </dl><dl><dt>
+          
+          <code><a href="error_not_string.html">error_not_string()</a></code> 
+        </dt>
+        <dd>Helper function</dd>
       </dl><dl><dt>
           
           <code><a href="featurise.html">featurise()</a></code> 
@@ -105,6 +115,19 @@ successfully coerces to a date.</dd>
         </dt>
         <dd>Computes the number of rows per patient ID which contain specific values in
 specific columns.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="featurise_lookup.html">featurise_lookup()</a></code> 
+        </dt>
+        <dd>Generates a feature which simply takes values from a named column from a
+source table. If a patient has multiple rows in the source table, the
+feature table will contain the value from the first row.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="featurise_present.html">featurise_present()</a></code> 
+        </dt>
+        <dd>Generates a feature which, for each patient ID, contains a 1 if any row that
+passes a specified filter exists, or 0 if not.</dd>
       </dl><dl><dt>
           
           <code><a href="featurise_sum.html">featurise_sum()</a></code> 
@@ -212,7 +235,7 @@ which case it is assumed to be a file and is read in.</dd>
         <dd>Helper function to read a single table from a file.</dd>
       </dl><dl><dt>
           
-          <code><a href="trace_context.html">trace_context()</a></code> 
+          <code><a href="trace_context.html">trace_context()</a></code> <code><a href="trace_context.html">trace_context()</a></code> 
         </dt>
         <dd>Log a TRACE message showing the current execution context</dd>
       </dl><dl><dt>
@@ -220,6 +243,43 @@ which case it is assumed to be a file and is read in.</dd>
           <code><a href="transform.html">transform()</a></code> 
         </dt>
         <dd>Perform the entire feature transformation process.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="validate_absent_default_value.html">validate_absent_default_value()</a></code> 
+        </dt>
+        <dd>Checks that <code>spec$absent_default_value</code> is a single number. If so, returns
+the number.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="validate_column_present.html">validate_column_present()</a></code> 
+        </dt>
+        <dd>Checks that <code>spec[[field_name]]</code> is a single string and that it is a column
+in the table <code>tbl</code>. If so, returns the column name.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="validate_filter_column.html">validate_filter_column()</a></code> 
+        </dt>
+        <dd>Checks that the column specified by a filter object exists in a table. If
+so, returns the column name.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="validate_filter_value.html">validate_filter_value()</a></code> 
+        </dt>
+        <dd>Checks that the values specified by a filter object are of the same type as
+the column to be filtered on. If so, returns the values.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="validate_output_feature_name.html">validate_output_feature_name()</a></code> 
+        </dt>
+        <dd>Checks that <code>spec$output_feature_name</code> is a single string. If so, returns
+the string.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="validate_source_file.html">validate_source_file()</a></code> 
+        </dt>
+        <dd>Checks that <code>spec$source_file</code> is a single string and that it is a key in
+<code>all_tables</code>. If so, returns the table itself (or the file path of the
+table).</dd>
       </dl></div>
   </main></div>
 

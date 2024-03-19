@@ -66,8 +66,7 @@
 
 
 
-<script src="combine_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="combine_files/kePrint-0.0.1/kePrint.js"></script><link href="combine_files/lightable-0.0.1/lightable.css" rel="stylesheet">
-<div class="row">
+<script src="combine_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Combine Example</h1>
             
@@ -78,7 +77,7 @@
 
     
     
-<p>Peamble for nice formatting</p>
+<p>This vignette demonstrates an example of a feature derived through the combination of two subfeatures, which in turn come from two different data sources.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">eider</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -86,430 +85,228 @@
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     transform</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/" class="external-link">kableExtra</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.1.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.1.5</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.5.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 3.5.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.2.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.3     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.1</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.0.2     </span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span>     masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">group_rows()</span> masks <span style="color: #0000BB;">kableExtra</span>::group_rows()</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>        masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use the conflicted package (<span style="color: #0000BB; font-style: italic;">&lt;http://conflicted.r-lib.org/&gt;</span>) to force all conflicts to become errors</span></span>
-<span><span class="va">kbl</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">10</span><span class="op">)</span></span>
-<span>  <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span>,</span>
-<span>                 table.attr <span class="op">=</span> <span class="st">'data-quarto-disable-processing="true"'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu">kableExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html" class="external-link">kable_styling</a></span><span class="op">(</span>bootstrap_options <span class="op">=</span> <span class="st">"striped"</span>,</span>
-<span>                              full_width <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="read-in-data">1. Read in data<a class="anchor" aria-label="anchor" href="#read-in-data"></a>
 </h2>
-<p>This time we will need 2 data sets, the A&amp;E data and the Prescribing data</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>This time we will need two datasets, one for A&amp;E data and one for prescribing data.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ae_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ae_data.csv"</span><span class="op">)</span></span>
 <span><span class="va">prescribing_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_pis_data.csv"</span><span class="op">)</span></span></code></pre></div>
-<p>This is the A&amp;E data</p>
+<p>This is the A&amp;E data. Note that this is purely for illustration purposes, you don’t need to call <code>read.csv</code> on the data file as <code>transform</code> will do that for you.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     id       time attendance_category diagnosis_1 diagnosis_2 diagnosis_3</span></span>
+<span><span class="co">#&gt; 1    2 2016-08-16                   1         104         103         102</span></span>
+<span><span class="co">#&gt; 2    2 2015-07-28                   1         101         103         104</span></span>
+<span><span class="co">#&gt; 3   16 2017-09-20                   1         102         101         104</span></span>
+<span><span class="co">#&gt; 4   10 2016-03-25                   1         104         103         101</span></span>
+<span><span class="co">#&gt; 5    5 2016-09-20                   1         103         104         101</span></span>
+<span><span class="co">#&gt; 6    6 2016-02-11                   1         103         102         101</span></span>
+<span><span class="co">#&gt; 7   14 2016-02-14                   1         102         103         104</span></span>
+<span><span class="co">#&gt; 8   14 2015-11-09                   1         104         103         102</span></span>
+<span><span class="co">#&gt; 9   14 2016-03-24                   1         102         101         104</span></span>
+<span><span class="co">#&gt; 10   1 2015-07-01                   1         103         104         101</span></span>
+<span><span class="co">#&gt; 11   9 2015-11-02                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 12   3 2017-10-25                   1         102         103         101</span></span>
+<span><span class="co">#&gt; 13  15 2017-06-12                   1         104         101         102</span></span>
+<span><span class="co">#&gt; 14   0 2017-12-22                   1         102         101         104</span></span>
+<span><span class="co">#&gt; 15   3 2016-10-28                   1         102         103         104</span></span>
+<span><span class="co">#&gt; 16   7 2016-09-06                   1         101         102         104</span></span>
+<span><span class="co">#&gt; 17  18 2017-08-26                   1         102         101          NA</span></span>
+<span><span class="co">#&gt; 18  15 2016-09-04                   1         103         104         102</span></span>
+<span><span class="co">#&gt; 19   6 2015-10-22                   1         101         103         104</span></span>
+<span><span class="co">#&gt; 20   2 2017-11-20                   1         103         101         104</span></span>
+<span><span class="co">#&gt; 21  14 2017-03-26                   1         104         105         101</span></span>
+<span><span class="co">#&gt; 22   8 2017-01-15                   1         101          NA          NA</span></span>
+<span><span class="co">#&gt; 23   0 2016-08-06                   1         101         104         103</span></span>
+<span><span class="co">#&gt; 24  13 2015-02-23                   1         104         103         101</span></span>
+<span><span class="co">#&gt; 25   6 2017-02-12                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 26   2 2015-11-12                   1         103         104         101</span></span>
+<span><span class="co">#&gt; 27  13 2016-10-16                   1         102         104         103</span></span>
+<span><span class="co">#&gt; 28   0 2016-03-18                   1         104         103         101</span></span>
+<span><span class="co">#&gt; 29  17 2015-07-23                   1         102         103         104</span></span>
+<span><span class="co">#&gt; 30   0 2016-03-06                   1         104         103         102</span></span>
+<span><span class="co">#&gt; 31   8 2015-07-12                   1         101         103         102</span></span>
+<span><span class="co">#&gt; 32  11 2015-08-29                   1         104         105         102</span></span>
+<span><span class="co">#&gt; 33   0 2017-11-19                   1         104         101         103</span></span>
+<span><span class="co">#&gt; 34   5 2016-03-06                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 35   8 2017-09-27                   1         104         101         102</span></span>
+<span><span class="co">#&gt; 36  13 2017-02-19                   1         102         101         104</span></span>
+<span><span class="co">#&gt; 37   6 2016-08-24                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 38   4 2017-05-18                   1         101         100         103</span></span>
+<span><span class="co">#&gt; 39  14 2016-01-07                   1         104         102         101</span></span>
+<span><span class="co">#&gt; 40  10 2017-08-11                   1         102         104          NA</span></span>
+<span><span class="co">#&gt; 41  13 2017-09-04                   1         103         101         104</span></span>
+<span><span class="co">#&gt; 42  17 2015-07-20                   1         101         103         102</span></span>
+<span><span class="co">#&gt; 43   1 2015-11-28                   1         101         102         103</span></span>
+<span><span class="co">#&gt; 44  11 2016-04-16                   1         101         104         102</span></span>
+<span><span class="co">#&gt; 45  13 2016-04-19                   1         104         103         102</span></span>
+<span><span class="co">#&gt; 46  12 2015-06-14                   1         103         101         104</span></span>
+<span><span class="co">#&gt; 47  19 2015-12-24                   1         102         103         104</span></span>
+<span><span class="co">#&gt; 48  19 2015-10-30                   1         103         101         102</span></span>
+<span><span class="co">#&gt; 49   2 2017-04-10                   1         103         101         104</span></span>
+<span><span class="co">#&gt; 50   6 2015-03-07                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 51   6 2016-01-27                   1         101         100         104</span></span>
+<span><span class="co">#&gt; 52   8 2016-11-24                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 53  10 2015-11-24                   1         102          NA          NA</span></span>
+<span><span class="co">#&gt; 54  12 2015-11-18                   1         103         101         102</span></span>
+<span><span class="co">#&gt; 55   9 2017-04-18                   1         103         104         102</span></span>
+<span><span class="co">#&gt; 56   9 2017-09-14                   1         103          NA          NA</span></span>
+<span><span class="co">#&gt; 57   8 2015-06-07                   1         103         101         102</span></span>
+<span><span class="co">#&gt; 58  11 2015-11-14                   1         102         101         103</span></span>
+<span><span class="co">#&gt; 59   5 2017-05-03                   1         104         101         103</span></span>
+<span><span class="co">#&gt; 60   0 2015-04-02                   1         104         103         101</span></span>
+<span><span class="co">#&gt; 61  17 2016-11-29                   1         102         103         101</span></span>
+<span><span class="co">#&gt; 62  10 2016-05-07                   1         101         100         102</span></span>
+<span><span class="co">#&gt; 63  17 2015-12-10                   1         103         102         101</span></span>
+<span><span class="co">#&gt; 64   5 2015-08-19                   1         101         102         103</span></span>
+<span><span class="co">#&gt; 65  14 2016-10-12                   1         101         102          NA</span></span>
+<span><span class="co">#&gt; 66   7 2016-11-09                   1         101         102         103</span></span>
+<span><span class="co">#&gt; 67  13 2015-01-13                   1         101         104          NA</span></span>
+<span><span class="co">#&gt; 68  15 2016-08-11                   1         102         103         104</span></span>
+<span><span class="co">#&gt; 69  19 2016-05-19                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 70   6 2017-10-11                   1         103         102         101</span></span>
+<span><span class="co">#&gt; 71   7 2016-12-22                   1         103         104         102</span></span>
+<span><span class="co">#&gt; 72  17 2015-12-21                   1         104         103         102</span></span>
+<span><span class="co">#&gt; 73  17 2015-08-30                   1         101         102         104</span></span>
+<span><span class="co">#&gt; 74  13 2017-03-30                   1         103         101         104</span></span>
+<span><span class="co">#&gt; 75  17 2017-01-02                   1         104         101          NA</span></span>
+<span><span class="co">#&gt; 76  15 2017-05-24                   1         104         102         101</span></span>
+<span><span class="co">#&gt; 77   3 2017-01-10                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 78  12 2015-02-25                   1         104         102         101</span></span>
+<span><span class="co">#&gt; 79   1 2017-12-22                   1         103         101         102</span></span>
+<span><span class="co">#&gt; 80  19 2015-10-12                   1         101         104         102</span></span>
+<span><span class="co">#&gt; 81   4 2015-09-29                   1         101         104         103</span></span>
+<span><span class="co">#&gt; 82  18 2017-03-24                   1         101         104         103</span></span>
+<span><span class="co">#&gt; 83  10 2016-05-28                   1         102         101         103</span></span>
+<span><span class="co">#&gt; 84  17 2016-12-04                   1         104          NA          NA</span></span>
+<span><span class="co">#&gt; 85  18 2017-02-19                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 86  15 2017-01-05                   1         104         103         101</span></span>
+<span><span class="co">#&gt; 87   1 2017-04-28                   1         104         102         101</span></span>
+<span><span class="co">#&gt; 88   0 2016-04-08                   1         101         103         104</span></span>
+<span><span class="co">#&gt; 89  12 2017-11-11                   1         102         103         104</span></span>
+<span><span class="co">#&gt; 90   0 2015-02-23                   1         103         104         102</span></span>
+<span><span class="co">#&gt; 91  12 2016-07-23                   1         103         101         104</span></span>
+<span><span class="co">#&gt; 92  16 2015-09-07                   1         102         101         104</span></span>
+<span><span class="co">#&gt; 93  19 2015-04-15                   1         101         102         104</span></span>
+<span><span class="co">#&gt; 94  19 2016-06-04                   1         103         102         104</span></span>
+<span><span class="co">#&gt; 95   7 2016-05-10                   1         101         103         102</span></span>
+<span><span class="co">#&gt; 96  13 2016-03-20                   1         104         103         102</span></span>
+<span><span class="co">#&gt; 97   0 2016-03-26                   1         102          NA          NA</span></span>
+<span><span class="co">#&gt; 98   7 2017-07-20                   1         101         102         103</span></span>
+<span><span class="co">#&gt; 99   7 2016-11-16                   1         101         104          NA</span></span>
+<span><span class="co">#&gt; 100 12 2017-07-24                   1         101          NA          NA</span></span></code></pre></div>
+<p>and this is the prescription data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table data-quarto-disable-processing="true" class="table table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead><tr>
-<th style="text-align:right;">
-id
-</th>
-<th style="text-align:left;">
-time
-</th>
-<th style="text-align:right;">
-attendance_category
-</th>
-<th style="text-align:right;">
-diagnosis_1
-</th>
-<th style="text-align:right;">
-diagnosis_2
-</th>
-<th style="text-align:right;">
-diagnosis_3
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-2016-08-16
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-104
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-102
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-2015-07-28
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-101
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-104
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:left;">
-2017-09-20
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-102
-</td>
-<td style="text-align:right;">
-101
-</td>
-<td style="text-align:right;">
-104
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-2016-03-25
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-104
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-101
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-2016-09-20
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-104
-</td>
-<td style="text-align:right;">
-101
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-2016-02-11
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-102
-</td>
-<td style="text-align:right;">
-101
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:left;">
-2016-02-14
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-102
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-104
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:left;">
-2015-11-09
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-104
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-102
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:left;">
-2016-03-24
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-102
-</td>
-<td style="text-align:right;">
-101
-</td>
-<td style="text-align:right;">
-104
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-2015-07-01
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-104
-</td>
-<td style="text-align:right;">
-101
-</td>
-</tr>
-</tbody>
-</table>
-<p>and this is the prescription data</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">prescribing_data_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html" class="external-link">kbl</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table data-quarto-disable-processing="true" class="table table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead><tr>
-<th style="text-align:right;">
-id
-</th>
-<th style="text-align:left;">
-paid_date
-</th>
-<th style="text-align:right;">
-bnf_section
-</th>
-<th style="text-align:right;">
-num_items
-</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:left;">
-2017-12-15
-</td>
-<td style="text-align:right;">
-106
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:left;">
-2016-08-11
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-19
-</td>
-<td style="text-align:left;">
-2015-07-07
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-2017-03-14
-</td>
-<td style="text-align:right;">
-106
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-2015-08-07
-</td>
-<td style="text-align:right;">
-105
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-18
-</td>
-<td style="text-align:left;">
-2016-05-07
-</td>
-<td style="text-align:right;">
-103
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-2016-09-29
-</td>
-<td style="text-align:right;">
-104
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-2015-12-01
-</td>
-<td style="text-align:right;">
-102
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-2017-01-11
-</td>
-<td style="text-align:right;">
-105
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-2017-11-04
-</td>
-<td style="text-align:right;">
-105
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-</tbody>
-</table>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">prescribing_data_filepath</span><span class="op">)</span></span>
+<span><span class="co">#&gt;     id  paid_date bnf_section num_items</span></span>
+<span><span class="co">#&gt; 1   19 2017-12-15         106         3</span></span>
+<span><span class="co">#&gt; 2   19 2016-08-11         103         5</span></span>
+<span><span class="co">#&gt; 3   19 2015-07-07         103         1</span></span>
+<span><span class="co">#&gt; 4    7 2017-03-14         106         1</span></span>
+<span><span class="co">#&gt; 5    3 2015-08-07         105         1</span></span>
+<span><span class="co">#&gt; 6   18 2016-05-07         103         3</span></span>
+<span><span class="co">#&gt; 7    2 2016-09-29         104         4</span></span>
+<span><span class="co">#&gt; 8    5 2015-12-01         102         3</span></span>
+<span><span class="co">#&gt; 9    2 2017-01-11         105         1</span></span>
+<span><span class="co">#&gt; 10   6 2017-11-04         105         4</span></span>
+<span><span class="co">#&gt; 11  10 2016-01-22         105         4</span></span>
+<span><span class="co">#&gt; 12   2 2017-04-03         107         5</span></span>
+<span><span class="co">#&gt; 13  15 2015-11-02         103         3</span></span>
+<span><span class="co">#&gt; 14   4 2016-06-01         107         5</span></span>
+<span><span class="co">#&gt; 15  15 2015-05-01         102         1</span></span>
+<span><span class="co">#&gt; 16   6 2016-05-16         103         2</span></span>
+<span><span class="co">#&gt; 17  15 2017-01-05         105         4</span></span>
+<span><span class="co">#&gt; 18  19 2017-03-28         106         2</span></span>
+<span><span class="co">#&gt; 19  19 2015-12-12         107         3</span></span>
+<span><span class="co">#&gt; 20   5 2017-07-26         103         1</span></span>
+<span><span class="co">#&gt; 21  11 2016-07-23         108         6</span></span>
+<span><span class="co">#&gt; 22   8 2015-11-18         103         2</span></span>
+<span><span class="co">#&gt; 23   5 2015-10-01         101         4</span></span>
+<span><span class="co">#&gt; 24  12 2017-03-14         109         3</span></span>
+<span><span class="co">#&gt; 25  17 2016-07-08         109         3</span></span>
+<span><span class="co">#&gt; 26  17 2017-06-05         103         1</span></span>
+<span><span class="co">#&gt; 27  12 2017-04-29         101         2</span></span>
+<span><span class="co">#&gt; 28  17 2017-08-30         109         3</span></span>
+<span><span class="co">#&gt; 29  10 2015-09-28         101         1</span></span>
+<span><span class="co">#&gt; 30  13 2015-01-28         102         4</span></span>
+<span><span class="co">#&gt; 31  19 2016-04-03         106         2</span></span>
+<span><span class="co">#&gt; 32  13 2016-07-15         106         2</span></span>
+<span><span class="co">#&gt; 33   0 2017-01-12         107         4</span></span>
+<span><span class="co">#&gt; 34  14 2016-11-02         104         2</span></span>
+<span><span class="co">#&gt; 35  14 2017-02-22         102         3</span></span>
+<span><span class="co">#&gt; 36   4 2015-11-04         108         5</span></span>
+<span><span class="co">#&gt; 37  17 2015-05-12         103         4</span></span>
+<span><span class="co">#&gt; 38   3 2016-05-10         102         3</span></span>
+<span><span class="co">#&gt; 39  15 2015-10-02         104         1</span></span>
+<span><span class="co">#&gt; 40  17 2016-08-05         109         2</span></span>
+<span><span class="co">#&gt; 41   9 2016-11-11         109         1</span></span>
+<span><span class="co">#&gt; 42   1 2017-12-19         107         2</span></span>
+<span><span class="co">#&gt; 43   3 2017-05-26         106         6</span></span>
+<span><span class="co">#&gt; 44  13 2015-01-07         102         1</span></span>
+<span><span class="co">#&gt; 45   0 2016-11-08         109         4</span></span>
+<span><span class="co">#&gt; 46  13 2015-08-09         107         4</span></span>
+<span><span class="co">#&gt; 47   2 2016-04-05         109         4</span></span>
+<span><span class="co">#&gt; 48  12 2015-10-09         101         1</span></span>
+<span><span class="co">#&gt; 49  10 2015-01-31         101         5</span></span>
+<span><span class="co">#&gt; 50   1 2016-01-09         106         3</span></span>
+<span><span class="co">#&gt; 51   3 2017-04-09         107         3</span></span>
+<span><span class="co">#&gt; 52  19 2015-02-28         101         3</span></span>
+<span><span class="co">#&gt; 53   8 2017-12-14         105         4</span></span>
+<span><span class="co">#&gt; 54   8 2015-12-24         101         6</span></span>
+<span><span class="co">#&gt; 55   9 2017-03-27         106         2</span></span>
+<span><span class="co">#&gt; 56  10 2015-08-06         104         2</span></span>
+<span><span class="co">#&gt; 57   3 2015-05-10         109         3</span></span>
+<span><span class="co">#&gt; 58   0 2017-06-27         107         2</span></span>
+<span><span class="co">#&gt; 59  12 2016-08-19         105         2</span></span>
+<span><span class="co">#&gt; 60   5 2016-11-29         107         3</span></span>
+<span><span class="co">#&gt; 61  13 2016-04-02         107         4</span></span>
+<span><span class="co">#&gt; 62  17 2015-04-04         107         3</span></span>
+<span><span class="co">#&gt; 63   8 2015-01-25         108         3</span></span>
+<span><span class="co">#&gt; 64   8 2015-08-30         106         3</span></span>
+<span><span class="co">#&gt; 65   3 2015-03-20         102         2</span></span>
+<span><span class="co">#&gt; 66  14 2017-01-16         108         3</span></span>
+<span><span class="co">#&gt; 67  13 2016-01-17         108         2</span></span>
+<span><span class="co">#&gt; 68  18 2015-05-28         105         6</span></span>
+<span><span class="co">#&gt; 69  15 2016-05-13         107         4</span></span>
+<span><span class="co">#&gt; 70   3 2017-11-14         101         2</span></span>
+<span><span class="co">#&gt; 71  16 2015-03-24         109         2</span></span>
+<span><span class="co">#&gt; 72  19 2015-05-30         102         2</span></span>
+<span><span class="co">#&gt; 73   7 2017-07-13         101         4</span></span>
+<span><span class="co">#&gt; 74   3 2017-05-24         109         7</span></span>
+<span><span class="co">#&gt; 75  17 2015-02-06         104         3</span></span>
+<span><span class="co">#&gt; 76  18 2016-06-30         108         3</span></span>
+<span><span class="co">#&gt; 77  19 2017-12-26         102         3</span></span>
+<span><span class="co">#&gt; 78   1 2015-11-30         101         3</span></span>
+<span><span class="co">#&gt; 79  17 2017-04-05         107         3</span></span>
+<span><span class="co">#&gt; 80   9 2015-09-14         109         4</span></span>
+<span><span class="co">#&gt; 81   8 2017-11-24         101         4</span></span>
+<span><span class="co">#&gt; 82  16 2017-09-05         106         4</span></span>
+<span><span class="co">#&gt; 83  18 2016-07-30         102         3</span></span>
+<span><span class="co">#&gt; 84   5 2016-02-18         109         4</span></span>
+<span><span class="co">#&gt; 85  15 2017-09-25         109         6</span></span>
+<span><span class="co">#&gt; 86  17 2015-03-25         102         3</span></span>
+<span><span class="co">#&gt; 87  17 2015-07-27         108         2</span></span>
+<span><span class="co">#&gt; 88  19 2015-02-07         106         3</span></span>
+<span><span class="co">#&gt; 89   6 2016-03-02         102         2</span></span>
+<span><span class="co">#&gt; 90  16 2016-05-20         105         2</span></span>
+<span><span class="co">#&gt; 91   8 2017-06-22         104         3</span></span>
+<span><span class="co">#&gt; 92   8 2017-08-15         102         3</span></span>
+<span><span class="co">#&gt; 93  15 2016-10-15         108         2</span></span>
+<span><span class="co">#&gt; 94   7 2016-01-20         101         5</span></span>
+<span><span class="co">#&gt; 95  15 2017-09-12         101         3</span></span>
+<span><span class="co">#&gt; 96   9 2017-06-21         106         3</span></span>
+<span><span class="co">#&gt; 97   0 2015-08-17         103         4</span></span>
+<span><span class="co">#&gt; 98   1 2017-11-04         101         2</span></span>
+<span><span class="co">#&gt; 99  15 2016-06-07         108         3</span></span>
+<span><span class="co">#&gt; 100  4 2015-03-15         103         1</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-specification">2. Read in the specification<a class="anchor" aria-label="anchor" href="#read-in-the-specification"></a>
 </h2>
-<p>This is what the specification looks like</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>This is what the specification looks like. Notice that there are now two features, which each refer to different source tables.</p>
+<p>The <code>COMBINE_LINEAR</code> feature type here generates a linear combination of the two subfeatures, with the coefficients specified as the <code>weight</code> field. In this case, the weight of both subfeatures is 1, which means that the final feature is simply the sum of the two subfeatures. If one wanted the difference of the two subfeatures (for example), one would instead set the weight of the second subfeature to -1.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">basic_combine_spec_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span></span>
 <span>  <span class="st">"spec_example_combine_linear.json"</span></span>
 <span><span class="op">)</span></span>
@@ -517,13 +314,13 @@ num_items
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     "transformation_type": "COMBINE_LINEAR",</span></span>
 <span><span class="co">#&gt;     "output_feature_name": "sum_of_feature_1_and_feature_2",</span></span>
-<span><span class="co">#&gt;     "grouping_columns": ["id"],</span></span>
 <span><span class="co">#&gt;     "feature_list": {</span></span>
 <span><span class="co">#&gt;         "feature_1": {</span></span>
 <span><span class="co">#&gt;             "weight": 1,</span></span>
-<span><span class="co">#&gt;             "source_file": ["ae2"],</span></span>
+<span><span class="co">#&gt;             "source_file": "ae2",</span></span>
+<span><span class="co">#&gt;             "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;             "transformation_type": "COUNT",</span></span>
-<span><span class="co">#&gt;             "absent_data_flag": 0,</span></span>
+<span><span class="co">#&gt;             "absent_default_value": 0,</span></span>
 <span><span class="co">#&gt;             "primary_filter": {</span></span>
 <span><span class="co">#&gt;                 "column": "attendance_category",</span></span>
 <span><span class="co">#&gt;                 "type": "IN",</span></span>
@@ -532,9 +329,10 @@ num_items
 <span><span class="co">#&gt;         },</span></span>
 <span><span class="co">#&gt;         "feature_2": {</span></span>
 <span><span class="co">#&gt;             "weight": 1,</span></span>
-<span><span class="co">#&gt;             "source_file": ["prescribing"],</span></span>
+<span><span class="co">#&gt;             "source_file": "prescribing",</span></span>
+<span><span class="co">#&gt;             "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;             "transformation_type": "COUNT",</span></span>
-<span><span class="co">#&gt;             "absent_data_flag": 0,</span></span>
+<span><span class="co">#&gt;             "absent_default_value": 0,</span></span>
 <span><span class="co">#&gt;             "primary_filter": {</span></span>
 <span><span class="co">#&gt;                 "column": "bnf_section",</span></span>
 <span><span class="co">#&gt;                 "type": "IN",</span></span>
@@ -547,14 +345,12 @@ num_items
 <div class="section level2">
 <h2 id="run-the-transformation">3. Run the transformation<a class="anchor" aria-label="anchor" href="#run-the-transformation"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">all_data_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ae2 <span class="op">=</span> <span class="va">ae_data_filepath</span>,</span>
-<span>                      prescribing <span class="op">=</span> <span class="va">prescribing_data_filepath</span><span class="op">)</span></span>
-<span><span class="co"># Note now there are two source files with aliases.</span></span>
-<span></span>
-<span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">all_data_path</span>, <span class="va">basic_combine_spec_filepath</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tf</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">all_data_paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  ae2 <span class="op">=</span> <span class="va">ae_data_filepath</span>,</span>
+<span>  prescribing <span class="op">=</span> <span class="va">prescribing_data_filepath</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">all_data_paths</span>, <span class="va">basic_combine_spec_filepath</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    id sum_of_feature_1_and_feature_2</span></span>
 <span><span class="co">#&gt; 1   0                              9</span></span>
 <span><span class="co">#&gt; 2   1                              5</span></span>

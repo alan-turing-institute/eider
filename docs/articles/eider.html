@@ -117,8 +117,8 @@
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     "transformation_type": "count",</span></span>
 <span><span class="co">#&gt;     "source_file": "attendances",</span></span>
-<span><span class="co">#&gt;     "grouping_columns": "patient_id",</span></span>
-<span><span class="co">#&gt;     "absent_data_flag": 0,</span></span>
+<span><span class="co">#&gt;     "grouping_column": "patient_id",</span></span>
+<span><span class="co">#&gt;     "absent_default_value": 0,</span></span>
 <span><span class="co">#&gt;     "output_feature_name": "total_attendances",</span></span>
 <span><span class="co">#&gt;     "primary_filter": {</span></span>
 <span><span class="co">#&gt;         "column": "attendance_reason",</span></span>
@@ -134,9 +134,9 @@
 <li>
 <code>source_file</code> specifies the name of the data source to be used in the list of data sources.</li>
 <li>
-<code>grouping_columns</code> specifies the columns to group by.</li>
+<code>grouping_column</code> specifies the columns to group by.</li>
 <li>
-<code>absent_data_flag</code> specifies what to do if there is no data for a particular patient ID.</li>
+<code>absent_default_value</code> specifies what to do if there is no data for a particular patient ID.</li>
 <li>
 <code>output_feature_name</code> specifies the name of the column to be created in the output table.</li>
 <li>

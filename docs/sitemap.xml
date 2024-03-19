@@ -43,6 +43,9 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/coerce_dates.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/context_message.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/eider-package.html</loc>
   </url>
   <url>
@@ -52,6 +55,9 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/error_context.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/error_not_string.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/featurise.html</loc>
   </url>
   <url>
@@ -59,6 +65,12 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/featurise_count.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/featurise_lookup.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/featurise_present.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/featurise_sum.html</loc>
@@ -122,5 +134,23 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/transform.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/validate_absent_default_value.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/validate_column_present.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/validate_filter_column.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/validate_filter_value.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/validate_output_feature_name.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/validate_source_file.html</loc>
   </url>
 </urlset>

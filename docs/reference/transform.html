@@ -54,7 +54,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transform</span><span class="op">(</span><span class="va">data_sources</span>, <span class="va">feature_filenames</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transform</span><span class="op">(</span><span class="va">data_sources</span>, <span class="va">feature_filenames</span>, all_ids <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,6 +67,12 @@ the file path from which they should be read from, or the data frame itself.</p>
 <dt>feature_filenames</dt>
 <dd><p>A vector of file paths to the feature JSON
 specifications.</p></dd>
+
+
+<dt>all_ids</dt>
+<dd><p>A vector of all the unique identifiers that should be in the
+final feature table. If not given, will generate a feature table containing
+all unique identifiers found in input tables used by at least one feature.</p></dd>
 
 </dl></div>
     <div class="section level2">

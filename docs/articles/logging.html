@@ -98,12 +98,12 @@
 <code class="sourceCode R"><span><span class="va">wrong_spec1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"spec_wrong1_ae.json"</span><span class="op">)</span></span>
 <span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wrong_spec1</span><span class="op">)</span></span>
 <span><span class="va">lines</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "  \"transformation_type\": [\"COUNT DRACULA\"],"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "  \"transformation_type\": \"COUNT DRACULA\","</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">wrong_spec1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: Unknown transformation type: count dracula</span></span>
 <span><span class="co">#&gt; Context:</span></span>
-<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpLEpX7j/temp_libpath19772e67040e/eider/extdata/spec_wrong1_ae.json</span></span></code></pre></div>
+<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_wrong1_ae.json</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="example-2">Example 2<a class="anchor" aria-label="anchor" href="#example-2"></a>
@@ -112,10 +112,13 @@
 <code class="sourceCode R"><span><span class="va">wrong_spec2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"spec_wrong2_ae.json"</span><span class="op">)</span></span>
 <span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wrong_spec2</span><span class="op">)</span></span>
 <span><span class="va">lines</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "  \"grouping_columns\": [\"this_column_doesnt_exist\"],"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "  \"grouping_column\": \"this_column_doesnt_exist\","</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">wrong_spec2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in tibble::rowid_to_column(table, "EIDER_PRIVATE_INDEX"): is.data.frame(df) is not TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: The name '../example_data/random_ae_data.csv' supplied for 'source_file' was not provided as an input table.</span></span>
+<span><span class="co">#&gt; Context:</span></span>
+<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_wrong2_ae.json</span></span>
+<span><span class="co">#&gt;  &gt; featurise_count</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="example-3">Example 3<a class="anchor" aria-label="anchor" href="#example-3"></a>
@@ -124,10 +127,13 @@
 <code class="sourceCode R"><span><span class="va">wrong_spec3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"spec_wrong3_ae.json"</span><span class="op">)</span></span>
 <span><span class="va">lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">wrong_spec3</span><span class="op">)</span></span>
 <span><span class="va">lines</span><span class="op">[</span><span class="fl">11</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] "        \"column\": [\"at_ten_dance_category\"],"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "        \"column\": \"at_ten_dance_category\","</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">wrong_spec3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in tibble::rowid_to_column(table, "EIDER_PRIVATE_INDEX"): is.data.frame(df) is not TRUE</span></span></code></pre></div>
+<span><span class="co">#&gt; Error: The name '../example_data/random_ae_data.csv' supplied for 'source_file' was not provided as an input table.</span></span>
+<span><span class="co">#&gt; Context:</span></span>
+<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_wrong3_ae.json</span></span>
+<span><span class="co">#&gt;  &gt; featurise_count</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
