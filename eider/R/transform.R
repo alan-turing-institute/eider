@@ -22,10 +22,17 @@ transform <- function(
   features <- lapply(
     feature_filenames,
     function(json_fname) {
+      json_context <- json_fname
+      file_or_string <- read_spec_type(json_fname)
+      if (file_or_string == "string") {
+        json_context <- "User defined string"
+      } else {
+        json_context <- json_fname
+      }
       featurise(
         all_tables,
         json_to_feature(json_fname),
-        context = paste0("featurise: ", json_fname)
+        context = paste0("featurise: ", json_context)
       )
     }
   )
