@@ -3,7 +3,7 @@
   "transformation_type": ["COUNT"],
   "grouping_column": ["id"],
   "absent_default_value": 0,
-  "output_feature_name": ["smr04_op"],
+  "output_feature_name": ["with_preprocessing"],
   "preprocess": {
     "on": "cis_marker",
     "retain_min": "admission_date",
@@ -15,12 +15,12 @@
       "subfilter_1": {
         "column": ["episode_within_cis"],
         "type": ["IN"],
-        "value": [1, 2]
+        "value": [1, 2, 3]
       },
     "subfilter_2": {
         "column": "discharge_date",
         "type": "date_lt_eq",
-        "value": ["2015-07-31"]
+        "value": ["2015-04-22"]
       }
     }
   }

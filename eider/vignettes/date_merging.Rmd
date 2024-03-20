@@ -25,7 +25,7 @@ library(knitr)
 library(kableExtra)
 library(tidyverse)
 kbl <- function(x) {
-  x <- head(x, 20)
+  x <- head(x, 10)
   x %>%
     knitr::kable(format = "html",
                  table.attr = 'data-quarto-disable-processing="true"') %>%
@@ -44,23 +44,23 @@ initial_table <- read_data(smr04_data_filepath)[[1]]
 initial_table %>% kbl()
 ```
 
-Each row is an episode. Multiple episodes make up a stay. The `cis_marker` field can be used to group episodes from one id into a stay. I.e. all rows for a (`id`, `cis_marker`) tuple correspond to a single stay. `episode_within_cis` tells us the order of the episodes within a stay. So in this example, patient with ID 14 had a 2 day stay from 31st July 2016 to 1st August 2016. The first episode occured on 31st July only and had `SOME_CODE` of "b". This could correspond to the admitting event. The second episode also started on the 31st July, but didn't conclude until the next day. It has a `EPISODE_WITHIN_CIS` of 2, identifying it as the second episode. 
+Each row is an episode. Multiple episodes make up a stay. The `cis_marker` field can be used to group episodes from one id into a stay. I.e. all rows for a (`id`, `cis_marker`) tuple correspond to a single stay. `episode_within_cis` tells us the order of the episodes within a stay.
+
+```{r}
+p3_only <- initial_table[initial_table$id == 3, ]
+p3_only %>% kbl()
+```
+
+Using patient with ID of 3 as an example - the data contains details of 4 episodes (with `CIS_MARKERS` of 23, 24, 25, and 26). For the stay with `CIS_MARKER` 23, there were three episodes, all started on 17th May 2015 and ended on the same date. For the stays with `CIS_MARKER` 24, and 25, there was only one episode, and for the stay with `CIS_MARKER` 26 there were 3 episodes, the first episode had an admission date of 21st April 2015, and a discharge date of the 22nd April. The second episode had an admission date of the 22nd April and a discharge date of the same day, and the third episode had an admission date of the 22nd but a discharge date of the 24th. This stay for patient 3 spanned the 21st to 24th of April.
 
 With episodic data is could be necessary to filter on dates. If in the example of patient with ID 14 the cut-off-date was set as 1st August, then the first episode in their stay would be omitted, and potentially the second episode would be assumed to be the first. 
 
-
 ## 2. Describe the pre-processing
-
-```{r}
-spec_filepath <- eider_example("spec_basic_preprocessing_smr04.json")
-writeLines(readLines(spec_filepath))
-```
 
 The way `eider` has approached this, is to allow users to pre-process their data, to merge episodes into stays. In this case by specifying that they can select the earliest admission date for each stay and the latest discharge date for each stay and replace each episode with the stay-related span.
 
 The key features outlined here are: The `grouping_column`, the `preprocess$on` as well as the `preprocess$retain_min` and `preprocess$retain_max`. We can put these in a mini specification and call the preprocessing function directly
 
-## 3. Preprocessing only
 Here we define a mini specification with only the important features
 ```{r}
 minispec <- list()
@@ -77,42 +77,57 @@ Then we can run it with the example SMR04 data
 ```{r}
 processed_table <- preprocess_table(input_table = initial_table,
                                     spec = minispec)
-processed_table %>% kbl()
+p3_processed <- processed_table[processed_table$id == 3, ]
+p3_processed %>% kbl()
 ```
 
-The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date. So now patient 14 still shows 2 episodes for summer 2016, but now both start on the same day and end on the same day, allowing filtering to account for a whole stay rather than an episode within a stay.
+The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date. So now patient 3 still has 4 stays in the data, but now all episodes within the stay with `CIS_MARKER` 26, has the same admission and discharge date. This allows filtering to account for a whole stay rather than an episode within a stay.
 
-## 4 With and Without preprocessing
+## 3. Without and With preprocessing
+
+Here are two full specification files, one without the preprocessing request, and one with.
 
 ```{r}
-with_preprocessing <- eider_example("spec_basic_preprocessing_smr04.json")
-writeLines(readLines(with_preprocessing))
+spec_without_preprocessing <- eider_example("spec_smr04.json")
+writeLines(readLines(spec_without_preprocessing))
+```
+This spec is requesting a count of the number of times episode 1, 2, or 3 from `episode_within_cis` occurs for `DISCHARGE_DATE` earlier than (or equal to) 22nd April 2015.
+
+For patient 3, without the preprocessing step we expect this to count 2 of the 8 episodes, the two with `CIS_MARKER` 26 and `DISCHARGE_DATE` of 22nd April 2015, the final episode in that stay does not satisfy the date condition and so is not expected to be counted.
+
+```{r}
+spec_with_preprocessing <- eider_example("spec_smr04_preprocessing.json")
+writeLines(readLines(spec_with_preprocessing))
 ```
 
-This spec is requesting a count of the number of times episode 1 or 2 from `episode_within_cis` occurs for discharge dates earlier than 31st July 2015. 
+This spec is requesting the same thing, but now has the preprocessing step included. The `DISCHARGE_DATE` for all episodes in the stay with `CIS_MARKER` 26 will now all be the same - the latest discharge date from the stay, and the transform will count none of the total episodes for patient 3. This means that there will now be zero episodes which match the criteria.
 
+Read in the data table
 ```{r}
-without_preprocessing <- eider_example("spec_basic_no-preprocessing_smr04.json")
-writeLines(readLines(without_preprocessing))
+smr04_table <- read_data(list(smr04 = eider_example("random_smr04_data.csv")))
 ```
-This spec has the pre-processing step removed
 
+This featurise call does not use the preprocessing flags
 ```{r}
-smr04_data <- list(smr04 = eider_example("random_smr04_data.csv"))
-with_preprocessing <- transform(
-  data_sources = smr04_data,
-  feature_filenames = with_preprocessing
+w_out_preprocessing <- featurise(
+  smr04_table,
+  json_to_feature(spec_without_preprocessing)
 )
-with_preprocessing %>% kbl()
 ```
 
-
+This featurise call does use the preprocessing flags,
 ```{r}
-smr04_data <- list(smr04 = eider_example("random_smr04_data.csv"))
-w_out_preprocessing <- transform(
-  data_sources = smr04_data,
-  feature_filenames = without_preprocessing
+w_preprocessing <- featurise(
+  smr04_table,
+  json_to_feature(spec_with_preprocessing)
 )
-w_out_preprocessing %>% kbl()
 ```
 
+Joining the resultant tables:
+```{r}
+joined_feature_table <- join_feature_tables(list(w_out_preprocessing,
+                                                 w_preprocessing))
+joined_feature_table %>% kbl()
+```
+
+Comparing the above, we can see that for patient with id 3, when no pre-processing is applied, two episodes are counted, but when the preprocessing step is applied, zero are.
