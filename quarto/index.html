@@ -638,15 +638,17 @@ Attaching package: 'eider'</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(tmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "TRACE [2024-03-19 08:50:03] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json"                                                                   
-[2] "DEBUG [2024-03-19 08:50:03] Parsing nested filter"                                                                                                                                               
-[3] "DEBUG [2024-03-19 08:50:03] Parsing single filter"                                                                                                                                               
-[4] "DEBUG [2024-03-19 08:50:03] Parsing single filter"                                                                                                                                               
-[5] "TRACE [2024-03-19 08:50:03] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count"                                                 
-[6] "TRACE [2024-03-19 08:50:03] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    
-[7] "TRACE [2024-03-19 08:50:03] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"
-[8] "TRACE [2024-03-19 08:50:03] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"
-[9] "TRACE [2024-03-19 08:50:03] context: join_feature_tables"                                                                                                                                        </code></pre>
+<pre><code> [1] "TRACE [2024-03-20 22:26:45] context: Checking for json file or str"                                                                                                                              
+ [2] "DEBUG [2024-03-20 22:26:45] Valid filepath found /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json"                                                                  
+ [3] "TRACE [2024-03-20 22:26:45] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json"                                                                   
+ [4] "DEBUG [2024-03-20 22:26:45] Parsing nested filter"                                                                                                                                               
+ [5] "DEBUG [2024-03-20 22:26:45] Parsing single filter"                                                                                                                                               
+ [6] "DEBUG [2024-03-20 22:26:45] Parsing single filter"                                                                                                                                               
+ [7] "TRACE [2024-03-20 22:26:45] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count"                                                 
+ [8] "TRACE [2024-03-20 22:26:45] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    
+ [9] "TRACE [2024-03-20 22:26:45] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"
+[10] "TRACE [2024-03-20 22:26:45] context: featurise: /home/runner/work/_temp/Library/eider/extdata/spec_example_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"
+[11] "TRACE [2024-03-20 22:26:45] context: join_feature_tables"                                                                                                                                        </code></pre>
 </div>
 </div>
 <p>Line 2 is when the primary filter is parsed. It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 3 and 4. Lines 5 - 9 give the context of what is being processed for debug purposes including the path to the corresponding specification files (which in this case are in the examples folder of this package).</p>

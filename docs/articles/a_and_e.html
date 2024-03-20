@@ -469,16 +469,72 @@
 <p>Check the log:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "TRACE [2024-03-19 08:49:26] context: featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_basic_ae_data.json"                                                                   </span></span>
-<span><span class="co">#&gt; [2] "DEBUG [2024-03-19 08:49:26] Parsing nested filter"                                                                                                                                                </span></span>
-<span><span class="co">#&gt; [3] "DEBUG [2024-03-19 08:49:26] Parsing single filter"                                                                                                                                                </span></span>
-<span><span class="co">#&gt; [4] "DEBUG [2024-03-19 08:49:26] Parsing single filter"                                                                                                                                                </span></span>
-<span><span class="co">#&gt; [5] "TRACE [2024-03-19 08:49:26] context: featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                 </span></span>
-<span><span class="co">#&gt; [6] "TRACE [2024-03-19 08:49:26] context: featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    </span></span>
-<span><span class="co">#&gt; [7] "TRACE [2024-03-19 08:49:26] context: featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
-<span><span class="co">#&gt; [8] "TRACE [2024-03-19 08:49:26] context: featurise: /tmp/RtmpEF1XE0/temp_libpath16ed4fad5409/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
-<span><span class="co">#&gt; [9] "TRACE [2024-03-19 08:49:26] context: join_feature_tables"</span></span></code></pre></div>
-<p>Line 2 is when the primary filter is parsed. It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 3 and 4. Lines 5 - 9 give the context of what is being processed for debug purposes including the path to the corresponding specification files (which in this case are in the examples folder of this package).</p>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-20 22:26:13] context: Checking for json file or str"                                                                                                                               </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-20 22:26:13] Valid filepath found /tmp/RtmpMyaiTa/temp_libpath16676c9ca5a6/eider/extdata/spec_basic_ae_data.json"                                                                  </span></span>
+<span><span class="co">#&gt;  [3] "TRACE [2024-03-20 22:26:13] context: featurise: /tmp/RtmpMyaiTa/temp_libpath16676c9ca5a6/eider/extdata/spec_basic_ae_data.json"                                                                   </span></span>
+<span><span class="co">#&gt;  [4] "DEBUG [2024-03-20 22:26:13] Parsing nested filter"                                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [5] "DEBUG [2024-03-20 22:26:13] Parsing single filter"                                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [6] "DEBUG [2024-03-20 22:26:13] Parsing single filter"                                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-20 22:26:13] context: featurise: /tmp/RtmpMyaiTa/temp_libpath16676c9ca5a6/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                 </span></span>
+<span><span class="co">#&gt;  [8] "TRACE [2024-03-20 22:26:13] context: featurise: /tmp/RtmpMyaiTa/temp_libpath16676c9ca5a6/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    </span></span>
+<span><span class="co">#&gt;  [9] "TRACE [2024-03-20 22:26:13] context: featurise: /tmp/RtmpMyaiTa/temp_libpath16676c9ca5a6/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-20 22:26:13] context: featurise: /tmp/RtmpMyaiTa/temp_libpath16676c9ca5a6/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-20 22:26:13] context: join_feature_tables"</span></span></code></pre></div>
+<p>Lines 1-2 report checks on the specification, Line 4 is where the primary filter is parsed, It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 5 and 6.</p>
+<p>Lines 7 -11 give the context of what is being processed for debug purposes including the path to the corresponding specification files (which in this case are in the examples folder of this package).</p>
+</div>
+<div class="section level3">
+<h3 id="reading-json-file-as-string">7. Reading JSON file as string<a class="anchor" aria-label="anchor" href="#reading-json-file-as-string"></a>
+</h3>
+<p>The specification can also be provided as a string instead of a path to a JSON file, as shown below.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">json_string</span> <span class="op">&lt;-</span> <span class="st">'{"source_file":["ae2"],"transformation_type":["COUNT"],</span></span>
+<span><span class="st">"grouping_column":["id"],"absent_default_value":[0],"output_feature_name"</span></span>
+<span><span class="st">:["user_defined_name"],"primary_filter":{"type":["AND"],"subfilters"</span></span>
+<span><span class="st">:{"subfilter_1":{"column":["attendance_category"],"type":["IN"],"value":[1]},</span></span>
+<span><span class="st">"subfilter_2":{"column":["diagnosis_1"],"type":["IN"],"value":[101]}}}}'</span></span></code></pre></div>
+<p>Apply the transformation</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_threshold.html" class="external-link">log_threshold</a></span><span class="op">(</span><span class="va">TRACE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://daroczig.github.io/logger/reference/log_appender.html" class="external-link">log_appender</a></span><span class="op">(</span><span class="fu"><a href="https://daroczig.github.io/logger/reference/appender_file.html" class="external-link">appender_file</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform.html">transform</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">json_string</span><span class="op">)</span></span>
+<span><span class="va">tf</span></span>
+<span><span class="co">#&gt;    id user_defined_name</span></span>
+<span><span class="co">#&gt; 1   0                 2</span></span>
+<span><span class="co">#&gt; 2   1                 1</span></span>
+<span><span class="co">#&gt; 3   2                 1</span></span>
+<span><span class="co">#&gt; 4   3                 0</span></span>
+<span><span class="co">#&gt; 5   4                 2</span></span>
+<span><span class="co">#&gt; 6   5                 1</span></span>
+<span><span class="co">#&gt; 7   6                 2</span></span>
+<span><span class="co">#&gt; 8   7                 5</span></span>
+<span><span class="co">#&gt; 9   8                 2</span></span>
+<span><span class="co">#&gt; 10  9                 0</span></span>
+<span><span class="co">#&gt; 11 10                 1</span></span>
+<span><span class="co">#&gt; 12 11                 1</span></span>
+<span><span class="co">#&gt; 13 12                 1</span></span>
+<span><span class="co">#&gt; 14 13                 1</span></span>
+<span><span class="co">#&gt; 15 14                 1</span></span>
+<span><span class="co">#&gt; 16 15                 0</span></span>
+<span><span class="co">#&gt; 17 16                 0</span></span>
+<span><span class="co">#&gt; 18 17                 2</span></span>
+<span><span class="co">#&gt; 19 18                 1</span></span>
+<span><span class="co">#&gt; 20 19                 2</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-20 22:26:13] context: Checking for json file or str"                                                                    </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-20 22:26:13] Specified path is too long for a file, assuming a json string"                                             </span></span>
+<span><span class="co">#&gt;  [3] "TRACE [2024-03-20 22:26:13] context: featurise: User defined string"                                                                   </span></span>
+<span><span class="co">#&gt;  [4] "DEBUG [2024-03-20 22:26:13] Parsing nested filter"                                                                                     </span></span>
+<span><span class="co">#&gt;  [5] "DEBUG [2024-03-20 22:26:13] Parsing single filter"                                                                                     </span></span>
+<span><span class="co">#&gt;  [6] "DEBUG [2024-03-20 22:26:13] Parsing single filter"                                                                                     </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-20 22:26:13] context: featurise: User defined string &gt; featurise_count"                                                 </span></span>
+<span><span class="co">#&gt;  [8] "TRACE [2024-03-20 22:26:13] context: featurise: User defined string &gt; featurise_count &gt; filter_and"                                    </span></span>
+<span><span class="co">#&gt;  [9] "TRACE [2024-03-20 22:26:13] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-20 22:26:13] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-20 22:26:13] context: join_feature_tables"</span></span></code></pre></div>
+<p>Here the log identifies that a user-defined string is used instead of a file and processes as before</p>
 </div>
 <div class="section level3">
 <h3 id="glossary">Glossary<a class="anchor" aria-label="anchor" href="#glossary"></a>

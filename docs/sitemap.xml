@@ -40,6 +40,9 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/check_for_nested.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/chk_pth.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/coerce_dates.html</loc>
   </url>
   <url>
@@ -128,6 +131,9 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/read_one_table.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/read_spec_type.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/trace_context.html</loc>
