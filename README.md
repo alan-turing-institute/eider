@@ -8,7 +8,8 @@ Thursdays, usually 10:30 - 11:30. Notes [here](https://hackmd.io/@hdduncan/BJRce
 
 ## Package documentation
 
-https://alan-turing-institute.github.io/eider/docs/
+Ideally: https://alan-turing-institute.github.io/eider/docs/
+Currently: https://alan-turing-institute.github.io/SPARRA/docs/
 
 
 ## Setting up pre-commit
