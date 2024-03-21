@@ -22,7 +22,7 @@ library(eider)
 Users may specify a set of operations to be performed on a table using JSON, which are then executed by the package.
 The primary use case of `eider` is for extraction of machine learning features from health data, but `eider` can in principle be used for any kind of data.
 
-The usage of `eider` in R source code itself is straightforward, and consists of a single call to `transform()`.
+The usage of `eider` in R source code itself is straightforward, and consists of a single call to `run_pipeline()`.
 
 ## Data
 
@@ -80,7 +80,7 @@ Subsequent vignettes will go into more detail about the different types of trans
 To obtain the desired feature, we can simply do:
 
 ```{r}
-transform(
+run_pipeline(
   data_sources = data_sources,
   feature_filenames = "example_attendances_6.json"
 )
@@ -88,7 +88,7 @@ transform(
 
 As expected, both patients 1 and 2 have attended for reason 6 twice, and patient 3 has not.
 
-`transform()` returns a list of two data frames, called _features_ and _responses_ respectively.
+`run_pipeline()` returns a list of two data frames, called _features_ and _responses_ respectively.
 These refer to data used for training machine learning models: _features_ are the independent variables (i.e. `X`), and _responses_ are the dependent variables (i.e. `y`).
 For consistency, `eider` always returns both of these data frames and ensures that both of them have the same list of IDs.
 Responses may be specified in exactly the same way as features, but using the `response_filenames` argument instead of `feature_filenames`.

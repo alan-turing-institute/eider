@@ -6,12 +6,12 @@ without_preprocessing <- eider_example("spec_smr04.json")
 
 test_that("preprocessing", {
 
-  tf_with_preprocessing <- transform(
+  tf_with_preprocessing <- run_pipeline(
     data_sources = smr04_data,
     feature_filenames = with_preprocessing
   )
 
-  tf_wout_preprocessing <- transform(
+  tf_wout_preprocessing <- run_pipeline(
     data_sources = smr04_data,
     feature_filenames = without_preprocessing
   )

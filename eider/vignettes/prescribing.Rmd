@@ -40,7 +40,7 @@ There is date filtering applied, in this case between 1st January 2015 and 1st J
 ## 3. Run transformation - Number of unique
 ```{r}
 prescribing_data_path <- list(prescribing = prescribing_data_filepath)
-transform(prescribing_data_path, prescribing_spec_nunique_fp)
+run_pipeline(prescribing_data_path, prescribing_spec_nunique_fp)
 ```
 
 The results of the transformation are shown above - here the patient with id 0 had 3 unique values of `bnf_section`, and the patient with id 19 ultimately ended up with 5 unique selections over the specified time period. 
@@ -56,5 +56,5 @@ writeLines(readLines(prescribing_spec_npresc_fp))
 
 With the corresponding transformation
 ```{r}
-transform(prescribing_data_path, prescribing_spec_npresc_fp)
+run_pipeline(prescribing_data_path, prescribing_spec_npresc_fp)
 ```

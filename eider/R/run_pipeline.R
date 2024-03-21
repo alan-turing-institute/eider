@@ -12,7 +12,7 @@
 #'
 #' @return A data frame with the feature tables joined together
 #' @export
-transform <- function(
+run_pipeline <- function(
     data_sources,
     feature_filenames = NULL,
     response_filenames = NULL,

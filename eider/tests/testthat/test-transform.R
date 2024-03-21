@@ -3,7 +3,7 @@ test_that("transform", {
 
   all_table_filenames <- c(ae2_table_path)
 
-  joined_feature_table <- transform(
+  joined_feature_table <- run_pipeline(
     data_sources = list(ae2 = ae2_table_path),
     feature_filenames = c(
       "../spec/test_join1.json",
