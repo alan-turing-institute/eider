@@ -5,7 +5,7 @@
 #' "trace")
 #'
 #' @returns NULL
-log_context <- function(context, severity) {
+log_context <- function(context, severity, message = "") {
   logging_function <- switch(severity,
     "fatal" = log_fatal,
     "error" = log_error,
@@ -14,7 +14,7 @@ log_context <- function(context, severity) {
     "debug" = log_debug,
     "trace" = log_trace
   )
-  logging_function("context: ", stringr::str_c(context, collapse = " > "))
+  logging_function("context: ", context_message(context, message))
 }
 
 #' Concatenate context into string and append a message
@@ -24,29 +24,58 @@ log_context <- function(context, severity) {
 #'
 #' @returns result A single string
 context_message <- function(context, message) {
-  paste0(stringr::str_c(context, collapse = " > "), ": ", message)
+  context_string <- stringr::str_c(context, collapse = " > ")
+  if (message == "") {
+    context_string
+  } else {
+    stringr::str_c(context_string, ": ", message)
+  }
 }
 
-trace_context <- function(context) {
-  log_context(context, "trace")
+trace_context <- function(context, message) {
+  log_context(
+    context = context,
+    severity = "trace",
+    message = message
+  )
 }
 
-debug_context <- function(context) {
-  log_context(context, "debug")
+debug_context <- function(context, message) {
+  log_context(
+    context = context,
+    severity = "debug",
+    message = message
+  )
 }
 
-info_context <- function(context) {
-  log_context(context, "info")
+info_context <- function(context, message) {
+  log_context(
+    context = context,
+    severity = "info",
+    message = message
+  )
 }
 
-warn_context <- function(context) {
-  log_context(context, "warn")
+warn_context <- function(context, message) {
+  log_context(
+    context = context,
+    severity = "warn",
+    message = message
+  )
 }
 
-error_context <- function(context) {
-  log_context(context, "error")
+error_context <- function(context, message) {
+  log_context(
+    context = context,
+    severity = "error",
+    message = message
+  )
 }
 
-fatal_context <- function(context) {
-  log_context(context, "fatal")
+fatal_context <- function(context, message) {
+  log_context(
+    context = context,
+    severity = "fatal",
+    message = message
+  )
 }

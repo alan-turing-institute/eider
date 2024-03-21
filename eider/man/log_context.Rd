@@ -4,7 +4,7 @@
 \alias{log_context}
 \title{Log a message showing the current execution context}
 \usage{
-log_context(context, severity)
+log_context(context, severity, message = "")
 }
 \arguments{
 \item{context}{A character vector}

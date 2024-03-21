@@ -24,10 +24,11 @@ join_feature_tables <- function(
   # If not supplied, collect the set of IDs across all tables
   if (is.null(all_ids)) {
     debug_context(
-      paste0(
+      context = context,
+      message = paste0(
         "List of IDs was not explicitly supplied. ",
         "Taking the union of all IDs from feature tables."
-      ), context
+      )
     )
     get_ids <- function(feature) feature$feature_table$id
     all_ids <- lapply(calculated_features, get_ids) %>%
@@ -36,11 +37,12 @@ join_feature_tables <- function(
       sort()
   } else {
     debug_context(
-      paste0(
+      context = context,
+      message = paste0(
         "A list of IDs to include in the output was specified, containing ",
         length(all_ids),
         " IDs."
-      ), context
+      )
     )
   }
 
@@ -70,6 +72,16 @@ join_feature_tables <- function(
 #' Helper function
 add_feature_column_to_df <- function(df, feature) {
   output_column_name <- setdiff(names(feature$feature_table), "id")
+
+  if (output_column_name %in% names(df)) {
+    error_context(
+      paste0(
+        "Feature column name '",
+        output_column_name,
+        "' already exists in the data frame."
+      ), context
+    )
+  }
 
   df <- df %>%
     left_join(feature$feature_table, by = "id") %>%

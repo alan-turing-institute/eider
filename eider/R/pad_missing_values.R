@@ -15,7 +15,7 @@ pad_missing_values <- function(
     missing_value,
     id_table,
     context) {
-  trace_context(
+  debug_context(
     paste0(
       "Adding absent_default_value: ",
       missing_value,

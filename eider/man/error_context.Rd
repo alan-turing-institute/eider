@@ -4,7 +4,7 @@
 \alias{error_context}
 \title{Issue an error with a context and stop}
 \usage{
-error_context(context)
+error_context(context, message)
 }
 \arguments{
 \item{context}{A character vector}
