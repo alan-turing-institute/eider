@@ -16,6 +16,9 @@ test_that("preprocessing", {
     feature_filenames = without_preprocessing
   )
 
+  tf_with_preprocessing <- tf_with_preprocessing$features
+  tf_wout_preprocessing <- tf_wout_preprocessing$features
+
   # Check that with preprocessing patient 3 returns
   # 0 counts for the example data
   p3_w_preprocessing <- tf_with_preprocessing[tf_with_preprocessing$id == 3, ]

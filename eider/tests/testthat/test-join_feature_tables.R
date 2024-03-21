@@ -34,13 +34,13 @@ test_that("join_feature_tables", {
     left_join(diag_102_expected, by = "id") %>%
     mutate(diag_102_count = tidyr::replace_na(diag_102_count, 0))
 
-  expect_equal(joined_feature_table$id, feature_table_expected$id)
+  expect_equal(joined_feature_table$features$id, feature_table_expected$id)
   expect_equal(
-    joined_feature_table$diag_101_count,
+    joined_feature_table$features$diag_101_count,
     feature_table_expected$diag_101_count
   )
   expect_equal(
-    joined_feature_table$diag_102_count,
+    joined_feature_table$features$diag_102_count,
     feature_table_expected$diag_102_count
   )
 })

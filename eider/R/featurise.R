@@ -2,6 +2,8 @@
 #'
 #' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec Parsed JSON file containing the feature specification.
+#' @param is_feature Logical indicating whether the feature is a feature (TRUE)
+#' or a response (FALSE). Defaults to TRUE.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
 #'
@@ -11,12 +13,15 @@
 #'                  The column names are 'id' for the ID (this is standardised
 #'                  across all feature tables), and the value of
 #'                  output_column_name.
+#' - is_feature:    Logical indicating whether the feature is a feature (TRUE)
+#'                  or a response (FALSE).
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
 #' @export
 featurise <- function(all_tables,
                       spec,
+                      is_feature = TRUE,
                       context = NULL) {
   trace_context(context)
 
@@ -54,5 +59,6 @@ featurise <- function(all_tables,
     )
   }
 
+  feature$is_feature <- is_feature  # Used by join_feature_tables
   feature
 }

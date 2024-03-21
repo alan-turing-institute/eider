@@ -29,7 +29,10 @@ join_feature_tables <- function(
       unique() %>%
       sort()
   }
-  df <- data.frame(id = all_ids)
+
+  # Generate empty data frames for features and responses
+  feature_df <- data.frame(id = all_ids)
+  response_df <- data.frame(id = all_ids)
 
   for (i in seq_along(calculated_features)) {
     feature <- calculated_features[[i]]
@@ -39,13 +42,28 @@ join_feature_tables <- function(
 
     # Join the feature table to the main table and replace any NAs with the
     # specified missing value
-    df <- df %>%
-      left_join(feature_table, by = "id") %>%
-      mutate(
-        !!output_column_name :=
-          coalesce(.data[[output_column_name]], missing_value)
-      )
+    feature <- calculated_features[[i]]
+    if (feature$is_feature) {
+      feature_df <- add_feature_column_to_df(feature_df, feature)
+    } else {
+      response_df <- add_feature_column_to_df(response_df, feature)
+    }
   }
 
-  df
+  list(features = feature_df, responses = response_df)
+}
+
+#' Helper function
+add_feature_column_to_df <- function(df, feature) {
+  output_column_name <- setdiff(names(feature$feature_table), "id")
+
+  df <- df %>%
+    left_join(feature$feature_table, by = "id") %>%
+    mutate(
+      !!output_column_name :=
+        coalesce(
+          .data[[output_column_name]],
+          feature$missing_value
+        )
+    )
 }

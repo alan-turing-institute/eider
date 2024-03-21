@@ -4,12 +4,15 @@
 \alias{featurise}
 \title{Extract a feature table using a feature JSON file.}
 \usage{
-featurise(all_tables, spec, context = NULL)
+featurise(all_tables, spec, is_feature = TRUE, context = NULL)
 }
 \arguments{
 \item{all_tables}{List of all input tables (passed in from read_data).}
 
 \item{spec}{Parsed JSON file containing the feature specification.}
+
+\item{is_feature}{Logical indicating whether the feature is a feature (TRUE)
+or a response (FALSE). Defaults to TRUE.}
 
 \item{context}{A character vector to be used in logging or error messages.
 Defaults to NULL.}
@@ -22,6 +25,8 @@ containing the sum of matching rows in the source table.
 The column names are 'id' for the ID (this is standardised
 across all feature tables), and the value of
 output_column_name.
+\item is_feature:    Logical indicating whether the feature is a feature (TRUE)
+or a response (FALSE).
 \item missing_value: The value to use for patients who have no matching rows in
 the source table. This value is passed downstream to the
 function which joins all the feature tables together.

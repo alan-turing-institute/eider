@@ -4,14 +4,22 @@
 \alias{transform}
 \title{Perform the entire feature transformation process.}
 \usage{
-transform(data_sources, feature_filenames, all_ids = NULL)
+transform(
+  data_sources,
+  feature_filenames = NULL,
+  response_filenames = NULL,
+  all_ids = NULL
+)
 }
 \arguments{
 \item{data_sources}{A list mapping unique table identifiers to either
 the file path from which they should be read from, or the data frame itself.}
 
 \item{feature_filenames}{A vector of file paths to the feature JSON
-specifications.}
+specifications. Defaults to NULL.}
+
+\item{response_filenames}{A vector of file paths to the feature JSON
+specifications. Defaults to NULL.}
 
 \item{all_ids}{A vector of all the unique identifiers that should be in the
 final feature table. If not given, will generate a feature table containing
