@@ -4,10 +4,11 @@ pkgdown_sha: ~
 articles:
   a_and_e: a_and_e.html
   combine: combine.html
+  date_merging: date_merging.html
   eider: eider.html
   logging: logging.html
   prescribing: prescribing.html
-last_built: 2024-03-21T09:47Z
+last_built: 2024-03-21T09:54Z
 urls:
   reference: https://alan-turing-institute.github.io/SPARRA/docs/reference
   article: https://alan-turing-institute.github.io/SPARRA/docs/articles

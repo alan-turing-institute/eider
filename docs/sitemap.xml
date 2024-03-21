@@ -16,6 +16,9 @@
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/articles/combine.html</loc>
   </url>
   <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/articles/date_merging.html</loc>
+  </url>
+  <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/articles/eider.html</loc>
   </url>
   <url>
@@ -125,6 +128,9 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/parse_single_or_nested.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/preprocess_table.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/SPARRA/docs/reference/read_data.html</loc>

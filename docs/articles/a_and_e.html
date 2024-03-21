@@ -48,6 +48,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/a_and_e.html">A &amp; E Example</a>
     <a class="dropdown-item" href="../articles/combine.html">Combine Example</a>
+    <a class="dropdown-item" href="../articles/date_merging.html">Date Merging</a>
     <a class="dropdown-item" href="../articles/logging.html">Logging Example</a>
     <a class="dropdown-item" href="../articles/prescribing.html">Prescribing Example</a>
   </div>
@@ -469,17 +470,17 @@
 <p>Check the log:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "TRACE [2024-03-21 09:47:25] context: Checking for json file or str"                                                                                                                               </span></span>
-<span><span class="co">#&gt;  [2] "DEBUG [2024-03-21 09:47:25] Valid filepath found /tmp/Rtmpdn9n1q/temp_libpath16ce4aa7d73c/eider/extdata/spec_basic_ae_data.json"                                                                  </span></span>
-<span><span class="co">#&gt;  [3] "TRACE [2024-03-21 09:47:25] context: featurise: /tmp/Rtmpdn9n1q/temp_libpath16ce4aa7d73c/eider/extdata/spec_basic_ae_data.json"                                                                   </span></span>
-<span><span class="co">#&gt;  [4] "DEBUG [2024-03-21 09:47:25] Parsing nested filter"                                                                                                                                                </span></span>
-<span><span class="co">#&gt;  [5] "DEBUG [2024-03-21 09:47:25] Parsing single filter"                                                                                                                                                </span></span>
-<span><span class="co">#&gt;  [6] "DEBUG [2024-03-21 09:47:25] Parsing single filter"                                                                                                                                                </span></span>
-<span><span class="co">#&gt;  [7] "TRACE [2024-03-21 09:47:25] context: featurise: /tmp/Rtmpdn9n1q/temp_libpath16ce4aa7d73c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                 </span></span>
-<span><span class="co">#&gt;  [8] "TRACE [2024-03-21 09:47:25] context: featurise: /tmp/Rtmpdn9n1q/temp_libpath16ce4aa7d73c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    </span></span>
-<span><span class="co">#&gt;  [9] "TRACE [2024-03-21 09:47:25] context: featurise: /tmp/Rtmpdn9n1q/temp_libpath16ce4aa7d73c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
-<span><span class="co">#&gt; [10] "TRACE [2024-03-21 09:47:25] context: featurise: /tmp/Rtmpdn9n1q/temp_libpath16ce4aa7d73c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
-<span><span class="co">#&gt; [11] "TRACE [2024-03-21 09:47:25] context: join_feature_tables"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-21 09:55:00] context: Checking for json file or str"                                                                                                                               </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-21 09:55:00] Valid filepath found /tmp/RtmpyLR56d/temp_libpath166129c4e8b9/eider/extdata/spec_basic_ae_data.json"                                                                  </span></span>
+<span><span class="co">#&gt;  [3] "TRACE [2024-03-21 09:55:00] context: featurise: /tmp/RtmpyLR56d/temp_libpath166129c4e8b9/eider/extdata/spec_basic_ae_data.json"                                                                   </span></span>
+<span><span class="co">#&gt;  [4] "DEBUG [2024-03-21 09:55:00] Parsing nested filter"                                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [5] "DEBUG [2024-03-21 09:55:00] Parsing single filter"                                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [6] "DEBUG [2024-03-21 09:55:00] Parsing single filter"                                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-21 09:55:00] context: featurise: /tmp/RtmpyLR56d/temp_libpath166129c4e8b9/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                 </span></span>
+<span><span class="co">#&gt;  [8] "TRACE [2024-03-21 09:55:00] context: featurise: /tmp/RtmpyLR56d/temp_libpath166129c4e8b9/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                    </span></span>
+<span><span class="co">#&gt;  [9] "TRACE [2024-03-21 09:55:00] context: featurise: /tmp/RtmpyLR56d/temp_libpath166129c4e8b9/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-21 09:55:00] context: featurise: /tmp/RtmpyLR56d/temp_libpath166129c4e8b9/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-21 09:55:00] context: join_feature_tables"</span></span></code></pre></div>
 <p>Lines 1-2 report checks on the specification, Line 4 is where the primary filter is parsed, It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 5 and 6.</p>
 <p>Lines 7 -11 give the context of what is being processed for debug purposes including the path to the corresponding specification files (which in this case are in the examples folder of this package).</p>
 </div>
@@ -523,17 +524,17 @@
 <span><span class="co">#&gt; 20 19                 2</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "TRACE [2024-03-21 09:47:26] context: Checking for json file or str"                                                                    </span></span>
-<span><span class="co">#&gt;  [2] "DEBUG [2024-03-21 09:47:26] Specified path is too long for a file, assuming a json string"                                             </span></span>
-<span><span class="co">#&gt;  [3] "TRACE [2024-03-21 09:47:26] context: featurise: User defined string"                                                                   </span></span>
-<span><span class="co">#&gt;  [4] "DEBUG [2024-03-21 09:47:26] Parsing nested filter"                                                                                     </span></span>
-<span><span class="co">#&gt;  [5] "DEBUG [2024-03-21 09:47:26] Parsing single filter"                                                                                     </span></span>
-<span><span class="co">#&gt;  [6] "DEBUG [2024-03-21 09:47:26] Parsing single filter"                                                                                     </span></span>
-<span><span class="co">#&gt;  [7] "TRACE [2024-03-21 09:47:26] context: featurise: User defined string &gt; featurise_count"                                                 </span></span>
-<span><span class="co">#&gt;  [8] "TRACE [2024-03-21 09:47:26] context: featurise: User defined string &gt; featurise_count &gt; filter_and"                                    </span></span>
-<span><span class="co">#&gt;  [9] "TRACE [2024-03-21 09:47:26] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
-<span><span class="co">#&gt; [10] "TRACE [2024-03-21 09:47:26] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
-<span><span class="co">#&gt; [11] "TRACE [2024-03-21 09:47:26] context: join_feature_tables"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-21 09:55:00] context: Checking for json file or str"                                                                    </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-21 09:55:00] Specified path is too long for a file, assuming a json string"                                             </span></span>
+<span><span class="co">#&gt;  [3] "TRACE [2024-03-21 09:55:00] context: featurise: User defined string"                                                                   </span></span>
+<span><span class="co">#&gt;  [4] "DEBUG [2024-03-21 09:55:00] Parsing nested filter"                                                                                     </span></span>
+<span><span class="co">#&gt;  [5] "DEBUG [2024-03-21 09:55:00] Parsing single filter"                                                                                     </span></span>
+<span><span class="co">#&gt;  [6] "DEBUG [2024-03-21 09:55:00] Parsing single filter"                                                                                     </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-21 09:55:00] context: featurise: User defined string &gt; featurise_count"                                                 </span></span>
+<span><span class="co">#&gt;  [8] "TRACE [2024-03-21 09:55:00] context: featurise: User defined string &gt; featurise_count &gt; filter_and"                                    </span></span>
+<span><span class="co">#&gt;  [9] "TRACE [2024-03-21 09:55:00] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-21 09:55:00] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"</span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-21 09:55:00] context: join_feature_tables"</span></span></code></pre></div>
 <p>Here the log identifies that a user-defined string is used instead of a file and processes as before</p>
 </div>
 <div class="section level3">
