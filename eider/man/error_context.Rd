@@ -4,12 +4,12 @@
 \alias{error_context}
 \title{Issue an error with a context and stop}
 \usage{
-error_context(err_message, context)
+error_context(context)
 }
 \arguments{
-\item{err_message}{A string}
-
 \item{context}{A character vector}
+
+\item{err_message}{A string}
 }
 \description{
 Issue an error with a context and stop
