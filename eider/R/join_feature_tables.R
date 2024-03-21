@@ -23,11 +23,25 @@ join_feature_tables <- function(
 
   # If not supplied, collect the set of IDs across all tables
   if (is.null(all_ids)) {
+    debug_context(
+      paste0(
+        "List of IDs was not explicitly supplied. ",
+        "Taking the union of all IDs from feature tables."
+      ), context
+    )
     get_ids <- function(feature) feature$feature_table$id
     all_ids <- lapply(calculated_features, get_ids) %>%
       unlist() %>%
       unique() %>%
       sort()
+  } else {
+    debug_context(
+      paste0(
+        "A list of IDs to include in the output was specified, containing ",
+        length(all_ids),
+        " IDs."
+      ), context
+    )
   }
 
   # Generate empty data frames for features and responses
