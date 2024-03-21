@@ -1,0 +1,27 @@
+{
+  "source_file": ["smr04"],
+  "transformation_type": ["COUNT"],
+  "grouping_column": ["id"],
+  "absent_default_value": 0,
+  "output_feature_name": ["with_preprocessing"],
+  "preprocess": {
+    "on": "cis_marker",
+    "retain_min": "admission_date",
+    "retain_max": "discharge_date"
+    },
+  "primary_filter": {
+    "type": ["AND"],
+    "subfilters": {
+      "subfilter_1": {
+        "column": ["episode_within_cis"],
+        "type": ["IN"],
+        "value": [1, 2, 3]
+      },
+    "subfilter_2": {
+        "column": "discharge_date",
+        "type": "date_lt_eq",
+        "value": ["2015-04-22"]
+      }
+    }
+  }
+}

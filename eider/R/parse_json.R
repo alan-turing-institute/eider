@@ -9,7 +9,7 @@ check_for_nested <- function(filter) {
 }
 
 parse_feature <- function(json_data) {
-  if (json_data$transformation_type == "COMBINE") {
+  if (json_data$transformation_type %>% tolower() == "combine") {
     # Handle COMBINE features separately
     feature_object <- list()
     feature_object$transformation_type <- json_data$transformation_type
@@ -43,6 +43,8 @@ parse_single_feature <- function(json_data) {
       feature_object$primary_filter <- parse_single_or_nested(
         json_data$primary_filter
       )
+    } else if (key == "preprocess") {
+      feature_object$preprocess <- preprocess_data(json_data$preprocess)
     } else {
       feature_object[[key]] <- json_data[[key]]
     }
@@ -103,9 +105,18 @@ parse_single_or_nested <- function(filter) {
 #'
 #' @param filename The relative filepath to the json file or a json string
 #'
-#' @return A feature object
+#' @return A feature object - the spec
 #' @export
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
   parse_single_feature(json_data)
+}
+
+
+preprocess_data <- function(details) {
+  parsed_preprocess <- list()
+  parsed_preprocess$on <- details$on
+  parsed_preprocess$retain_min <- details$retain_min
+  parsed_preprocess$retain_max <- details$retain_max
+  return(parsed_preprocess)
 }

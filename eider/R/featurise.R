@@ -14,6 +14,7 @@
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
+#' @export
 featurise <- function(all_tables,
                       spec,
                       context = NULL) {
@@ -22,6 +23,15 @@ featurise <- function(all_tables,
   # Read the feature JSON file
   t <- spec$transformation_type %>% tolower()
 
+  # If the preprocessing flag exists in the spec update the corresponding table
+  if (exists("preprocess", spec)) {
+    log_trace(paste("Table", spec$source_file, "will be preprocessed"))
+    updated_table <- preprocess_table(
+      input_table = all_tables[[spec$source_file]],
+      spec = spec
+    )
+    all_tables[[spec$source_file]] <- updated_table
+  }
   # Check the transformation type and dispatch to the appropriate function
   if (t == "count") {
     feature <- featurise_count(all_tables, spec, context)

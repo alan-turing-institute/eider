@@ -11,7 +11,7 @@ json_to_feature(filename)
 \item{filename}{The relative filepath to the json file or a json string}
 }
 \value{
-A feature object
+A feature object - the spec
 }
 \description{
 Take the json input file and produce a formatted R object which can direct
