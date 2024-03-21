@@ -44,7 +44,7 @@ featurise_present <- function(all_tables,
         summarise(!!output_feature_name := 1)
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(message = e, context = context)
     }
   )
 

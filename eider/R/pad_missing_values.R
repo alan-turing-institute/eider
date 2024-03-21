@@ -16,12 +16,12 @@ pad_missing_values <- function(
     id_table,
     context) {
   debug_context(
-    paste0(
+    message = paste0(
       "Adding absent_default_value: ",
       missing_value,
       " to any IDs not present in the calculated feature"
     ),
-    context
+    context = context
   )
 
   missing_ids <- setdiff(table[[id_col]], id_table$id)

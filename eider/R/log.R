@@ -5,7 +5,7 @@
 #' "trace")
 #'
 #' @returns NULL
-log_context <- function(context, severity, message = "") {
+log_context <- function(context, severity, message) {
   logging_function <- switch(severity,
     "fatal" = log_fatal,
     "error" = log_error,
@@ -14,7 +14,7 @@ log_context <- function(context, severity, message = "") {
     "debug" = log_debug,
     "trace" = log_trace
   )
-  logging_function("context: ", context_message(context, message))
+  logging_function(paste0("context: ", context_message(context, message)))
 }
 
 #' Concatenate context into string and append a message
@@ -32,7 +32,7 @@ context_message <- function(context, message) {
   }
 }
 
-trace_context <- function(context, message) {
+trace_context <- function(context, message = "") {
   log_context(
     context = context,
     severity = "trace",
@@ -40,7 +40,7 @@ trace_context <- function(context, message) {
   )
 }
 
-debug_context <- function(context, message) {
+debug_context <- function(context, message = "") {
   log_context(
     context = context,
     severity = "debug",
@@ -48,7 +48,7 @@ debug_context <- function(context, message) {
   )
 }
 
-info_context <- function(context, message) {
+info_context <- function(context, message = "") {
   log_context(
     context = context,
     severity = "info",
@@ -56,7 +56,7 @@ info_context <- function(context, message) {
   )
 }
 
-warn_context <- function(context, message) {
+warn_context <- function(context, message = "") {
   log_context(
     context = context,
     severity = "warn",
@@ -64,7 +64,7 @@ warn_context <- function(context, message) {
   )
 }
 
-error_context <- function(context, message) {
+error_context <- function(context, message = "") {
   log_context(
     context = context,
     severity = "error",
@@ -72,10 +72,22 @@ error_context <- function(context, message) {
   )
 }
 
-fatal_context <- function(context, message) {
+fatal_context <- function(context, message = "") {
   log_context(
     context = context,
     severity = "fatal",
     message = message
   )
+}
+
+#' On top of logging a FATAL message, stop execution entirely, and print a
+#' message showing the current execution context
+stop_context <- function(context, message = "") {
+  fatal_context(context, message)
+
+  ctx_str <- context %>%
+    lapply(function(x) paste0(" > ", x)) %>%
+    stringr::str_c(collapse = "\n")
+
+  stop(message, "\nContext:\n", ctx_str, call. = FALSE)
 }

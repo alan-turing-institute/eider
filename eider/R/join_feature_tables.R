@@ -18,7 +18,7 @@ join_feature_tables <- function(
   trace_context(context)
 
   if (length(calculated_features) == 0) {
-    error_context("No feature tables to join.", context)
+    stop_context(message = "No feature tables to join.", context = context)
   }
 
   # If not supplied, collect the set of IDs across all tables
@@ -74,12 +74,13 @@ add_feature_column_to_df <- function(df, feature) {
   output_column_name <- setdiff(names(feature$feature_table), "id")
 
   if (output_column_name %in% names(df)) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "Feature column name '",
         output_column_name,
         "' already exists in the data frame."
-      ), context
+      ),
+      context = context
     )
   }
 

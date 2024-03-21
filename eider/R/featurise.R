@@ -53,9 +53,9 @@ featurise <- function(all_tables,
   } else if (t %in% c("combine_linear", "combine_min", "combine_max")) {
     feature <- featurise_combine(mode = t, all_tables, spec, context)
   } else {
-    error_context(
-      paste0("Unknown transformation type: ", t),
-      context
+    stop_context(
+      context = context,
+      message = paste0("Unknown transformation type: ", t),
     )
   }
 

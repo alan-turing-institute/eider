@@ -65,7 +65,7 @@ featurise_time_since <- function(all_tables,
         rename(id = !!grouping_column)
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(message = e, context = context)
     }
   )
 

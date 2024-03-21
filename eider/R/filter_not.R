@@ -18,9 +18,11 @@ filter_not <- function(table,
   trace_context(context)
 
   if (tolower(filter_obj$type) != "not") {
-    error_context(
-      paste0("Expected filter type 'not', but got '", filter_obj$type, "'."),
-      context
+    stop_context(
+      message = paste0(
+        "Expected filter type 'not', but got '", filter_obj$type, "'."
+      ),
+      context = context
     )
   }
 

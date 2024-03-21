@@ -23,8 +23,8 @@ filter_basic <- function(table,
   t <- tolower(filter_obj$type)
   valid_filter_types <- c("in", "lt", "lt_eq", "gt", "gt_eq")
   if (!(t %in% valid_filter_types)) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "Expected filter type to be one of ",
         paste(
           sapply(valid_filter_types, function(x) paste0("'", x, "'")),
@@ -32,7 +32,7 @@ filter_basic <- function(table,
         ),
         ", but got '", filter_obj$type, "'."
       ),
-      context
+      context = context
     )
   }
 

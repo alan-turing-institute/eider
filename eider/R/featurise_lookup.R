@@ -58,7 +58,7 @@ featurise_lookup <- function(all_tables,
         select(id, !!output_feature_name)
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(message = e, context = context)
     }
   )
 

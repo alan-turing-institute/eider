@@ -33,9 +33,9 @@ filter_all <- function(table,
   } else if (t == "not") {
     filter_results <- filter_not(table, filter_obj, context)
   } else {
-    error_context(
-      paste0("Filter type '", filter_obj$type, "' not implemented."),
-      context
+    stop_context(
+      message = paste0("Filter type '", filter_obj$type, "' not implemented."),
+      context = context
     )
   }
   filter_results

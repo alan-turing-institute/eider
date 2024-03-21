@@ -29,10 +29,11 @@ featurise_combine <- function(mode,
 
   mode <- tolower(mode)
 
-  # featurise.R should already check this, so we use stop() instead of
-  # error_context() here
   if (!mode %in% c("combine_linear", "combine_min", "combine_max")) {
-    stop("Invalid combination mode: ", mode)
+    stop_context(
+      message = paste0("Invalid combination mode: ", mode),
+      context = context
+    )
   }
 
   # Validate spec

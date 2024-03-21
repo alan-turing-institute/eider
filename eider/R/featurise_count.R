@@ -47,7 +47,7 @@ featurise_count <- function(all_tables,
         summarise(!!output_feature_name := n())
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(message = e, context = context)
     }
   )
 
