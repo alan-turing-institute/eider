@@ -7,3 +7,6 @@
 ^doc$
 ^Meta$
 ^README\.Rmd$
+^.github$
+.pre-commit-config.yaml
+.lintr
