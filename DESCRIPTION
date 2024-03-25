@@ -23,7 +23,8 @@ Imports:
     jsonlite,
     logger,
     purrr,
-    fs
+    fs,
+    tidyr
 Suggests: 
     knitr,
     rmarkdown,
