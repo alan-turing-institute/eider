@@ -4,8 +4,11 @@ from datetime import timedelta
 
 rng = np.random.default_rng(seed=1234)
 
+def make_random_attendance_cat(categories, nrows):
+    return rng.choice(categories, nrows)
+
 def make_random_IDs(max_ID, nrows):
-    return list(rng.choice(max_ID, nrows))
+    return rng.choice(max_ID, nrows)
 
 def make_random_dates(start, end, nrows, replace=True):
     dates = pd.date_range(start, end).to_list()
@@ -18,65 +21,50 @@ def make_random_bnf_secs(min_sec, max_sec):
 def make_random_num_prescribed_items(nrows):
     return rng.poisson(2, nrows) + 1
 
-def make_random_diagnois_choice(ranges, with_NA, nrows):
-    diag_choice = list(rng.choice(ranges, size=nrows))
-    if with_NA: # replace ~5% of the values with NA
-        n_replace = int(nrows/20)+1
-        for _ in range(n_replace):
-            idx = rng.choice(range(len(diag_choice)))
-            diag_choice[idx] = "NA"
-    return diag_choice
+def make_random_diagnosis_choices(diagnosis_ranges, nrows, n=3):
+    if n > len(diagnosis_ranges):
+        raise ValueError("n must be less than or equal to len(ranges)")
 
-def make_three_random_diagnosis_choices(ranges, nrows, n=3):
-    diag_choice = ranges.copy()
-    d1 = make_random_diagnois_choice(ranges=diag_choice, with_NA=False, nrows=nrows)
-    d2 = make_random_diagnois_choice(ranges=diag_choice, with_NA=True, nrows=nrows)
-    d3 = make_random_diagnois_choice(ranges=diag_choice, with_NA=True, nrows=nrows)
+    all_diagnoses = []
 
-    # Ensure all d1 and d2 are different
-    for i, (a, b) in enumerate(zip(d1, d2)):
-        if a == b:
-            d2[i] = a + rng.choice([-1,1])
+    for _ in range(nrows):
+        # Randomly generate a number of diagnoses and then pad with empty
+        # strings to make a list of length n
+        n_diagnoses = rng.choice(range(1, n + 1))
+        diagnoses = list(rng.choice(diagnosis_ranges, size=n_diagnoses,
+                                    replace=False))
+        diagnoses += [""] * (n - n_diagnoses)
+        all_diagnoses.append(diagnoses)
 
-    # Ensure d3[i] is NA if d2[i] is NA
-    for i, x in enumerate(d2):
-        if x=="NA":
-            d3[i] = "NA"
-
-    # Ensure no duplicates across d1, d2, d3 except NA
-    for i, x in enumerate(d3):
-        if x != "NA" and (d1[i] == x or d2[i]==x):
-            tmp = ranges.copy()
-            vals_to_remove = list(set([d1[i], d2[i]]))
-            for v in vals_to_remove:
-                if v in tmp:
-                    tmp.remove(v)
-            d3[i] = rng.choice(tmp)
-    return d1, d2, d3
+    return zip(*all_diagnoses)
 
 
-
-def make_random_pis_data(max_ID, nrows, start_date, end_date, min_sec, max_sec):
+def make_random_pis_data(max_ID, nrows, start_date, end_date, bnf_sections):
     pis_data = pd.DataFrame({
-        'id': make_random_IDs(max_ID=max_ID, nrows=nrows), 
+        'id': rng.choice(max_ID, nrows),
         'paid_date': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
-        'bnf_section': make_random_bnf_secs(min_sec=min_sec, max_sec=max_sec), 
+        'bnf_section': rng.choice(bnf_sections, nrows),
         'num_items': make_random_num_prescribed_items(nrows=nrows)
         }, index=range(nrows))
     pis_data.to_csv("./random_pis_data.csv", index=False)
 
-def make_random_ae_data(max_ID, nrows, start_date, end_date, diagnosis_choice):
+def make_random_ae_data(max_ID: int,
+                        nrows: int,
+                        start_date: pd.Timestamp,
+                        end_date: pd.Timestamp,
+                        diagnosis_choice: list[int],
+                        attendance_categories: list[str]
+                        ):
+    d1, d2, d3 = make_random_diagnosis_choices(diagnosis_ranges=diagnosis_choice,
+                                               nrows=nrows,
+                                               n=3)
 
-    d1, d2, d3 = make_three_random_diagnosis_choices(ranges=diagnosis_choice, nrows=nrows)
-
-    ae_data = pd.DataFrame({
-    'id': make_random_IDs(max_ID=max_ID, nrows=nrows), 
-    'time': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
-    'attendance_category': [1]*nrows,
-    'diagnosis_1': d1,
-    'diagnosis_2': d2,
-    'diagnosis_3': d3,
-    }, index=range(nrows))
+    ae_data = pd.DataFrame({'id': rng.choice(a=max_ID, size=nrows), 
+                            'time': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
+                            'attendance_category': rng.choice(attendance_categories, nrows),
+                            'diagnosis_1': d1,
+                            'diagnosis_2': d2,
+                            'diagnosis_3': d3})
     ae_data.to_csv("./random_ae_data.csv", index=False)
 
 def make_smr04_data(start_date, end_date, nstays, max_ID):
@@ -84,8 +72,22 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
                                     end=end_date,
                                     nrows=nstays,
                                     replace=False)
-    data_dict = {'id': [], 'admission_date': [], 'discharge_date': [], 'cis_marker': [], 'episode_within_cis': [], 'some_code': []}
+    data_dict = {
+        'id': [],
+        'admission_date': [],
+        'discharge_date': [],
+        'cis_marker': [],
+        'episode_within_cis': [],
+        'admission_type': [],
+        'specialty': []
+    }
     cis_dict = {}
+    # https://publichealthscotland.scot/media/24927/smr04_crib_270323.pdf
+    admission_type_list = [10, 11, 12, 18, 19, 20, 21, 22, 31, 32, 33, 34, 35,
+                           36, 38, 39, 30, 40, 48]
+    specialties = ['CC', 'G1', 'G2', 'G21', 'G22', 'G3', 'G4', 'G5', 'G6',
+                   'G61', 'G62', 'G63']
+
     for stay_idx in range(nstays):
         # pick a start date for the stay
         start_date = start_dates[stay_idx]
@@ -110,8 +112,7 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
 
 
         # loop over the episodes
-        for episode in range(n_episodes):
-            episode_within_cis = episode + 1 # first episode in a stay has episode_within_cis = 1
+        for i in range(n_episodes):
             # First episode has stay start date as its start
             episode_start_date = start_date
 
@@ -122,40 +123,49 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
             # Set start_date for the next episode to the end date of this one
             start_date = episode_end_date
 
-            # Add a random code just to demonstrate the kind of features we might want
-            code = rng.choice(['a', 'b', 'c', 'd', 'e'])
+            # Add in an admission type (which only exists for the first episode
+            # within each stay)
+            admission_type = rng.choice(admission_type_list) if i == 0 else ""
+
+            # Add in specialty (which exists for all episodes... I think)
+            specialty = rng.choice(specialties)
 
             # Add the episode to the data dictionary
             data_dict['id'].append(id)
             data_dict['admission_date'].append(episode_start_date)
             data_dict['discharge_date'].append(episode_end_date)
-            data_dict['episode_within_cis'].append(episode_within_cis)
-            data_dict['some_code'].append(code)
             data_dict['cis_marker'].append(cis_marker)
+            data_dict['episode_within_cis'].append(i + 1)
+            data_dict['admission_type'].append(admission_type)
+            data_dict['specialty'].append(specialty)
+
     smr04 = pd.DataFrame(data_dict, index=range(len(data_dict['id'])))
     smr04.to_csv("./random_smr04_data.csv", index=False)
 
-start_date=pd.to_datetime('2015-01-01')
-end_date=pd.to_datetime('2017-12-31')
-nrows=100
-max_ID=20
-min_sec = 101
-max_sec = 110
-diagnosis_choice = [101, 102, 103, 104]
-nstays=100
+
+# https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/attendance-category-ae/
+
+start_date = pd.to_datetime('2015-01-01')
+end_date = pd.to_datetime('2017-12-31')
+nrows = 100
+max_ID = 20
+bnf_sections = numbers = [str(i).zfill(4) for i in range(101, 120)]
+diagnosis_choice = list(range(0, 20)) + [99] 
+attendance_categories = ["01", "02", "03", "04", "05"]
+nstays = 100
 
 make_random_pis_data(max_ID=max_ID,
                      nrows=nrows,
                      start_date=start_date,
                      end_date=end_date,
-                     min_sec=min_sec,
-                     max_sec=max_sec)
+                     bnf_sections=bnf_sections)
 
 make_random_ae_data(max_ID=max_ID, 
                     nrows=nrows, 
                     start_date=start_date, 
                     end_date=end_date, 
-                    diagnosis_choice=diagnosis_choice)
+                    diagnosis_choice=diagnosis_choice,
+                    attendance_categories=attendance_categories)
 
 make_smr04_data(start_date=start_date, 
                 end_date=end_date, 
