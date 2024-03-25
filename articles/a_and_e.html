@@ -101,7 +101,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ae_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ae_data.csv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span></span>
-<span><span class="co">#&gt;     id       time attendance_category diagnosis_1 diagnosis_2 diagnosis_3</span></span>
+<span><span class="co">#&gt;     id       date attendance_category diagnosis_1 diagnosis_2 diagnosis_3</span></span>
 <span><span class="co">#&gt; 1   15 2017-06-12                   5           1          18           7</span></span>
 <span><span class="co">#&gt; 2    0 2017-12-22                   1          15           8          NA</span></span>
 <span><span class="co">#&gt; 3    3 2016-10-28                   3          16           7          NA</span></span>
@@ -323,7 +323,7 @@
 <span><span class="co">#&gt;         "value": [101]</span></span>
 <span><span class="co">#&gt;       },</span></span>
 <span><span class="co">#&gt;       "subfilter_3": {</span></span>
-<span><span class="co">#&gt;         "column": "time",</span></span>
+<span><span class="co">#&gt;         "column": "date",</span></span>
 <span><span class="co">#&gt;         "type": "date_gt",</span></span>
 <span><span class="co">#&gt;         "value": ["2015-12-31"]</span></span>
 <span><span class="co">#&gt;       }</span></span>
@@ -419,7 +419,7 @@
 <span><span class="co">#&gt;         }</span></span>
 <span><span class="co">#&gt;       },</span></span>
 <span><span class="co">#&gt;       "subfilter_3": {</span></span>
-<span><span class="co">#&gt;         "column": "time",</span></span>
+<span><span class="co">#&gt;         "column": "date",</span></span>
 <span><span class="co">#&gt;         "type": "date_gt",</span></span>
 <span><span class="co">#&gt;         "value": ["2015-12-31"]</span></span>
 <span><span class="co">#&gt;       }</span></span>
@@ -561,20 +561,20 @@
 <p>Check the log:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "TRACE [2024-03-25 22:59:49] context: read_spec_type"                                                                                                                                                                                                   </span></span>
-<span><span class="co">#&gt;  [2] "DEBUG [2024-03-25 22:59:49] context: read_spec_type: Valid filepath found: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json"                                                                                             </span></span>
-<span><span class="co">#&gt;  [3] "TRACE [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json"                                                                                                                        </span></span>
-<span><span class="co">#&gt;  [4] "TRACE [2024-03-25 22:59:49] context: parse_nested_filter"                                                                                                                                                                                              </span></span>
-<span><span class="co">#&gt;  [5] "TRACE [2024-03-25 22:59:49] context: parse_single_filter"                                                                                                                                                                                              </span></span>
-<span><span class="co">#&gt;  [6] "TRACE [2024-03-25 22:59:49] context: parse_single_filter"                                                                                                                                                                                              </span></span>
-<span><span class="co">#&gt;  [7] "TRACE [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                                                                      </span></span>
-<span><span class="co">#&gt;  [8] "DEBUG [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
-<span><span class="co">#&gt;  [9] "TRACE [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
-<span><span class="co">#&gt; [10] "TRACE [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [11] "TRACE [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [12] "DEBUG [2024-03-25 22:59:49] context: featurise: /tmp/RtmppdulhU/temp_libpath16d369d92923/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
-<span><span class="co">#&gt; [13] "TRACE [2024-03-25 22:59:49] context: join_feature_tables"                                                                                                                                                                                              </span></span>
-<span><span class="co">#&gt; [14] "DEBUG [2024-03-25 22:59:49] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-25 23:18:30] context: read_spec_type"                                                                                                                                                                                                   </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-25 23:18:30] context: read_spec_type: Valid filepath found: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json"                                                                                             </span></span>
+<span><span class="co">#&gt;  [3] "TRACE [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json"                                                                                                                        </span></span>
+<span><span class="co">#&gt;  [4] "TRACE [2024-03-25 23:18:30] context: parse_nested_filter"                                                                                                                                                                                              </span></span>
+<span><span class="co">#&gt;  [5] "TRACE [2024-03-25 23:18:30] context: parse_single_filter"                                                                                                                                                                                              </span></span>
+<span><span class="co">#&gt;  [6] "TRACE [2024-03-25 23:18:30] context: parse_single_filter"                                                                                                                                                                                              </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                                                                      </span></span>
+<span><span class="co">#&gt;  [8] "DEBUG [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
+<span><span class="co">#&gt;  [9] "TRACE [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [12] "DEBUG [2024-03-25 23:18:30] context: featurise: /tmp/Rtmp05oHvR/temp_libpath16c73db7a47c/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
+<span><span class="co">#&gt; [13] "TRACE [2024-03-25 23:18:31] context: join_feature_tables"                                                                                                                                                                                              </span></span>
+<span><span class="co">#&gt; [14] "DEBUG [2024-03-25 23:18:31] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
 <p>Lines 1-2 report checks on the specification, Line 4 is where the primary filter is parsed, It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 5 and 6.</p>
 <p>Lines 7 -11 give the context of what is being processed for debug purposes including the path to the corresponding specification files (which in this case are in the examples folder of this package).</p>
 </div>
@@ -642,20 +642,20 @@
 <span><span class="co">#&gt; 20 19</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "TRACE [2024-03-25 22:59:49] context: read_spec_type"                                                                                                                                        </span></span>
-<span><span class="co">#&gt;  [2] "DEBUG [2024-03-25 22:59:49] context: read_spec_type: Specified path is too long for a file, assuming a json string"                                                                         </span></span>
-<span><span class="co">#&gt;  [3] "TRACE [2024-03-25 22:59:49] context: featurise: User defined string"                                                                                                                        </span></span>
-<span><span class="co">#&gt;  [4] "TRACE [2024-03-25 22:59:49] context: parse_nested_filter"                                                                                                                                   </span></span>
-<span><span class="co">#&gt;  [5] "TRACE [2024-03-25 22:59:49] context: parse_single_filter"                                                                                                                                   </span></span>
-<span><span class="co">#&gt;  [6] "TRACE [2024-03-25 22:59:49] context: parse_single_filter"                                                                                                                                   </span></span>
-<span><span class="co">#&gt;  [7] "TRACE [2024-03-25 22:59:49] context: featurise: User defined string &gt; featurise_count"                                                                                                      </span></span>
-<span><span class="co">#&gt;  [8] "DEBUG [2024-03-25 22:59:49] context: featurise: User defined string &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
-<span><span class="co">#&gt;  [9] "TRACE [2024-03-25 22:59:49] context: featurise: User defined string &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
-<span><span class="co">#&gt; [10] "TRACE [2024-03-25 22:59:49] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [11] "TRACE [2024-03-25 22:59:49] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [12] "DEBUG [2024-03-25 22:59:49] context: featurise: User defined string &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
-<span><span class="co">#&gt; [13] "TRACE [2024-03-25 22:59:49] context: join_feature_tables"                                                                                                                                   </span></span>
-<span><span class="co">#&gt; [14] "DEBUG [2024-03-25 22:59:49] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-25 23:18:31] context: read_spec_type"                                                                                                                                        </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-25 23:18:31] context: read_spec_type: Specified path is too long for a file, assuming a json string"                                                                         </span></span>
+<span><span class="co">#&gt;  [3] "TRACE [2024-03-25 23:18:31] context: featurise: User defined string"                                                                                                                        </span></span>
+<span><span class="co">#&gt;  [4] "TRACE [2024-03-25 23:18:31] context: parse_nested_filter"                                                                                                                                   </span></span>
+<span><span class="co">#&gt;  [5] "TRACE [2024-03-25 23:18:31] context: parse_single_filter"                                                                                                                                   </span></span>
+<span><span class="co">#&gt;  [6] "TRACE [2024-03-25 23:18:31] context: parse_single_filter"                                                                                                                                   </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-25 23:18:31] context: featurise: User defined string &gt; featurise_count"                                                                                                      </span></span>
+<span><span class="co">#&gt;  [8] "DEBUG [2024-03-25 23:18:31] context: featurise: User defined string &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
+<span><span class="co">#&gt;  [9] "TRACE [2024-03-25 23:18:31] context: featurise: User defined string &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-25 23:18:31] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-25 23:18:31] context: featurise: User defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [12] "DEBUG [2024-03-25 23:18:31] context: featurise: User defined string &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
+<span><span class="co">#&gt; [13] "TRACE [2024-03-25 23:18:31] context: join_feature_tables"                                                                                                                                   </span></span>
+<span><span class="co">#&gt; [14] "DEBUG [2024-03-25 23:18:31] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
 <p>Here the log identifies that a user-defined string is used instead of a file and processes as before</p>
 </div>
 <div class="section level3">
