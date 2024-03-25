@@ -12,3 +12,6 @@ docs
 inst/doc
 /doc/
 /Meta/
+
+# Python virtualenv
+.venv
