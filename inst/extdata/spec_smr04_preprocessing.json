@@ -5,7 +5,7 @@
   "absent_default_value": 0,
   "output_feature_name": ["with_preprocessing"],
   "preprocess": {
-    "on": "cis_marker",
+    "on": ["id", "cis_marker"],
     "retain_min": "admission_date",
     "retain_max": "discharge_date"
     },

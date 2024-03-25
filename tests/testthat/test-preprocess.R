@@ -6,7 +6,7 @@ test_that("preprocess_table function", {
   mock_preproc_spec <- list(
     grouping_column = "id",
     preprocess = list(
-      on = "group",
+      on = c("id", "group"),
       retain_min = "start_date",
       retain_max = "end_date"
     )

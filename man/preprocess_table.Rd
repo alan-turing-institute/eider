@@ -11,7 +11,7 @@ preprocess_table(input_table, spec, context = NULL)
 
 \item{spec}{The specification which dictates the changes}
 
-\item{context}{Execution context}
+\item{context}{Execution context, defaulting to NULL}
 }
 \value{
 A mutated version of the initial input table

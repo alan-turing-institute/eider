@@ -59,6 +59,47 @@ validate_column_present <- function(field_name, spec, tbl, context) {
   n
 }
 
+#' Same as validate_column_present, but allows for multiple columns to be
+#' specified.
+validate_columns_present <- function(field_name, spec, tbl, context) {
+  ns <- spec[[field_name]]
+
+  for (n in ns) {
+    if (!(is.character(n))) {
+      stop_context(
+        message = paste0(
+          "The entries in '",
+          name,
+          "' must be strings, ",
+          "but the value supplied (",
+          value,
+          ") is of type '",
+          typeof(value),
+          "'."
+        ),
+        context = context
+      )
+    }
+  }
+
+  for (n in ns) {
+    if (!(n %in% names(tbl))) {
+      stop_context(
+        message = paste0(
+          "The column '",
+          n,
+          "' supplied as part of '",
+          field_name,
+          "' was not found in the input table."
+        ),
+        context = context
+      )
+    }
+  }
+
+  ns
+}
+
 
 #' Checks that `spec$absent_default_value` is a single number. If so, returns
 #' the number.

@@ -31,12 +31,17 @@ featurise_unique <- function(all_tables,
   trace_context(context)
 
   # Validate spec
-  source_table <- all_tables[[spec$source_file]]
+  source_table <- validate_source_file(spec, all_tables, context)
+  source_table <- preprocess_table(source_table, spec, context)
+  output_feature_name <- validate_output_feature_name(spec, context)
+  grouping_column <- validate_column_present(
+    "grouping_column", spec, source_table, context
+  )
+  column_to_ndistinct_over <- validate_column_present(
+    "aggregation_column", spec, source_table, context
+  )
+  missing_value <- validate_absent_default_value(spec, context)
   filter_obj <- spec$primary_filter
-  output_feature_name <- spec$output_feature_name
-  column_to_ndistinct_over <- spec$aggregation_column
-  grouping_column <- spec$grouping_column
-  missing_value <- spec$absent_default_value
 
   if (length(grouping_column) > 1) {
     # TODO: Issue #24

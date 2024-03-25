@@ -28,22 +28,6 @@ featurise <- function(all_tables,
   # Read the feature JSON file
   t <- spec$transformation_type %>% tolower()
 
-  # If the preprocessing flag exists in the spec update the corresponding table
-  # TODO: Verify fields here and pass them to preprocess_table() so that
-  # function signature is easier to understand
-  if (exists("preprocess", spec)) {
-    debug_context(
-      context,
-      message = paste0("Preprocessing table ", spec$source_file)
-    )
-    updated_table <- preprocess_table(
-      input_table = all_tables[[spec$source_file]],
-      spec = spec,
-      context = context
-    )
-    all_tables[[spec$source_file]] <- updated_table
-  }
-
   # Check the transformation type and dispatch to the appropriate function
   if (t == "count") {
     feature <- featurise_count(all_tables, spec, context)

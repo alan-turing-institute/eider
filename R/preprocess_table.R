@@ -2,60 +2,55 @@
 #'
 #' @param input_table The original input table which will be mutated
 #' @param spec The specification which dictates the changes
-#' @param context Execution context
+#' @param context Execution context, defaulting to NULL
 #'
 #' @return A mutated version of the initial input table
 #' @export
-preprocess_table <- function(
-    input_table,
-    spec,
-    context = NULL) {
+preprocess_table <- function(input_table, spec, context = NULL) {
   context <- c(context, "preprocess_table")
-  debug_context("Mutating original data table")
 
-  # identify useful variables
-  grouping_column <- validate_column_present(
-    "grouping_column", spec, input_table, context
-  )
-  preprocess_on <- validate_column_present(
-    "on", spec$preprocess, input_table, context
-  )
-  # TODO: Allow retain_{min,max} to have multiple values
-  retain_min <- validate_column_present(
-    "retain_min", spec$preprocess, input_table, context
-  )
-  retain_max <- validate_column_present(
-    "retain_max", spec$preprocess, input_table, context
-  )
+  if ("preprocess" %in% names(spec)) {
+    debug_context(
+      context,
+      message = paste0("Preprocessing table ", spec$source_file)
+    )
 
-  # Find the earliest (admission) and latest (discharge) date for each group
-  min_values <- input_table %>%
-    group_by(
-      across(all_of(grouping_column)),
-      across(all_of(preprocess_on))
-    ) %>%
-    summarise(EIDER_MIN_PREPROC = min(!!sym(retain_min)))
+    on <- validate_columns_present(
+      "on", spec$preprocess, input_table, context
+    )
+    retain_min <- if ("retain_min" %in% names(spec$preprocess)) {
+      validate_column_present(
+        "retain_min", spec$preprocess, input_table, context
+      )
+    } else {
+      NULL
+    }
+    retain_max <- if ("retain_max" %in% names(spec$preprocess)) {
+      validate_column_present(
+        "retain_max", spec$preprocess, input_table, context
+      )
+    } else {
+      NULL
+    }
 
-  max_values <- input_table %>%
-    group_by(
-      across(all_of(grouping_column)),
-      across(all_of(preprocess_on))
-    ) %>%
-    summarise(EIDER_MAX_PREPROC = max(!!sym(retain_max)))
+    input_table <- input_table %>% group_by(across(all_of(on)))
 
-  # Replace the minimum (admission likely) in the original dataframe
-  # with the earliest date
-  input_table <- input_table %>%
-    left_join(min_values, by = c(grouping_column, preprocess_on)) %>%
-    mutate(!!retain_min := EIDER_MIN_PREPROC) %>%
-    select(-EIDER_MIN_PREPROC)
+    for (col in retain_min) {
+      input_table <- input_table %>%
+        mutate(!!col := min(!!sym(col)))
+    }
 
-  # Replace the maximum (discharge likely) in the original dataframe
-  # with the latest date
-  input_table <- input_table %>%
-    left_join(max_values, by = c(grouping_column, preprocess_on)) %>%
-    mutate(!!retain_max := EIDER_MAX_PREPROC) %>%
-    select(-EIDER_MAX_PREPROC)
+    for (col in retain_max) {
+      input_table <- input_table %>%
+        mutate(!!col := max(!!sym(col)))
+    }
 
-  return(input_table)
+    input_table %>% ungroup()
+  } else {
+    debug_context(
+      context,
+      message = "No preprocessing specified for this feature"
+    )
+    input_table
+  }
 }

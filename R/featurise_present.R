@@ -26,6 +26,7 @@ featurise_present <- function(all_tables,
 
   # Validate spec
   source_table <- validate_source_file(spec, all_tables, context)
+  source_table <- preprocess_table(source_table, spec, context)
   output_feature_name <- validate_output_feature_name(spec, context)
   grouping_column <- validate_column_present(
     "grouping_column", spec, source_table, context
