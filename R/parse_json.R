@@ -110,7 +110,6 @@ parse_single_or_nested <- function(filter) {
 #' @param filename The relative filepath to the json file or a json string
 #'
 #' @return A feature object - the spec
-#' @export
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
   parse_single_feature(json_data)

@@ -1,0 +1,132 @@
+---
+title: "Preprocessing"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Preprocessing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eider)
+library(magrittr)
+```
+
+Inside each feature JSON, an optional `preprocess` object can be included, which causes the input table to be modified in a particular way before the feature is calculated.
+
+This is primarily useful for data where each row represents some subdivision of a larger entity, and the user wants to calculate features based on the information from those larger entity.
+In particular, this is useful for *episodic data*, where each row represents an *episode* within a continuous hospital *stay*.
+
+## Example data
+
+For example, consider the following dataframe.
+The loading of data here is only shown for illustrative purposes: when using `eider` you do not need to do any of this as it is all handled internally.
+
+```{r}
+smr04_data_filepath <- eider_example("random_smr04_data.csv")
+
+initial_table <- smr04_data_filepath %>%
+  utils::read.csv() %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(
+    admission_date = lubridate::ymd(admission_date),
+    discharge_date = lubridate::ymd(discharge_date)
+  )
+
+initial_table
+```
+
+Here, each row is an episode; multiple episodes make up a stay.
+The `cis_marker` field is used to label stays, and can thus be used to identify episodes belonging to the same stay.
+In this case, the `episode_within_cis` tells us the order of the episodes within a stay; this is not always present, though.
+
+```{r}
+initial_table %>% dplyr::filter(id == 3)
+```
+
+Using patient with ID of 3 as an example - the data contains details of 4 episodes (with `CIS_MARKERS` of 23, 24, 25, and 26). For the stay with `CIS_MARKER` 23, there were three episodes, all started on 17th May 2015 and ended on the same date. For the stays with `CIS_MARKER` 24, and 25, there was only one episode, and for the stay with `CIS_MARKER` 26 there were 3 episodes, the first episode had an admission date of 21st April 2015, and a discharge date of the 22nd April. The second episode had an admission date of the 22nd April and a discharge date of the same day, and the third episode had an admission date of the 22nd but a discharge date of the 24th. This stay for patient 3 spanned the 21st to 24th of April.
+
+With episodic data is could be necessary to filter on dates. If in the example of patient with ID 14 the cut-off-date was set as 1st August, then the first episode in their stay would be omitted, and potentially the second episode would be assumed to be the first. 
+
+## The preprocessing step
+
+The way `eider` has approached this, is to allow users to pre-process their data, to merge episodes into stays. In this case by specifying that they can select the earliest admission date for each stay and the latest discharge date for each stay and replace each episode with the stay-related span.
+
+The key features outlined here are:
+- `preprocess$on`, which specifies how to group the data for preprocessing. This is a list of column names (i.e. strings).
+- `preprocess$retain_min` and `preprocess$retain_max`, which are the columns for which we want to keep the minimum and maximum values of within each group. These entries can contain multiple (or zero) columns which we want to preprocess.
+
+For example, in a JSON specification file, the following could be included:
+
+```json
+{
+  "source_file": "smr04",
+  ...,
+  "preprocess": {
+    "on": ["id", "cis_marker"],
+    "retain_min": ["admission_date"],
+    "retain_max": ["discharge_date"]
+  },
+  ...
+}
+```
+
+This mini-specification will use the `cis_marker` column to identify which episodes belong with a given patient stay, and then the minimum `admission_date` and maximum `discharge_date` are replaced in the initial data.
+Using a JSON file like this will result in the `smr04` table being converted into this before the feature itself is calculated.
+Again, none of this has to be done manually, it is all handled internally by `eider`.
+
+```{r}
+processed_table <- initial_table %>%
+  dplyr::group_by(id, cis_marker) %>%
+  dplyr::mutate(
+    admission_date = min(admission_date),
+    discharge_date = max(discharge_date)
+  ) %>%
+  dplyr::ungroup()
+
+processed_table %>% dplyr::filter(id == 3)
+```
+
+The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date.
+So now patient 3 still has 4 stays in the data, but all episodes within the `cis_marker=26` stay are given the same admission and discharge date.
+This allows the user to filter the list of episodes based on the overall stay dates, rather than the dates for each episode itself.
+
+## Feature outputs
+
+Here are two full specification files, one without the preprocessing request, and one with.
+
+```{r}
+spec_without_preprocessing <- eider_example("spec_smr04.json")
+writeLines(readLines(spec_without_preprocessing))
+```
+This spec is requesting a count of the number of times episode 1, 2, or 3 from `episode_within_cis` occurs for `DISCHARGE_DATE` earlier than (or equal to) 22nd April 2015.
+
+For patient 3, without the preprocessing step we expect this to count 2 of the 8 episodes, the two with `CIS_MARKER` 26 and `DISCHARGE_DATE` of 22nd April 2015, the final episode in that stay does not satisfy the date condition and so is not expected to be counted.
+
+```{r}
+spec_with_preprocessing <- eider_example("spec_smr04_preprocessing.json")
+writeLines(readLines(spec_with_preprocessing))
+```
+
+This spec is requesting the same thing, but now has the preprocessing step included. The `DISCHARGE_DATE` for all episodes in the stay with `CIS_MARKER` 26 will now all be the same - the latest discharge date from the stay, and the transform will count none of the total episodes for patient 3. This means that there will now be zero episodes which match the criteria.
+
+```{r}
+processed <- run_pipeline(
+  data_sources = list(smr04 = eider_example("random_smr04_data.csv")),
+  feature_filenames = c(
+    spec_without_preprocessing,
+    spec_with_preprocessing
+  )
+)
+
+processed$features
+```
+
+Comparing the above, we can see that for patient with id 3, when no pre-processing is applied, two episodes are counted, but when the preprocessing step is applied, zero are.

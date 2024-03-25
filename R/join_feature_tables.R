@@ -9,7 +9,6 @@
 #' NULL.
 #'
 #' @return A data frame with the feature tables joined together
-#' @export
 join_feature_tables <- function(
     calculated_features,
     all_ids = NULL,

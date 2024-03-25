@@ -5,7 +5,6 @@
 #' @param filenames A vector of strings or dataframe-like objects.
 #' @return A list of data frames. The names of the list are the same as the
 #' names of the input list.
-#' @export
 read_data <- function(source_names) {
   purrr::imap(source_names, read_one_table)
 }
