@@ -59,10 +59,14 @@ validate_column_present <- function(field_name, spec, tbl, context) {
   n
 }
 
-#' Same as validate_column_present, but allows for multiple columns to be
-#' specified.
+#' Same as validate_column_present, but allows for multiple (or no!) columns to
+#' be specified.
 validate_columns_present <- function(field_name, spec, tbl, context) {
   ns <- spec[[field_name]]
+
+  if (is.null(ns)) {
+    return(NULL)
+  }
 
   for (n in ns) {
     if (!(is.character(n))) {

@@ -2,12 +2,12 @@
 % Please edit documentation in R/validation.R
 \name{validate_columns_present}
 \alias{validate_columns_present}
-\title{Same as validate_column_present, but allows for multiple columns to be
-specified.}
+\title{Same as validate_column_present, but allows for multiple (or no!) columns to
+be specified.}
 \usage{
 validate_columns_present(field_name, spec, tbl, context)
 }
 \description{
-Same as validate_column_present, but allows for multiple columns to be
-specified.
+Same as validate_column_present, but allows for multiple (or no!) columns to
+be specified.
 }

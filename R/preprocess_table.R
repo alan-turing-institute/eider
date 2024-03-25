@@ -18,20 +18,12 @@ preprocess_table <- function(input_table, spec, context = NULL) {
     on <- validate_columns_present(
       "on", spec$preprocess, input_table, context
     )
-    retain_min <- if ("retain_min" %in% names(spec$preprocess)) {
-      validate_column_present(
-        "retain_min", spec$preprocess, input_table, context
-      )
-    } else {
-      NULL
-    }
-    retain_max <- if ("retain_max" %in% names(spec$preprocess)) {
-      validate_column_present(
-        "retain_max", spec$preprocess, input_table, context
-      )
-    } else {
-      NULL
-    }
+    retain_min <- validate_columns_present(
+      "retain_min", spec$preprocess, input_table, context
+    )
+    retain_max <- validate_columns_present(
+      "retain_max", spec$preprocess, input_table, context
+    )
 
     input_table <- input_table %>% group_by(across(all_of(on)))
 
