@@ -22,9 +22,6 @@
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/combine.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/date_merging.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/eider.html</loc>
   </url>
   <url>
@@ -32,6 +29,9 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/logging.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/eider/docs/articles/preprocessing.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/prescribing.html</loc>
