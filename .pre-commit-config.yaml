@@ -2,7 +2,7 @@ repos:
 - repo: local
   hooks:
   - id: document
-    name: Make sure functions have been documented
+    name: Make sure functions have been documented and README generated
     language: system
     entry: make doc
     always_run: true

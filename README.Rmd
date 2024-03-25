@@ -18,38 +18,45 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of eider is to ...
+The goal of eider is to ... **TODO**
 
 ## Installation
 
 You can install the development version of eider from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("alan-turing-institute/SPARRA")
+install.packages("devtools")
+devtools::install_github("alan-turing-institute/eider")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+TODO: write some examples
 
 ```{r example}
 library(eider)
-## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Development
 
-```{r cars}
-summary(cars)
+If you are making changes to the library itself, first clone the repository:
+
+```
+git clone git@github.com:alan-turing-institute/eider.git
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+You will need to install the `lintr`, `pkgdown`, `devtools` R packages to build documentation, run tests, and lint.
+Then, from the repository root, you can use the following commands:
 
-You can also embed plots, for example:
+- `make doc` generates all function documentation, and also generates the `README.md` file from `README.rmd`
+- `make lint` lints the project directory
+- `make test` runs all tests
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
+You can also use [`pre-commit`](https://pre-commit.com/) to run all of these before committing, to ensure that you do not commit incomplete code.
+Firstly, install `pre-commit` according to the instructions on the webpage above.
+Then run `pre-commit install`.
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+*What about vignettes?*
+Well, building vignettes is slightly more complicated.
+You can perform a one-time build from the R console using `pkgdown::build_site()`, but running this every time you edit a file gets tiring quickly.
+To automate this, first install the package with `make install`, and install a working version of Python and also [`entr`](https://github.com/eradman/entr) (the latter is available on Homebrew via `brew install entr`).
+Then run `make vig`: this will monitor your vignette RMarkdown files, rebuild the vignettes any time they are changed, and launch a HTTP server on port 8000 to view the files.
+If you change any library code you will have to run `make install` again before rerunning `make vig`.
