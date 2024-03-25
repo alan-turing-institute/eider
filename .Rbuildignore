@@ -8,5 +8,6 @@
 ^Meta$
 ^README\.Rmd$
 ^.github$
-.pre-commit-config.yaml
-.lintr
+^.pre-commit-config.yaml$
+^.lintr$
+^make_example_data$
