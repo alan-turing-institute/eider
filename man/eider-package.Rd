@@ -9,12 +9,12 @@
 ooooooOOOOooooo!!
 }
 \author{
-\strong{Maintainer}: Camila Rangel Smith \email{crangelsmith@turing.ac.uk} [contributor]
+\strong{Maintainer}: Camila Rangel Smith \email{crangelsmith@turing.ac.uk} (\href{https://orcid.org/0000-0002-0227-836X}{ORCID}) [contributor]
 
 Authors:
 \itemize{
   \item Helen Duncan Little \email{hduncan@turing.ac.uk} (\href{https://orcid.org/0000-0002-0897-7188}{ORCID})
-  \item Jonathan Yong \email{jyong@turing.ac.uk}
+  \item Jonathan Yong \email{jyong@turing.ac.uk} (\href{https://orcid.org/0000-0002-2472-974X}{ORCID})
 }
 
 Other contributors:
