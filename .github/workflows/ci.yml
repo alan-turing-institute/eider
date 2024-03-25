@@ -18,7 +18,7 @@ jobs:
       - name: Install R packages
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages:
+          extra-packages: |
             any::lintr
             any::rcmdcheck
 
