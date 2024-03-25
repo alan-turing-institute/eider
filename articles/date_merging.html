@@ -142,14 +142,14 @@
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 6</span></span></span>
 <span><span class="co">#&gt;      id admission_date discharge_date cis_marker episode_within_cis some_code</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     3 2015-05-17     2015-05-17             23                  1 d        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3 2015-05-17     2015-05-17             23                  2 c        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 2015-05-17     2015-05-17             23                  3 b        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     3 2015-05-17     2017-08-05             23                  1 d        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3 2015-05-17     2017-08-05             23                  2 c        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 2015-05-17     2017-08-05             23                  3 b        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     3 2017-01-25     2017-01-29             24                  1 b        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     3 2017-02-01     2017-02-01             25                  1 a        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     3 2015-04-21     2015-04-24             26                  1 c        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>     3 2015-04-21     2015-04-24             26                  2 e        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>     3 2015-04-21     2015-04-24             26                  3 b</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     3 2015-04-21     2015-11-14             26                  1 c        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>     3 2015-04-21     2015-11-14             26                  2 e        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>     3 2015-04-21     2015-11-14             26                  3 b</span></span></code></pre></div>
 <p>The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date. So now patient 3 still has 4 stays in the data, but now all episodes within the stay with <code>CIS_MARKER</code> 26, has the same admission and discharge date. This allows filtering to account for a whole stay rather than an episode within a stay.</p>
 </div>
 <div class="section level2">
@@ -193,7 +193,7 @@
 <span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
 <span><span class="co">#&gt;   "output_feature_name": ["with_preprocessing"],</span></span>
 <span><span class="co">#&gt;   "preprocess": {</span></span>
-<span><span class="co">#&gt;     "on": "cis_marker",</span></span>
+<span><span class="co">#&gt;     "on": ["id", "cis_marker"],</span></span>
 <span><span class="co">#&gt;     "retain_min": "admission_date",</span></span>
 <span><span class="co">#&gt;     "retain_max": "discharge_date"</span></span>
 <span><span class="co">#&gt;     },</span></span>
