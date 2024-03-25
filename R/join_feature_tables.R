@@ -60,9 +60,9 @@ join_feature_tables <- function(
     # specified missing value
     feature <- calculated_features[[i]]
     if (feature$is_feature) {
-      feature_df <- add_feature_column_to_df(feature_df, feature)
+      feature_df <- add_feature_column_to_df(feature_df, feature, context)
     } else {
-      response_df <- add_feature_column_to_df(response_df, feature)
+      response_df <- add_feature_column_to_df(response_df, feature, context)
     }
   }
 
@@ -71,7 +71,9 @@ join_feature_tables <- function(
 
 #' Helper function
 #' @noRd
-add_feature_column_to_df <- function(df, feature) {
+add_feature_column_to_df <- function(df, feature, context = NULL) {
+  context <- c(context, "add_feature_column_to_df")
+
   output_column_name <- setdiff(names(feature$feature_table), "id")
 
   if (output_column_name %in% names(df)) {
