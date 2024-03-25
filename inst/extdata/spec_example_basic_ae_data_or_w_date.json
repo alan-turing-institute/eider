@@ -27,7 +27,7 @@
         }
       },
       "subfilter_3": {
-        "column": "time",
+        "column": "date",
         "type": "date_gt",
         "value": ["2015-12-31"]
       }

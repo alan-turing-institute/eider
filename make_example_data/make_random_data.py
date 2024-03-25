@@ -60,7 +60,7 @@ def make_random_ae_data(max_ID: int,
                                                n=3)
 
     ae_data = pd.DataFrame({'id': rng.choice(a=max_ID, size=nrows), 
-                            'time': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
+                            'date': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
                             'attendance_category': rng.choice(attendance_categories, nrows),
                             'diagnosis_1': d1,
                             'diagnosis_2': d2,

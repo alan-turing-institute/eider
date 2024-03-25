@@ -1,4 +1,4 @@
-id,time,attendance_category,diagnosis_1,diagnosis_2,diagnosis_3
+id,date,attendance_category,diagnosis_1,diagnosis_2,diagnosis_3
 15,2017-06-12,05,1,18,7
 0,2017-12-22,01,15,8,
 3,2016-10-28,03,16,7,
