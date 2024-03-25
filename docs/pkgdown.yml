@@ -8,8 +8,8 @@ articles:
   eider: eider.html
   logging: logging.html
   prescribing: prescribing.html
-last_built: 2024-03-21T09:54Z
+last_built: 2024-03-25T11:24Z
 urls:
-  reference: https://alan-turing-institute.github.io/SPARRA/docs/reference
-  article: https://alan-turing-institute.github.io/SPARRA/docs/articles
+  reference: https://alan-turing-institute.github.io/eider/docs/reference
+  article: https://alan-turing-institute.github.io/eider/docs/articles
 
