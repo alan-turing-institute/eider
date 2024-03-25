@@ -6,13 +6,9 @@ tmp_*
 *.Rcheck
 .Rhistory
 
-# Quarto
-.quarto
-_site
-
-# Intermediate files
-*.fst
-*.zsav
-
 # Build output
 *.tar.gz
+docs
+inst/doc
+/doc/
+/Meta/

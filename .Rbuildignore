@@ -1,0 +1,12 @@
+^miniSPARRA01\.Rproj$
+^\.Rproj\.user$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^LICENSE\.md$
+^doc$
+^Meta$
+^README\.Rmd$
+^.github$
+.pre-commit-config.yaml
+.lintr

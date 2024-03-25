@@ -2,22 +2,22 @@ repos:
 - repo: local
   hooks:
   - id: document
-    name: Make sure functions have been documented
+    name: Make sure functions have been documented and README generated
     language: system
-    entry: make -C eider doc
+    entry: make doc
     always_run: true
     pass_filenames: false
 
   - id: test
     name: Run tests
     language: system
-    entry: make -C eider test
+    entry: make test
     always_run: true
     pass_filenames: false
 
   - id: lint
     name: Lint source code
     language: system
-    entry: make -C eider lint
+    entry: make lint
     always_run: true
     pass_filenames: false
