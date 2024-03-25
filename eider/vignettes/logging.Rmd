@@ -35,7 +35,7 @@ lines[3]
 ```
 
 ```{r error=TRUE}
-tf <- transform(ae_data_path, wrong_spec1)
+tf <- run_pipeline(ae_data_path, wrong_spec1)
 ```
 
 ### Example 2
@@ -47,7 +47,7 @@ lines[4]
 ```
 
 ```{r error=TRUE}
-tf <- transform(ae_data_path, wrong_spec2)
+tf <- run_pipeline(ae_data_path, wrong_spec2)
 ```
 
 ### Example 3
@@ -59,6 +59,6 @@ lines[11]
 ```
 
 ```{r error=TRUE}
-tf <- transform(ae_data_path, wrong_spec3)
+tf <- run_pipeline(ae_data_path, wrong_spec3)
 ```
 

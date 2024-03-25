@@ -16,9 +16,11 @@ filter_or <- function(table, filter_obj, context = NULL) {
   trace_context(context)
 
   if (tolower(filter_obj$type) != "or") {
-    error_context(
-      paste0("Expected filter type 'or', but got '", filter_obj$type, "'."),
-      context
+    stop_context(
+      message = paste0(
+        "Expected filter type 'or', but got '", filter_obj$type, "'."
+      ),
+      context = context
     )
   }
 

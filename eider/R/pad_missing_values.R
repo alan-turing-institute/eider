@@ -9,7 +9,21 @@
 #'
 #' @return A table like `id_table`, but with rows appended for each ID that is
 #' present in `table` but not present in `id_table`.
-pad_missing_values <- function(table, id_col, missing_value, id_table) {
+pad_missing_values <- function(
+    table,
+    id_col,
+    missing_value,
+    id_table,
+    context) {
+  debug_context(
+    message = paste0(
+      "Adding absent_default_value: ",
+      missing_value,
+      " to any IDs not present in the calculated feature"
+    ),
+    context = context
+  )
+
   missing_ids <- setdiff(table[[id_col]], id_table$id)
   if (length(missing_ids) == 0) {
     return(id_table)

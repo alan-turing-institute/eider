@@ -27,8 +27,8 @@ filter_basic_date <- function(table,
     "date_lt_eq", "date_gt", "date_gt_eq"
   )
   if (!(t %in% valid_filter_types)) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "Expected filter type to be one of ",
         paste(
           sapply(valid_filter_types, function(x) paste0("'", x, "'")),
@@ -36,7 +36,7 @@ filter_basic_date <- function(table,
         ),
         ", but got '", filter_obj$type, "'."
       ),
-      context
+      context = context
     )
   }
 

@@ -18,18 +18,37 @@ join_feature_tables <- function(
   trace_context(context)
 
   if (length(calculated_features) == 0) {
-    error_context("No feature tables to join.", context)
+    stop_context(message = "No feature tables to join.", context = context)
   }
 
   # If not supplied, collect the set of IDs across all tables
   if (is.null(all_ids)) {
+    debug_context(
+      context = context,
+      message = paste0(
+        "List of IDs was not explicitly supplied. ",
+        "Taking the union of all IDs from feature tables."
+      )
+    )
     get_ids <- function(feature) feature$feature_table$id
     all_ids <- lapply(calculated_features, get_ids) %>%
       unlist() %>%
       unique() %>%
       sort()
+  } else {
+    debug_context(
+      context = context,
+      message = paste0(
+        "A list of IDs to include in the output was specified, containing ",
+        length(all_ids),
+        " IDs."
+      )
+    )
   }
-  df <- data.frame(id = all_ids)
+
+  # Generate empty data frames for features and responses
+  feature_df <- data.frame(id = all_ids)
+  response_df <- data.frame(id = all_ids)
 
   for (i in seq_along(calculated_features)) {
     feature <- calculated_features[[i]]
@@ -39,13 +58,39 @@ join_feature_tables <- function(
 
     # Join the feature table to the main table and replace any NAs with the
     # specified missing value
-    df <- df %>%
-      left_join(feature_table, by = "id") %>%
-      mutate(
-        !!output_column_name :=
-          coalesce(.data[[output_column_name]], missing_value)
-      )
+    feature <- calculated_features[[i]]
+    if (feature$is_feature) {
+      feature_df <- add_feature_column_to_df(feature_df, feature)
+    } else {
+      response_df <- add_feature_column_to_df(response_df, feature)
+    }
   }
 
-  df
+  list(features = feature_df, responses = response_df)
+}
+
+#' Helper function
+add_feature_column_to_df <- function(df, feature) {
+  output_column_name <- setdiff(names(feature$feature_table), "id")
+
+  if (output_column_name %in% names(df)) {
+    stop_context(
+      message = paste0(
+        "Feature column name '",
+        output_column_name,
+        "' already exists in the data frame."
+      ),
+      context = context
+    )
+  }
+
+  df <- df %>%
+    left_join(feature$feature_table, by = "id") %>%
+    mutate(
+      !!output_column_name :=
+        coalesce(
+          .data[[output_column_name]],
+          feature$missing_value
+        )
+    )
 }

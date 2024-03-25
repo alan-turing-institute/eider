@@ -6,7 +6,7 @@
 for all values that are not in a second table. It is assumed that the IDs
 are added to the 'id' column in the second table.}
 \usage{
-pad_missing_values(table, id_col, missing_value, id_table)
+pad_missing_values(table, id_col, missing_value, id_table, context)
 }
 \arguments{
 \item{table}{The table containing all the values that should be present}

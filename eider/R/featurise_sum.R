@@ -53,7 +53,7 @@ featurise_sum <- function(all_tables,
         summarise(!!output_feature_name := sum(.data[[column_to_sum_over]]))
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(message = e, context = context)
     }
   )
 
@@ -61,7 +61,8 @@ featurise_sum <- function(all_tables,
     source_table,
     grouping_column,
     missing_value,
-    feature_table
+    feature_table,
+    context = c(context, "pad_missing_values")
   )
 
 

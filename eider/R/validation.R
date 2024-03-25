@@ -9,13 +9,13 @@ validate_source_file <- function(spec, all_tables, context) {
   }
 
   if (!(n %in% names(all_tables))) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "The name '",
         n,
         "' supplied for 'source_file' was not provided as an input table."
       ),
-      context
+      context = context
     )
   }
 
@@ -44,14 +44,15 @@ validate_column_present <- function(field_name, spec, tbl, context) {
   }
 
   if (!(n %in% names(tbl))) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "The column '",
         n,
         "' supplied for '",
         field_name,
         "' was not found in the input table."
-      ), context
+      ),
+      context = context
     )
   }
 
@@ -69,8 +70,8 @@ validate_absent_default_value <- function(spec, context) {
   }
 
   if (!(is.numeric(n) && length(n) == 1)) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "If provided, 'absent_default_value' must be a single number. ",
         "However, the value supplied (",
         n,
@@ -78,7 +79,7 @@ validate_absent_default_value <- function(spec, context) {
         typeof(n),
         "'."
       ),
-      context
+      context = context
     )
   }
 
@@ -96,13 +97,13 @@ validate_filter_column <- function(filter_obj, tbl, context) {
   }
 
   if (!n %in% colnames(tbl)) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "The column '",
         n,
         "' to be filtered on was not found in the table."
       ),
-      context
+      context = context
     )
   }
 
@@ -122,9 +123,10 @@ validate_filter_value <- function(filter_obj, table, context) {
   col_type <- typeof(column)
 
   if (length(v) == 0) {
-    error_context(
-      "The 'value' field of a filter object must contain at least one item",
-      context
+    stop_context(
+      message =
+        "The 'value' field of a filter object must contain at least one item",
+      context = context
     )
   }
 
@@ -138,8 +140,8 @@ validate_filter_value <- function(filter_obj, table, context) {
       is.numeric(v) && is.numeric(column)
   )
   if (!compatible) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "The 'value' field of a filter object must be of the same type as ",
         "the column to be filtered on. However, the column '",
         column_name,
@@ -149,7 +151,7 @@ validate_filter_value <- function(filter_obj, table, context) {
         val_type,
         "'."
       ),
-      context
+      context = context
     )
   }
 
@@ -167,23 +169,24 @@ validate_filter_date_value <- function(filter_obj, table, context) {
   col_type <- typeof(column)
 
   if (length(v) == 0) {
-    error_context(
-      "The 'value' field of a filter object must contain at least one item",
-      context
+    stop_context(
+      message =
+        "The 'value' field of a filter object must contain at least one item",
+      context = context
     )
   }
 
   ymd_with_check <- function(v) {
     v2 <- lubridate::ymd(v)
     if (is.na(v2)) {
-      error_context(
-        paste0(
+      stop_context(
+        message = paste0(
           "The 'value' field of a date filter object must be a date in the ",
           "format 'YYYY-MM-DD'. However, the value supplied (",
           v,
           ") could not be parsed as a valid date."
         ),
-        context
+        context = context
       )
     }
     v2
@@ -191,8 +194,8 @@ validate_filter_date_value <- function(filter_obj, table, context) {
 
   # Check that the column consists of dates or NAs only
   if (!all(sapply(column, function(x) is.na(x) || lubridate::is.Date(x)))) {
-    error_context(
-      paste0(
+    stop_context(
+      message = paste0(
         "The 'column' field of a date filter object must refer to a ",
         "column which is of type 'date'. However, the column '",
         column_name,
@@ -200,7 +203,7 @@ validate_filter_date_value <- function(filter_obj, table, context) {
         col_type,
         "'."
       ),
-      context
+      context = context
     )
   }
 
@@ -219,8 +222,8 @@ validate_weight <- function(spec, context) {
 
 #' Helper function
 error_not_string <- function(value, name, context) {
-  error_context(
-    paste0(
+  stop_context(
+    message = paste0(
       "'",
       name,
       "' must be a single string, ",
@@ -230,13 +233,13 @@ error_not_string <- function(value, name, context) {
       typeof(value),
       "'."
     ),
-    context
+    context = context
   )
 }
 
 error_not_number <- function(value, name, context) {
-  error_context(
-    paste0(
+  stop_context(
+    message = paste0(
       "'",
       name,
       "' must be a single number, ",
@@ -246,6 +249,6 @@ error_not_number <- function(value, name, context) {
       typeof(value),
       "'."
     ),
-    context
+    context = context
   )
 }

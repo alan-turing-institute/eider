@@ -47,7 +47,7 @@ featurise_count <- function(all_tables,
         summarise(!!output_feature_name := n())
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(message = e, context = context)
     }
   )
 
@@ -55,7 +55,8 @@ featurise_count <- function(all_tables,
     source_table,
     grouping_column,
     missing_value,
-    feature_table
+    feature_table,
+    context = c(context, "pad_missing_values")
   )
 
   list(

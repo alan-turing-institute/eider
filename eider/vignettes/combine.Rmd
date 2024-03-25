@@ -62,5 +62,5 @@ all_data_paths <- list(
   ae2 = ae_data_filepath,
   prescribing = prescribing_data_filepath
 )
-transform(all_data_paths, basic_combine_spec_filepath)
+run_pipeline(all_data_paths, basic_combine_spec_filepath)
 ```

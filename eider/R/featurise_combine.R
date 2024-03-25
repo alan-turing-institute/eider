@@ -29,10 +29,11 @@ featurise_combine <- function(mode,
 
   mode <- tolower(mode)
 
-  # featurise.R should already check this, so we use stop() instead of
-  # error_context() here
   if (!mode %in% c("combine_linear", "combine_min", "combine_max")) {
-    stop("Invalid combination mode: ", mode)
+    stop_context(
+      message = paste0("Invalid combination mode: ", mode),
+      context = context
+    )
   }
 
   # Validate spec
@@ -69,15 +70,18 @@ featurise_combine <- function(mode,
 
     # Calculate the feature
     extra_ctx <- c(context, "(feature", i, "of", n, ": ", subfeature_name, ")")
+    # Note: no need to pass is_feature to featurise() because it won't be used
+    # at this stage
     subfeatures[[i]] <- featurise(
       all_tables,
       subfeature_spec,
-      c(context, extra_ctx)
+      context = c(context, extra_ctx)
     )
   }
 
   # Combine the subfeatures into a table
   joined_subfeatures <- join_feature_tables(subfeatures, context = context)
+  joined_subfeatures <- joined_subfeatures$features
 
   # Then combine the subfeatures
   feature_table <- tibble(id = joined_subfeatures$id) %>%

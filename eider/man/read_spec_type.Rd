@@ -4,7 +4,7 @@
 \alias{read_spec_type}
 \title{Read spec type and give appropriate logging messages}
 \usage{
-read_spec_type(filename_or_json_str)
+read_spec_type(filename_or_json_str, context = NULL)
 }
 \arguments{
 \item{filename_or_json_str}{A string which may or may not be a valid filepath}

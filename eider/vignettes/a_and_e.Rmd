@@ -74,7 +74,7 @@ We then run the transformation which will produce the resultant dataframe.
 ```{r}
 ae_data_path <- list(ae2 = ae_data_filepath)
 # Note the name ae2 is used in the spec example `source_file` above
-transform(ae_data_path, basic_ae_spec_filepath)
+run_pipeline(ae_data_path, basic_ae_spec_filepath)
 ```
 
 
@@ -94,7 +94,7 @@ Also note the `absent_default_value` has now been removed, and a more descriptiv
 We can again run this transformation pipeline with the same A&E data:
 
 ```{r}
-transform(ae_data_path, basic_ae_spec_w_date_filepath)
+run_pipeline(ae_data_path, basic_ae_spec_w_date_filepath)
 ```
 
 We note that patient with id 2 now has no entries in the resultant table. This is expected as noted above patient 2 only had one instance where their `diagnosis_1` was 101, and from inspection of the source data, we can see that it was on the 28th July 2015. 
@@ -114,7 +114,7 @@ writeLines(readLines(ae_spec_or_w_date_fp))
 Subfilter 2 has now been defined as an OR type, and it contains it's own subfilters, 21 and 22. `subfilter_21` is a filter that `diagnosis_1` column is 101, and `subfilter_22` is a filter that `diagnosis_2` column is 101. So the transformation will count an instance if either `diagnosis_1` OR `diagnosis_2` are 101. Subject to the other filters of the `attendence_type` being 1, and the date being later than 31st December 2015.
 
 ```{r}
-transform(ae_data_path, ae_spec_or_w_date_fp)
+run_pipeline(ae_data_path, ae_spec_or_w_date_fp)
 ```
 
 Here we see patient 14 has 2 instances of either `diagnosis_1` or `diagnosis_2` being 101 when the `attendence_type` is 1, and for dates later than 31st December 2015.
@@ -138,7 +138,7 @@ writeLines(readLines(basic_ae_spec_filepath))
 
 And the transformation pipeline is run again - for completeness here is the result.
 ```{r}
-transform(ae_data_path, basic_ae_spec_filepath)
+run_pipeline(ae_data_path, basic_ae_spec_filepath)
 ```
 
 Check the log:
@@ -166,7 +166,7 @@ Apply the transformation
 tmp <- tempfile()
 log_threshold(TRACE)
 log_appender(appender_file(tmp))
-tf <- transform(ae_data_path, json_string)
+tf <- run_pipeline(ae_data_path, json_string)
 tf
 ```
 
