@@ -32,7 +32,10 @@ featurise <- function(all_tables,
   # TODO: Verify fields here and pass them to preprocess_table() so that
   # function signature is easier to understand
   if (exists("preprocess", spec)) {
-    debug_context(paste0("Preprocessing table ", spec$source_file), context)
+    debug_context(
+      context,
+      message = paste0("Preprocessing table ", spec$source_file)
+    )
     updated_table <- preprocess_table(
       input_table = all_tables[[spec$source_file]],
       spec = spec,
@@ -63,6 +66,6 @@ featurise <- function(all_tables,
     )
   }
 
-  feature$is_feature <- is_feature  # Used by join_feature_tables
+  feature$is_feature <- is_feature # Used by join_feature_tables
   feature
 }
