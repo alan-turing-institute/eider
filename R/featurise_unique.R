@@ -56,7 +56,7 @@ featurise_unique <- function(all_tables,
         )
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(e, context)
     }
   )
 

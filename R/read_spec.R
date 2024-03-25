@@ -27,7 +27,7 @@ read_spec_type <- function(filename_or_json_str, context = NULL) {
       message = "No valid filepath found, assuming a json string"
     )
   } else if (result == "other_error") {
-    error_context("Unknown error when trying to read specification", context)
+    stop_context("Unknown error when trying to read specification", context)
   }
 
   return(file_or_string)

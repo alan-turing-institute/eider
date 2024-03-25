@@ -74,7 +74,7 @@ featurise_time_since <- function(all_tables,
   } else if (time_units == "days") {
     ndays <- lubridate::ddays(1)
   } else {
-    error_context("Time_units must be either 'days' or 'years'", context)
+    stop_context("Time_units must be either 'days' or 'years'", context)
   }
 
   feature_table <- tryCatch(
@@ -96,7 +96,7 @@ featurise_time_since <- function(all_tables,
       tbl %>% select(id, !!output_feature_name)
     },
     error = function(e) {
-      error_context(e, context)
+      stop_context(e, context)
     }
   )
 
