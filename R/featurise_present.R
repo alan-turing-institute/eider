@@ -18,6 +18,7 @@
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together. By
 #'                  definition, this value is 0.
+#' @noRd
 featurise_present <- function(all_tables,
                               spec,
                               context = NULL) {

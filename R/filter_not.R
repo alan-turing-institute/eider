@@ -11,6 +11,7 @@
 #'               - passed: data frame with the rows that satisfies the NOT
 #'                         filter
 #'               - rejected: all other rows
+#' @noRd
 filter_not <- function(table,
                        filter_obj,
                        context = NULL) {

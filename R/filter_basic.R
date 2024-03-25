@@ -14,6 +14,7 @@
 #' @return A list with the following elements:
 #'               - passed: data frame with the rows that passed the filter
 #'               - rejected: all other rows
+#' @noRd
 filter_basic <- function(table,
                          filter_obj,
                          context = NULL) {

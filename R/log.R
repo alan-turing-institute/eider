@@ -5,6 +5,7 @@
 #' "trace")
 #'
 #' @returns NULL
+#' @noRd
 log_context <- function(context, severity, message) {
   logging_function <- switch(severity,
     "fatal" = log_fatal,
@@ -23,6 +24,7 @@ log_context <- function(context, severity, message) {
 #' @param message A single string
 #'
 #' @returns result A single string
+#' @noRd
 context_message <- function(context, message) {
   context_string <- stringr::str_c(context, collapse = " > ")
   if (message == "") {
@@ -82,6 +84,7 @@ fatal_context <- function(context, message = "") {
 
 #' On top of logging a FATAL message, stop execution entirely, and print a
 #' message showing the current execution context
+#' @noRd
 stop_context <- function(context, message = "") {
   fatal_context(context, message)
 

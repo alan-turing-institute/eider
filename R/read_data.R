@@ -5,11 +5,13 @@
 #' @param filenames A vector of strings or dataframe-like objects.
 #' @return A list of data frames. The names of the list are the same as the
 #' names of the input list.
+#' @noRd
 read_data <- function(source_names) {
   purrr::imap(source_names, read_one_table)
 }
 
 #' Helper function to read a single table from a file.
+#' @noRd
 read_one_table <- function(filepath_or_df, name) {
   if (is.character(filepath_or_df)) {
     df <- read.csv(filepath_or_df, header = TRUE)
@@ -31,6 +33,7 @@ read_one_table <- function(filepath_or_df, name) {
 #'
 #' @param table A data frame
 #' @return A data frame with columns coerced to dates where possible
+#' @noRd
 coerce_dates <- function(table) {
   cols <- names(table)
 

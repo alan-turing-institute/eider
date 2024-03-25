@@ -5,6 +5,7 @@
 #' @param context Execution context, defaulting to NULL
 #'
 #' @return A mutated version of the initial input table
+#' @noRd
 preprocess_table <- function(input_table, spec, context = NULL) {
   context <- c(context, "preprocess_table")
 

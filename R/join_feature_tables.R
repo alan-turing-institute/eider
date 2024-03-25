@@ -9,6 +9,7 @@
 #' NULL.
 #'
 #' @return A data frame with the feature tables joined together
+#' @noRd
 join_feature_tables <- function(
     calculated_features,
     all_ids = NULL,
@@ -69,6 +70,7 @@ join_feature_tables <- function(
 }
 
 #' Helper function
+#' @noRd
 add_feature_column_to_df <- function(df, feature) {
   output_column_name <- setdiff(names(feature$feature_table), "id")
 

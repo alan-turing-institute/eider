@@ -4,10 +4,12 @@
 #'
 #' @return TRUE if the filter is nested (as determined by it having the
 #' 'subfilters' key), FALSE if it is not
+#' @noRd
 check_for_nested <- function(filter) {
   !is.null(filter$subfilters)
 }
 
+#' @noRd
 parse_feature <- function(json_data) {
   if (json_data$transformation_type %>% tolower() == "combine") {
     # Handle COMBINE features separately
@@ -32,6 +34,7 @@ parse_feature <- function(json_data) {
 #' @param json_data The parsed json data
 #'
 #' @return A feature object
+#' @noRd
 parse_single_feature <- function(json_data) {
   # Initialise empty list
   feature_object <- list()
@@ -52,18 +55,13 @@ parse_single_feature <- function(json_data) {
   feature_object
 }
 
-# TODO - when parsing header check that only COUNT is allowed to exist without
-# an aggreation column
-# TODO set a log warning/info level that the absent data flag is set to
-# whatever user has specified
-# TODO - put in a warning if expected/mandatory flags are missing
-
 #' Parse a single (un-nested) filter and return a list with data column name
 #' filter type, and the limiting values
 #'
 #' @param filter A filter as defined in the origin json file
 #'
 #' @return A filter object
+#' @noRd
 parse_single_filter <- function(filter) {
   context <- "parse_single_filter"
   trace_context(context)
@@ -81,6 +79,7 @@ parse_single_filter <- function(filter) {
 #' @param nested_filter A nested filter as defined in the origin json file
 #'
 #' @return A nested filter object
+#' @noRd
 parse_nested_filter <- function(nested_filter) {
   context <- "parse_nested_filter"
   trace_context(context)
@@ -96,6 +95,7 @@ parse_nested_filter <- function(nested_filter) {
 }
 
 #' Check if a filter is nested or single and parse accordingly
+#' @noRd
 parse_single_or_nested <- function(filter) {
   if (check_for_nested(filter)) {
     parse_nested_filter(filter)
@@ -110,12 +110,13 @@ parse_single_or_nested <- function(filter) {
 #' @param filename The relative filepath to the json file or a json string
 #'
 #' @return A feature object - the spec
+#' @noRd
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
   parse_single_feature(json_data)
 }
 
-
+#' @noRd
 preprocess_data <- function(details) {
   parsed_preprocess <- list()
   parsed_preprocess$on <- details$on

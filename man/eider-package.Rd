@@ -6,7 +6,9 @@
 \alias{eider-package}
 \title{eider: Todo Acronym Has Not Been Decided}
 \description{
-ooooooOOOOooooo!!
+\code{eider} is a lightweight package for processing tabular data in a
+declarative fashion. To get started, see:
+\code{vignette("eider")}
 }
 \author{
 \strong{Maintainer}: Camila Rangel Smith \email{crangelsmith@turing.ac.uk} (\href{https://orcid.org/0000-0002-0227-836X}{ORCID}) [contributor]
@@ -25,3 +27,4 @@ Other contributors:
 }
 
 }
+\keyword{internal}

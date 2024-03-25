@@ -1,6 +1,7 @@
 #' Checks that `spec$source_file` is a single string and that it is a key in
 #' `all_tables`. If so, returns the table itself (or the file path of the
 #' table).
+#' @noRd
 validate_source_file <- function(spec, all_tables, context) {
   n <- spec$source_file
 
@@ -24,6 +25,7 @@ validate_source_file <- function(spec, all_tables, context) {
 
 #' Checks that `spec$output_feature_name` is a single string. If so, returns
 #' the string.
+#' @noRd
 validate_output_feature_name <- function(spec, context) {
   n <- spec$output_feature_name
 
@@ -36,6 +38,7 @@ validate_output_feature_name <- function(spec, context) {
 
 #' Checks that `spec[[field_name]]` is a single string and that it is a column
 #' in the table `tbl`. If so, returns the column name.
+#' @noRd
 validate_column_present <- function(field_name, spec, tbl, context) {
   n <- spec[[field_name]]
 
@@ -61,6 +64,7 @@ validate_column_present <- function(field_name, spec, tbl, context) {
 
 #' Same as validate_column_present, but allows for multiple (or no!) columns to
 #' be specified.
+#' @noRd
 validate_columns_present <- function(field_name, spec, tbl, context) {
   ns <- spec[[field_name]]
 
@@ -107,6 +111,7 @@ validate_columns_present <- function(field_name, spec, tbl, context) {
 
 #' Checks that `spec$absent_default_value` is a single number. If so, returns
 #' the number.
+#' @noRd
 validate_absent_default_value <- function(spec, context) {
   n <- spec$absent_default_value
 
@@ -134,6 +139,7 @@ validate_absent_default_value <- function(spec, context) {
 
 #' Checks that the column specified by a filter object exists in a table. If
 #' so, returns the column name.
+#' @noRd
 validate_filter_column <- function(filter_obj, tbl, context) {
   n <- filter_obj$column
 
@@ -157,6 +163,7 @@ validate_filter_column <- function(filter_obj, tbl, context) {
 
 #' Checks that the values specified by a filter object are of the same type as
 #' the column to be filtered on. If so, returns the values.
+#' @noRd
 validate_filter_value <- function(filter_obj, table, context) {
   v <- filter_obj$value
   val_type <- typeof(v)
@@ -203,6 +210,7 @@ validate_filter_value <- function(filter_obj, table, context) {
   v
 }
 
+#' @noRd
 validate_filter_date_value <- function(filter_obj, table, context) {
   v <- filter_obj$value
   val_type <- typeof(v)
@@ -255,6 +263,7 @@ validate_filter_date_value <- function(filter_obj, table, context) {
   purrr::map_vec(v, ymd_with_check)
 }
 
+#' @noRd
 validate_weight <- function(spec, context) {
   w <- spec$weight
 
@@ -265,7 +274,7 @@ validate_weight <- function(spec, context) {
   w
 }
 
-#' Helper function
+#' @noRd
 error_not_string <- function(value, name, context) {
   stop_context(
     message = paste0(
@@ -282,6 +291,7 @@ error_not_string <- function(value, name, context) {
   )
 }
 
+#' @noRd
 error_not_number <- function(value, name, context) {
   stop_context(
     message = paste0(

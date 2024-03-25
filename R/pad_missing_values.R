@@ -9,6 +9,7 @@
 #'
 #' @return A table like `id_table`, but with rows appended for each ID that is
 #' present in `table` but not present in `id_table`.
+#' @noRd
 pad_missing_values <- function(
     table,
     id_col,

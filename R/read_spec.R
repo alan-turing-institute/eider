@@ -3,6 +3,7 @@
 #' @param filename_or_json_str A string which may or may not be a valid filepath
 #'
 #' @return information if a file or a string has been provided
+#' @noRd
 read_spec_type <- function(filename_or_json_str, context = NULL) {
   context <- c(context, "read_spec_type")
   trace_context(context)
@@ -39,6 +40,7 @@ read_spec_type <- function(filename_or_json_str, context = NULL) {
 #' the specification, or the specification itself as a json string
 #'
 #' @return A string identifying if the file was found or not
+#' @noRd
 chk_pth <- function(file_or_json) {
   tryCatch(
     expr = {
