@@ -65,7 +65,9 @@ parse_single_feature <- function(json_data) {
 #'
 #' @return A filter object
 parse_single_filter <- function(filter) {
-  log_debug("Parsing single filter")
+  context <- "parse_single_filter"
+  trace_context(context)
+
   parsed_single_filter <- list()
   parsed_single_filter$column <- filter$column
   parsed_single_filter$type <- filter$type
@@ -80,7 +82,9 @@ parse_single_filter <- function(filter) {
 #'
 #' @return A nested filter object
 parse_nested_filter <- function(nested_filter) {
-  log_debug("Parsing nested filter")
+  context <- "parse_nested_filter"
+  trace_context(context)
+
   op_nested_filter <- list()
   op_nested_filter$type <- nested_filter$type
   op_nested_filter$subfilters <- list()

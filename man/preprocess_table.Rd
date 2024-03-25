@@ -4,12 +4,14 @@
 \alias{preprocess_table}
 \title{Perform (date) preprocessing on a given data table}
 \usage{
-preprocess_table(input_table, spec)
+preprocess_table(input_table, spec, context = NULL)
 }
 \arguments{
 \item{input_table}{The original input table which will be mutated}
 
 \item{spec}{The specification which dictates the changes}
+
+\item{context}{Execution context}
 }
 \value{
 A mutated version of the initial input table
