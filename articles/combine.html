@@ -90,7 +90,7 @@
 <span><span class="va">prescribing_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_pis_data.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>This is the A&amp;E data. Note that this is purely for illustration purposes, you don’t need to call <code>read.csv</code> on the data file as <code>transform</code> will do that for you.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     id       date attendance_category diagnosis_1 diagnosis_2 diagnosis_3</span></span>
 <span><span class="co">#&gt; 1   15 2017-06-12                   5           1          18           7</span></span>
 <span><span class="co">#&gt; 2    0 2017-12-22                   1          15           8          NA</span></span>
@@ -194,7 +194,7 @@
 <span><span class="co">#&gt; 100 18 2015-07-29                   1           1          13          14</span></span></code></pre></div>
 <p>and this is the prescription data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">prescribing_data_filepath</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">prescribing_data_filepath</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     id  paid_date bnf_section num_items</span></span>
 <span><span class="co">#&gt; 1   19 2017-12-15         113         3</span></span>
 <span><span class="co">#&gt; 2   19 2016-08-11         106         5</span></span>
