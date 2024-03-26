@@ -62,6 +62,31 @@ validate_column_present <- function(field_name, spec, tbl, context) {
   n
 }
 
+#' Same as validate_column_present, but additionally checks that the column has
+#' a date type.
+#' @noRd
+validate_date_column_present <- function(field_name, spec, tbl, context) {
+  n <- validate_column_present(field_name, spec, tbl, context)
+  column <- tbl[[n]]
+
+  if (!lubridate::is.Date(column)) {
+    stop_context(
+      message = paste0(
+        "The column '",
+        n,
+        "' supplied for '",
+        field_name,
+        "' must be of type 'date'. However, the column is of type '",
+        typeof(column),
+        "'."
+      ),
+      context = context
+    )
+  }
+
+  n
+}
+
 #' Same as validate_column_present, but allows for multiple (or no!) columns to
 #' be specified.
 #' @noRd

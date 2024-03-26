@@ -47,7 +47,7 @@ featurise_time_since <- function(all_tables,
   grouping_column <- validate_column_present(
     "grouping_column", spec, source_table, context
   )
-  date_column <- validate_column_present(
+  date_column <- validate_date_column_present(
     "date_column", spec, source_table, context
   )
 
