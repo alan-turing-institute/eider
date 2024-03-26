@@ -5,10 +5,13 @@ articles:
   a_and_e: a_and_e.html
   combine: combine.html
   eider: eider.html
+  feature_count: feature_count.html
+  features: features.html
+  filtering: filtering.html
   logging: logging.html
   preprocessing: preprocessing.html
   prescribing: prescribing.html
-last_built: 2024-03-26T17:05Z
+last_built: 2024-03-26T18:08Z
 urls:
   reference: https://alan-turing-institute.github.io/eider/docs/reference
   article: https://alan-turing-institute.github.io/eider/docs/articles
