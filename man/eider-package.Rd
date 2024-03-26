@@ -4,7 +4,7 @@
 \name{eider-package}
 \alias{eider}
 \alias{eider-package}
-\title{eider: Todo Acronym Has Not Been Decided}
+\title{eider: Declarative feature extraction from tabular records data}
 \description{
 \code{eider} is a lightweight package for processing tabular data in a
 declarative fashion. To get started, see:

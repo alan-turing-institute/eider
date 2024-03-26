@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# eider
+# eider <img src="man/figures/eider_hexagon.png" align="right" height="138" />
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -27,13 +27,14 @@ function documentation).
 
 The output of this is a column named `total_ae_attendances`, containing
 the number of rows per patient, and with a value of 0 for any patients
-who do not appear in the `ae2` table. This declarative approach provides
-an alternative to traditional, imperative-style, `dplyr` pipelines which
-can be more difficult to reason about, especially when a series of
-features is being extracted and merged together. As features are
-specified without reference to a specific programming language or
-paradigm, it also encourages code that is concise, easy to read, and
-maintainable.
+who do not appear in the `ae2` table.
+
+This declarative approach provides an alternative to traditional,
+imperative-style, `dplyr` pipelines which can be more difficult to
+reason about, especially when a series of features is being extracted
+and merged together. As features are specified without reference to a
+specific programming language or paradigm, it also encourages code that
+is concise, easy to read, and maintainable.
 
 `eider` is a collaboration between [The Alan Turing
 Institute](https://www.turing.ac.uk/), [Public Health
