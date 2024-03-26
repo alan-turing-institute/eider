@@ -16,7 +16,7 @@ vig_serv:
 	open http://localhost:8000/articles && python -m http.server -d docs 8000
 
 vig_build:
-	ls vignettes/* | entr -s "Rscript -e 'pkgdown::build_articles(preview = FALSE)'"
+	ls _pkgdown.yml vignettes/* | entr -s "Rscript -e 'pkgdown::build_articles(preview = FALSE)'"
 
 vig:
 	sh -c "trap 'kill 0' SIGINT; make vig_build & make vig_serv"

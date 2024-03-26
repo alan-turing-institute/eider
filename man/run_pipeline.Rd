@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_pipeline.R
 \name{run_pipeline}
 \alias{run_pipeline}
-\title{Perform the entire feature transformation process.}
+\title{Perform the entire feature transformation process}
 \usage{
 run_pipeline(
   data_sources,
@@ -12,22 +12,33 @@ run_pipeline(
 )
 }
 \arguments{
-\item{data_sources}{A list mapping unique table identifiers to either
-the file path from which they should be read from, or the data frame itself.}
+\item{data_sources}{A list, whose names are the unique identifiers of the
+data sources, and whose values are either the data frame itself or the file
+path from which they should be read from. Only CSV files are supported at
+this point in time.}
 
 \item{feature_filenames}{A vector of file paths to the feature JSON
-specifications. Defaults to NULL.}
+specifications. Defaults to \code{NULL}.}
 
-\item{response_filenames}{A vector of file paths to the feature JSON
-specifications. Defaults to NULL.}
+\item{response_filenames}{A vector of file paths to the response JSON
+specifications. Defaults to \code{NULL}.}
 
-\item{all_ids}{A vector of all the unique identifiers that should be in the
-final feature table. If not given, will generate a feature table containing
-all unique identifiers found in input tables used by at least one feature.}
+\item{all_ids}{A vector of all the unique numeric identifiers that should be
+in the final feature table. If not given, this will be determined by taking
+the union of all unique identifiers found in input tables used by at least
+one feature.}
 }
 \value{
-A data frame with the feature tables joined together
+A list with the following elementss:
+\itemize{
+\item \code{features}: A data frame with all the features. The first column is the ID
+column, and always has the name \code{id}. Subsequent columns are the features,
+with column names as specified in the \code{output_feature_name} field of the
+JSON files.
+\item \code{responses}: A data frame with all the responses. The structure is the same
+as the \code{features} data frame.
+}
 }
 \description{
-Perform the entire feature transformation process.
+Please see the package articles for usage examples.
 }

@@ -1,9 +1,14 @@
-#' Return path to the example datasets provided with the package
+#' Obtain filepaths to example data and JSON features
 #'
-#' @param file Name of the file to be used from inst/extdata.
-#' If NULL all files will be listed
+#' Return an absolute path to the example data and JSON features provided with
+#' the package. These files are contained in the package `inst/extdata`
+#' directory.
 #'
-#' @return A character string with the path to the file, or a vector of strings
+#' @param file The filename to return the full path for. If NULL, will return a
+#' vector of all valid filenames.
+#'
+#' @return A string containing the full path to the file, or a vector of
+#' filenames
 #' @export
 #'
 #' @examples

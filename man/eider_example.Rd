@@ -2,19 +2,22 @@
 % Please edit documentation in R/example.R
 \name{eider_example}
 \alias{eider_example}
-\title{Return path to the example datasets provided with the package}
+\title{Obtain filepaths to example data and JSON features}
 \usage{
 eider_example(file = NULL)
 }
 \arguments{
-\item{file}{Name of the file to be used from inst/extdata.
-If NULL all files will be listed}
+\item{file}{The filename to return the full path for. If NULL, will return a
+vector of all valid filenames.}
 }
 \value{
-A character string with the path to the file, or a vector of strings
+A string containing the full path to the file, or a vector of
+filenames
 }
 \description{
-Return path to the example datasets provided with the package
+Return an absolute path to the example data and JSON features provided with
+the package. These files are contained in the package \code{inst/extdata}
+directory.
 }
 \examples{
 eider_example()

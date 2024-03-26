@@ -1,8 +1,8 @@
 ---
-title: "eider"
+title: "Introduction to eider"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{eider}
+  %\VignetteIndexEntry{Introduction to eider}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

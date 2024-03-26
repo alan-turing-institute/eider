@@ -1,16 +1,28 @@
-#' Perform the entire feature transformation process.
+#' Perform the entire feature transformation process
 #'
-#' @param data_sources A list mapping unique table identifiers to either
-#' the file path from which they should be read from, or the data frame itself.
+#' Please see the package articles for usage examples.
+#'
+#' @param data_sources A list, whose names are the unique identifiers of the
+#' data sources, and whose values are either the data frame itself or the file
+#' path from which they should be read from. Only CSV files are supported at
+#' this point in time.
 #' @param feature_filenames A vector of file paths to the feature JSON
-#' specifications. Defaults to NULL.
-#' @param response_filenames A vector of file paths to the feature JSON
-#' specifications. Defaults to NULL.
-#' @param all_ids A vector of all the unique identifiers that should be in the
-#' final feature table. If not given, will generate a feature table containing
-#' all unique identifiers found in input tables used by at least one feature.
+#' specifications. Defaults to `NULL`.
+#' @param response_filenames A vector of file paths to the response JSON
+#' specifications. Defaults to `NULL`.
+#' @param all_ids A vector of all the unique numeric identifiers that should be
+#' in the final feature table. If not given, this will be determined by taking
+#' the union of all unique identifiers found in input tables used by at least
+#' one feature.
 #'
-#' @return A data frame with the feature tables joined together
+#' @return
+#' A list with the following elementss:
+#' * `features`: A data frame with all the features. The first column is the ID
+#' column, and always has the name `id`. Subsequent columns are the features,
+#' with column names as specified in the `output_feature_name` field of the
+#' JSON files.
+#' * `responses`: A data frame with all the responses. The structure is the same
+#' as the `features` data frame.
 #' @export
 run_pipeline <- function(
     data_sources,

@@ -7,3 +7,43 @@ template:
     base_font: {google: "Fira Sans"}
     heading_font: {google: "Fira Sans"}
     code_font: {google: "Fira Mono"}
+
+# home:
+#   links:
+#     - text: GitHub repository
+#       href: https://github.com/alan-turing-institute/eider
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+
+articles:
+  - title: Introduction
+    navbar: ~
+    contents:
+      - eider
+
+  - title: Feature types
+    navbar: Feature types
+    contents:
+      - features
+      - feature_count
+
+  - title: Subfields
+    navbar: Subfields
+    contents:
+      - preprocessing
+      - filtering
+
+  - title: Logging
+    navbar: Logging
+    contents:
+      - logging
+
+  - title: Examples
+    navbar: Examples
+    contents:
+      - a_and_e
+      - combine
+      - prescribing
