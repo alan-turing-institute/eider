@@ -62,7 +62,7 @@ featurise_unique <- function(all_tables,
         )
     },
     error = function(e) {
-      stop_context(e, context)
+      stop_context(message = conditionMessage(e), context = context)
     }
   )
 

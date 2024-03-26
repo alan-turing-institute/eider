@@ -55,7 +55,7 @@ featurise_sum <- function(all_tables,
         summarise(!!output_feature_name := sum(.data[[column_to_sum_over]]))
     },
     error = function(e) {
-      stop_context(message = e, context = context)
+      stop_context(message = conditionMessage(e), context = context)
     }
   )
 
