@@ -142,6 +142,21 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
     smr04 = pd.DataFrame(data_dict, index=range(len(data_dict['id'])))
     smr04.to_csv("./random_smr04_data.csv", index=False)
 
+def make_ltc_data(start_date, end_date, max_ID):
+    conditions = ['ASTHMA', 'DIABETES', 'PARKINSONS']
+    data_dict = {'id': [], **{c: [] for c in conditions}}
+    for i in range(max_ID):
+        data_dict['id'].append(i)
+        for c in conditions:
+            if rng.random() < 0.2:
+                condition_start_date = make_random_dates(start=start_date,
+                                                         end=end_date,
+                                                         nrows=1)[0]
+                condition_start_date = condition_start_date.strftime("%Y-%m-%d")
+            else:
+                condition_start_date = ""
+            data_dict[c].append(condition_start_date)
+    pd.DataFrame(data_dict).to_csv("./random_ltc_data.csv", index=False)
 
 # https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/attendance-category-ae/
 
@@ -171,3 +186,7 @@ make_smr04_data(start_date=start_date,
                 end_date=end_date, 
                 nstays=nstays, 
                 max_ID=max_ID)
+
+make_ltc_data(start_date=start_date, 
+              end_date=end_date, 
+              max_ID=max_ID)
