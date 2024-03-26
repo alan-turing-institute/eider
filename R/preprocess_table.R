@@ -24,6 +24,9 @@ preprocess_table <- function(input_table, spec, context = NULL) {
     retain_max <- validate_columns_present(
       "retain_max", spec$preprocess, input_table, context
     )
+    replace_with_sum <- validate_columns_present(
+      "replace_with_sum", spec$preprocess, input_table, context
+    )
 
     input_table <- input_table %>% group_by(across(all_of(on)))
 
@@ -35,6 +38,11 @@ preprocess_table <- function(input_table, spec, context = NULL) {
     for (col in retain_max) {
       input_table <- input_table %>%
         mutate(!!col := max(!!sym(col)))
+    }
+
+    for (col in replace_with_sum) {
+      input_table <- input_table %>%
+        mutate(!!col := sum(!!sym(col)))
     }
 
     input_table %>% ungroup()
