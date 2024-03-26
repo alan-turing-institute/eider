@@ -143,7 +143,7 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
     smr04.to_csv("./random_smr04_data.csv", index=False)
 
 def make_ltc_data(start_date, end_date, max_ID):
-    conditions = ['ASTHMA', 'DIABETES', 'PARKINSONS']
+    conditions = ['asthma', 'diabetes', 'parkinsons']
     data_dict = {'id': [], **{c: [] for c in conditions}}
     for i in range(max_ID):
         data_dict['id'].append(i)
