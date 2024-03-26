@@ -1,0 +1,27 @@
+
+{
+  "transformation_type": ["COMBINE_LINEAR"],
+  "output_feature_name": ["my_sum"],
+  "feature_list": {
+    "has_any_101": {
+      "weight": 1,
+      "source_file": ["ae2"],
+      "transformation_type": ["present"],
+      "grouping_column": ["id"],
+      "primary_filter": {
+          "column": ["diagnosis_1"],
+          "type": ["in"],
+          "value": [101]
+        }
+    },
+    "sum_of_all_diagnosis_1": {
+      "weight": 1,
+      "source_file": ["ae2"],
+      "transformation_type": ["sum"],
+      "grouping_column": ["id"],
+      "aggregation_column": ["diagnosis_1"],
+      "absent_default_value": [50],
+      "primary_filter": null
+    }
+  }
+}

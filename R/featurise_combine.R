@@ -56,10 +56,16 @@ featurise_combine <- function(mode,
 
     # Pass in the output feature name from the parent spec
     subfeature_spec <- spec$feature_list[[i]]
+    subfeature_spec$output_feature_name <- subfeature_name # validated later
+    # Read the absent_default_value from the subfeature spec and aggregate it
     this_absent_default_value <- validate_absent_default_value(
       subfeature_spec, context
     )
-    subfeature_spec$output_feature_name <- subfeature_name # validated later
+    # Issue 89: set `this_absent_default_value` to 0 if the subfeature is a
+    # PRESENT
+    if (subfeature_spec$transformation_type %>% tolower() == "present") {
+      this_absent_default_value <- 0
+    }
 
     # Update the missing value
     missing_value <- switch(mode,
