@@ -1,18 +1,11 @@
 ae2_table_path <- "../data/ae2.csv"
 
-# id,time,attendance_category,source_table,diagnosis_1,diagnosis_2,diagnosis_3
-# 1,2016-03-17,1,AE2,101,NA,NA
-# 1,2016-03-18,1,AE2,101,102,NA
-# 1,2016-03-19,1,AE2,101,103,NA
-# 1,2016-03-20,1,AE2,102,101,NA
-# 2,2016-03-21,1,AE2,102,NA,NA
-
-test_that("featurise_lookup", {
+test_that("featurise_first", {
   all_tables <- read_data(list(ae2 = ae2_table_path))
   # This is a meaningless feature, but it is a serviceable test case
   diag_101 <- featurise(
     all_tables,
-    json_to_feature("../spec/test_lookup.json")
+    json_to_feature("../spec/test_first.json")
   )
 
   # Check the result

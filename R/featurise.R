@@ -31,10 +31,11 @@ featurise <- function(all_tables,
   # Check the transformation type and dispatch to the appropriate function
   if (t == "count") {
     feature <- featurise_count(all_tables, spec, context)
-  } else if (t %in% c("sum", "nunique", "mean", "median", "sd")) {
+  } else if (t %in% c(
+    "sum", "nunique", "mean", "median", "sd",
+    "first", "last", "min", "max"
+  )) {
     feature <- featurise_summary(mode = t, all_tables, spec, context)
-  } else if (t == "lookup") {
-    feature <- featurise_lookup(all_tables, spec, context)
   } else if (t == "present") {
     feature <- featurise_present(all_tables, spec, context)
   } else if (t == "time_since") {

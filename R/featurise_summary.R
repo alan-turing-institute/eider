@@ -37,7 +37,10 @@ featurise_summary <- function(mode,
 
   # Check mode and choose appropriate summary function
   mode <- tolower(mode)
-  allowed_modes <- c("sum", "nunique", "mean", "median", "sd")
+  allowed_modes <- c(
+    "sum", "nunique", "mean", "median", "sd",
+    "first", "last", "min", "max"
+  )
   if (!mode %in% allowed_modes) {
     stop_context(
       message = paste0(
@@ -55,14 +58,18 @@ featurise_summary <- function(mode,
     nunique = n_distinct,
     mean = mean,
     median = median,
-    sd = sd
+    sd = sd,
+    first = first,
+    last = last,
+    min = min,
+    max = max
   )
 
   # Validate spec
   source_table <- validate_source_file(spec, all_tables, context)
   source_table <- preprocess_table(source_table, spec, context)
   output_feature_name <- validate_output_feature_name(spec, context)
-  column_to_sum_over <- validate_column_present(
+  aggregation_column <- validate_column_present(
     "aggregation_column", spec, source_table, context
   )
   grouping_column <- validate_column_present(
@@ -80,7 +87,7 @@ featurise_summary <- function(mode,
         rename(id = !!grouping_column) %>%
         group_by(id) %>%
         summarise(
-          !!output_feature_name := summary_function(.data[[column_to_sum_over]])
+          !!output_feature_name := summary_function(.data[[aggregation_column]])
         )
     },
     error = function(e) {
@@ -95,7 +102,6 @@ featurise_summary <- function(mode,
     feature_table,
     context = c(context, "pad_missing_values")
   )
-
 
   list(
     feature_table = feature_table,
