@@ -28,6 +28,21 @@ preprocess_table <- function(input_table, spec, context = NULL) {
       "replace_with_sum", spec$preprocess, input_table, context
     )
 
+    # Check that no column is present in multiple lists
+    all_cols <- c(retain_min, retain_max, replace_with_sum)
+    duplicate_cols <- all_cols[duplicated(all_cols)]
+    if (length(duplicate_cols) > 0) {
+      stop_context(
+        context = context,
+        message = paste0(
+          "The column(s) '",
+          paste(duplicate_cols, collapse = ", "),
+          "' are present in multiple preprocessing steps. ",
+          "Each column should only be present in one list."
+        )
+      )
+    }
+
     input_table <- input_table %>% group_by(across(all_of(on)))
 
     for (col in retain_min) {
