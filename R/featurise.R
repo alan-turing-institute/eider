@@ -46,7 +46,7 @@ featurise <- function(all_tables,
   } else {
     stop_context(
       context = context,
-      message = paste0("Unknown transformation type: ", t),
+      message = paste0("Unknown transformation type: ", t)
     )
   }
 
