@@ -69,23 +69,23 @@ parse_single_filter <- function(filter) {
 #'
 #' @return The same data
 #' @noRd
-parse_nested_filter <- function(nested_filter) {
+parse_nested_filter <- function(filter) {
   debug_context(
     context = "parse_nested_filter",
     message = paste0(
       "Parsing nested filter of type ",
       filter$type,
       " with ",
-      length(nested_filter$subfilters),
+      length(filter$subfilters),
       " subfilters"
     )
   )
 
   op_nested_filter <- list()
-  op_nested_filter$type <- nested_filter$type
+  op_nested_filter$type <- filter$type
   op_nested_filter$subfilters <- list()
-  for (nm in names(nested_filter$subfilters)) {
-    target <- nested_filter$subfilters[[nm]]
+  for (nm in names(filter$subfilters)) {
+    target <- filter$subfilters[[nm]]
     op_nested_filter$subfilters[[nm]] <- parse_single_or_nested(target)
   }
   op_nested_filter
