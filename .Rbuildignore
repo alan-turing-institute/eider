@@ -11,3 +11,6 @@
 ^.pre-commit-config.yaml$
 ^.lintr$
 ^make_example_data$
+^Makefile$
+^CODE_OF_CONDUCT\.md$
+^CONTRIBUTING\.md$
