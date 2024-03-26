@@ -29,7 +29,10 @@ read_one_table <- function(filepath_or_df, name) {
 
 #' Helper function to coerce YYYYMMDD columns in a data frame to dates where
 #' possible, using `lubridate::ymd()`. This function only converts columns
-#' where every value successfully coerces to a date.
+#' where:
+#'  - at least one value is successfully coerced to a date
+#'  - all non-empty values can be coerced to a date (empty values are left as
+#'    NA)
 #'
 #' @param table A data frame
 #' @return A data frame with columns coerced to dates where possible
@@ -37,9 +40,13 @@ read_one_table <- function(filepath_or_df, name) {
 coerce_dates <- function(table) {
   cols <- names(table)
 
+  output_na_and_input_nonempty <- function(output, input) {
+    is.na(output) & !is.na(input) & input != ""
+  }
+
   for (col in cols) {
     maybe_dates <- lubridate::ymd(table[[col]], quiet = TRUE)
-    if (!anyNA(maybe_dates)) {
+    if (!any(output_na_and_input_nonempty(maybe_dates, table[[col]]))) {
       table[[col]] <- maybe_dates
     }
   }
