@@ -11,7 +11,7 @@ articles:
   logging: logging.html
   preprocessing: preprocessing.html
   prescribing: prescribing.html
-last_built: 2024-03-26T20:15Z
+last_built: 2024-03-26T21:38Z
 urls:
   reference: https://alan-turing-institute.github.io/eider/docs/reference
   article: https://alan-turing-institute.github.io/eider/docs/articles
