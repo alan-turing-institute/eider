@@ -18,22 +18,43 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of eider is to ... **TODO**
+**eider** is an R package for extracting machine learning features from tabular data, in particular health records, in a declarative manner.
+
+Features are specified as JSON objects which contain all the necessary information required to perform a given calculation.
+For example, the following calculates the number of total rows per patient `id` in the table labelled `ae2` (details on how to specify this table are in the function documentation).
+
+```json
+{
+  "source_file": "ae2",
+  "transformation_type": "COUNT",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "output_feature_name": "total_ae_attendances"
+}
+```
+
+The output of this is a column named `total_ae_attendances`, containing the number of rows per patient, and with a value of 0 for any patients who do not appear in the `ae2` table.
+This declarative approach provides an alternative to traditional, imperative-style, `dplyr` pipelines which can be more difficult to reason about, especially when a series of features is being extracted and merged together.
+As features are specified without reference to a specific programming language or paradigm, it also encourages code that is concise, easy to read, and maintainable.
+
+`eider` is a collaboration between [The Alan Turing Institute](https://www.turing.ac.uk/), [Public Health Scotland](https://publichealthscotland.scot/), and the Universities of [Edinburgh](https://www.ed.ac.uk) and [Durham](https://www.durham.ac.uk).
+It grew out of a desire to generalise the feature extraction process for health data, specifically the [SPARRA *(Scottish Patients At Risk of Readmission and Admission)* project](https://www.gov.scot/publications/sparra-made-easy/) ([GitHub repo](https://github.com/jamesliley/SPARRAv4)), and to allow similar analyses to be carried out in different contexts.
 
 ## Installation
 
-You can install the development version of eider from [GitHub](https://github.com/) with:
+You can install `eider` from [GitHub](https://github.com/) using:
 
 ``` r
 install.packages("devtools")
 devtools::install_github("alan-turing-institute/eider")
 ```
 
-TODO: write some examples
+We plan to submit `eider` to CRAN in the near future.
 
-```{r example}
-library(eider)
-```
+## Documentation
+
+The package documentation is available [online](https://alan-turing-institute.github.io/eider/).
+In particular, the [package articles](https://alan-turing-institute.github.io/eider/articles/) contain a series of vignettes which provide detailed guidance on the package and its features.
 
 ## Development
 
