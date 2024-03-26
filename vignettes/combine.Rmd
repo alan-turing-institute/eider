@@ -31,12 +31,12 @@ prescribing_data_filepath <- eider_example("random_pis_data.csv")
 
 This is the A&E data. Note that this is purely for illustration purposes, you don't need to call `read.csv` on the data file as `transform` will do that for you.
 ```{r}
-read.csv(ae_data_filepath)
+utils::read.csv(ae_data_filepath)
 ```
 
 and this is the prescription data:
 ```{r}
-read.csv(prescribing_data_filepath)
+utils::read.csv(prescribing_data_filepath)
 ```
 
 ## 2. Read in the specification

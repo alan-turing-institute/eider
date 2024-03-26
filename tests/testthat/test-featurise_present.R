@@ -8,7 +8,7 @@ test_that("featurise_present", {
   )
 
   # Check the result
-  orig_table <- read.csv(ae2_table_path)
+  orig_table <- utils::read.csv(ae2_table_path)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
     group_by(id) %>%

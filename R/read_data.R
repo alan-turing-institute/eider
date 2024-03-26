@@ -14,7 +14,7 @@ read_data <- function(source_names) {
 #' @noRd
 read_one_table <- function(filepath_or_df, name) {
   if (is.character(filepath_or_df)) {
-    df <- read.csv(filepath_or_df, header = TRUE)
+    df <- utils::read.csv(filepath_or_df, header = TRUE)
   } else if (is.data.frame(filepath_or_df)) {
     df <- filepath_or_df
   } else {
@@ -24,7 +24,7 @@ read_one_table <- function(filepath_or_df, name) {
 
   df %>%
     coerce_dates() %>%
-    tibble()
+    tibble::as_tibble()
 }
 
 #' Helper function to coerce YYYYMMDD columns in a data frame to dates where

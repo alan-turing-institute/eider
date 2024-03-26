@@ -26,16 +26,18 @@ filter_or <- function(table, filter_obj, context = NULL) {
   }
 
   # Move row names to a column if present
+  private_sentinel_row_names <- "EIDER_PRIVATE_ROW_NAMES"
   has_row_names <- tibble::has_rownames(table)
   if (has_row_names) {
-    table <- tibble::rownames_to_column(table, "EIDER_PRIVATE_ROW_NAMES")
+    table <- tibble::rownames_to_column(table, private_sentinel_row_names)
   }
 
   # Attach an index column to label the rows. This step gets rid of preexisting
   # row names hence the check above
-  has_indices <- "EIDER_PRIVATE_INDEX" %in% names(table)
+  private_sentinel_index <- "EIDER_PRIVATE_INDEX"
+  has_indices <- private_sentinel_index %in% names(table)
   if (!has_indices) {
-    table <- tibble::rowid_to_column(table, "EIDER_PRIVATE_INDEX")
+    table <- tibble::rowid_to_column(table, private_sentinel_index)
   }
 
   # Pass the input table through each subfilter in turn. To avoid doing more
@@ -43,7 +45,7 @@ filter_or <- function(table, filter_obj, context = NULL) {
   # to the 'passed' table and we don't need to check it against the remaining
   # subfilters.
   n <- length(filter_obj$subfilters)
-  passed <- tibble()
+  passed <- tibble::tibble()
   not_yet_passed <- table
   for (i in seq_along(filter_obj$subfilters)) {
     nm <- names(filter_obj$subfilters)[[i]]
@@ -60,22 +62,22 @@ filter_or <- function(table, filter_obj, context = NULL) {
   # Sort by the index column (to restore the input order) and remove it
   if (!has_indices) {
     passed <- passed %>%
-      arrange(EIDER_PRIVATE_INDEX) %>%
-      select(-EIDER_PRIVATE_INDEX)
+      arrange(.data[[private_sentinel_index]]) %>%
+      select(-all_of(private_sentinel_index))
     not_yet_passed <- not_yet_passed %>%
-      arrange(EIDER_PRIVATE_INDEX) %>%
-      select(-EIDER_PRIVATE_INDEX)
+      arrange(.data[[private_sentinel_index]]) %>%
+      select(-all_of(private_sentinel_index))
   }
 
   # Restore row names if present
   if (has_row_names) {
     passed <- tibble::column_to_rownames(
       passed,
-      "EIDER_PRIVATE_ROW_NAMES"
+      private_sentinel_row_names
     )
     not_yet_passed <- tibble::column_to_rownames(
       not_yet_passed,
-      "EIDER_PRIVATE_ROW_NAMES"
+      private_sentinel_row_names
     )
   }
 

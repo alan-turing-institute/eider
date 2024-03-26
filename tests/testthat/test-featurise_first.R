@@ -9,7 +9,7 @@ test_that("featurise_first", {
   )
 
   # Check the result
-  orig_table <- read.csv(ae2_table_path)
+  orig_table <- utils::read.csv(ae2_table_path)
   diag_101_expected <- orig_table %>%
     group_by(id) %>%
     summarise(first_diagnosis = first(diagnosis_1)) %>%

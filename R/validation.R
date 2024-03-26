@@ -102,12 +102,12 @@ validate_columns_present <- function(field_name, spec, tbl, context) {
       stop_context(
         message = paste0(
           "The entries in '",
-          name,
+          field_name,
           "' must be strings, ",
           "but the value supplied (",
-          value,
+          n,
           ") is of type '",
-          typeof(value),
+          typeof(n),
           "'."
         ),
         context = context

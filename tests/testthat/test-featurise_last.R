@@ -9,7 +9,7 @@ test_that("featurise_last", {
   )
 
   # Check the result
-  orig_table <- read.csv(ae2_table_path)
+  orig_table <- utils::read.csv(ae2_table_path)
   diag_101_expected <- orig_table %>%
     group_by(id) %>%
     summarise(last_diagnosis = last(diagnosis_1)) %>%

@@ -39,7 +39,7 @@ Here we are utilising MINISPARRA's example data which is accessed via `eider_exa
 
 ```{r}
 ae_data_filepath <- eider_example("random_ae_data.csv")
-read.csv(ae_data_filepath)
+utils::read.csv(ae_data_filepath)
 ```
 
 A snippet of the table is shown above.

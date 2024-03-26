@@ -20,7 +20,7 @@ test_that("join_feature_tables (with all_ids specified)", {
   )
 
   # Check the result
-  orig_table <- read.csv(ae2_table_path)
+  orig_table <- utils::read.csv(ae2_table_path)
   ids <- data.frame(id = all_ids)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%

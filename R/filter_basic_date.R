@@ -52,9 +52,10 @@ filter_basic_date <- function(table,
   )
 
   # Add a sentinel column indicating whether the row passed the filter
+  private_sentinel <- "EIDER_PRIVATE_FILTERED"
   table <- table %>%
     mutate(
-      EIDER_PRIVATE_FILTERED =
+      !!private_sentinel :=
         operator(.data[[column_name]], value)
     )
 
@@ -62,10 +63,10 @@ filter_basic_date <- function(table,
   # column
   list(
     passed = table %>%
-      filter(EIDER_PRIVATE_FILTERED) %>%
-      select(-EIDER_PRIVATE_FILTERED),
+      filter(.data[[private_sentinel]]) %>%
+      select(-all_of(private_sentinel)),
     rejected = table %>%
-      filter(!EIDER_PRIVATE_FILTERED) %>%
-      select(-EIDER_PRIVATE_FILTERED)
+      filter(!(.data[[private_sentinel]])) %>%
+      select(-all_of(private_sentinel))
   )
 }

@@ -16,7 +16,7 @@ test_that("join_feature_tables", {
   joined_feature_table <- join_feature_tables(list(diag_101, diag_102))
 
   # Check the result
-  orig_table <- read.csv(ae2_table_path)
+  orig_table <- utils::read.csv(ae2_table_path)
   ids <- data.frame(id = sort(unique(orig_table$id)))
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%

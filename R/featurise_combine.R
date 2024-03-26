@@ -91,7 +91,7 @@ featurise_combine <- function(mode,
   joined_subfeatures <- joined_subfeatures$features
 
   # Then combine the subfeatures
-  feature_table <- tibble(id = joined_subfeatures$id) %>%
+  feature_table <- tibble::tibble(id = joined_subfeatures$id) %>%
     mutate(!!output_feature_name := initial_missing_value)
   for (i in seq_along(subfeatures)) {
     subfeature_name <- names(spec$feature_list)[i]
@@ -111,7 +111,7 @@ featurise_combine <- function(mode,
   }
 
   list(
-    feature_table = tibble(feature_table),
+    feature_table = tibble::as_tibble(feature_table),
     missing_value = missing_value
   )
 }

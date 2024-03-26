@@ -9,14 +9,13 @@ Authors@R: c(
     person("Helen", "Duncan Little", email = "hduncan@turing.ac.uk", role = c("aut"), comment = c(ORCID = "0000-0002-0897-7188")),
     person("Jonathan", "Yong", email = "jyong@turing.ac.uk", role = c("aut"), comment = c(ORCID = "0000-0002-2472-974X"))
     )
-Description: Extract features from tabular data in a declarative fashion
+Description: Extract features from tabular data in a declarative fashion.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Imports: 
     dplyr,
-    glue,
     lubridate,
     stringr,
     magrittr,
@@ -24,7 +23,8 @@ Imports:
     logger,
     purrr,
     fs,
-    tidyr
+    tibble,
+    rlang
 Suggests: 
     knitr,
     rmarkdown,

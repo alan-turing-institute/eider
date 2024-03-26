@@ -32,5 +32,5 @@ pad_missing_values <- function(
 
   missing_table <- data.frame(id = missing_ids, value = missing_value)
   names(missing_table) <- names(id_table)
-  tibble(rbind(id_table, missing_table))
+  tibble::tibble(rbind(id_table, missing_table))
 }

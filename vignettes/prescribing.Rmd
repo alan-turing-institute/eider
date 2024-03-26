@@ -22,7 +22,7 @@ library(eider)
 ## 1. Prescribing data
 ```{r}
 prescribing_data_filepath <- eider_example("random_pis_data.csv")
-read.csv(prescribing_data_filepath)
+utils::read.csv(prescribing_data_filepath)
 ```
 Here we have a random example prescribing data file. From the first few rows we can see that patient with id 19 had 3 items from under `bnf_section` 0106 prescribed on 15th December 2017, had 5 items from `bnf_section` 0103 prescribed on 11th August 2016, and had 1 item from `bnf_section` 0103 on 7th July 2015.
 
