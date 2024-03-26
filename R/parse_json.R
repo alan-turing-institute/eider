@@ -9,33 +9,24 @@ check_for_nested <- function(filter) {
   !is.null(filter$subfilters)
 }
 
+#' Traverse a feature with appropriate logging
+#' TODO: filters for subfeatures of COMBINE feature are not debug-logged
+#'
+#' @param json_data The JSON data for a feature
+#'
+#' @return The same data
 #' @noRd
 parse_feature <- function(json_data) {
-  if (json_data$transformation_type %>% tolower() == "combine") {
-    # Handle COMBINE features separately
-    feature_object <- list()
-    feature_object$transformation_type <- json_data$transformation_type
-    feature_object$output_feature_name <- json_data$output_feature_name
-    feature_object$grouping_column <- json_data$grouping_column
-    feature_object$feature_list <- list()
-    for (i in seq_along(json_data$feature_list)) {
-      feature_name <- names(json_data$feature_list)[[i]]
-      feature <- parse_feature(json_data$feature_list[[i]])
-      feature_object$feature_list[[feature_name]] <- feature
-    }
-    feature_object
-  } else {
-    parse_single_feature(json_data)
-  }
-}
+  debug_context(
+    context = "parse_feature",
+    message = paste0(
+      "Parsing feature of type ",
+      json_data$transformation_type,
+      " with output name ",
+      json_data$output_feature_name
+    )
+  )
 
-#' Parse the header information from the json file to our targed feature object
-#'
-#' @param json_data The parsed json data
-#'
-#' @return A feature object
-#' @noRd
-parse_single_feature <- function(json_data) {
   # Initialise empty list
   feature_object <- list()
 
@@ -46,8 +37,6 @@ parse_single_feature <- function(json_data) {
       feature_object$primary_filter <- parse_single_or_nested(
         json_data$primary_filter
       )
-    } else if (key == "preprocess") {
-      feature_object$preprocess <- preprocess_data(json_data$preprocess)
     } else {
       feature_object[[key]] <- json_data[[key]]
     }
@@ -55,34 +44,42 @@ parse_single_feature <- function(json_data) {
   feature_object
 }
 
-#' Parse a single (un-nested) filter and return a list with data column name
-#' filter type, and the limiting values
+#' Traverse a single filter with appropriate logging
 #'
 #' @param filter A filter as defined in the origin json file
 #'
 #' @return A filter object
 #' @noRd
 parse_single_filter <- function(filter) {
-  context <- "parse_single_filter"
-  trace_context(context)
-
-  parsed_single_filter <- list()
-  parsed_single_filter$column <- filter$column
-  parsed_single_filter$type <- filter$type
-  parsed_single_filter$value <- filter$value
-  return(parsed_single_filter)
+  debug_context(
+    context = "parse_single_filter",
+    message = paste0(
+      "Parsing single filter of type ",
+      filter$type,
+      " for column ",
+      filter$column
+    )
+  )
+  filter
 }
 
-#' Parse a nested filter, returns a list of type (AND/OR) followed by lists
-#' of the singular filters
+#' Traverse a nested filter with appropriate logging
 #'
-#' @param nested_filter A nested filter as defined in the origin json file
+#' @param nested_filter JSON data for a nested filter
 #'
-#' @return A nested filter object
+#' @return The same data
 #' @noRd
 parse_nested_filter <- function(nested_filter) {
-  context <- "parse_nested_filter"
-  trace_context(context)
+  debug_context(
+    context = "parse_nested_filter",
+    message = paste0(
+      "Parsing nested filter of type ",
+      filter$type,
+      " with ",
+      length(nested_filter$subfilters),
+      " subfilters"
+    )
+  )
 
   op_nested_filter <- list()
   op_nested_filter$type <- nested_filter$type
@@ -97,7 +94,7 @@ parse_nested_filter <- function(nested_filter) {
 #' Check if a filter is nested or single and parse accordingly
 #' @noRd
 parse_single_or_nested <- function(filter) {
-  if (check_for_nested(filter)) {
+  if (!is.null(filter$subfilters)) {
     parse_nested_filter(filter)
   } else {
     parse_single_filter(filter)
@@ -113,14 +110,5 @@ parse_single_or_nested <- function(filter) {
 #' @noRd
 json_to_feature <- function(filename) {
   json_data <- jsonlite::fromJSON(filename)
-  parse_single_feature(json_data)
-}
-
-#' @noRd
-preprocess_data <- function(details) {
-  parsed_preprocess <- list()
-  parsed_preprocess$on <- details$on
-  parsed_preprocess$retain_min <- details$retain_min
-  parsed_preprocess$retain_max <- details$retain_max
-  return(parsed_preprocess)
+  parse_feature(json_data)
 }
