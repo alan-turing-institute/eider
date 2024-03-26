@@ -31,14 +31,12 @@ featurise <- function(all_tables,
   # Check the transformation type and dispatch to the appropriate function
   if (t == "count") {
     feature <- featurise_count(all_tables, spec, context)
-  } else if (t == "sum") {
-    feature <- featurise_sum(all_tables, spec, context)
+  } else if (t %in% c("sum", "nunique", "mean", "median", "sd")) {
+    feature <- featurise_summary(mode = t, all_tables, spec, context)
   } else if (t == "lookup") {
     feature <- featurise_lookup(all_tables, spec, context)
   } else if (t == "present") {
     feature <- featurise_present(all_tables, spec, context)
-  } else if (t == "nunique") {
-    feature <- featurise_unique(all_tables, spec, context)
   } else if (t == "time_since") {
     feature <- featurise_time_since(all_tables, spec, context)
   } else if (t %in% c("combine_linear", "combine_min", "combine_max")) {

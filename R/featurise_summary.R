@@ -1,15 +1,17 @@
-#' Groups by ID and computes the number of distinct values in all rows which
-#' pass a given filter.
+#' Groups by ID and computes a summary statistic of the values in all rows
+#' which pass a given filter.
 #'
+#' @param mode The type of transformation to apply. This should be one
+#' of: 'sum', 'nunique', 'mean', 'median', 'sd'.
 #' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
 #'  - source_file:         Filename of the source table to read from.
 #'  - primary_filter:      A filter object to apply to the source table.
-#'  - aggregation_column:  Name of the column which provides the distinct
-#'                         values to be counted.
+#'  - aggregation_column:  Name of the column which provides the values to be
+#'  -                      summarised over.
 #'  - output_feature_name: Name of the output column.
 #'  - grouping_column:     Name of the column to group the source table by
-#'                         before summation.
+#'                         before summarisation
 #'  - absent_default_value:The value to use for patients who have no matching
 #'                         rows in the source table.
 #' @param context A character vector to be used in logging or error messages.
@@ -17,37 +19,57 @@
 #'
 #' @return A list with the following elements:
 #' - feature_table: A data frame with one row per patient ID and one column
-#'                  containing the sum of matching rows in the source table.
-#'                  The column names are 'id' for the ID (this is standardised
-#'                  across all feature tables), and the value of
+#'                  containing a summary statistic of matching rows in the
+#'                  source table. The column names are 'id' for the ID (this is
+#'                  standardised across all feature tables), and the value of
 #'                  output_column_name.
 #' - missing_value: The value to use for patients who have no matching rows in
 #'                  the source table. This value is passed downstream to the
 #'                  function which joins all the feature tables together.
 #' @noRd
-featurise_unique <- function(all_tables,
-                             spec,
-                             context = NULL) {
-  context <- c(context, "featurise_unique")
+featurise_summary <- function(mode,
+                              all_tables,
+                              spec,
+                              context = NULL) {
+  extra_ctx <- paste0("featurise_summary:", mode)
+  context <- c(context, extra_ctx)
   trace_context(context)
+
+  # Check mode and choose appropriate summary function
+  mode <- tolower(mode)
+  allowed_modes <- c("sum", "nunique", "mean", "median", "sd")
+  if (!mode %in% allowed_modes) {
+    stop_context(
+      message = paste0(
+        "Invalid summary mode: must be one of ",
+        paste(
+          sapply(allowed_modes, function(x) paste0("'", x, "'")),
+          collapse = ", "
+        )
+      ),
+      context = context
+    )
+  }
+  summary_function <- switch(mode,
+    sum = sum,
+    nunique = n_distinct,
+    mean = mean,
+    median = median,
+    sd = sd
+  )
 
   # Validate spec
   source_table <- validate_source_file(spec, all_tables, context)
   source_table <- preprocess_table(source_table, spec, context)
   output_feature_name <- validate_output_feature_name(spec, context)
+  column_to_sum_over <- validate_column_present(
+    "aggregation_column", spec, source_table, context
+  )
   grouping_column <- validate_column_present(
     "grouping_column", spec, source_table, context
   )
-  column_to_ndistinct_over <- validate_column_present(
-    "aggregation_column", spec, source_table, context
-  )
   missing_value <- validate_absent_default_value(spec, context)
   filter_obj <- spec$primary_filter
-
-  if (length(grouping_column) > 1) {
-    # TODO: Issue #24
-    stop("Multiple groupings not yet implemented")
-  }
 
   # Calculate feature
   feature_table <- source_table %>% filter_all(filter_obj, context)
@@ -58,7 +80,7 @@ featurise_unique <- function(all_tables,
         rename(id = !!grouping_column) %>%
         group_by(id) %>%
         summarise(
-          !!output_feature_name := n_distinct(.data[[column_to_ndistinct_over]])
+          !!output_feature_name := summary_function(.data[[column_to_sum_over]])
         )
     },
     error = function(e) {
