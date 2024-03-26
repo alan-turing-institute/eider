@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# eider <img src="man/figures/eider_hexagon.png" align="right" height="138" />
+# eider <img src="man/figures/eider_hexagon.png" align="right" height="138" style="max-height: 138px" />
 
 <!-- badges: start -->
 <!-- badges: end -->

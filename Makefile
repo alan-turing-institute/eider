@@ -18,5 +18,8 @@ vig_serv:
 vig_build:
 	ls _pkgdown.yml vignettes/* | entr -s "Rscript -e 'pkgdown::build_articles(preview = FALSE)'"
 
+site:
+	Rscript -e "pkgdown::build_site()"
+
 vig:
 	sh -c "trap 'kill 0' SIGINT; make vig_build & make vig_serv"
