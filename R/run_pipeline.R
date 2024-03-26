@@ -20,15 +20,25 @@ run_pipeline <- function(
   # Read all the tables
   all_tables <- read_data(data_sources)
 
-  # Read in each feature JSON file and calculate each individual feature
+  # Parse JSON filenames into a list of `(feature, context)`, where `context`
+  # is either the filename (for JSON read from file) or "user defined string"
+  # (for JSON provided directly as a string)
+  feature_objs <- lapply(feature_filenames, json_to_feature_wrapper)
+  response_objs <- lapply(response_filenames, json_to_feature_wrapper)
+
+  # Check that no output feature name is duplicated
+  check_duplicate_feature_names(feature_objs, is_feature = TRUE)
+  check_duplicate_feature_names(response_objs, is_feature = FALSE)
+
+  # Calculate the features
   features <- lapply(
-    feature_filenames,
+    feature_objs,
     function(f) {
       featurise_wrapper(f, TRUE, all_tables)
     }
   )
   responses <- lapply(
-    response_filenames,
+    response_objs,
     function(f) {
       featurise_wrapper(f, FALSE, all_tables)
     }
@@ -38,18 +48,53 @@ run_pipeline <- function(
   join_feature_tables(features, all_ids = all_ids)
 }
 
-featurise_wrapper <- function(json_fname, is_feature, all_tables) {
-  json_context <- json_fname
-  file_or_string <- read_spec_type(json_fname)
+json_to_feature_wrapper <- function(json_or_fname) {
+  json_context <- json_or_fname
+  file_or_string <- read_spec_type(json_or_fname)
   if (file_or_string == "string") {
-    json_context <- "User defined string"
+    json_context <- "user defined string"
   } else {
-    json_context <- json_fname
+    json_context <- json_or_fname
   }
+  list(
+    feature = json_to_feature(json_or_fname),
+    context = json_context
+  )
+}
+
+featurise_wrapper <- function(feature_and_context, is_feature, all_tables) {
   featurise(
     all_tables,
-    json_to_feature(json_fname),
+    feature_and_context$feature,
     is_feature = is_feature,
-    context = paste0("featurise: ", json_context)
+    context = paste0("featurise: ", feature_and_context$context)
   )
+}
+
+check_duplicate_feature_names <- function(specs, is_feature) {
+  feature_names <- sapply(
+    specs, function(spec) spec$feature$output_feature_name
+  )
+  feature_contexts <- sapply(
+    specs, function(spec) spec$context
+  )
+  # Get the duplicated feature names
+  duplicates <- unique(feature_names[duplicated(feature_names)])
+
+  if (length(duplicates) > 0) {
+    # Construct error message and quit
+    context_str <- if (is_feature) {
+      "Duplicate feature names found: \n"
+    } else {
+      "Duplicate response names found: \n"
+    }
+    for (d in duplicates) {
+      context_str <- paste0(context_str, "   - '", d, "' found in\n")
+      for (c in feature_contexts[feature_names == d]) {
+        context_str <- paste0(context_str, "     -- ", c, "\n")
+      }
+    }
+
+    stop(context_str)
+  }
 }

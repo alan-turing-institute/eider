@@ -1,19 +1,20 @@
-test_that("transform", {
+test_that("run_pipeline works with all_ids parameter", {
   ae2_table_path <- "../data/ae2.csv"
+  all_ids <- 1:200
 
   all_table_filenames <- c(ae2_table_path)
-
   joined_feature_table <- run_pipeline(
     data_sources = list(ae2 = ae2_table_path),
     feature_filenames = c(
       "../spec/test_join1.json",
       "../spec/test_join2.json"
-    )
+    ),
+    all_ids = all_ids
   )
 
   # Check the result
   orig_table <- read.csv(ae2_table_path)
-  ids <- data.frame(id = sort(unique(orig_table$id)))
+  ids <- data.frame(id = all_ids)
   diag_101_expected <- orig_table %>%
     filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
     group_by(id) %>%
