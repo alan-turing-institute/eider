@@ -3,7 +3,7 @@
   "transformation_type": "COUNT",
   "grouping_column": "id",
   "output_feature_name": "patients_w_diag_1_in_date_range",
-  "primary_filter": {
+  "filter": {
     "type": "AND",
     "subfilters": {
       "subfilter_1": {

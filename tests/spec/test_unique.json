@@ -5,5 +5,5 @@
   "grouping_column": ["id"],
   "output_feature_name": ["diag_1_unique"],
   "absent_default_value": [0],
-  "primary_filter": null
+  "filter": null
 }

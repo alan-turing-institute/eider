@@ -71,7 +71,7 @@ writeLines(readLines("example_attendances_6.json"))
 - `grouping_column` specifies the columns to group by.
 - `absent_default_value` specifies what to do if there is no data for a particular patient ID.
 - `output_feature_name` specifies the name of the column to be created in the output table.
-- `primary_filter` is a filter object which is used to select rows from the input table which match particular conditions.
+- `filter` is a filter object which is used to select rows from the input table which match particular conditions.
 
 Subsequent vignettes will go into more detail about the different types of transformations and the required JSON fields for each of them.
 

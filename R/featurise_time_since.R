@@ -4,7 +4,7 @@
 #' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
 #'  - source_file:         Filename of the source table to read from.
-#'  - primary_filter:      A filter object to apply to the source table.
+#'  - filter:      A filter object to apply to the source table.
 #'  - date_column:         Name of the date column in the source table to
 #'                         calculate the time since.
 #'  - cutoff_date:         The date to calculate the time since from.
@@ -56,7 +56,7 @@ featurise_time_since <- function(all_tables,
   time_units <- spec$time_units
 
   missing_value <- validate_absent_default_value(spec, context)
-  filter_obj <- spec$primary_filter
+  filter_obj <- spec$filter
 
   # Calculate feature
   feature_table <- source_table %>% filter_all(filter_obj, context)

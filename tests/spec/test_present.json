@@ -4,7 +4,7 @@
   "grouping_column": ["id"],
   "output_feature_name": ["any_101_diagnosis"],
   "absent_default_value": [0],
-  "primary_filter": {
+  "filter": {
     "type": ["OR"],
     "subfilters": {
       "subfilter_1": {

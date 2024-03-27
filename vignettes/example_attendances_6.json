@@ -4,7 +4,7 @@
     "grouping_column": "patient_id",
     "absent_default_value": 0,
     "output_feature_name": "total_attendances",
-    "primary_filter": {
+    "filter": {
         "column": "attendance_reason",
         "type": "in",
         "value": [

@@ -3,7 +3,7 @@
   "transformation_type": "COUNT",
   "grouping_column": "id",
   "output_feature_name": "using_or_filter",
-  "primary_filter": {
+  "filter": {
     "type": "AND",
     "subfilters": {
       "subfilter_1": {

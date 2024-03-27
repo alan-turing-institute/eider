@@ -8,7 +8,7 @@
       "source_file": ["ae2"],
       "transformation_type": ["present"],
       "grouping_column": ["id"],
-      "primary_filter": {
+      "filter": {
           "column": ["diagnosis_1"],
           "type": ["in"],
           "value": [101]
@@ -21,7 +21,7 @@
       "grouping_column": ["id"],
       "aggregation_column": ["diagnosis_1"],
       "absent_default_value": [50],
-      "primary_filter": null
+      "filter": null
     }
   }
 }

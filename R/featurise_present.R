@@ -4,7 +4,7 @@
 #' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
 #'  - source_file:         Filename of the source table to read from.
-#'  - primary_filter:      A filter object to apply to the source table.
+#'  - filter:      A filter object to apply to the source table.
 #'  - output_feature_name: Name of the output column.
 #'  - grouping_column:     Name of the column to group by.
 #' @param context A character vector to be used in logging or error messages.
@@ -32,7 +32,7 @@ featurise_present <- function(all_tables,
   grouping_column <- validate_column_present(
     "grouping_column", spec, source_table, context
   )
-  filter_obj <- spec$primary_filter
+  filter_obj <- spec$filter
   missing_value <- 0
 
   # Calculate feature

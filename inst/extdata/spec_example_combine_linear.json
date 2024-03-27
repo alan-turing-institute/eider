@@ -8,7 +8,7 @@
             "grouping_column": "id",
             "transformation_type": "COUNT",
             "absent_default_value": 0,
-            "primary_filter": {
+            "filter": {
                 "column": "attendance_category",
                 "type": "IN",
                 "value": [1]
@@ -20,7 +20,7 @@
             "grouping_column": "id",
             "transformation_type": "COUNT",
             "absent_default_value": 0,
-            "primary_filter": {
+            "filter": {
                 "column": "bnf_section",
                 "type": "IN",
                 "value": [106]

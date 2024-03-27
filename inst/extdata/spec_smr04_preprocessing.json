@@ -9,7 +9,7 @@
     "retain_min": "admission_date",
     "retain_max": "discharge_date"
     },
-  "primary_filter": {
+  "filter": {
     "type": ["AND"],
     "subfilters": {
       "subfilter_1": {

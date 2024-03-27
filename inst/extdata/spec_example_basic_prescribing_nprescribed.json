@@ -5,7 +5,7 @@
     "grouping_column": "id",
     "absent_default_value": 0,
     "output_feature_name": "number_of_prescribed_items_goes_here",
-    "primary_filter" : {
+    "filter" : {
         "type": "AND",
         "subfilters":{
             "subfilter_1": {

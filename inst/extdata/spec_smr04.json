@@ -4,7 +4,7 @@
   "grouping_column": ["id"],
   "absent_default_value": 0,
   "output_feature_name": ["no_preprocessing"],
-  "primary_filter": {
+  "filter": {
     "type": ["AND"],
     "subfilters": {
       "subfilter_1": {

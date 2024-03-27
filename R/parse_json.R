@@ -30,12 +30,12 @@ parse_feature <- function(json_data) {
   # Initialise empty list
   feature_object <- list()
 
-  # Read in all keys, using the special filter parser for the "primary_filter"
+  # Read in all keys, using the special filter parser for the "filter"
   # key
   for (key in names(json_data)) {
-    if (key == "primary_filter") {
-      feature_object$primary_filter <- parse_single_or_nested(
-        json_data$primary_filter
+    if (key == "filter") {
+      feature_object$filter <- parse_single_or_nested(
+        json_data$filter
       )
     } else {
       feature_object[[key]] <- json_data[[key]]

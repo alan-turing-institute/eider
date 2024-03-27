@@ -4,7 +4,7 @@
   "grouping_column": "this_column_doesnt_exist",
   "absent_data_flag": 0,
   "output_feature_name": "user_defined_name",
-  "primary_filter": {
+  "filter": {
     "type": "AND",
     "subfilters": {
       "subfilter_1": {

@@ -8,7 +8,7 @@
   "from_first": [false],
   "cutoff_date": ["2023-03-18"],
   "absent_default_value": [40],
-  "primary_filter": {
+  "filter": {
     "type": ["OR"],
     "subfilters": {
       "subfilter_1": {

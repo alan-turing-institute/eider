@@ -5,7 +5,7 @@
   "grouping_column": ["id"],
   "output_feature_name": ["diag_101_sum"],
   "absent_default_value": [0],
-  "primary_filter": {
+  "filter": {
     "type": ["OR"],
     "subfilters": {
       "subfilter_1": {
