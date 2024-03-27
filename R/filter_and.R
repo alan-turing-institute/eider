@@ -4,7 +4,7 @@
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
 #'               - type: must be 'and' (case-insensitive)
-#'               - subfilters: a list of filter objects
+#'               - subfilter: a list of filter objects
 #' @param context A string to be used in logging or error messages. Defaults to
 #' NULL.
 #'
@@ -46,15 +46,15 @@ filter_and <- function(table,
   # work than necessary, once a row fails any of the subfilters, it is added to
   # the 'failed' table and we don't need to check it against the remaining
   # subfilters.
-  n <- length(filter_obj$subfilters)
+  n <- length(filter_obj$subfilter)
   not_yet_failed <- table
   failed <- tibble::tibble()
-  for (i in seq_along(filter_obj$subfilters)) {
-    nm <- names(filter_obj$subfilters)[[i]]
+  for (i in seq_along(filter_obj$subfilter)) {
+    nm <- names(filter_obj$subfilter)[[i]]
     extra_ctx <- paste0("(", i, "/", n, ": ", nm, ")")
     subfilter_result <- filter_all(
       not_yet_failed,
-      filter_obj$subfilters[[i]],
+      filter_obj$subfilter[[i]],
       c(context, extra_ctx)
     )
     not_yet_failed <- subfilter_result$passed

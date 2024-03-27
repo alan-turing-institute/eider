@@ -1,14 +1,3 @@
-#' Check if a filter is nested or single
-#'
-#' @param filter A filter as defined in the origin json file
-#'
-#' @return TRUE if the filter is nested (as determined by it having the
-#' 'subfilters' key), FALSE if it is not
-#' @noRd
-check_for_nested <- function(filter) {
-  !is.null(filter$subfilters)
-}
-
 #' Traverse a feature with appropriate logging
 #' TODO: filters for subfeatures of COMBINE feature are not debug-logged
 #'
@@ -76,17 +65,17 @@ parse_nested_filter <- function(filter) {
       "Parsing nested filter of type ",
       filter$type,
       " with ",
-      length(filter$subfilters),
+      length(filter$subfilter),
       " subfilters"
     )
   )
 
   op_nested_filter <- list()
   op_nested_filter$type <- filter$type
-  op_nested_filter$subfilters <- list()
-  for (nm in names(filter$subfilters)) {
-    target <- filter$subfilters[[nm]]
-    op_nested_filter$subfilters[[nm]] <- parse_single_or_nested(target)
+  op_nested_filter$subfilter <- list()
+  for (nm in names(filter$subfilter)) {
+    target <- filter$subfilter[[nm]]
+    op_nested_filter$subfilter[[nm]] <- parse_single_or_nested(target)
   }
   op_nested_filter
 }
@@ -94,7 +83,7 @@ parse_nested_filter <- function(filter) {
 #' Check if a filter is nested or single and parse accordingly
 #' @noRd
 parse_single_or_nested <- function(filter) {
-  if (!is.null(filter$subfilters)) {
+  if (!is.null(filter$subfilter)) {
     parse_nested_filter(filter)
   } else {
     parse_single_filter(filter)

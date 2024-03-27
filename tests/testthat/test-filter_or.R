@@ -3,7 +3,7 @@ test_that("filter_or", {
     iris,
     list(
       type = "OR",
-      subfilters = list(
+      subfilter = list(
         list(
           type = "GT",
           value = 5,

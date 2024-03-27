@@ -59,7 +59,7 @@ basic_ae_spec_filepath <- eider_example("spec_basic_ae_data.json")
 writeLines(readLines(basic_ae_spec_filepath))
 ```
 
-The `filter` is AND, and there are two `subfilters`. The first subfilter - `subfilter_1` specifies that the user wants to filter based on the `attendance_category` column of the random A&E-type data, and that the value that they are interested in is 1. That is only return results where the `attendance_category` is 1.
+The `filter` is AND, and there are two `subfilter`s. The first subfilter - `subfilter_1` specifies that the user wants to filter based on the `attendance_category` column of the random A&E-type data, and that the value that they are interested in is 1. That is only return results where the `attendance_category` is 1.
 
 The second subfilter `subfilter_2` filters based on the `diagnosis_1` column and should only return results where `diagnosis_1` is 101.
 
@@ -111,7 +111,7 @@ ae_spec_or_w_date_fp <- eider_example(
 writeLines(readLines(ae_spec_or_w_date_fp))
 ```
 
-Subfilter 2 has now been defined as an OR type, and it contains it's own subfilters, 21 and 22. `subfilter_21` is a filter that `diagnosis_1` column is 101, and `subfilter_22` is a filter that `diagnosis_2` column is 101. So the transformation will count an instance if either `diagnosis_1` OR `diagnosis_2` are 101. Subject to the other filters of the `attendence_type` being 1, and the date being later than 31st December 2015.
+Subfilter 2 has now been defined as an OR type, and it contains its own subfilters, 21 and 22. `subfilter_21` is a filter that `diagnosis_1` column is 101, and `subfilter_22` is a filter that `diagnosis_2` column is 101. So the transformation will count an instance if either `diagnosis_1` OR `diagnosis_2` are 101. Subject to the other filters of the `attendence_type` being 1, and the date being later than 31st December 2015.
 
 ```{r}
 run_pipeline(ae_data_path, ae_spec_or_w_date_fp)
@@ -156,7 +156,7 @@ The specification can also be provided as a string instead of a path to a JSON f
 ```{r}
 json_string <- '{"source_file":["ae2"],"transformation_type":["COUNT"],
 "grouping_column":["id"],"absent_default_value":[0],"output_feature_name"
-:["user_defined_name"],"filter":{"type":["AND"],"subfilters"
+:["user_defined_name"],"filter":{"type":["AND"],"subfilter"
 :{"subfilter_1":{"column":["attendance_category"],"type":["IN"],"value":[1]},
 "subfilter_2":{"column":["diagnosis_1"],"type":["IN"],"value":[101]}}}}'
 ```

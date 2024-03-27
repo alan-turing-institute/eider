@@ -4,7 +4,7 @@
 #' @param table A data frame
 #' @param filter_obj A list containing the following elements:
 #'               - type: must be 'or' (case-insensitive)
-#'               - subfilters: a list of filter objects
+#'               - subfilter: a list of filter objects
 #' @param context A string to be used in logging or error messages. Defaults to
 #' NULL.
 #'
@@ -44,15 +44,15 @@ filter_or <- function(table, filter_obj, context = NULL) {
   # work than necessary, once a row passes any of the subfilters, it is added
   # to the 'passed' table and we don't need to check it against the remaining
   # subfilters.
-  n <- length(filter_obj$subfilters)
+  n <- length(filter_obj$subfilter)
   passed <- tibble::tibble()
   not_yet_passed <- table
-  for (i in seq_along(filter_obj$subfilters)) {
-    nm <- names(filter_obj$subfilters)[[i]]
+  for (i in seq_along(filter_obj$subfilter)) {
+    nm <- names(filter_obj$subfilter)[[i]]
     extra_ctx <- paste0("(", i, "/", n, ": ", nm, ")")
     subfilter_result <- filter_all(
       not_yet_passed,
-      filter_obj$subfilters[[i]],
+      filter_obj$subfilter[[i]],
       c(context, extra_ctx)
     )
     passed <- bind_rows(passed, subfilter_result$passed)

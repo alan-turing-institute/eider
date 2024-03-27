@@ -6,7 +6,7 @@
   "output_feature_name": "user_defined_name",
   "filter": {
     "type": "AND",
-    "subfilters": {
+    "subfilter": {
       "subfilter_1": {
         "column": "at_ten_dance_category",
         "type": "IN",

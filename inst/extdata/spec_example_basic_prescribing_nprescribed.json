@@ -7,7 +7,7 @@
     "output_feature_name": "number_of_prescribed_items_goes_here",
     "filter" : {
         "type": "AND",
-        "subfilters":{
+        "subfilter":{
             "subfilter_1": {
                 "column": "paid_date",
                 "type": "DATE_GT_EQ",

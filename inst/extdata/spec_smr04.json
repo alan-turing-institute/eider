@@ -6,7 +6,7 @@
   "output_feature_name": ["no_preprocessing"],
   "filter": {
     "type": ["AND"],
-    "subfilters": {
+    "subfilter": {
       "subfilter_1": {
         "column": ["episode_within_cis"],
         "type": ["IN"],

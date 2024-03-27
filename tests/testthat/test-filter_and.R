@@ -3,7 +3,7 @@ test_that("filter_and", {
     iris,
     list(
       type = "AND",
-      subfilters = list(
+      subfilter = list(
         list(
           type = "GT",
           value = 5,

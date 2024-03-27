@@ -10,7 +10,7 @@
   "absent_default_value": [40],
   "filter": {
     "type": ["OR"],
-    "subfilters": {
+    "subfilter": {
       "subfilter_1": {
         "column": ["diagnosis_1"],
         "type": ["IN"],
