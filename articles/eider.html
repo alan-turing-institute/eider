@@ -126,7 +126,7 @@
 <span><span class="co">#&gt;     "grouping_column": "patient_id",</span></span>
 <span><span class="co">#&gt;     "absent_default_value": 0,</span></span>
 <span><span class="co">#&gt;     "output_feature_name": "total_attendances",</span></span>
-<span><span class="co">#&gt;     "primary_filter": {</span></span>
+<span><span class="co">#&gt;     "filter": {</span></span>
 <span><span class="co">#&gt;         "column": "attendance_reason",</span></span>
 <span><span class="co">#&gt;         "type": "in",</span></span>
 <span><span class="co">#&gt;         "value": [</span></span>
@@ -146,7 +146,7 @@
 <li>
 <code>output_feature_name</code> specifies the name of the column to be created in the output table.</li>
 <li>
-<code>primary_filter</code> is a filter object which is used to select rows from the input table which match particular conditions.</li>
+<code>filter</code> is a filter object which is used to select rows from the input table which match particular conditions.</li>
 </ul>
 <p>Subsequent vignettes will go into more detail about the different types of transformations and the required JSON fields for each of them.</p>
 </div>
@@ -172,6 +172,11 @@
 <span><span class="co">#&gt; 3  3</span></span></code></pre></div>
 <p>As expected, both patients 1 and 2 have attended for reason 6 twice, and patient 3 has not.</p>
 <p><code><a href="../reference/run_pipeline.html">run_pipeline()</a></code> returns a list of two data frames, called <em>features</em> and <em>responses</em> respectively. These refer to data used for training machine learning models: <em>features</em> are the independent variables (i.e. <code>X</code>), and <em>responses</em> are the dependent variables (i.e. <code>y</code>). For consistency, <code>eider</code> always returns both of these data frames and ensures that both of them have the same list of IDs. Responses may be specified in exactly the same way as features, but using the <code>response_filenames</code> argument instead of <code>feature_filenames</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h2>
+<p>Move on to <a href="features.html">the next vignette</a>, which covers the different types of features that <code>eider</code> lets you define.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
