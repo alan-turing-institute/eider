@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 library(eider)
 ```
 
-As the [introduction vignette](eider.html) shows, writing R code with `eider` simply consists of a call to `run_pipeline()`.
+As the [introductory vignette](eider.html) shows, writing R code with `eider` simply consists of a call to `run_pipeline()`.
 Most of the time spent using this library will be spent defining the features themselves using JSON.
 
 ## Features as JSON
@@ -127,9 +127,18 @@ This feature requires a few more keys:
 **Transformation types:** `"combine_linear"`, `"combine_min"`, `"combine_max"`
 
 Combination features are a way of combining the results of multiple features into a single feature.
-They have a slightly different structure to the rest: thus, they are covered in a [separate vignette](feature_combine.html).
+They have a slightly different structure to the rest: broadly speaking, these transformation types require a `feature_list` key, which is itself an object which contains the features which are to be combined.
+
+Combination features are covered in a [separate vignette](feature_combine.html).
 
 
 ## Preprocessing and filtering
 
-In addition to the keys shown above, (non-combination) features may also contain the `preprocess` and `filter` keys
+While the above may seem like a large number of possible calculations, on their own they offer no way of controlling which parts of the input data are to be considered.
+
+In addition to the keys shown above, (non-combination) features may also contain the `preprocess` and `filter` keys, which perform transformations on the input table before the features are calculated from them.
+Preprocessing refers to the modification of values within a table, whereas filtering does not modify the values, but only allows rows that pass a set of criteria to be considered when calculating the feature.
+
+Preprocessing is performed prior to filtering: thus, if both are specified, filtering is performed on the already-preprocessed values.
+
+Both the `preprocess` and `filter` keys are themselves JSON objects, and are detailed respectively in the [preprocessing](preprocessing.html) and [filtering](filtering.html) vignettes.
