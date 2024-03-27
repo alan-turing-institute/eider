@@ -92,3 +92,7 @@ As expected, both patients 1 and 2 have attended for reason 6 twice, and patient
 These refer to data used for training machine learning models: _features_ are the independent variables (i.e. `X`), and _responses_ are the dependent variables (i.e. `y`).
 For consistency, `eider` always returns both of these data frames and ensures that both of them have the same list of IDs.
 Responses may be specified in exactly the same way as features, but using the `response_filenames` argument instead of `feature_filenames`.
+
+## Next steps
+
+Move on to [the next vignette](features.html), which covers the different types of features that `eider` lets you define.
