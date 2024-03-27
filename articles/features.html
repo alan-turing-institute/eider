@@ -90,7 +90,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">eider</span><span class="op">)</span></span></code></pre></div>
-<p>As the <a href="eider.html">introduction vignette</a> shows, writing R code with <code>eider</code> simply consists of a call to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>. Most of the time spent using this library will be spent defining the features themselves using JSON.</p>
+<p>As the <a href="eider.html">introductory vignette</a> shows, writing R code with <code>eider</code> simply consists of a call to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>. Most of the time spent using this library will be spent defining the features themselves using JSON.</p>
 <div class="section level2">
 <h2 id="features-as-json">Features as JSON<a class="anchor" aria-label="anchor" href="#features-as-json"></a>
 </h2>
@@ -182,13 +182,17 @@
 <h3 id="combination-features">Combination features<a class="anchor" aria-label="anchor" href="#combination-features"></a>
 </h3>
 <p><strong>Transformation types:</strong> <code>"combine_linear"</code>, <code>"combine_min"</code>, <code>"combine_max"</code></p>
-<p>Combination features are a way of combining the results of multiple features into a single feature. They have a slightly different structure to the rest: thus, they are covered in a <a href="feature_combine.html">separate vignette</a>.</p>
+<p>Combination features are a way of combining the results of multiple features into a single feature. They have a slightly different structure to the rest: broadly speaking, these transformation types require a <code>feature_list</code> key, which is itself an object which contains the features which are to be combined.</p>
+<p>Combination features are covered in a <a href="feature_combine.html">separate vignette</a>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="preprocessing-and-filtering">Preprocessing and filtering<a class="anchor" aria-label="anchor" href="#preprocessing-and-filtering"></a>
 </h2>
-<p>In addition to the keys shown above, (non-combination) features may also contain the <code>preprocess</code> and <code>filter</code> keys</p>
+<p>While the above may seem like a large number of possible calculations, on their own they offer no way of controlling which parts of the input data are to be considered.</p>
+<p>In addition to the keys shown above, (non-combination) features may also contain the <code>preprocess</code> and <code>filter</code> keys, which perform transformations on the input table before the features are calculated from them. Preprocessing refers to the modification of values within a table, whereas filtering does not modify the values, but only allows rows that pass a set of criteria to be considered when calculating the feature.</p>
+<p>Preprocessing is performed prior to filtering: thus, if both are specified, filtering is performed on the already-preprocessed values.</p>
+<p>Both the <code>preprocess</code> and <code>filter</code> keys are themselves JSON objects, and are detailed respectively in the <a href="preprocessing.html">preprocessing</a> and <a href="filtering.html">filtering</a> vignettes.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

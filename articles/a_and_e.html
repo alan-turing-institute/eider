@@ -232,7 +232,7 @@
 <span><span class="co">#&gt;   "output_feature_name": "user_defined_name",</span></span>
 <span><span class="co">#&gt;   "filter": {</span></span>
 <span><span class="co">#&gt;     "type": "AND",</span></span>
-<span><span class="co">#&gt;     "subfilters": {</span></span>
+<span><span class="co">#&gt;     "subfilter": {</span></span>
 <span><span class="co">#&gt;       "subfilter_1": {</span></span>
 <span><span class="co">#&gt;         "column": "attendance_category",</span></span>
 <span><span class="co">#&gt;         "type": "IN",</span></span>
@@ -246,7 +246,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
-<p>The <code>filter</code> is AND, and there are two <code>subfilters</code>. The first subfilter - <code>subfilter_1</code> specifies that the user wants to filter based on the <code>attendance_category</code> column of the random A&amp;E-type data, and that the value that they are interested in is 1. That is only return results where the <code>attendance_category</code> is 1.</p>
+<p>The <code>filter</code> is AND, and there are two <code>subfilter</code>s. The first subfilter - <code>subfilter_1</code> specifies that the user wants to filter based on the <code>attendance_category</code> column of the random A&amp;E-type data, and that the value that they are interested in is 1. That is only return results where the <code>attendance_category</code> is 1.</p>
 <p>The second subfilter <code>subfilter_2</code> filters based on the <code>diagnosis_1</code> column and should only return results where <code>diagnosis_1</code> is 101.</p>
 <p>As the primary filter is AND, the resultant dataframe will be a count, grouped by patient <code>id</code> of A&amp;E data with <code>attendance_category</code> = 1 AND <code>diagnosos_1</code> = 101.</p>
 </div>
@@ -321,7 +321,7 @@
 <span><span class="co">#&gt;   "output_feature_name": "patients_w_diag_1_in_date_range",</span></span>
 <span><span class="co">#&gt;   "filter": {</span></span>
 <span><span class="co">#&gt;     "type": "AND",</span></span>
-<span><span class="co">#&gt;     "subfilters": {</span></span>
+<span><span class="co">#&gt;     "subfilter": {</span></span>
 <span><span class="co">#&gt;       "subfilter_1": {</span></span>
 <span><span class="co">#&gt;         "column": "attendance_category",</span></span>
 <span><span class="co">#&gt;         "type": "IN",</span></span>
@@ -407,7 +407,7 @@
 <span><span class="co">#&gt;   "output_feature_name": "using_or_filter",</span></span>
 <span><span class="co">#&gt;   "filter": {</span></span>
 <span><span class="co">#&gt;     "type": "AND",</span></span>
-<span><span class="co">#&gt;     "subfilters": {</span></span>
+<span><span class="co">#&gt;     "subfilter": {</span></span>
 <span><span class="co">#&gt;       "subfilter_1": {</span></span>
 <span><span class="co">#&gt;         "column": "attendance_category",</span></span>
 <span><span class="co">#&gt;         "type": "IN",</span></span>
@@ -436,7 +436,7 @@
 <span><span class="co">#&gt;     }</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
-<p>Subfilter 2 has now been defined as an OR type, and it contains it’s own subfilters, 21 and 22. <code>subfilter_21</code> is a filter that <code>diagnosis_1</code> column is 101, and <code>subfilter_22</code> is a filter that <code>diagnosis_2</code> column is 101. So the transformation will count an instance if either <code>diagnosis_1</code> OR <code>diagnosis_2</code> are 101. Subject to the other filters of the <code>attendence_type</code> being 1, and the date being later than 31st December 2015.</p>
+<p>Subfilter 2 has now been defined as an OR type, and it contains its own subfilters, 21 and 22. <code>subfilter_21</code> is a filter that <code>diagnosis_1</code> column is 101, and <code>subfilter_22</code> is a filter that <code>diagnosis_2</code> column is 101. So the transformation will count an instance if either <code>diagnosis_1</code> OR <code>diagnosis_2</code> are 101. Subject to the other filters of the <code>attendence_type</code> being 1, and the date being later than 31st December 2015.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">ae_spec_or_w_date_fp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $features</span></span>
@@ -506,7 +506,7 @@
 <span><span class="co">#&gt;   "output_feature_name": "user_defined_name",</span></span>
 <span><span class="co">#&gt;   "filter": {</span></span>
 <span><span class="co">#&gt;     "type": "AND",</span></span>
-<span><span class="co">#&gt;     "subfilters": {</span></span>
+<span><span class="co">#&gt;     "subfilter": {</span></span>
 <span><span class="co">#&gt;       "subfilter_1": {</span></span>
 <span><span class="co">#&gt;         "column": "attendance_category",</span></span>
 <span><span class="co">#&gt;         "type": "IN",</span></span>
@@ -571,21 +571,21 @@
 <p>Check the log:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "TRACE [2024-03-27 15:35:58] context: read_spec_type"                                                                                                                                                                                                   </span></span>
-<span><span class="co">#&gt;  [2] "DEBUG [2024-03-27 15:35:58] context: read_spec_type: Valid filepath found: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json"                                                                                             </span></span>
-<span><span class="co">#&gt;  [3] "DEBUG [2024-03-27 15:35:58] context: parse_feature: Parsing feature of type COUNT with output name user_defined_name"                                                                                                                                  </span></span>
-<span><span class="co">#&gt;  [4] "DEBUG [2024-03-27 15:35:58] context: parse_nested_filter: Parsing nested filter of type AND with 2 subfilters"                                                                                                                                         </span></span>
-<span><span class="co">#&gt;  [5] "DEBUG [2024-03-27 15:35:58] context: parse_single_filter: Parsing single filter of type IN for column attendance_category"                                                                                                                             </span></span>
-<span><span class="co">#&gt;  [6] "DEBUG [2024-03-27 15:35:58] context: parse_single_filter: Parsing single filter of type IN for column diagnosis_1"                                                                                                                                     </span></span>
-<span><span class="co">#&gt;  [7] "TRACE [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json"                                                                                                                        </span></span>
-<span><span class="co">#&gt;  [8] "TRACE [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                                                                      </span></span>
-<span><span class="co">#&gt;  [9] "DEBUG [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
-<span><span class="co">#&gt; [10] "TRACE [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
-<span><span class="co">#&gt; [11] "TRACE [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [12] "TRACE [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [13] "DEBUG [2024-03-27 15:35:58] context: featurise: /tmp/RtmpeVllvN/temp_libpath170a6c508e92/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
-<span><span class="co">#&gt; [14] "TRACE [2024-03-27 15:35:58] context: join_feature_tables"                                                                                                                                                                                              </span></span>
-<span><span class="co">#&gt; [15] "DEBUG [2024-03-27 15:35:58] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-27 16:56:46] context: read_spec_type"                                                                                                                                                                                                 </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-27 16:56:46] context: read_spec_type: Valid filepath found: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json"                                                                                             </span></span>
+<span><span class="co">#&gt;  [3] "DEBUG [2024-03-27 16:56:46] context: parse_feature: Parsing feature of type COUNT with output name user_defined_name"                                                                                                                                </span></span>
+<span><span class="co">#&gt;  [4] "DEBUG [2024-03-27 16:56:46] context: parse_nested_filter: Parsing nested filter of type AND with 2 subfilters"                                                                                                                                       </span></span>
+<span><span class="co">#&gt;  [5] "DEBUG [2024-03-27 16:56:46] context: parse_single_filter: Parsing single filter of type IN for column attendance_category"                                                                                                                           </span></span>
+<span><span class="co">#&gt;  [6] "DEBUG [2024-03-27 16:56:46] context: parse_single_filter: Parsing single filter of type IN for column diagnosis_1"                                                                                                                                   </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json"                                                                                                                        </span></span>
+<span><span class="co">#&gt;  [8] "TRACE [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json &gt; featurise_count"                                                                                                      </span></span>
+<span><span class="co">#&gt;  [9] "DEBUG [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [12] "TRACE [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [13] "DEBUG [2024-03-27 16:56:46] context: featurise: /tmp/RtmpKf91Hs/temp_libpath16f874903b/eider/extdata/spec_basic_ae_data.json &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
+<span><span class="co">#&gt; [14] "TRACE [2024-03-27 16:56:46] context: join_feature_tables"                                                                                                                                                                                            </span></span>
+<span><span class="co">#&gt; [15] "DEBUG [2024-03-27 16:56:46] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
 <p>Lines 1-2 report checks on the specification, Line 4 is where the primary filter is parsed, It has two subfilters so it is identified as a nested filter. The two subfilters (which themselves do not contain any subfilters) are then parsed, as reported on lines 5 and 6.</p>
 <p>Lines 7 -11 give the context of what is being processed for debug purposes including the path to the corresponding specification files (which in this case are in the examples folder of this package).</p>
 </div>
@@ -596,7 +596,7 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">json_string</span> <span class="op">&lt;-</span> <span class="st">'{"source_file":["ae2"],"transformation_type":["COUNT"],</span></span>
 <span><span class="st">"grouping_column":["id"],"absent_default_value":[0],"output_feature_name"</span></span>
-<span><span class="st">:["user_defined_name"],"filter":{"type":["AND"],"subfilters"</span></span>
+<span><span class="st">:["user_defined_name"],"filter":{"type":["AND"],"subfilter"</span></span>
 <span><span class="st">:{"subfilter_1":{"column":["attendance_category"],"type":["IN"],"value":[1]},</span></span>
 <span><span class="st">"subfilter_2":{"column":["diagnosis_1"],"type":["IN"],"value":[101]}}}}'</span></span></code></pre></div>
 <p>Apply the transformation</p>
@@ -653,21 +653,21 @@
 <span><span class="co">#&gt; 20 19</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "TRACE [2024-03-27 15:35:58] context: read_spec_type"                                                                                                                                        </span></span>
-<span><span class="co">#&gt;  [2] "DEBUG [2024-03-27 15:35:58] context: read_spec_type: Specified path is too long for a file, assuming a json string"                                                                         </span></span>
-<span><span class="co">#&gt;  [3] "DEBUG [2024-03-27 15:35:58] context: parse_feature: Parsing feature of type COUNT with output name user_defined_name"                                                                       </span></span>
-<span><span class="co">#&gt;  [4] "DEBUG [2024-03-27 15:35:58] context: parse_nested_filter: Parsing nested filter of type AND with 2 subfilters"                                                                              </span></span>
-<span><span class="co">#&gt;  [5] "DEBUG [2024-03-27 15:35:58] context: parse_single_filter: Parsing single filter of type IN for column attendance_category"                                                                  </span></span>
-<span><span class="co">#&gt;  [6] "DEBUG [2024-03-27 15:35:58] context: parse_single_filter: Parsing single filter of type IN for column diagnosis_1"                                                                          </span></span>
-<span><span class="co">#&gt;  [7] "TRACE [2024-03-27 15:35:58] context: featurise: user defined string"                                                                                                                        </span></span>
-<span><span class="co">#&gt;  [8] "TRACE [2024-03-27 15:35:58] context: featurise: user defined string &gt; featurise_count"                                                                                                      </span></span>
-<span><span class="co">#&gt;  [9] "DEBUG [2024-03-27 15:35:58] context: featurise: user defined string &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
-<span><span class="co">#&gt; [10] "TRACE [2024-03-27 15:35:58] context: featurise: user defined string &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
-<span><span class="co">#&gt; [11] "TRACE [2024-03-27 15:35:58] context: featurise: user defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [12] "TRACE [2024-03-27 15:35:58] context: featurise: user defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
-<span><span class="co">#&gt; [13] "DEBUG [2024-03-27 15:35:58] context: featurise: user defined string &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
-<span><span class="co">#&gt; [14] "TRACE [2024-03-27 15:35:58] context: join_feature_tables"                                                                                                                                   </span></span>
-<span><span class="co">#&gt; [15] "DEBUG [2024-03-27 15:35:58] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "TRACE [2024-03-27 16:56:46] context: read_spec_type"                                                                                                                                        </span></span>
+<span><span class="co">#&gt;  [2] "DEBUG [2024-03-27 16:56:46] context: read_spec_type: Specified path is too long for a file, assuming a json string"                                                                         </span></span>
+<span><span class="co">#&gt;  [3] "DEBUG [2024-03-27 16:56:47] context: parse_feature: Parsing feature of type COUNT with output name user_defined_name"                                                                       </span></span>
+<span><span class="co">#&gt;  [4] "DEBUG [2024-03-27 16:56:47] context: parse_nested_filter: Parsing nested filter of type AND with 2 subfilters"                                                                              </span></span>
+<span><span class="co">#&gt;  [5] "DEBUG [2024-03-27 16:56:47] context: parse_single_filter: Parsing single filter of type IN for column attendance_category"                                                                  </span></span>
+<span><span class="co">#&gt;  [6] "DEBUG [2024-03-27 16:56:47] context: parse_single_filter: Parsing single filter of type IN for column diagnosis_1"                                                                          </span></span>
+<span><span class="co">#&gt;  [7] "TRACE [2024-03-27 16:56:47] context: featurise: user defined string"                                                                                                                        </span></span>
+<span><span class="co">#&gt;  [8] "TRACE [2024-03-27 16:56:47] context: featurise: user defined string &gt; featurise_count"                                                                                                      </span></span>
+<span><span class="co">#&gt;  [9] "DEBUG [2024-03-27 16:56:47] context: featurise: user defined string &gt; featurise_count &gt; preprocess_table: No preprocessing specified for this feature"                                      </span></span>
+<span><span class="co">#&gt; [10] "TRACE [2024-03-27 16:56:47] context: featurise: user defined string &gt; featurise_count &gt; filter_and"                                                                                         </span></span>
+<span><span class="co">#&gt; [11] "TRACE [2024-03-27 16:56:47] context: featurise: user defined string &gt; featurise_count &gt; filter_and &gt; (1/2: subfilter_1) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [12] "TRACE [2024-03-27 16:56:47] context: featurise: user defined string &gt; featurise_count &gt; filter_and &gt; (2/2: subfilter_2) &gt; filter_basic"                                                     </span></span>
+<span><span class="co">#&gt; [13] "DEBUG [2024-03-27 16:56:47] context: featurise: user defined string &gt; featurise_count &gt; pad_missing_values: Adding absent_default_value: 0 to any IDs not present in the calculated feature"</span></span>
+<span><span class="co">#&gt; [14] "TRACE [2024-03-27 16:56:47] context: join_feature_tables"                                                                                                                                   </span></span>
+<span><span class="co">#&gt; [15] "DEBUG [2024-03-27 16:56:47] context: join_feature_tables: List of IDs was not explicitly supplied. Taking the union of all IDs from feature tables."</span></span></code></pre></div>
 <p>Here the log identifies that a user-defined string is used instead of a file and processes as before</p>
 </div>
 <div class="section level3">
