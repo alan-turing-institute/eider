@@ -37,8 +37,8 @@ articles:
     contents:
       - logging
 
-  - title: Examples
-    navbar: Examples
+  - title: Gallery
+    navbar: Gallery
     contents:
       - a_and_e
       - combine
