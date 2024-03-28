@@ -1,7 +1,7 @@
 {
   "transformation_type": ["COMBINE_MAX"],
   "output_feature_name": ["my_max"],
-  "feature_list": {
+  "subfeature": {
     "count_of_101s_in_diagnosis_2": {
       "source_file": ["ae2"],
       "transformation_type": ["count"],

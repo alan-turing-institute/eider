@@ -7,7 +7,7 @@
 #' @param spec A list containing the following elements:
 #'  - output_feature_name: Name of the output column.
 #'  - grouping_column:     Name of the column to group by.
-#'  - feature_list:        List of feature specs to combine.
+#'  - subfeature:        List of feature specs to combine.
 #' @param context A character vector to be used in logging or error messages.
 #' Defaults to NULL.
 #'
@@ -49,13 +49,13 @@ featurise_combine <- function(mode,
   missing_value <- initial_missing_value
 
   # Loop over subfeatures
-  n <- length(spec$feature_list)
+  n <- length(spec$subfeature)
   subfeatures <- list()
-  for (i in seq_along(spec$feature_list)) {
-    subfeature_name <- names(spec$feature_list)[i]
+  for (i in seq_along(spec$subfeature)) {
+    subfeature_name <- names(spec$subfeature)[i]
 
     # Pass in the output feature name from the parent spec
-    subfeature_spec <- spec$feature_list[[i]]
+    subfeature_spec <- spec$subfeature[[i]]
     subfeature_spec$output_feature_name <- subfeature_name # validated later
     # Read the absent_default_value from the subfeature spec and aggregate it
     this_absent_default_value <- validate_absent_default_value(
@@ -94,8 +94,8 @@ featurise_combine <- function(mode,
   feature_table <- tibble::tibble(id = joined_subfeatures$id) %>%
     mutate(!!output_feature_name := initial_missing_value)
   for (i in seq_along(subfeatures)) {
-    subfeature_name <- names(spec$feature_list)[i]
-    weight <- spec$feature_list[[i]]$weight
+    subfeature_name <- names(spec$subfeature)[i]
+    weight <- spec$subfeature[[i]]$weight
     feature_table[[output_feature_name]] <- switch(mode,
       combine_linear = feature_table[[output_feature_name]] +
         (weight * joined_subfeatures[[subfeature_name]]),

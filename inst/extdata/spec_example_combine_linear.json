@@ -1,7 +1,7 @@
 {
     "transformation_type": "COMBINE_LINEAR",
     "output_feature_name": "sum_of_feature_1_and_feature_2",
-    "feature_list": {
+    "subfeature": {
         "feature_1": {
             "weight": 1,
             "source_file": "ae2",

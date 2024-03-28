@@ -123,7 +123,7 @@ This feature requires a few more keys:
 **Transformation types:** `"combine_linear"`, `"combine_min"`, `"combine_max"`
 
 Combination features are a way of combining the results of multiple features into a single feature.
-They have a slightly different structure to the rest: broadly speaking, these transformation types require a `feature_list` key, which is itself an object which contains the features which are to be combined.
+They have a slightly different structure to the rest: broadly speaking, these transformation types require a `subfeature` key, which is itself an object which contains the features which are to be combined.
 
 Combination features are covered in a [separate vignette](feature_combine.html).
 
