@@ -14,11 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(eider)
-library(magrittr)
-```
-
 Filtering relies on a `filter` key in the feature JSON, for which the corresponding value is an object:
 
 ```json
@@ -154,6 +149,77 @@ Again, `age_filter` and `height_filter` are just names for logging purposes, and
 Finally, note that the subfilters need not _necessarily_ be basic filters, though: they can be compound filters themselves.
 So it is possible to nest filters as deeply as you like to accomplish the desired result.
 
-## An example
+## Examples
 
-TODO
+```{r setup}
+library(eider)
+```
+
+Consider the following input table with five rows:
+
+```{r}
+input_table <- data.frame(
+  id = c(1, 1, 1, 2, 3),
+  date = as.Date(c(
+    "2024-01-01", "2024-01-02", "2024-01-03",
+    "2023-01-01", "2023-01-01"
+  )),
+  diagnosis = c("A", "B", "C", "B", "C")
+)
+input_table
+```
+
+and suppose we would like to count the number of times each person has had a diagnosis of "B".
+This is a `transformation_type` of `"count"`; but if we do not perform any filtering, `"count"` will simply return the number of times each person appears in this dataframe.
+
+The following JSON is provided as [`json_examples/filter1.json`](https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/filter1.json):
+
+```{r comment='', echo=FALSE}
+writeLines(readLines("json_examples/filter1.json"))
+```
+
+Passing this into `run_pipeline()` will give us the following result:
+
+```{r}
+results <- run_pipeline(
+  data_sources = list(input_table = input_table),
+  feature_filenames = "json_examples/filter1.json"
+)
+
+results$features
+```
+
+Instead of this, if we specify a filter for the `diagnosis` column (in [`json_examples/filter2.json`](https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/filter2.json)), we can achieve the desired result:
+
+```{r comment='', echo=FALSE}
+writeLines(readLines("json_examples/filter2.json"))
+```
+
+```{r}
+results <- run_pipeline(
+  data_sources = list(input_table = input_table),
+  feature_filenames = "json_examples/filter2.json"
+)
+
+results$features
+```
+
+Note how patient 3 has a count of 0, because they have never been diagnosed with "B".
+This is specified by the `absent_default_value` key in the JSON.
+
+If we would like to find diagnoses of "B" only in 2024, then we can add a date filter to the mix, and combine it with the diagnosis filter with an AND filter ([`json_examples/filter3.json`](https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/filter3.json)):
+
+```{r comment='', echo=FALSE}
+writeLines(readLines("json_examples/filter3.json"))
+```
+
+```{r}
+results <- run_pipeline(
+  data_sources = list(input_table = input_table),
+  feature_filenames = "json_examples/filter3.json"
+)
+
+results$features
+```
+
+Patient 2's diagnosis has been excluded this time because the corresponding entry came in 2023.

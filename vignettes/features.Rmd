@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(eider)
-```
-
 As the [introductory vignette](eider.html) shows, writing R code with `eider` simply consists of a call to `run_pipeline()`.
 Most of the time spent using this library will be spent defining the features themselves using JSON.
 

@@ -61,8 +61,8 @@ This allows the user to, for example, perform preprocessing on a portion of thei
 Suppose we want to extract a feature corresponding to the total number of times a patient attended for reason 6.
 `eider` requires that the feature is specified as a JSON file, which looks like this:
 
-```{r}
-writeLines(readLines("example_attendances_6.json"))
+```{r comment='', echo=FALSE}
+writeLines(readLines("json_examples/eider.json"))
 ```
 
 - `transformation_type` tells you what kind of overall operation is being performed.
@@ -77,12 +77,12 @@ Subsequent vignettes will go into more detail about the different types of trans
 
 ## Performing the transformation
 
-To obtain the desired feature, we can simply do:
+To obtain the desired feature, we can place the JSON above in a file (here [`json_examples/eider.json`](https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/eider.json)) and simply do:
 
 ```{r}
 run_pipeline(
   data_sources = data_sources,
-  feature_filenames = "example_attendances_6.json"
+  feature_filenames = "json_examples/eider.json"
 )
 ```
 

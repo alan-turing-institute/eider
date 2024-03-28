@@ -24,17 +24,13 @@ articles:
     contents:
       - eider
 
-  - title: Feature types
-    navbar: Feature types
+  - title: Specifying features in JSON
+    navbar: Specifying features in JSON
     contents:
       - features
-      - feature_count
-
-  - title: Subfields
-    navbar: Subfields
-    contents:
-      - preprocessing
       - filtering
+      - preprocessing
+      - feature_count
 
   - title: Logging
     navbar: Logging
