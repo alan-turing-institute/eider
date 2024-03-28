@@ -46,13 +46,11 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Feature types</h6>
+    <h6 class="dropdown-header" data-toc-skip>Specifying features in JSON</h6>
     <a class="dropdown-item" href="../articles/features.html">Features: An overview</a>
-    <a class="dropdown-item" href="../articles/feature_count.html">Features: Counting rows</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Subfields</h6>
-    <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
     <a class="dropdown-item" href="../articles/filtering.html">Filtering</a>
+    <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
+    <a class="dropdown-item" href="../articles/feature_count.html">Features: Counting rows</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Logging</h6>
     <a class="dropdown-item" href="../articles/logging.html">Logging Example</a>
@@ -88,23 +86,21 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">eider</span><span class="op">)</span></span></code></pre></div>
 <p>As the <a href="eider.html">introductory vignette</a> shows, writing R code with <code>eider</code> simply consists of a call to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>. Most of the time spent using this library will be spent defining the features themselves using JSON.</p>
 <div class="section level2">
 <h2 id="features-as-json">Features as JSON<a class="anchor" aria-label="anchor" href="#features-as-json"></a>
 </h2>
 <p>Features are JSON <em>objects</em>, which are an association of <em>keys</em> and <em>values</em> tied together within curly braces. Keys are always strings, and values can be strings, numbers, booleans, arrays, or objects themselves, as shown in the example object below. Conceptually, JSON objects are similar to R lists.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  <span class="dt">"key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="dt">"key_2"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  <span class="dt">"key_3"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>  <span class="dt">"key_4"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>  <span class="dt">"key_5"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>    <span class="dt">"nested_key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>    <span class="dt">"nested_key_2"</span><span class="fu">:</span> <span class="dv">1</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a>  <span class="fu">}</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="dt">"key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="dt">"key_2"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="dt">"key_3"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="dt">"key_4"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="dt">"key_5"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="dt">"nested_key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    <span class="dt">"nested_key_2"</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>  <span class="fu">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
 <p>To be correctly parsed by <code>eider</code>, each feature must contain a specific set of keys. The keys that are shared across all features are:</p>
 <ul>
 <li>

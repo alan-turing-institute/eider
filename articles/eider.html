@@ -46,13 +46,11 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Feature types</h6>
+    <h6 class="dropdown-header" data-toc-skip>Specifying features in JSON</h6>
     <a class="dropdown-item" href="../articles/features.html">Features: An overview</a>
-    <a class="dropdown-item" href="../articles/feature_count.html">Features: Counting rows</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Subfields</h6>
-    <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
     <a class="dropdown-item" href="../articles/filtering.html">Filtering</a>
+    <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
+    <a class="dropdown-item" href="../articles/feature_count.html">Features: Counting rows</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Logging</h6>
     <a class="dropdown-item" href="../articles/logging.html">Logging Example</a>
@@ -118,22 +116,18 @@
 <h2 id="feature-specification">Feature specification<a class="anchor" aria-label="anchor" href="#feature-specification"></a>
 </h2>
 <p>Suppose we want to extract a feature corresponding to the total number of times a patient attended for reason 6. <code>eider</code> requires that the feature is specified as a JSON file, which looks like this:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="st">"example_attendances_6.json"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;     "transformation_type": "count",</span></span>
-<span><span class="co">#&gt;     "source_file": "attendances",</span></span>
-<span><span class="co">#&gt;     "grouping_column": "patient_id",</span></span>
-<span><span class="co">#&gt;     "absent_default_value": 0,</span></span>
-<span><span class="co">#&gt;     "output_feature_name": "total_attendances",</span></span>
-<span><span class="co">#&gt;     "filter": {</span></span>
-<span><span class="co">#&gt;         "column": "attendance_reason",</span></span>
-<span><span class="co">#&gt;         "type": "in",</span></span>
-<span><span class="co">#&gt;         "value": [</span></span>
-<span><span class="co">#&gt;             6</span></span>
-<span><span class="co">#&gt;         ]</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt; }</span></span></code></pre></div>
+<pre><code>{
+    "transformation_type": "count",
+    "source_file": "attendances",
+    "grouping_column": "patient_id",
+    "absent_default_value": 0,
+    "output_feature_name": "total_attendances",
+    "filter": {
+        "column": "attendance_reason",
+        "type": "in",
+        "value": [6]
+    }
+}</code></pre>
 <ul>
 <li>
 <code>transformation_type</code> tells you what kind of overall operation is being performed. This determines which other fields are required in the JSON.</li>
@@ -153,11 +147,11 @@
 <div class="section level2">
 <h2 id="performing-the-transformation">Performing the transformation<a class="anchor" aria-label="anchor" href="#performing-the-transformation"></a>
 </h2>
-<p>To obtain the desired feature, we can simply do:</p>
+<p>To obtain the desired feature, we can place the JSON above in a file (here <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/eider.json" class="external-link"><code>json_examples/eider.json</code></a>) and simply do:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="va">data_sources</span>,</span>
-<span>  feature_filenames <span class="op">=</span> <span class="st">"example_attendances_6.json"</span></span>
+<span>  feature_filenames <span class="op">=</span> <span class="st">"json_examples/eider.json"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; $features</span></span>
 <span><span class="co">#&gt;   id total_attendances</span></span>
