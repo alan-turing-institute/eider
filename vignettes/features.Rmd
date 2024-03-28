@@ -1,8 +1,8 @@
 ---
-title: "Features: An overview"
+title: "An overview of features"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Features: An overview}
+  %\VignetteIndexEntry{An overview of features}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

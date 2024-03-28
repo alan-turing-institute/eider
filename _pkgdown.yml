@@ -24,13 +24,13 @@ articles:
     contents:
       - eider
 
-  - title: Specifying features in JSON
-    navbar: Specifying features in JSON
+  - title: Features as JSON
+    navbar: Features as JSON
     contents:
       - features
       - filtering
       - preprocessing
-      - feature_count
+      - combination
 
   - title: Logging
     navbar: Logging
