@@ -92,71 +92,82 @@
 <p>Inside each feature JSON, an optional <code>preprocess</code> object can be included, which causes the input table to be modified in a particular way before the feature is calculated.</p>
 <p>This is primarily useful for data where each row represents some subdivision of a larger entity, and the user wants to calculate features based on the information from those larger entity. In particular, this is useful for <em>episodic data</em>, where each row represents an <em>episode</em> within a continuous hospital <em>stay</em>.</p>
 <div class="section level2">
-<h2 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
-<p>For example, consider the following dataframe. The loading of data here is only shown for illustrative purposes: when using <code>eider</code> you do not need to do any of this as it is all handled internally.</p>
+<p>We begin by making the case for why preprocessing can be required for certain features.</p>
+<p>Consider the following data frame. (This is a heavily simplified version of the example <a href="https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/smr04-summary-of-rules/?Search=S&amp;ID=999&amp;Title=SMR04%20-%20Summary%20of%20Rules" class="external-link">SMR04</a> data bundled with the package, which you can obtain using <code>eider_example('random_smr04_data.csv')</code>.)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">smr04_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_smr04_data.csv"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">input_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  admission_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"2015-01-01"</span>, <span class="st">"2016-01-01"</span>, <span class="st">"2016-01-04"</span>, <span class="st">"2017-01-01"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span>,</span>
+<span>  discharge_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"2015-01-05"</span>, <span class="st">"2016-01-04"</span>, <span class="st">"2016-01-08"</span>, <span class="st">"2017-01-08"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span>,</span>
+<span>  cis_marker <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  episode_within_cis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  diagnosis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"B"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">initial_table</span> <span class="op">&lt;-</span> <span class="va">smr04_data_filepath</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    admission_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="va">admission_date</span><span class="op">)</span>,</span>
-<span>    discharge_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="va">discharge_date</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="va">input_table</span></span>
+<span><span class="co">#&gt;   id admission_date discharge_date cis_marker episode_within_cis diagnosis</span></span>
+<span><span class="co">#&gt; 1  1     2015-01-01     2015-01-05          1                  1         A</span></span>
+<span><span class="co">#&gt; 2  1     2016-01-01     2016-01-04          2                  1         B</span></span>
+<span><span class="co">#&gt; 3  1     2016-01-04     2016-01-08          2                  2         C</span></span>
+<span><span class="co">#&gt; 4  1     2017-01-01     2017-01-08          3                  1         B</span></span></code></pre></div>
+<p>Here, each row is an episode; multiple episodes make up a <em>continuous inpatient stay</em> (hence the abbreviation “cis”). The <code>cis_marker</code> field is used to label stays, and can thus be used to identify episodes belonging to the same stay. In this case, the <code>episode_within_cis</code> tells us the order of the episodes within a stay; such information is not always present, though.</p>
+<p>In this table snippet, there is only one patient: they have had 3 distinct stays; the second of these comprises 2 episodes.</p>
+<p>Such information can be tricky to perform filtering on, because the <code>admission_date</code> and <code>discharge_date</code> pertain to each episode, but we are often interested in stay-level data: for example, when the patient was first admitted to hospital.</p>
+<p>Consider the following question: <em>how many stays has a patient had since 5 January 2016 in which they had a diagnosis of “B”?</em> For the patient in this table, the answer is 2: both the 2016 and 2017 stays had a diagnosis of “B”, and both <em>stays</em> ended after 5 January 2016.</p>
+<p>If we were to naively try to perform this calculation without accounting for the dates, we could write something like <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing1.json" class="external-link"><code>json_examples/preprocessing1.json</code></a>:</p>
+<pre><code>{
+    "output_feature_name": "naive",
+    "transformation_type": "nunique",
+    "source_file": "input_table",
+    "aggregation_column": "cis_marker",
+    "grouping_column": "id",
+    "absent_default_value": 0,
+    "filter": {
+        "type": "and",
+        "subfilter": {
+            "date_filter": {
+                "column": "discharge_date",
+                "type": "date_gt_eq",
+                "value": "2016-01-05"
+            },
+            "diagnosis_filter": {
+                "column": "diagnosis",
+                "type": "in",
+                "value": ["B"]
+            }
+        }
+    }
+}</code></pre>
+<p>Running this would give:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
+<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>input_table <span class="op">=</span> <span class="va">input_table</span><span class="op">)</span>,</span>
+<span>  feature_filenames <span class="op">=</span> <span class="st">"json_examples/preprocessing1.json"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">initial_table</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 190 × 7</span></span></span>
-<span><span class="co">#&gt;       id admission_date discharge_date cis_marker episode_within_cis</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    16 2015-12-04     2015-12-07             89                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>    10 2015-11-03     2015-11-04             19                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>    10 2015-11-04     2015-11-04             19                  2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>    15 2016-02-08     2016-02-09             72                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>    15 2016-02-09     2016-02-10             72                  2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>    17 2017-07-30     2017-08-01             80                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>    17 2017-08-01     2017-08-02             80                  2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>    14 2017-01-08     2017-01-08             78                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>    14 2017-01-08     2017-01-09             78                  2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    14 2017-01-09     2017-01-11             78                  3</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 180 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: admission_type &lt;int&gt;, specialty &lt;chr&gt;</span></span></span></code></pre></div>
-<p>Here, each row is an episode; multiple episodes make up a stay. The <code>cis_marker</code> field is used to label stays, and can thus be used to identify episodes belonging to the same stay. In this case, the <code>episode_within_cis</code> tells us the order of the episodes within a stay; this is not always present, though.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">initial_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
-<span><span class="co">#&gt;      id admission_date discharge_date cis_marker episode_within_cis</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     3 2016-10-15     2016-10-16             44                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3 2016-10-16     2016-10-17             44                  2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 2016-10-17     2016-10-19             44                  3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     3 2016-10-19     2016-10-20             44                  4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     3 2016-01-02     2016-01-04             45                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     3 2016-03-08     2016-03-08             46                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: admission_type &lt;int&gt;, specialty &lt;chr&gt;</span></span></span></code></pre></div>
-<p>Using patient with ID of 3 as an example - the data contains details of 4 episodes (with <code>CIS_MARKERS</code> of 23, 24, 25, and 26). For the stay with <code>CIS_MARKER</code> 23, there were three episodes, all started on 17th May 2015 and ended on the same date. For the stays with <code>CIS_MARKER</code> 24, and 25, there was only one episode, and for the stay with <code>CIS_MARKER</code> 26 there were 3 episodes, the first episode had an admission date of 21st April 2015, and a discharge date of the 22nd April. The second episode had an admission date of the 22nd April and a discharge date of the same day, and the third episode had an admission date of the 22nd but a discharge date of the 24th. This stay for patient 3 spanned the 21st to 24th of April.</p>
-<p>With episodic data is could be necessary to filter on dates. If in the example of patient with ID 14 the cut-off-date was set as 1st August, then the first episode in their stay would be omitted, and potentially the second episode would be assumed to be the first.</p>
+<span><span class="va">results</span><span class="op">$</span><span class="va">features</span></span>
+<span><span class="co">#&gt;   id naive</span></span>
+<span><span class="co">#&gt; 1  1     1</span></span></code></pre></div>
+<p>We got a value of 1, which is incorrect! What gives? As it happens, the filter was applied to each episode, and because the first episode of the 2016 stay ended before 5 January, it was not counted in the data. The second episode of the 2016 stay was also removed because its diagnosis was not “B”. So only the third stay, in 2017, was counted.</p>
 </div>
 <div class="section level2">
-<h2 id="the-preprocessing-step">The preprocessing step<a class="anchor" aria-label="anchor" href="#the-preprocessing-step"></a>
+<h2 id="preprocessing-specification">Preprocessing specification<a class="anchor" aria-label="anchor" href="#preprocessing-specification"></a>
 </h2>
-<p>The way <code>eider</code> has approached this, is to allow users to pre-process their data, to merge episodes into stays. In this case by specifying that they can select the earliest admission date for each stay and the latest discharge date for each stay and replace each episode with the stay-related span.</p>
-<p>The key features outlined here are: - <code>preprocess$on</code>, which specifies how to group the data for preprocessing. This is a list of column names (i.e. strings). - <code>preprocess$retain_min</code> and <code>preprocess$retain_max</code>, which are the columns for which we want to keep the minimum and maximum values of within each group. These entries can contain multiple (or zero) columns which we want to preprocess.</p>
-<p>For example, in a JSON specification file, the following could be included:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">{</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="dt">"source_file"</span><span class="fu">:</span> <span class="st">"smr04"</span><span class="fu">,</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>  <span class="er">...</span><span class="fu">,</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>  <span class="dt">"preprocess"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>    <span class="dt">"on"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"id"</span><span class="ot">,</span> <span class="st">"cis_marker"</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>    <span class="dt">"retain_min"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"admission_date"</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>    <span class="dt">"retain_max"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"discharge_date"</span><span class="ot">]</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>  <span class="fu">},</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>  <span class="er">...</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
-<p>This mini-specification will use the <code>cis_marker</code> column to identify which episodes belong with a given patient stay, and then the minimum <code>admission_date</code> and maximum <code>discharge_date</code> are replaced in the initial data. Using a JSON file like this will result in the <code>smr04</code> table being converted into this before the feature itself is calculated. Again, none of this has to be done manually, it is all handled internally by <code>eider</code>.</p>
+<p>The way <code>eider</code> approaches this issue is to allow users to preprocess their data. This is accomplished by specifying a <code>preprocess</code> object in the feature JSON. In our case, to merge episode dates into stays, we can say that we would like:</p>
+<ul>
+<li>for each unique pair of <code>id</code> and <code>cis_marker</code>,</li>
+<li>replace the value of the admission date with the earliest of all episodes,</li>
+<li>and replace the discharge date replaced with the latest of all episodes.</li>
+</ul>
+<p>In <code>dplyr</code> terms, one would write a pipeline like this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">processed_table</span> <span class="op">&lt;-</span> <span class="va">initial_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">processed_table</span> <span class="op">&lt;-</span> <span class="va">input_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">cis_marker</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    admission_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">admission_date</span><span class="op">)</span>,</span>
@@ -164,113 +175,123 @@
 <span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">processed_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">id</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
-<span><span class="co">#&gt;      id admission_date discharge_date cis_marker episode_within_cis</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     3 2016-10-15     2016-10-20             44                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     3 2016-10-15     2016-10-20             44                  2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3 2016-10-15     2016-10-20             44                  3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     3 2016-10-15     2016-10-20             44                  4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     3 2016-01-02     2016-01-04             45                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     3 2016-03-08     2016-03-08             46                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: admission_type &lt;int&gt;, specialty &lt;chr&gt;</span></span></span></code></pre></div>
-<p>The pre-processing mutates the initial table and (based on the specification) takes the earliest admission date for each stay (comprising a single or multiple episodes) and the latest discharge date. So now patient 3 still has 4 stays in the data, but all episodes within the <code>cis_marker=26</code> stay are given the same admission and discharge date. This allows the user to filter the list of episodes based on the overall stay dates, rather than the dates for each episode itself.</p>
+<span><span class="va">processed_table</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 6</span></span></span>
+<span><span class="co">#&gt;      id admission_date discharge_date cis_marker episode_within_cis diagnosis</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1 2015-01-01     2015-01-05              1                  1 A        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1 2016-01-01     2016-01-08              2                  1 B        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     1 2016-01-01     2016-01-08              2                  2 C        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     1 2017-01-01     2017-01-08              3                  1 B</span></span></code></pre></div>
+<p>Notice how the dates for both episodes in stay 2 are now the same, and reflect the overall dates for the stay.</p>
+<p>Returning to the <code>eider</code> library, this information is (unsurprisingly) specified in JSON. Including a <code>preprocess</code> object in the feature will cause the input table to be modified as above:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  <span class="dt">"preprocess"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>    <span class="dt">"on"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"id"</span><span class="ot">,</span> <span class="st">"cis_marker"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>    <span class="dt">"retain_min"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"admission_date"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    <span class="dt">"retain_max"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"discharge_date"</span><span class="ot">]</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  <span class="fu">},</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>The <code>preprocess</code> object contains one mandatory key:</p>
+<ul>
+<li>
+<strong>(array of strings) <code>"on"</code></strong>: the names of the columns by which the data should be grouped for preprocessing</li>
+</ul>
+<p>and several optional keys can be provided, corresponding to the operations which should be performed. All of these keys refer to column names:</p>
+<ul>
+<li>
+<strong>(array of strings) <code>"retain_min"</code></strong>: retain the minimum value within each group</li>
+<li>
+<strong>(array of strings) <code>"retain_max"</code></strong>: retain the maximum value within each group</li>
+<li>
+<strong>(array of strings) <code>"replace_with_sum"</code></strong>: sum the values within each group and replace the original values with the sum</li>
+</ul>
+<p>Columns may not be specified in more than one of the above keys (i.e., you cannot preprocess the same column twice).</p>
 </div>
 <div class="section level2">
-<h2 id="feature-outputs">Feature outputs<a class="anchor" aria-label="anchor" href="#feature-outputs"></a>
+<h2 id="returning-to-the-example">Returning to the example<a class="anchor" aria-label="anchor" href="#returning-to-the-example"></a>
 </h2>
-<p>Here are two full specification files, one without the preprocessing request, and one with.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">spec_without_preprocessing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"spec_smr04.json"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">spec_without_preprocessing</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": ["smr04"],</span></span>
-<span><span class="co">#&gt;   "transformation_type": ["COUNT"],</span></span>
-<span><span class="co">#&gt;   "grouping_column": ["id"],</span></span>
-<span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
-<span><span class="co">#&gt;   "output_feature_name": ["no_preprocessing"],</span></span>
-<span><span class="co">#&gt;   "filter": {</span></span>
-<span><span class="co">#&gt;     "type": ["AND"],</span></span>
-<span><span class="co">#&gt;     "subfilter": {</span></span>
-<span><span class="co">#&gt;       "subfilter_1": {</span></span>
-<span><span class="co">#&gt;         "column": ["episode_within_cis"],</span></span>
-<span><span class="co">#&gt;         "type": ["IN"],</span></span>
-<span><span class="co">#&gt;         "value": [1, 2, 3]</span></span>
-<span><span class="co">#&gt;       },</span></span>
-<span><span class="co">#&gt;     "subfilter_2": {</span></span>
-<span><span class="co">#&gt;         "column": "discharge_date",</span></span>
-<span><span class="co">#&gt;         "type": "date_lt_eq",</span></span>
-<span><span class="co">#&gt;         "value": ["2015-04-22"]</span></span>
-<span><span class="co">#&gt;       }</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; }</span></span></code></pre></div>
-<p>This spec is requesting a count of the number of times episode 1, 2, or 3 from <code>episode_within_cis</code> occurs for <code>DISCHARGE_DATE</code> earlier than (or equal to) 22nd April 2015.</p>
-<p>For patient 3, without the preprocessing step we expect this to count 2 of the 8 episodes, the two with <code>CIS_MARKER</code> 26 and <code>DISCHARGE_DATE</code> of 22nd April 2015, the final episode in that stay does not satisfy the date condition and so is not expected to be counted.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">spec_with_preprocessing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"spec_smr04_preprocessing.json"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">spec_with_preprocessing</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": ["smr04"],</span></span>
-<span><span class="co">#&gt;   "transformation_type": ["COUNT"],</span></span>
-<span><span class="co">#&gt;   "grouping_column": ["id"],</span></span>
-<span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
-<span><span class="co">#&gt;   "output_feature_name": ["with_preprocessing"],</span></span>
-<span><span class="co">#&gt;   "preprocess": {</span></span>
-<span><span class="co">#&gt;     "on": ["id", "cis_marker"],</span></span>
-<span><span class="co">#&gt;     "retain_min": "admission_date",</span></span>
-<span><span class="co">#&gt;     "retain_max": "discharge_date"</span></span>
-<span><span class="co">#&gt;     },</span></span>
-<span><span class="co">#&gt;   "filter": {</span></span>
-<span><span class="co">#&gt;     "type": ["AND"],</span></span>
-<span><span class="co">#&gt;     "subfilter": {</span></span>
-<span><span class="co">#&gt;       "subfilter_1": {</span></span>
-<span><span class="co">#&gt;         "column": ["episode_within_cis"],</span></span>
-<span><span class="co">#&gt;         "type": ["IN"],</span></span>
-<span><span class="co">#&gt;         "value": [1, 2, 3]</span></span>
-<span><span class="co">#&gt;       },</span></span>
-<span><span class="co">#&gt;     "subfilter_2": {</span></span>
-<span><span class="co">#&gt;         "column": "discharge_date",</span></span>
-<span><span class="co">#&gt;         "type": "date_lt_eq",</span></span>
-<span><span class="co">#&gt;         "value": ["2015-04-22"]</span></span>
-<span><span class="co">#&gt;       }</span></span>
-<span><span class="co">#&gt;     }</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; }</span></span></code></pre></div>
-<p>This spec is requesting the same thing, but now has the preprocessing step included. The <code>DISCHARGE_DATE</code> for all episodes in the stay with <code>CIS_MARKER</code> 26 will now all be the same - the latest discharge date from the stay, and the transform will count none of the total episodes for patient 3. This means that there will now be zero episodes which match the criteria.</p>
+<p>We can now rewrite the feature JSON to include the preprocessing step (<a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing2.json" class="external-link"><code>json_examples/preprocessing2.json</code></a>):</p>
+<pre><code>{
+    "output_feature_name": "correct",
+    "transformation_type": "nunique",
+    "source_file": "input_table",
+    "aggregation_column": "cis_marker",
+    "grouping_column": "id",
+    "absent_default_value": 0,
+    "filter": {
+        "type": "and",
+        "subfilter": {
+            "date_filter": {
+                "column": "discharge_date",
+                "type": "date_gt_eq",
+                "value": "2016-01-05"
+            },
+            "diagnosis_filter": {
+                "column": "diagnosis",
+                "type": "in",
+                "value": ["B"]
+            }
+        }
+    },
+    "preprocess": {
+        "on": ["id", "cis_marker"],
+        "retain_min": ["admission_date"],
+        "retain_max": ["discharge_date"]
+    }
+}</code></pre>
+<p>and rerunning the pipeline gives us the correct value of 2. Note that although the <code>preprocess</code> object is placed after the <code>filter</code> object in the JSON, the preprocessing is always done <em>prior</em> to filtering. The order of the keys in the JSON has no effect whatsoever on the result.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">processed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
-<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>smr04 <span class="op">=</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_smr04_data.csv"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  feature_filenames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="va">spec_without_preprocessing</span>,</span>
-<span>    <span class="va">spec_with_preprocessing</span></span>
-<span>  <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
+<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>input_table <span class="op">=</span> <span class="va">input_table</span><span class="op">)</span>,</span>
+<span>  feature_filenames <span class="op">=</span> <span class="st">"json_examples/preprocessing2.json"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">processed</span><span class="op">$</span><span class="va">features</span></span>
-<span><span class="co">#&gt;    id no_preprocessing with_preprocessing</span></span>
-<span><span class="co">#&gt; 1   0                0                  0</span></span>
-<span><span class="co">#&gt; 2   1                0                  0</span></span>
-<span><span class="co">#&gt; 3   2                0                  0</span></span>
-<span><span class="co">#&gt; 4   3                0                  0</span></span>
-<span><span class="co">#&gt; 5   4                1                  1</span></span>
-<span><span class="co">#&gt; 6   5                3                  3</span></span>
-<span><span class="co">#&gt; 7   6                0                  0</span></span>
-<span><span class="co">#&gt; 8   7                1                  1</span></span>
-<span><span class="co">#&gt; 9   8                1                  1</span></span>
-<span><span class="co">#&gt; 10  9                1                  1</span></span>
-<span><span class="co">#&gt; 11 10                0                  0</span></span>
-<span><span class="co">#&gt; 12 11                0                  0</span></span>
-<span><span class="co">#&gt; 13 12                0                  0</span></span>
-<span><span class="co">#&gt; 14 13                0                  0</span></span>
-<span><span class="co">#&gt; 15 14                0                  0</span></span>
-<span><span class="co">#&gt; 16 15                5                  5</span></span>
-<span><span class="co">#&gt; 17 16                0                  0</span></span>
-<span><span class="co">#&gt; 18 17                0                  0</span></span>
-<span><span class="co">#&gt; 19 18                2                  2</span></span>
-<span><span class="co">#&gt; 20 19                0                  0</span></span></code></pre></div>
-<p>Comparing the above, we can see that for patient with id 3, when no pre-processing is applied, two episodes are counted, but when the preprocessing step is applied, zero are.</p>
+<span><span class="va">results</span><span class="op">$</span><span class="va">features</span></span>
+<span><span class="co">#&gt;   id correct</span></span>
+<span><span class="co">#&gt; 1  1       2</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="an-example-for-replace_with_sum">An example for <code>replace_with_sum</code><a class="anchor" aria-label="anchor" href="#an-example-for-replace_with_sum"></a>
+</h2>
+<p>To motivate the use of <code>replace_with_sum</code>, we can add a column to our previous data frame to denote the length of each episode:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">input_table_with_sum</span> <span class="op">&lt;-</span> <span class="va">input_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">discharge_date</span> <span class="op">-</span> <span class="va">admission_date</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">input_table_with_sum</span></span>
+<span><span class="co">#&gt;   id admission_date discharge_date cis_marker episode_within_cis diagnosis days</span></span>
+<span><span class="co">#&gt; 1  1     2015-01-01     2015-01-05          1                  1         A    4</span></span>
+<span><span class="co">#&gt; 2  1     2016-01-01     2016-01-04          2                  1         B    3</span></span>
+<span><span class="co">#&gt; 3  1     2016-01-04     2016-01-08          2                  2         C    4</span></span>
+<span><span class="co">#&gt; 4  1     2017-01-01     2017-01-08          3                  1         B    7</span></span></code></pre></div>
+<p>Now consider a different question, which is: <em>how many stays has a patient had which lasted for a week or more?</em> To answer this, we need to first sum up the <code>days</code> for each stay, and we can then filter based on this sum. This is accomplished with <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing3.json" class="external-link"><code>json_examples/preprocessing3.json</code></a>:</p>
+<pre><code>{
+    "output_feature_name": "using_sum",
+    "transformation_type": "nunique",
+    "source_file": "input_table",
+    "aggregation_column": "cis_marker",
+    "grouping_column": "id",
+    "absent_default_value": 0,
+    "filter": {
+        "column": "days",
+        "type": "gt_eq",
+        "value": 7
+    },
+    "preprocess": {
+        "on": ["id", "cis_marker"],
+        "replace_with_sum": ["days"]
+    }
+}</code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
+<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>input_table <span class="op">=</span> <span class="va">input_table_with_sum</span><span class="op">)</span>,</span>
+<span>  feature_filenames <span class="op">=</span> <span class="st">"json_examples/preprocessing3.json"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">results</span><span class="op">$</span><span class="va">features</span></span>
+<span><span class="co">#&gt;   id using_sum</span></span>
+<span><span class="co">#&gt; 1  1         2</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
