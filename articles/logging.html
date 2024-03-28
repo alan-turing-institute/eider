@@ -46,11 +46,11 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Specifying features in JSON</h6>
-    <a class="dropdown-item" href="../articles/features.html">Features: An overview</a>
+    <h6 class="dropdown-header" data-toc-skip>Features as JSON</h6>
+    <a class="dropdown-item" href="../articles/features.html">An overview of features</a>
     <a class="dropdown-item" href="../articles/filtering.html">Filtering</a>
     <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
-    <a class="dropdown-item" href="../articles/feature_count.html">Features: Counting rows</a>
+    <a class="dropdown-item" href="../articles/combination.html">Combination features</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Logging</h6>
     <a class="dropdown-item" href="../articles/logging.html">Logging Example</a>
@@ -107,7 +107,7 @@
 <code class="sourceCode R"><span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">wrong_spec1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: Unknown transformation type: count dracula</span></span>
 <span><span class="co">#&gt; Context:</span></span>
-<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpV3tfj0/temp_libpath1783692e8287/eider/extdata/spec_wrong1_ae.json</span></span></code></pre></div>
+<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpqvahGB/temp_libpath17363cf35076/eider/extdata/spec_wrong1_ae.json</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="example-2">Example 2<a class="anchor" aria-label="anchor" href="#example-2"></a>
@@ -121,7 +121,7 @@
 <code class="sourceCode R"><span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">wrong_spec2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: The name '../example_data/random_ae_data.csv' supplied for 'source_file' was not provided as an input table.</span></span>
 <span><span class="co">#&gt; Context:</span></span>
-<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpV3tfj0/temp_libpath1783692e8287/eider/extdata/spec_wrong2_ae.json</span></span>
+<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpqvahGB/temp_libpath17363cf35076/eider/extdata/spec_wrong2_ae.json</span></span>
 <span><span class="co">#&gt;  &gt; featurise_count</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -136,7 +136,7 @@
 <code class="sourceCode R"><span><span class="va">tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span><span class="va">ae_data_path</span>, <span class="va">wrong_spec3</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: The name '../example_data/random_ae_data.csv' supplied for 'source_file' was not provided as an input table.</span></span>
 <span><span class="co">#&gt; Context:</span></span>
-<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpV3tfj0/temp_libpath1783692e8287/eider/extdata/spec_wrong3_ae.json</span></span>
+<span><span class="co">#&gt;  &gt; featurise: /tmp/RtmpqvahGB/temp_libpath17363cf35076/eider/extdata/spec_wrong3_ae.json</span></span>
 <span><span class="co">#&gt;  &gt; featurise_count</span></span></code></pre></div>
 </div>
 </div>
