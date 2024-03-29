@@ -57,7 +57,7 @@ run_pipeline <- function(
   )
 
   # Join all of them together
-  join_feature_tables(features, all_ids = all_ids)
+  join_feature_tables(c(features, responses), all_ids = all_ids)
 }
 
 json_to_feature_wrapper <- function(json_or_fname) {

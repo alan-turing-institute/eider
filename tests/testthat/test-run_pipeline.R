@@ -30,6 +30,11 @@ test_that("run_pipeline", {
     left_join(diag_102_expected, by = "id") %>%
     mutate(diag_102_count = tidyr::replace_na(diag_102_count, 0))
 
+  # Check features
+  expect_equal(
+    names(joined_feature_table$features),
+    c("id", "diag_101_count", "diag_102_count")
+  )
   expect_equal(joined_feature_table$features$id, feature_table_expected$id)
   expect_equal(
     joined_feature_table$features$diag_101_count,
@@ -39,4 +44,7 @@ test_that("run_pipeline", {
     joined_feature_table$features$diag_102_count,
     feature_table_expected$diag_102_count
   )
+  # Check responses
+  expect_equal(names(joined_feature_table$responses), "id")
+  expect_equal(joined_feature_table$responses$id, feature_table_expected$id)
 })
