@@ -249,7 +249,7 @@ dplyr::glimpse(res$features)
 
 In this case, we can see that patient 0 (for example) has had 9 total attendances, but only 1 of these were in 2017 and resulted in a neurology diagnosis.
 
-## Checking the results
+## Checking the results (so far)
 
 We can verify some of the results above using a standard `dplyr` pipeline.
 For feature 1:
@@ -275,3 +275,46 @@ ae_data %>%
 This tells us that patients 0 and 2 are the only ones with any neurology attendances in 2017, and is consistent with the feature table that `eider` has calculated.
 However, notice that `eider` has taken care of joining the features together and inserting the missing value of 0 where necessary.
 Using `eider` also helps to avoid errors that can easily creep in when data is mutated in a long script.
+
+## Feature 3: Whether a patient has ever attended A&E
+
+Through a slight modification of the first feature, we can also calculate whether a patient has ever attended A&E.
+This is a binary feature, which has values of either 1 (if the patient has attended A&E) or 0 (if they have not).
+All we need to do is to replace the `transformation_type` with `"present"` (instead of `"count"`):
+
+```{r}
+ae_present_filepath <- eider_example("has_visited_ae.json")
+writeLines(readLines(ae_present_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(ae = ae_data_filepath),
+  feature_filenames = ae_present_filepath
+)
+
+dplyr::glimpse(res$features)
+```
+
+## Feature 4: The number of days since the last A&E attendance
+
+As an example of a completely different transformation type, we look at the `"time_since"` feature type here.
+As the name suggests, this calculates the time since an event: in this case, we specify "from_first": "false"` and `"cutoff_date": "2021-03-25" to calculate the time since the last event up to 25 March 2021; and `"time_units": "days"` to return the value in days.
+The `"date_column"` specifies the name of the column in the input table which contains the date of attendance.
+
+The default value for patients who do not appear in this dataset should, logically, be set to something large, to indicate that they have not had a recent A&E attendance.
+In this case we use 2000.
+
+```{r}
+days_since_ae_filepath <- eider_example("days_since_last_ae.json")
+writeLines(readLines(days_since_ae_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(ae = ae_data_filepath),
+  feature_filenames = days_since_ae_filepath
+)
+
+dplyr::glimpse(res$features)
+```
