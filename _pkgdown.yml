@@ -41,5 +41,5 @@ articles:
     navbar: Gallery
     contents:
       - examples_ae
-      - combine
-      - prescribing
+      - examples_ltc
+      - examples_pis

@@ -1,12 +1,11 @@
 ---
-title: "Prescribing Example"
+title: "Examples: PIS data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Prescribing Example}
+  %\VignetteIndexEntry{Examples: PIS data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -15,11 +14,37 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r error = TRUE}
+```{r setup}
 library(eider)
+library(magrittr)
 ```
 
+This series of vignettes in the _Gallery_ section aim to demonstrate the functionality of `eider` through examples that are similar to real-life usage.
+To do this, we have created a series of randomly generated datasets that are stored with the package.
+You can access these datasets using the `eider_example()` function, which will return the path to where the dataset is stored in your installation of R.
+
+```{r}
+pis_data_filepath <- eider_example("random_pis_data.csv")
+
+pis_data_filepath
+```
+
+## The data
+
+In this specific vignette, we are using simulated [Prescribing Information System (PIS)](https://publichealthscotland.scot/services/national-data-catalogue/national-datasets/a-to-z-of-datasets/prescribing-information-system-pis/).
+Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
+
+```{r}
+pis_data <- utils::read.csv(pis_data_filepath)
+dplyr::glimpse(pis_data)
+```
+
+This simplified table has 4 columns:
+
+* `id`, which is a numeric patient ID;
+
 ## 1. Prescribing data
+
 ```{r error = TRUE}
 prescribing_data_filepath <- eider_example("random_pis_data.csv")
 utils::read.csv(prescribing_data_filepath)

@@ -35,9 +35,13 @@ In this specific vignette, we are using simulated [accident and emergency (A&E) 
 Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
 
 ```{r}
-ae_data <- utils::read.csv(ae_data_filepath)
+ae_data <- utils::read.csv(ae_data_filepath) %>%
+  dplyr::mutate(date = as.Date(date))
+
 dplyr::glimpse(ae_data)
 ```
+
+(Note that when the data is loaded by `eider`, the date columns are automatically converted to the date type for you: you do not need to do the manual processing above.)
 
 This simplified table has 6 columns:
 
