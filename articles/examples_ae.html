@@ -94,7 +94,7 @@
 <code class="sourceCode R"><span><span class="va">ae_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ae_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ae_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpKr2KrJ/temp_libpath1924c178b15/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpQ9jxS2/temp_libpath19227eb55a0b/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -353,7 +353,7 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="checking-the-results">Checking the results<a class="anchor" aria-label="anchor" href="#checking-the-results"></a>
+<h2 id="checking-the-results-so-far">Checking the results (so far)<a class="anchor" aria-label="anchor" href="#checking-the-results-so-far"></a>
 </h2>
 <p>We can verify some of the results above using a standard <code>dplyr</code> pipeline. For feature 1:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -378,6 +378,62 @@
 <span><span class="co">#&gt; $ id                             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 2</span></span>
 <span><span class="co">#&gt; $ total_neurology_ae_attendances <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1</span></span></code></pre></div>
 <p>This tells us that patients 0 and 2 are the only ones with any neurology attendances in 2017, and is consistent with the feature table that <code>eider</code> has calculated. However, notice that <code>eider</code> has taken care of joining the features together and inserting the missing value of 0 where necessary. Using <code>eider</code> also helps to avoid errors that can easily creep in when data is mutated in a long script.</p>
+</div>
+<div class="section level2">
+<h2 id="feature-3-whether-a-patient-has-ever-attended-ae">Feature 3: Whether a patient has ever attended A&amp;E<a class="anchor" aria-label="anchor" href="#feature-3-whether-a-patient-has-ever-attended-ae"></a>
+</h2>
+<p>Through a slight modification of the first feature, we can also calculate whether a patient has ever attended A&amp;E. This is a binary feature, which has values of either 1 (if the patient has attended A&amp;E) or 0 (if they have not). All we need to do is to replace the <code>transformation_type</code> with <code>"present"</code> (instead of <code>"count"</code>):</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ae_present_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"has_visited_ae.json"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ae_present_filepath</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "transformation_type": "present",</span></span>
+<span><span class="co">#&gt;   "grouping_column": "id",</span></span>
+<span><span class="co">#&gt;   "output_feature_name": "has_visited_ae"</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
+<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ae <span class="op">=</span> <span class="va">ae_data_filepath</span><span class="op">)</span>,</span>
+<span>  feature_filenames <span class="op">=</span> <span class="va">ae_present_filepath</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">features</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 20</span></span>
+<span><span class="co">#&gt; Columns: 2</span></span>
+<span><span class="co">#&gt; $ id             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1…</span></span>
+<span><span class="co">#&gt; $ has_visited_ae <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="feature-4-the-number-of-days-since-the-last-ae-attendance">Feature 4: The number of days since the last A&amp;E attendance<a class="anchor" aria-label="anchor" href="#feature-4-the-number-of-days-since-the-last-ae-attendance"></a>
+</h2>
+<p>As an example of a completely different transformation type, we look at the <code>"time_since"</code> feature type here. As the name suggests, this calculates the time since an event: in this case, we specify “from_first”: “false”<code>and</code>“cutoff_date”: “2021-03-25” to calculate the time since the last event up to 25 March 2021; and <code>"time_units": "days"</code> to return the value in days. The <code>"date_column"</code> specifies the name of the column in the input table which contains the date of attendance.</p>
+<p>The default value for patients who do not appear in this dataset should, logically, be set to something large, to indicate that they have not had a recent A&amp;E attendance. In this case we use 2000.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">days_since_ae_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"days_since_last_ae.json"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">days_since_ae_filepath</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; {</span></span>
+<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "grouping_column": "id",</span></span>
+<span><span class="co">#&gt;   "transformation_type": "time_since",</span></span>
+<span><span class="co">#&gt;   "time_units": "days",</span></span>
+<span><span class="co">#&gt;   "from_first": false,</span></span>
+<span><span class="co">#&gt;   "output_feature_name": "days_since_last_ae_visit",</span></span>
+<span><span class="co">#&gt;   "date_column": "date",</span></span>
+<span><span class="co">#&gt;   "cutoff_date": "2021-03-25",</span></span>
+<span><span class="co">#&gt;   "absent_default_value": 2000</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
+<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ae <span class="op">=</span> <span class="va">ae_data_filepath</span><span class="op">)</span>,</span>
+<span>  feature_filenames <span class="op">=</span> <span class="va">days_since_ae_filepath</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">features</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 20</span></span>
+<span><span class="co">#&gt; Columns: 2</span></span>
+<span><span class="co">#&gt; $ id                       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,…</span></span>
+<span><span class="co">#&gt; $ days_since_last_ae_visit <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1189, 1189, 1221, 1231, 1407, 1422, 1261, 130…</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
