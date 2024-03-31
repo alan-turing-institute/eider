@@ -19,13 +19,16 @@
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/combination.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/combine.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/eider.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ae.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ltc.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_pis.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/features.html</loc>
@@ -41,9 +44,6 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/preprocessing.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/prescribing.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/authors.html</loc>

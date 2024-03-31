@@ -3,15 +3,15 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   combination: combination.html
-  combine: combine.html
   eider: eider.html
   examples_ae: examples_ae.html
+  examples_ltc: examples_ltc.html
+  examples_pis: examples_pis.html
   features: features.html
   filtering: filtering.html
   logging: logging.html
   preprocessing: preprocessing.html
-  prescribing: prescribing.html
-last_built: 2024-03-31T18:44Z
+last_built: 2024-03-31T20:01Z
 urls:
   reference: https://alan-turing-institute.github.io/eider/docs/reference
   article: https://alan-turing-institute.github.io/eider/docs/articles

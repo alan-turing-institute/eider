@@ -57,8 +57,8 @@
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Gallery</h6>
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
-    <a class="dropdown-item" href="../articles/combine.html">Combine Example</a>
-    <a class="dropdown-item" href="../articles/prescribing.html">Prescribing Example</a>
+    <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
+    <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
   </div>
 </li>
       </ul>
@@ -94,22 +94,25 @@
 <code class="sourceCode R"><span><span class="va">ae_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ae_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ae_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpQ9jxS2/temp_libpath19227eb55a0b/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpiXasWE/temp_libpath1726322f63c1/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
 <p>In this specific vignette, we are using simulated <a href="https://publichealthscotland.scot/publications/ae-data-mart-user-guide/" class="external-link">accident and emergency (A&amp;E) data</a>. Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using <code>eider</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ae_data</span> <span class="op">&lt;-</span> <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ae_data</span> <span class="op">&lt;-</span> <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">ae_data_filepath</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ae_data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 100</span></span>
 <span><span class="co">#&gt; Columns: 6</span></span>
 <span><span class="co">#&gt; $ id                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 15, 0, 3, 7, 18, 15, 6, 2, 14, 8, 0, 13, 6, 2, 13,…</span></span>
-<span><span class="co">#&gt; $ date                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2017-06-12", "2017-12-22", "2016-10-28", "2016-09…</span></span>
+<span><span class="co">#&gt; $ date                <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2017-06-12, 2017-12-22, 2016-10-28, 2016-09-06, 2…</span></span>
 <span><span class="co">#&gt; $ attendance_category <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5, 1, 3, 3, 2, 4, 4, 4, 4, 1, 4, 5, 3, 1, 3, 3, 2,…</span></span>
 <span><span class="co">#&gt; $ diagnosis_1         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 15, 16, 1, 12, 2, 18, 17, 18, 10, 11, 12, 10, 8…</span></span>
 <span><span class="co">#&gt; $ diagnosis_2         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 18, 8, 7, NA, 3, 17, 8, NA, 9, 2, 12, NA, 99, 19, …</span></span>
 <span><span class="co">#&gt; $ diagnosis_3         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 7, NA, NA, NA, NA, 3, NA, NA, 8, 7, 7, NA, NA, NA,…</span></span></code></pre></div>
+<p>(Note that when the data is loaded by <code>eider</code>, the date columns are automatically converted to the date type for you: you do not need to do the manual processing above.)</p>
 <p>This simplified table has 6 columns:</p>
 <ul>
 <li>
