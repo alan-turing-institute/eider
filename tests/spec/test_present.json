@@ -1,25 +1,25 @@
 {
-  "source_file": ["ae2"],
-  "transformation_type": ["PRESENT"],
-  "grouping_column": ["id"],
-  "output_feature_name": ["any_101_diagnosis"],
-  "absent_default_value": [0],
+  "source_file": "ae2",
+  "transformation_type": "present",
+  "grouping_column": "id",
+  "output_feature_name": "any_101_diagnosis",
+  "absent_default_value": 0,
   "filter": {
-    "type": ["OR"],
+    "type": "or",
     "subfilter": {
       "subfilter_1": {
-        "column": ["diagnosis_1"],
-        "type": ["IN"],
+        "column": "diagnosis_1",
+        "type": "in",
         "value": [101]
       },
       "subfilter_2": {
-        "column": ["diagnosis_2"],
-        "type": ["IN"],
+        "column": "diagnosis_2",
+        "type": "in",
         "value": [101]
       },
       "subfilter_3": {
-        "column": ["diagnosis_3"],
-        "type": ["IN"],
+        "column": "diagnosis_3",
+        "type": "in",
         "value": [101]
       }
     }

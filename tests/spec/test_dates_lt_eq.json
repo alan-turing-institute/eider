@@ -1,12 +1,12 @@
 {
-  "source_file": ["ae2"],
-  "transformation_type": ["COUNT"],
-  "grouping_column": ["id"],
-  "output_feature_name": ["diag_101_count"],
-  "absent_default_value": [0],
+  "source_file": "ae2",
+  "transformation_type": "count",
+  "grouping_column": "id",
+  "output_feature_name": "diag_101_count",
+  "absent_default_value": 0,
   "filter": {
     "column": "time",
-    "type": "DATE_LT_EQ",
-    "values": ["2016-03-19"]
+    "type": "date_lt_eq",
+    "value": "2016-03-19"
   }
 }
