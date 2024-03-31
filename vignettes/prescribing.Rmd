@@ -15,19 +15,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r}
+```{r error = TRUE}
 library(eider)
 ```
 
 ## 1. Prescribing data
-```{r}
+```{r error = TRUE}
 prescribing_data_filepath <- eider_example("random_pis_data.csv")
 utils::read.csv(prescribing_data_filepath)
 ```
 Here we have a random example prescribing data file. From the first few rows we can see that patient with id 19 had 3 items from under `bnf_section` 0106 prescribed on 15th December 2017, had 5 items from `bnf_section` 0103 prescribed on 11th August 2016, and had 1 item from `bnf_section` 0103 on 7th July 2015.
 
 ## 2. Specification file - Number of unique
-```{r}
+```{r error = TRUE}
 prescribing_spec_nunique_fp <- eider_example(
   "spec_example_basic_prescribing_nunique.json"
 )
@@ -38,7 +38,7 @@ So, if there were no more entries for patient 19 in the data file, then they wou
 There is date filtering applied, in this case between 1st January 2015 and 1st January 2018 inclusive. 
 
 ## 3. Run transformation - Number of unique
-```{r}
+```{r error = TRUE}
 prescribing_data_path <- list(prescribing = prescribing_data_filepath)
 run_pipeline(prescribing_data_path, prescribing_spec_nunique_fp)
 ```
@@ -47,7 +47,7 @@ The results of the transformation are shown above - here the patient with id 0 h
 
 ## 4. Number of prescibed items
 The following specification can be used to return the number of prescribed items, per patient over a specified date range.
-```{r}
+```{r error = TRUE}
 prescribing_spec_npresc_fp <- eider_example(
   "spec_example_basic_prescribing_nprescribed.json"
 )
@@ -55,6 +55,6 @@ writeLines(readLines(prescribing_spec_npresc_fp))
 ```
 
 With the corresponding transformation
-```{r}
+```{r error = TRUE}
 run_pipeline(prescribing_data_path, prescribing_spec_npresc_fp)
 ```
