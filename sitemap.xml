@@ -16,9 +16,6 @@
     <loc>https://alan-turing-institute.github.io/eider/docs/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/a_and_e.html</loc>
-  </url>
-  <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/combination.html</loc>
   </url>
   <url>
@@ -26,6 +23,9 @@
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/eider.html</loc>
+  </url>
+  <url>
+    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ae.html</loc>
   </url>
   <url>
     <loc>https://alan-turing-institute.github.io/eider/docs/articles/features.html</loc>
