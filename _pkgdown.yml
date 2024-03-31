@@ -40,6 +40,6 @@ articles:
   - title: Gallery
     navbar: Gallery
     contents:
-      - a_and_e
+      - examples_ae
       - combine
       - prescribing
