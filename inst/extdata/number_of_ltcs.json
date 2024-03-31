@@ -1,5 +1,5 @@
 {
-  "transformation_type": "COMBINE_LINEAR",
+  "transformation_type": "combine_linear",
   "output_feature_name": "number_of_ltcs",
   "subfeature": {
     "asthma": {
