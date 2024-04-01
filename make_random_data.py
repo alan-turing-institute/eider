@@ -1,8 +1,27 @@
+"""
+make_random_data.py
+-------------------
+
+This Python script is responsible for generating the random data bundled with
+the `eider` package.
+
+It will generate the following files:
+
+- inst/extdata/random_ae_data.csv
+- inst/extdata/random_ltc_data.csv
+- inst/extdata/random_pis_data.csv
+- inst/extdata/random_smr04_data.csv
+"""
+
 import pandas as pd
 import numpy as np
 from datetime import timedelta
 
+from pathlib import Path
+
 SEED = 1234
+
+INST_EXTDATA_FOLDER = Path(__file__).parent / "inst" / "extdata"
 
 def make_random_dates(rng, start, end, nrows, replace=True):
     dates = pd.date_range(start, end).to_list()
@@ -38,7 +57,7 @@ def make_random_pis_data(max_ID, nrows, start_date, end_date, bnf_sections):
     # Replace the last 10 lines with the first 10 lines to make the vignette
     # examples look a bit different
     pis_data.iloc[-10:] = pis_data.iloc[:10].values
-    pis_data.to_csv("./random_pis_data.csv", index=False)
+    pis_data.to_csv(INST_EXTDATA_FOLDER / "random_pis_data.csv", index=False)
 
 def make_random_ae_data(max_ID: int,
                         nrows: int,
@@ -60,7 +79,7 @@ def make_random_ae_data(max_ID: int,
                             'diagnosis_1': d1,
                             'diagnosis_2': d2,
                             'diagnosis_3': d3})
-    ae_data.to_csv("./random_ae_data.csv", index=False)
+    ae_data.to_csv(INST_EXTDATA_FOLDER / "random_ae_data.csv", index=False)
 
 def make_smr04_data(start_date, end_date, nstays, max_ID):
     rng = np.random.default_rng(seed=SEED)
@@ -136,7 +155,7 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
             data_dict['specialty'].append(specialty)
 
     smr04 = pd.DataFrame(data_dict, index=range(len(data_dict['id'])))
-    smr04.to_csv("./random_smr04_data.csv", index=False)
+    smr04.to_csv(INST_EXTDATA_FOLDER / "random_smr04_data.csv", index=False)
 
 def make_ltc_data(start_date, end_date, max_ID):
     rng = np.random.default_rng(seed=SEED)
@@ -153,7 +172,7 @@ def make_ltc_data(start_date, end_date, max_ID):
                 condition_start_date = ""
             data_dict[c].append(condition_start_date)
     df = pd.DataFrame(data_dict)
-    df.to_csv("./random_ltc_data.csv", index=False)
+    df.to_csv(INST_EXTDATA_FOLDER / "random_ltc_data.csv", index=False)
 
 # https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/attendance-category-ae/
 

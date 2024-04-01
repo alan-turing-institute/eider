@@ -8,9 +8,9 @@
 ^Meta$
 ^README\.Rmd$
 ^.github$
-^.pre-commit-config.yaml$
+^.pre-commit-config\.yaml$
 ^.lintr$
-^make_example_data$
+^make_random_data\.py$
 ^Makefile$
 ^CODE_OF_CONDUCT\.md$
 ^CONTRIBUTING\.md$
