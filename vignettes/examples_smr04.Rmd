@@ -1,0 +1,189 @@
+---
+title: "Examples: SMR04 data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Examples: SMR04 data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(eider)
+library(magrittr)
+```
+
+This series of vignettes in the _Gallery_ section aim to demonstrate the functionality of `eider` through examples that are similar to real-life usage.
+To do this, we have created a series of randomly generated datasets that are stored with the package.
+You can access these datasets using the `eider_example()` function, which will return the path to where the dataset is stored in your installation of R.
+
+```{r}
+smr04_data_filepath <- eider_example("random_smr04_data.csv")
+
+smr04_data_filepath
+```
+
+## The data
+
+In this specific vignette, we are using simulated [SMR04 data](https://publichealthscotland.scot/services/national-data-catalogue/smr-data-manual/definitions-by-smr-record-section/smr04-mental-health-inpatient-and-day-case/general-definitions/).
+Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
+
+```{r}
+smr04_data <- utils::read.csv(smr04_data_filepath) %>%
+  dplyr::mutate(
+    admission_date = lubridate::ymd(admission_date),
+    discharge_date = lubridate::ymd(discharge_date)
+  )
+
+dplyr::glimpse(smr04_data)
+```
+
+(Note that when the data is loaded by `eider`, the date columns are automatically converted to the date type for you: you do not need to do the manual processing above.)
+
+Each row in this table corresponds to one *episode*; multiple episodes may be associated with the same *stay*.
+This simplified table has 7 columns:
+
+* `id`, which is a numeric patient ID;
+* `admission_date` and `discharge_date`, which are the dates of admission and discharge for each episode;
+* `cis_marker`, which is a unique number associated with each stay (note that this is not necessarily unique for different patient IDs);
+* `episode_within_cis`, which is the episode number within each stay; and
+* `specialty`, which is the specialty code for the episode.
+
+
+## Feature 1: Number of episodes associated with a psychotherapy specialty
+
+TODO DESCRIBE
+
+```{r}
+pt_episodes_filepath <- eider_example("psychotherapy_episodes.json")
+writeLines(readLines(pt_episodes_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(smr04 = smr04_data_filepath),
+  feature_filenames = pt_episodes_filepath
+)
+
+dplyr::glimpse(res$features)
+```
+
+## Feature 2: Number of stays associated with a psychotherapy specialty
+
+TODO DESCRIBE
+
+```{r}
+pt_stays_filepath <- eider_example("psychotherapy_stays.json")
+writeLines(readLines(pt_stays_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(smr04 = smr04_data_filepath),
+  feature_filenames = pt_stays_filepath
+)
+
+dplyr::glimpse(res$features)
+```
+
+## Interlude: Adding data sources on-the-fly
+
+The last three features will be concerned with the number of days spent in hospital.
+In principle, this can be easily calculated from the data we already have: by taking the discharge date and subtracting the admission date, we can obtain the length of each episode.
+
+`eider` does not yet possess the functionality to preprocess tables in this way (by adding new columns).
+However, the package _does_ allow you to perform this calculation yourself (e.g. using `dplyr`), and then add the new table to the pipeline as a new data source.
+Specifically, data sources do not necessarily need to be CSV filenames; they can simply be data frames themselves.
+
+Let's construct this new data frame:
+
+```{r}
+smr04_with_days_data <- smr04_data %>%
+  dplyr::mutate(days_in_hospital = as.numeric(discharge_date - admission_date))
+
+dplyr::glimpse(smr04_with_days_data)
+```
+
+In the subsequent sections, we'll provide this new data frame as a data source to `run_pipeline()`.
+
+## Feature 3: Total number of days spent in hospital
+
+TODO DESCRIBE
+
+```{r}
+total_days_filepath <- eider_example("days_in_smr04.json")
+writeLines(readLines(total_days_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(smr04_with_days = smr04_with_days_data),
+  feature_filenames = total_days_filepath
+)
+
+dplyr::glimpse(res$features)
+```
+
+## Feature 4: Longest stay in hospital
+
+TODO: DESCRIBE
+
+```{r}
+longest_stay_filepath <- eider_example("longest_stay.json")
+writeLines(readLines(longest_stay_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(smr04_with_days = smr04_with_days_data),
+  feature_filenames = longest_stay_filepath
+)
+
+dplyr::glimpse(res$features)
+```
+
+## Feature 5: Total number of days spent in any psychotherapy-related stay
+
+TODO: DESCRIBE
+
+```{r}
+pt_days_filepath <- eider_example("days_in_psychotherapy.json")
+writeLines(readLines(pt_days_filepath))
+```
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(smr04_with_days = smr04_with_days_data),
+  feature_filenames = pt_days_filepath
+)
+
+dplyr::glimpse(res$features)
+```
+
+## Putting it all together
+
+Just for good measure, let's run the entire pipeline with all five of the features above in one go.
+
+```{r}
+res <- run_pipeline(
+  data_sources = list(
+    smr04 = smr04_data_filepath,
+    smr04_with_days = smr04_with_days_data
+  ),
+  feature_filenames = c(
+    pt_episodes_filepath,
+    pt_stays_filepath,
+    total_days_filepath,
+    longest_stay_filepath,
+    pt_days_filepath
+  )
+)
+
+dplyr::glimpse(res$features)
+```
