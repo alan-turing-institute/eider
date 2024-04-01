@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -212,11 +213,11 @@
 <p>and suppose we would like to count the number of times each person has had a diagnosis of “B”. This is a <code>transformation_type</code> of <code>"count"</code>; but if we do not perform any filtering, <code>"count"</code> will simply return the number of times each person appears in this dataframe.</p>
 <p>The following JSON is provided as <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/filter1.json" class="external-link"><code>json_examples/filter1.json</code></a>:</p>
 <pre><code>{
-    "output_feature_name": "unfiltered_count",
-    "transformation_type": "count",
-    "source_file": "input_table",
-    "grouping_column": "id",
-    "absent_default_value": 0
+  "output_feature_name": "unfiltered_count",
+  "transformation_type": "count",
+  "source_file": "input_table",
+  "grouping_column": "id",
+  "absent_default_value": 0
 }</code></pre>
 <p>Passing this into <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code> will give us the following result:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -232,16 +233,18 @@
 <span><span class="co">#&gt; 3  3                1</span></span></code></pre></div>
 <p>Instead of this, if we specify a filter for the <code>diagnosis</code> column (in <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/filter2.json" class="external-link"><code>json_examples/filter2.json</code></a>), we can achieve the desired result:</p>
 <pre><code>{
-    "output_feature_name": "filtered_count",
-    "transformation_type": "count",
-    "source_file": "input_table",
-    "grouping_column": "id",
-    "absent_default_value": 0,
-    "filter": {
-        "column": "diagnosis",
-        "type": "in",
-        "value": ["B"]
-    }
+  "output_feature_name": "filtered_count",
+  "transformation_type": "count",
+  "source_file": "input_table",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "filter": {
+    "column": "diagnosis",
+    "type": "in",
+    "value": [
+      "B"
+    ]
+  }
 }</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
@@ -257,26 +260,28 @@
 <p>Note how patient 3 has a count of 0, because they have never been diagnosed with “B”. This is specified by the <code>absent_default_value</code> key in the JSON.</p>
 <p>If we would like to find diagnoses of “B” only in 2024, then we can add a date filter to the mix, and combine it with the diagnosis filter with an AND filter (<a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/filter3.json" class="external-link"><code>json_examples/filter3.json</code></a>):</p>
 <pre><code>{
-    "output_feature_name": "doubly_filtered_count",
-    "transformation_type": "count",
-    "source_file": "input_table",
-    "grouping_column": "id",
-    "absent_default_value": 0,
-    "filter": {
-        "type": "and",
-        "subfilter": {
-            "diagnosis_filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["B"]
-            },
-            "date_filter": {
-                "column": "date",
-                "type": "date_gt_eq",
-                "value": "2024-01-01"
-            }
-        }
+  "output_feature_name": "doubly_filtered_count",
+  "transformation_type": "count",
+  "source_file": "input_table",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "filter": {
+    "type": "and",
+    "subfilter": {
+      "diagnosis_filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "B"
+        ]
+      },
+      "date_filter": {
+        "column": "date",
+        "type": "date_gt_eq",
+        "value": "2024-01-01"
+      }
     }
+  }
 }</code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>

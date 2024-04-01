@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -122,27 +123,29 @@
 <p>Consider the following question: <em>how many stays has a patient had since 5 January 2016 in which they had a diagnosis of “B”?</em> For the patient in this table, the answer is 2: both the 2016 and 2017 stays had a diagnosis of “B”, and both <em>stays</em> ended after 5 January 2016.</p>
 <p>If we were to naively try to perform this calculation without accounting for the dates, we could write something like <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing1.json" class="external-link"><code>json_examples/preprocessing1.json</code></a>:</p>
 <pre><code>{
-    "output_feature_name": "naive",
-    "transformation_type": "nunique",
-    "source_file": "input_table",
-    "aggregation_column": "cis_marker",
-    "grouping_column": "id",
-    "absent_default_value": 0,
-    "filter": {
-        "type": "and",
-        "subfilter": {
-            "date_filter": {
-                "column": "discharge_date",
-                "type": "date_gt_eq",
-                "value": "2016-01-05"
-            },
-            "diagnosis_filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["B"]
-            }
-        }
+  "output_feature_name": "naive",
+  "transformation_type": "nunique",
+  "source_file": "input_table",
+  "aggregation_column": "cis_marker",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "filter": {
+    "type": "and",
+    "subfilter": {
+      "date_filter": {
+        "column": "discharge_date",
+        "type": "date_gt_eq",
+        "value": "2016-01-05"
+      },
+      "diagnosis_filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "B"
+        ]
+      }
     }
+  }
 }</code></pre>
 <p>Running this would give:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -213,32 +216,41 @@
 </h2>
 <p>We can now rewrite the feature JSON to include the preprocessing step (<a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing2.json" class="external-link"><code>json_examples/preprocessing2.json</code></a>):</p>
 <pre><code>{
-    "output_feature_name": "correct",
-    "transformation_type": "nunique",
-    "source_file": "input_table",
-    "aggregation_column": "cis_marker",
-    "grouping_column": "id",
-    "absent_default_value": 0,
-    "filter": {
-        "type": "and",
-        "subfilter": {
-            "date_filter": {
-                "column": "discharge_date",
-                "type": "date_gt_eq",
-                "value": "2016-01-05"
-            },
-            "diagnosis_filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["B"]
-            }
-        }
-    },
-    "preprocess": {
-        "on": ["id", "cis_marker"],
-        "retain_min": ["admission_date"],
-        "retain_max": ["discharge_date"]
+  "output_feature_name": "correct",
+  "transformation_type": "nunique",
+  "source_file": "input_table",
+  "aggregation_column": "cis_marker",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "filter": {
+    "type": "and",
+    "subfilter": {
+      "date_filter": {
+        "column": "discharge_date",
+        "type": "date_gt_eq",
+        "value": "2016-01-05"
+      },
+      "diagnosis_filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "B"
+        ]
+      }
     }
+  },
+  "preprocess": {
+    "on": [
+      "id",
+      "cis_marker"
+    ],
+    "retain_min": [
+      "admission_date"
+    ],
+    "retain_max": [
+      "discharge_date"
+    ]
+  }
 }</code></pre>
 <p>and rerunning the pipeline gives us the correct value of 2. Note that although the <code>preprocess</code> object is placed after the <code>filter</code> object in the JSON, the preprocessing is always done <em>prior</em> to filtering. The order of the keys in the JSON has no effect whatsoever on the result.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -267,21 +279,26 @@
 <span><span class="co">#&gt; 4  1     2017-01-01     2017-01-08          3                  1         B    7</span></span></code></pre></div>
 <p>Now consider a different question, which is: <em>how many stays has a patient had which lasted for a week or more?</em> To answer this, we need to first sum up the <code>days</code> for each stay, and we can then filter based on this sum. This is accomplished with <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing3.json" class="external-link"><code>json_examples/preprocessing3.json</code></a>:</p>
 <pre><code>{
-    "output_feature_name": "using_sum",
-    "transformation_type": "nunique",
-    "source_file": "input_table",
-    "aggregation_column": "cis_marker",
-    "grouping_column": "id",
-    "absent_default_value": 0,
-    "filter": {
-        "column": "days",
-        "type": "gt_eq",
-        "value": 7
-    },
-    "preprocess": {
-        "on": ["id", "cis_marker"],
-        "replace_with_sum": ["days"]
-    }
+  "output_feature_name": "using_sum",
+  "transformation_type": "nunique",
+  "source_file": "input_table",
+  "aggregation_column": "cis_marker",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "filter": {
+    "column": "days",
+    "type": "gt_eq",
+    "value": 7
+  },
+  "preprocess": {
+    "on": [
+      "id",
+      "cis_marker"
+    ],
+    "replace_with_sum": [
+      "days"
+    ]
+  }
 }</code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>

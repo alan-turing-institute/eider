@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -94,7 +95,7 @@
 <code class="sourceCode R"><span><span class="va">pis_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_pis_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pis_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpAZFHI1/temp_libpath17401b8c3978/eider/extdata/random_pis_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpfsQ0DT/temp_libpath1782207afb13/eider/extdata/random_pis_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -239,8 +240,11 @@
 <span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
 <span><span class="co">#&gt;   "aggregation_column": "num_items",</span></span>
 <span><span class="co">#&gt;   "preprocess": {</span></span>
-<span><span class="co">#&gt;       "on": ["id", "paid_date"],</span></span>
-<span><span class="co">#&gt;       "replace_with_sum": "num_items"</span></span>
+<span><span class="co">#&gt;     "on": [</span></span>
+<span><span class="co">#&gt;       "id",</span></span>
+<span><span class="co">#&gt;       "paid_date"</span></span>
+<span><span class="co">#&gt;     ],</span></span>
+<span><span class="co">#&gt;     "replace_with_sum": "num_items"</span></span>
 <span><span class="co">#&gt;   },</span></span>
 <span><span class="co">#&gt;   "output_feature_name": "max_drugs_in_day"</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>

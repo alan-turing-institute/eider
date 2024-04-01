@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -94,7 +95,7 @@
 <code class="sourceCode R"><span><span class="va">ae_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ae_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ae_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpAZFHI1/temp_libpath17401b8c3978/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpfsQ0DT/temp_libpath1782207afb13/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -290,53 +291,57 @@
 <code class="sourceCode R"><span><span class="va">ae_neurology_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"ae_attendances_neurology_2017.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ae_neurology_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;     "source_file": "ae",</span></span>
-<span><span class="co">#&gt;     "transformation_type": "count",</span></span>
-<span><span class="co">#&gt;     "grouping_column": "id",</span></span>
-<span><span class="co">#&gt;     "absent_default_value": 0,</span></span>
-<span><span class="co">#&gt;     "output_feature_name": "total_neurology_ae_attendances",</span></span>
-<span><span class="co">#&gt;     "filter": {</span></span>
+<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "transformation_type": "count",</span></span>
+<span><span class="co">#&gt;   "grouping_column": "id",</span></span>
+<span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
+<span><span class="co">#&gt;   "output_feature_name": "total_neurology_ae_attendances",</span></span>
+<span><span class="co">#&gt;   "filter": {</span></span>
+<span><span class="co">#&gt;     "type": "and",</span></span>
+<span><span class="co">#&gt;     "subfilter": {</span></span>
+<span><span class="co">#&gt;       "date": {</span></span>
 <span><span class="co">#&gt;         "type": "and",</span></span>
 <span><span class="co">#&gt;         "subfilter": {</span></span>
-<span><span class="co">#&gt;             "date": {</span></span>
-<span><span class="co">#&gt;                 "type": "and",</span></span>
-<span><span class="co">#&gt;                 "subfilter": {</span></span>
-<span><span class="co">#&gt;                     "date1": {</span></span>
-<span><span class="co">#&gt;                         "column": "date",</span></span>
-<span><span class="co">#&gt;                         "type": "date_gt_eq",</span></span>
-<span><span class="co">#&gt;                         "value": "2017-01-01"</span></span>
-<span><span class="co">#&gt;                     },</span></span>
-<span><span class="co">#&gt;                     "date2": {</span></span>
-<span><span class="co">#&gt;                         "column": "date",</span></span>
-<span><span class="co">#&gt;                         "type": "date_lt_eq",</span></span>
-<span><span class="co">#&gt;                         "value": "2017-12-31"</span></span>
-<span><span class="co">#&gt;                     }</span></span>
-<span><span class="co">#&gt;                 }</span></span>
-<span><span class="co">#&gt;             },</span></span>
-<span><span class="co">#&gt;             "diag": {</span></span>
-<span><span class="co">#&gt;                 "type": "or",</span></span>
-<span><span class="co">#&gt;                 "subfilter": {</span></span>
-<span><span class="co">#&gt;                     "diag1": {</span></span>
-<span><span class="co">#&gt;                         "column": "diagnosis_1",</span></span>
-<span><span class="co">#&gt;                         "type": "in",</span></span>
-<span><span class="co">#&gt;                         "value": [</span></span>
-<span><span class="co">#&gt;                             13</span></span>
-<span><span class="co">#&gt;                         ]</span></span>
-<span><span class="co">#&gt;                     },</span></span>
-<span><span class="co">#&gt;                     "diag2": {</span></span>
-<span><span class="co">#&gt;                         "column": "diagnosis_2",</span></span>
-<span><span class="co">#&gt;                         "type": "in",</span></span>
-<span><span class="co">#&gt;                         "value": [13]</span></span>
-<span><span class="co">#&gt;                     },</span></span>
-<span><span class="co">#&gt;                     "diag3": {</span></span>
-<span><span class="co">#&gt;                         "column": "diagnosis_3",</span></span>
-<span><span class="co">#&gt;                         "type": "in",</span></span>
-<span><span class="co">#&gt;                         "value": [13]</span></span>
-<span><span class="co">#&gt;                     }</span></span>
-<span><span class="co">#&gt;                 }</span></span>
-<span><span class="co">#&gt;             }</span></span>
+<span><span class="co">#&gt;           "date1": {</span></span>
+<span><span class="co">#&gt;             "column": "date",</span></span>
+<span><span class="co">#&gt;             "type": "date_gt_eq",</span></span>
+<span><span class="co">#&gt;             "value": "2017-01-01"</span></span>
+<span><span class="co">#&gt;           },</span></span>
+<span><span class="co">#&gt;           "date2": {</span></span>
+<span><span class="co">#&gt;             "column": "date",</span></span>
+<span><span class="co">#&gt;             "type": "date_lt_eq",</span></span>
+<span><span class="co">#&gt;             "value": "2017-12-31"</span></span>
+<span><span class="co">#&gt;           }</span></span>
 <span><span class="co">#&gt;         }</span></span>
+<span><span class="co">#&gt;       },</span></span>
+<span><span class="co">#&gt;       "diag": {</span></span>
+<span><span class="co">#&gt;         "type": "or",</span></span>
+<span><span class="co">#&gt;         "subfilter": {</span></span>
+<span><span class="co">#&gt;           "diag1": {</span></span>
+<span><span class="co">#&gt;             "column": "diagnosis_1",</span></span>
+<span><span class="co">#&gt;             "type": "in",</span></span>
+<span><span class="co">#&gt;             "value": [</span></span>
+<span><span class="co">#&gt;               13</span></span>
+<span><span class="co">#&gt;             ]</span></span>
+<span><span class="co">#&gt;           },</span></span>
+<span><span class="co">#&gt;           "diag2": {</span></span>
+<span><span class="co">#&gt;             "column": "diagnosis_2",</span></span>
+<span><span class="co">#&gt;             "type": "in",</span></span>
+<span><span class="co">#&gt;             "value": [</span></span>
+<span><span class="co">#&gt;               13</span></span>
+<span><span class="co">#&gt;             ]</span></span>
+<span><span class="co">#&gt;           },</span></span>
+<span><span class="co">#&gt;           "diag3": {</span></span>
+<span><span class="co">#&gt;             "column": "diagnosis_3",</span></span>
+<span><span class="co">#&gt;             "type": "in",</span></span>
+<span><span class="co">#&gt;             "value": [</span></span>
+<span><span class="co">#&gt;               13</span></span>
+<span><span class="co">#&gt;             ]</span></span>
+<span><span class="co">#&gt;           }</span></span>
+<span><span class="co">#&gt;         }</span></span>
+<span><span class="co">#&gt;       }</span></span>
 <span><span class="co">#&gt;     }</span></span>
+<span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 <p>This feature can be run in the same way as the previous one. To make things slightly more interesting, we will provide both features to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code> at the same time:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">

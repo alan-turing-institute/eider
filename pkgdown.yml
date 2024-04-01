@@ -7,11 +7,12 @@ articles:
   examples_ae: examples_ae.html
   examples_ltc: examples_ltc.html
   examples_pis: examples_pis.html
+  examples_smr04: examples_smr04.html
   features: features.html
   filtering: filtering.html
   logging: logging.html
   preprocessing: preprocessing.html
-last_built: 2024-04-01T00:15Z
+last_built: 2024-04-01T00:40Z
 urls:
   reference: https://alan-turing-institute.github.io/eider/docs/reference
   article: https://alan-turing-institute.github.io/eider/docs/articles

@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -141,32 +142,36 @@
 <p>and the number of “B” diagnoses would be exactly identical to this, except with “A” replaced with “B”.</p>
 <p>The combination feature we seek can thus be specified as in <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/combination1.json" class="external-link"><code>json_examples/combination1.json</code></a>. Each subfeature is exactly the same as above, except that the <code>output_feature_name</code> key is omitted:</p>
 <pre><code>{
-    "output_feature_name": "max_of_A_and_B",
-    "transformation_type": "combine_max",
-    "subfeature": {
-        "num_A": {
-            "source_file": "input_table",
-            "grouping_column": "id",
-            "transformation_type": "count",
-            "absent_default_value": 0,
-            "filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["A"]
-            }
-        },
-        "num_B": {
-            "source_file": "input_table",
-            "grouping_column": "id",
-            "transformation_type": "count",
-            "absent_default_value": 0,
-            "filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["B"]
-            }
-        }
+  "output_feature_name": "max_of_A_and_B",
+  "transformation_type": "combine_max",
+  "subfeature": {
+    "num_A": {
+      "source_file": "input_table",
+      "grouping_column": "id",
+      "transformation_type": "count",
+      "absent_default_value": 0,
+      "filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "A"
+        ]
+      }
+    },
+    "num_B": {
+      "source_file": "input_table",
+      "grouping_column": "id",
+      "transformation_type": "count",
+      "absent_default_value": 0,
+      "filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "B"
+        ]
+      }
     }
+  }
 }</code></pre>
 <p>Running this gives us the expected values of 4 and 2 for the two patients respectively:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -191,34 +196,38 @@
 </ul>
 <p>The result is <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/combination2.json" class="external-link"><code>json_examples/combination2.json</code></a>:</p>
 <pre><code>{
-    "output_feature_name": "linear",
-    "transformation_type": "combine_linear",
-    "subfeature": {
-        "A_score": {
-            "weight": 10,
-            "source_file": "input_table",
-            "grouping_column": "id",
-            "transformation_type": "count",
-            "absent_default_value": 0,
-            "filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["A"]
-            }
-        },
-        "B_score": {
-            "weight": 20,
-            "source_file": "input_table",
-            "grouping_column": "id",
-            "transformation_type": "count",
-            "absent_default_value": 0,
-            "filter": {
-                "column": "diagnosis",
-                "type": "in",
-                "value": ["B"]
-            }
-        }
+  "output_feature_name": "linear",
+  "transformation_type": "combine_linear",
+  "subfeature": {
+    "A_score": {
+      "weight": 10,
+      "source_file": "input_table",
+      "grouping_column": "id",
+      "transformation_type": "count",
+      "absent_default_value": 0,
+      "filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "A"
+        ]
+      }
+    },
+    "B_score": {
+      "weight": 20,
+      "source_file": "input_table",
+      "grouping_column": "id",
+      "transformation_type": "count",
+      "absent_default_value": 0,
+      "filter": {
+        "column": "diagnosis",
+        "type": "in",
+        "value": [
+          "B"
+        ]
+      }
     }
+  }
 }</code></pre>
 <p>and running it:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">

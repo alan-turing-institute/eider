@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -117,16 +118,18 @@
 </h2>
 <p>Suppose we want to extract a feature corresponding to the total number of times a patient attended for reason 6. <code>eider</code> requires that the feature is specified as JSON, which looks like this:</p>
 <pre><code>{
-    "transformation_type": "count",
-    "source_file": "attendances",
-    "grouping_column": "patient_id",
-    "absent_default_value": 0,
-    "output_feature_name": "total_attendances",
-    "filter": {
-        "column": "attendance_reason",
-        "type": "in",
-        "value": [6]
-    }
+  "transformation_type": "count",
+  "source_file": "attendances",
+  "grouping_column": "patient_id",
+  "absent_default_value": 0,
+  "output_feature_name": "total_attendances",
+  "filter": {
+    "column": "attendance_reason",
+    "type": "in",
+    "value": [
+      6
+    ]
+  }
 }</code></pre>
 <ul>
 <li>

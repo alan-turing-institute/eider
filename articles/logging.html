@@ -59,6 +59,7 @@
     <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
     <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
     <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
+    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
   </div>
 </li>
       </ul>
@@ -148,15 +149,15 @@
 <h3 id="data-type-mismatch">Data type mismatch<a class="anchor" aria-label="anchor" href="#data-type-mismatch"></a>
 </h3>
 <pre><code>{
-    "source_file": "ae2",
-    "transformation_type": "COUNT",
-    "grouping_column": "id",
-    "output_feature_name": "something",
-    "filter": {
-        "column": "diagnosis_1",
-        "type": "in",
-        "value": "a string"
-    }
+  "source_file": "ae2",
+  "transformation_type": "COUNT",
+  "grouping_column": "id",
+  "output_feature_name": "something",
+  "filter": {
+    "column": "diagnosis_1",
+    "type": "in",
+    "value": "a string"
+  }
 }</code></pre>
 <p>This example (<a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/logging3.json" class="external-link"><code>json_examples/logging3.json</code></a>) specifies that the table should be filtered to only retain rows where <code>diagnosis_1</code> is equal to <code>"a string"</code>, but in the actual table, <code>diagnosis_1</code> is an integer.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
