@@ -223,3 +223,12 @@ results$features
 ```
 
 Patient 2's diagnosis has been excluded this time because the corresponding entry came in 2023.
+
+## See also
+
+Filtering is used widely in the _Gallery_ examples.
+See, for example:
+
+* [PIS feature 2](examples_pis.html#feature-2-number-of-drugs-prescribed-since-2016) and [SMR04 features 1 and 2](examples_smr04.html#feature-1-number-of-episodes-associated-with-a-psychotherapy-specialty) both use basic filters;
+* [The LTC examples](examples_ltc.html) use filters to remove rows with missing data (`NA` values);
+* [A&E feature 2](examples_ae.html#feature-2-total-number-of-neurology-attendances-in-2017) has a doubly nested compound filter.

@@ -185,3 +185,7 @@ results <- run_pipeline(
 
 results$features
 ```
+
+## See also
+
+The _Gallery_ section contains two examples of preprocessing in action: both [PIS feature 4](examples_pis.html#feature-4-maximum-number-of-items-prescribed-in-a-single-day) and [SMR04 feature 4](examples_smr04.html#feature-4-longest-single-stay-in-hospital) use the `replace_with_sum` preprocessing function.

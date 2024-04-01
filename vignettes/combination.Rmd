@@ -117,3 +117,8 @@ results$features
 ```
 
 Note that for a simple unweighted sum of features, all weights can be set to 1; and to take the difference between two features, one weight can be set to 1 and the other to -1.
+
+
+## See also
+
+[Feature 3 in the LTC example vignette](examples_ltc.html#feature-3-number-of-conditions) is an example of a combination feature, in this case, a sum of three subfeatures.
