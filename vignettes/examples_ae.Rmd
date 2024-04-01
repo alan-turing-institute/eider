@@ -51,9 +51,6 @@ This simplified table has 6 columns:
 * `diagnosis_1`, `diagnosis_2`, and `diagnosis_3`, which are numeric values indicating [the patient's diagnoses](https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/diagnosis-ae/).
   Note that `diagnosis_2` and `diagnosis_3` may not necessarily exist for every entry.
 
-From the first row in this example, we can see that patient 15 was admitted on 12 June 2017.
-They had 3 unique diagnosis codes: 1, 18, and 7.
-
 ## Feature 1: Total number of attendances
 
 As a first example, we will calculate the total number of attendances for each patient.

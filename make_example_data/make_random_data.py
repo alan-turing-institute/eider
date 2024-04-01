@@ -2,26 +2,13 @@ import pandas as pd
 import numpy as np
 from datetime import timedelta
 
-rng = np.random.default_rng(seed=1234)
+SEED = 1234
 
-def make_random_attendance_cat(categories, nrows):
-    return rng.choice(categories, nrows)
-
-def make_random_IDs(max_ID, nrows):
-    return rng.choice(max_ID, nrows)
-
-def make_random_dates(start, end, nrows, replace=True):
+def make_random_dates(rng, start, end, nrows, replace=True):
     dates = pd.date_range(start, end).to_list()
     return list(rng.choice(dates, size=nrows, replace=replace))
 
-def make_random_bnf_secs(min_sec, max_sec):
-    numbers = [str(i).zfill(4) for i in range(min_sec, max_sec)]
-    return list(rng.choice(numbers, size=nrows, replace=True))
-
-def make_random_num_prescribed_items(nrows):
-    return rng.poisson(2, nrows) + 1
-
-def make_random_diagnosis_choices(diagnosis_ranges, nrows, n=3):
+def make_random_diagnosis_choices(rng, diagnosis_ranges, nrows, n=3):
     if n > len(diagnosis_ranges):
         raise ValueError("n must be less than or equal to len(ranges)")
 
@@ -40,12 +27,17 @@ def make_random_diagnosis_choices(diagnosis_ranges, nrows, n=3):
 
 
 def make_random_pis_data(max_ID, nrows, start_date, end_date, bnf_sections):
+    rng = np.random.default_rng(seed=SEED)
     pis_data = pd.DataFrame({
         'id': rng.choice(max_ID, nrows),
-        'paid_date': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
+        'paid_date': make_random_dates(rng=rng, start=start_date,
+                                       end=end_date, nrows=nrows), 
         'bnf_section': rng.choice(bnf_sections, nrows),
-        'num_items': make_random_num_prescribed_items(nrows=nrows)
+        'num_items': rng.poisson(2, nrows) + 1,
         }, index=range(nrows))
+    # Replace the last 10 lines with the first 10 lines to make the vignette
+    # examples look a bit different
+    pis_data.iloc[-10:] = pis_data.iloc[:10].values
     pis_data.to_csv("./random_pis_data.csv", index=False)
 
 def make_random_ae_data(max_ID: int,
@@ -55,12 +47,15 @@ def make_random_ae_data(max_ID: int,
                         diagnosis_choice: list[int],
                         attendance_categories: list[str]
                         ):
-    d1, d2, d3 = make_random_diagnosis_choices(diagnosis_ranges=diagnosis_choice,
+    rng = np.random.default_rng(seed=SEED)
+    d1, d2, d3 = make_random_diagnosis_choices(rng=rng,
+                                               diagnosis_ranges=diagnosis_choice,
                                                nrows=nrows,
                                                n=3)
 
     ae_data = pd.DataFrame({'id': rng.choice(a=max_ID, size=nrows), 
-                            'date': make_random_dates(start=start_date, end=end_date, nrows=nrows), 
+                            'date': make_random_dates(rng=rng, start=start_date,
+                                                      end=end_date, nrows=nrows), 
                             'attendance_category': rng.choice(attendance_categories, nrows),
                             'diagnosis_1': d1,
                             'diagnosis_2': d2,
@@ -68,7 +63,8 @@ def make_random_ae_data(max_ID: int,
     ae_data.to_csv("./random_ae_data.csv", index=False)
 
 def make_smr04_data(start_date, end_date, nstays, max_ID):
-    start_dates = make_random_dates(start=start_date,
+    rng = np.random.default_rng(seed=SEED)
+    start_dates = make_random_dates(rng=rng, start=start_date,
                                     end=end_date,
                                     nrows=nstays,
                                     replace=False)
@@ -143,20 +139,21 @@ def make_smr04_data(start_date, end_date, nstays, max_ID):
     smr04.to_csv("./random_smr04_data.csv", index=False)
 
 def make_ltc_data(start_date, end_date, max_ID):
+    rng = np.random.default_rng(seed=SEED)
     conditions = ['asthma', 'diabetes', 'parkinsons']
     data_dict = {'id': [], **{c: [] for c in conditions}}
     for i in range(max_ID):
         data_dict['id'].append(i)
         for c in conditions:
             if rng.random() < 0.2:
-                condition_start_date = make_random_dates(start=start_date,
-                                                         end=end_date,
-                                                         nrows=1)[0]
+                condition_start_date = make_random_dates(rng=rng, start=start_date,
+                                                         end=end_date, nrows=1)[0]
                 condition_start_date = condition_start_date.strftime("%Y-%m-%d")
             else:
                 condition_start_date = ""
             data_dict[c].append(condition_start_date)
-    pd.DataFrame(data_dict).to_csv("./random_ltc_data.csv", index=False)
+    df = pd.DataFrame(data_dict)
+    df.to_csv("./random_ltc_data.csv", index=False)
 
 # https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/attendance-category-ae/
 
