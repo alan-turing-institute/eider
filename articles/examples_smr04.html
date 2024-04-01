@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span><span class="va">smr04_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_smr04_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">smr04_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpfsQ0DT/temp_libpath1782207afb13/eider/extdata/random_smr04_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpNKanfi/temp_libpath17239f36a7c/eider/extdata/random_smr04_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -135,8 +135,36 @@
 <div class="section level2">
 <h2 id="feature-1-number-of-episodes-associated-with-a-psychotherapy-specialty">Feature 1: Number of episodes associated with a psychotherapy specialty<a class="anchor" aria-label="anchor" href="#feature-1-number-of-episodes-associated-with-a-psychotherapy-specialty"></a>
 </h2>
-<p>TODO DESCRIBE</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>We begin with a simple example: counting the number of episodes (i.e. number of rows) associated with a psychotherapy specialty, which corresponds to any of the codes <code>"G6"</code>, <code>"G61"</code>, <code>"G62"</code>, or <code>"G63"</code>. This is a fairly straightforward <code>count</code> transformation_type, with a filter to select for those values. We can, in principle, express this as a compound filter with type <code>"or"</code>, as the following shows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>  <span class="dt">"filter"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>    <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"or"</span><span class="fu">,</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>    <span class="dt">"subfilter"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>      <span class="dt">"g6"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>        <span class="dt">"column"</span><span class="fu">:</span> <span class="st">"specialty"</span><span class="fu">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"in"</span><span class="fu">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a>        <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"G6"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a>      <span class="fu">},</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a>      <span class="dt">"g61"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a>        <span class="dt">"column"</span><span class="fu">:</span> <span class="st">"specialty"</span><span class="fu">,</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"in"</span><span class="fu">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>        <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"G61"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>      <span class="fu">},</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>      <span class="dt">"g62"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>        <span class="dt">"column"</span><span class="fu">:</span> <span class="st">"specialty"</span><span class="fu">,</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"in"</span><span class="fu">,</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>        <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"G62"</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>      <span class="fu">},</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>      <span class="dt">"g63"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>        <span class="dt">"column"</span><span class="fu">:</span> <span class="st">"specialty"</span><span class="fu">,</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"in"</span><span class="fu">,</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a>        <span class="dt">"value"</span><span class="fu">:</span> <span class="st">"G63"</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true"></a>      <span class="fu">}</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true"></a>    <span class="fu">}</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true"></a>  <span class="fu">}</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>However, for filters with type <code>"in"</code>, <code>eider</code> lets the user specify multiple values to compare against, which is much more compact. The resulting feature definition is as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pt_episodes_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"psychotherapy_episodes.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pt_episodes_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -156,7 +184,7 @@
 <span><span class="co">#&gt;     ]</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>smr04 <span class="op">=</span> <span class="va">smr04_data_filepath</span><span class="op">)</span>,</span>
 <span>  feature_filenames <span class="op">=</span> <span class="va">pt_episodes_filepath</span></span>
@@ -171,8 +199,8 @@
 <div class="section level2">
 <h2 id="feature-2-number-of-stays-associated-with-a-psychotherapy-specialty">Feature 2: Number of stays associated with a psychotherapy specialty<a class="anchor" aria-label="anchor" href="#feature-2-number-of-stays-associated-with-a-psychotherapy-specialty"></a>
 </h2>
-<p>TODO DESCRIBE</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>Next, we will count the number of <em>stays</em> associated with a psychotherapy specialty. This is slightly more complicated, as each row corresponds to an episode, not a stay: thus, we cannot simply count the number of rows in the table. Instead, we will need to count the number of unique <code>cis_marker</code> values associated with a psychotherapy specialty, as each <code>cis_marker</code> corresponds to a different stay. This means a transformation type of <code>"nunique"</code>, and an aggregation column of <code>"cis_marker"</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pt_stays_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"psychotherapy_stays.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pt_stays_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -193,7 +221,7 @@
 <span><span class="co">#&gt;     ]</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>smr04 <span class="op">=</span> <span class="va">smr04_data_filepath</span><span class="op">)</span>,</span>
 <span>  feature_filenames <span class="op">=</span> <span class="va">pt_stays_filepath</span></span>
@@ -211,7 +239,7 @@
 <p>The last three features will be concerned with the number of days spent in hospital. In principle, this can be easily calculated from the data we already have: by taking the discharge date and subtracting the admission date, we can obtain the length of each episode.</p>
 <p><code>eider</code> does not yet possess the functionality to preprocess tables in this way (by adding new columns). However, the package <em>does</em> allow you to perform this calculation yourself (e.g. using <code>dplyr</code>), and then add the new table to the pipeline as a new data source. Specifically, data sources do not necessarily need to be CSV filenames; they can simply be data frames themselves.</p>
 <p>Let’s construct this new data frame:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smr04_with_days_data</span> <span class="op">&lt;-</span> <span class="va">smr04_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>days_in_hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">discharge_date</span> <span class="op">-</span> <span class="va">admission_date</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -231,8 +259,8 @@
 <div class="section level2">
 <h2 id="feature-3-total-number-of-days-spent-in-hospital">Feature 3: Total number of days spent in hospital<a class="anchor" aria-label="anchor" href="#feature-3-total-number-of-days-spent-in-hospital"></a>
 </h2>
-<p>TODO DESCRIBE</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>With this new column, we can now calculate the total number of days each patient has spent in hospital. This just requires a <code>sum</code> transformation, where we act on the column that we just added, called <code>days_in_hospital</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">total_days_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"days_in_smr04.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">total_days_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -243,7 +271,8 @@
 <span><span class="co">#&gt;   "aggregation_column": "days_in_hospital",</span></span>
 <span><span class="co">#&gt;   "output_feature_name": "total_days_in_hospital"</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>Notice that the feature above specifies a different <code>"source_file"</code>. This new identifier can then be passed to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>, together with the data frame that we calculated above.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>smr04_with_days <span class="op">=</span> <span class="va">smr04_with_days_data</span><span class="op">)</span>,</span>
 <span>  feature_filenames <span class="op">=</span> <span class="va">total_days_filepath</span></span>
@@ -256,10 +285,12 @@
 <span><span class="co">#&gt; $ total_days_in_hospital <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6, 15, 6, 8, 13, 5, 12, 9, 3, 7, 7, 7, 11, 6, 1…</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="feature-4-longest-stay-in-hospital">Feature 4: Longest stay in hospital<a class="anchor" aria-label="anchor" href="#feature-4-longest-stay-in-hospital"></a>
+<h2 id="feature-4-longest-single-stay-in-hospital">Feature 4: Longest single stay in hospital<a class="anchor" aria-label="anchor" href="#feature-4-longest-single-stay-in-hospital"></a>
 </h2>
-<p>TODO: DESCRIBE</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>In this feature, we are going to calculate the longest single stay in hospital for each patient. To do this, we need to add up the number of days spent in each episode within the same stay, before we take the maximum of these values.</p>
+<p>Because the overall action is to take the maximum, the <code>max</code> transformation type is appropriate here. However, the summation must be accomplished through a preprocessing step. In this step, we need to group the data on the <code>id</code> and <code>cis_marker</code> columns, and then replace the values of <code>days_in_hospital</code> with the sums of the days for all episodes. This will give us a table where each row still corresponds to an episode, but the <code>days_in_hospital</code> column has been modified to contain values for each stay.</p>
+<p>For more details on preprocessing, see the <a href="preprocessing.html">corresponding vignette</a>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">longest_stay_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"longest_stay.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">longest_stay_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
@@ -279,7 +310,7 @@
 <span><span class="co">#&gt;   "aggregation_column": "days_in_hospital",</span></span>
 <span><span class="co">#&gt;   "output_feature_name": "longest_stay"</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>smr04_with_days <span class="op">=</span> <span class="va">smr04_with_days_data</span><span class="op">)</span>,</span>
 <span>  feature_filenames <span class="op">=</span> <span class="va">longest_stay_filepath</span></span>
@@ -292,56 +323,10 @@
 <span><span class="co">#&gt; $ longest_stay <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 5, 4, 3, 4, 3, 5, 6, 1, 3, 5, 3, 6, 4, 4, 3, 7, 7, 7, 6</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="feature-5-total-number-of-days-spent-in-any-psychotherapy-related-stay">Feature 5: Total number of days spent in any psychotherapy-related stay<a class="anchor" aria-label="anchor" href="#feature-5-total-number-of-days-spent-in-any-psychotherapy-related-stay"></a>
-</h2>
-<p>TODO: DESCRIBE</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pt_days_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"days_in_psychotherapy.json"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">pt_days_filepath</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "smr04_with_days",</span></span>
-<span><span class="co">#&gt;   "transformation_type": "sum",</span></span>
-<span><span class="co">#&gt;   "grouping_column": "id",</span></span>
-<span><span class="co">#&gt;   "aggregation_column": "days_in_hospital",</span></span>
-<span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
-<span><span class="co">#&gt;   "preprocess": {</span></span>
-<span><span class="co">#&gt;     "on": [</span></span>
-<span><span class="co">#&gt;       "id",</span></span>
-<span><span class="co">#&gt;       "cis_marker"</span></span>
-<span><span class="co">#&gt;     ],</span></span>
-<span><span class="co">#&gt;     "replace_with_sum": [</span></span>
-<span><span class="co">#&gt;       "days_in_hospital"</span></span>
-<span><span class="co">#&gt;     ]</span></span>
-<span><span class="co">#&gt;   },</span></span>
-<span><span class="co">#&gt;   "output_feature_name": "total_days_in_psychotherapy",</span></span>
-<span><span class="co">#&gt;   "filter": {</span></span>
-<span><span class="co">#&gt;     "column": "specialty",</span></span>
-<span><span class="co">#&gt;     "type": "in",</span></span>
-<span><span class="co">#&gt;     "value": [</span></span>
-<span><span class="co">#&gt;       "G6",</span></span>
-<span><span class="co">#&gt;       "G61",</span></span>
-<span><span class="co">#&gt;       "G62",</span></span>
-<span><span class="co">#&gt;       "G63"</span></span>
-<span><span class="co">#&gt;     ]</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="co">#&gt; }</span></span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
-<span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>smr04_with_days <span class="op">=</span> <span class="va">smr04_with_days_data</span><span class="op">)</span>,</span>
-<span>  feature_filenames <span class="op">=</span> <span class="va">pt_days_filepath</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">features</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 20</span></span>
-<span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ id                          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …</span></span>
-<span><span class="co">#&gt; $ total_days_in_psychotherapy <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10, 15, 6, 7, 10, 1, 4, 12, 0, 5, 5, 7, 17…</span></span></code></pre></div>
-</div>
-<div class="section level2">
 <h2 id="putting-it-all-together">Putting it all together<a class="anchor" aria-label="anchor" href="#putting-it-all-together"></a>
 </h2>
-<p>Just for good measure, let’s run the entire pipeline with all five of the features above in one go.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p>Just for good measure, let’s run the entire pipeline with all four of the features above in one go.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    smr04 <span class="op">=</span> <span class="va">smr04_data_filepath</span>,</span>
@@ -351,20 +336,18 @@
 <span>    <span class="va">pt_episodes_filepath</span>,</span>
 <span>    <span class="va">pt_stays_filepath</span>,</span>
 <span>    <span class="va">total_days_filepath</span>,</span>
-<span>    <span class="va">longest_stay_filepath</span>,</span>
-<span>    <span class="va">pt_days_filepath</span></span>
+<span>    <span class="va">longest_stay_filepath</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">features</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 20</span></span>
-<span><span class="co">#&gt; Columns: 6</span></span>
-<span><span class="co">#&gt; $ id                          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, …</span></span>
-<span><span class="co">#&gt; $ num_psychotherapy_episodes  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 3, 5, 2, 3, 5, 1, 1, 3, 0, 2, 1, 6, 4, 3, …</span></span>
-<span><span class="co">#&gt; $ num_psychotherapy_stays     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 4, 2, 3, 4, 1, 1, 2, 0, 2, 1, 4, 3, 2, …</span></span>
-<span><span class="co">#&gt; $ total_days_in_hospital      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6, 15, 6, 8, 13, 5, 12, 9, 3, 7, 7, 7, 11,…</span></span>
-<span><span class="co">#&gt; $ longest_stay                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 5, 4, 3, 4, 3, 5, 6, 1, 3, 5, 3, 6, 4, …</span></span>
-<span><span class="co">#&gt; $ total_days_in_psychotherapy <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10, 15, 6, 7, 10, 1, 4, 12, 0, 5, 5, 7, 17…</span></span></code></pre></div>
+<span><span class="co">#&gt; Columns: 5</span></span>
+<span><span class="co">#&gt; $ id                         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1…</span></span>
+<span><span class="co">#&gt; $ num_psychotherapy_episodes <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 3, 5, 2, 3, 5, 1, 1, 3, 0, 2, 1, 6, 4, 3, 9…</span></span>
+<span><span class="co">#&gt; $ num_psychotherapy_stays    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2, 4, 2, 3, 4, 1, 1, 2, 0, 2, 1, 4, 3, 2, 6…</span></span>
+<span><span class="co">#&gt; $ total_days_in_hospital     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6, 15, 6, 8, 13, 5, 12, 9, 3, 7, 7, 7, 11, …</span></span>
+<span><span class="co">#&gt; $ longest_stay               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4, 5, 4, 3, 4, 3, 5, 6, 1, 3, 5, 3, 6, 4, 4…</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
