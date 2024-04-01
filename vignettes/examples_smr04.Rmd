@@ -58,7 +58,42 @@ This simplified table has 7 columns:
 
 ## Feature 1: Number of episodes associated with a psychotherapy specialty
 
-TODO DESCRIBE
+We begin with a simple example: counting the number of episodes (i.e. number of rows) associated with a psychotherapy specialty, which corresponds to any of the codes `"G6"`, `"G61"`, `"G62"`, or `"G63"`.
+This is a fairly straightforward `count` transformation_type, with a filter to select for those values.
+We can, in principle, express this as a compound filter with type `"or"`, as the following shows:
+
+```json
+{
+  "filter": {
+    "type": "or",
+    "subfilter": {
+      "g6": {
+        "column": "specialty",
+        "type": "in",
+        "value": "G6"
+      },
+      "g61": {
+        "column": "specialty",
+        "type": "in",
+        "value": "G61"
+      },
+      "g62": {
+        "column": "specialty",
+        "type": "in",
+        "value": "G62"
+      },
+      "g63": {
+        "column": "specialty",
+        "type": "in",
+        "value": "G63"
+      }
+    }
+  }
+}
+```
+
+However, for filters with type `"in"`, `eider` lets the user specify multiple values to compare against, which is much more compact.
+The resulting feature definition is as follows:
 
 ```{r}
 pt_episodes_filepath <- eider_example("psychotherapy_episodes.json")
@@ -76,7 +111,10 @@ dplyr::glimpse(res$features)
 
 ## Feature 2: Number of stays associated with a psychotherapy specialty
 
-TODO DESCRIBE
+Next, we will count the number of _stays_ associated with a psychotherapy specialty.
+This is slightly more complicated, as each row corresponds to an episode, not a stay: thus, we cannot simply count the number of rows in the table.
+Instead, we will need to count the number of unique `cis_marker` values associated with a psychotherapy specialty, as each `cis_marker` corresponds to a different stay.
+This means a transformation type of `"nunique"`, and an aggregation column of `"cis_marker"`.
 
 ```{r}
 pt_stays_filepath <- eider_example("psychotherapy_stays.json")
@@ -114,12 +152,16 @@ In the subsequent sections, we'll provide this new data frame as a data source t
 
 ## Feature 3: Total number of days spent in hospital
 
-TODO DESCRIBE
+With this new column, we can now calculate the total number of days each patient has spent in hospital.
+This just requires a `sum` transformation, where we act on the column that we just added, called `days_in_hospital`.
 
 ```{r}
 total_days_filepath <- eider_example("days_in_smr04.json")
 writeLines(readLines(total_days_filepath))
 ```
+
+Notice that the feature above specifies a different `"source_file"`.
+This new identifier can then be passed to `run_pipeline()`, together with the data frame that we calculated above.
 
 ```{r}
 res <- run_pipeline(
@@ -130,9 +172,17 @@ res <- run_pipeline(
 dplyr::glimpse(res$features)
 ```
 
-## Feature 4: Longest stay in hospital
+## Feature 4: Longest single stay in hospital
 
-TODO: DESCRIBE
+In this feature, we are going to calculate the longest single stay in hospital for each patient.
+To do this, we need to add up the number of days spent in each episode within the same stay, before we take the maximum of these values.
+
+Because the overall action is to take the maximum, the `max` transformation type is appropriate here.
+However, the summation must be accomplished through a preprocessing step.
+In this step, we need to group the data on the `id` and `cis_marker` columns, and then replace the values of `days_in_hospital` with the sums of the days for all episodes.
+This will give us a table where each row still corresponds to an episode, but the `days_in_hospital` column has been modified to contain values for each stay.
+
+For more details on preprocessing, see the [corresponding vignette](preprocessing.html).
 
 ```{r}
 longest_stay_filepath <- eider_example("longest_stay.json")
@@ -148,27 +198,9 @@ res <- run_pipeline(
 dplyr::glimpse(res$features)
 ```
 
-## Feature 5: Total number of days spent in any psychotherapy-related stay
-
-TODO: DESCRIBE
-
-```{r}
-pt_days_filepath <- eider_example("days_in_psychotherapy.json")
-writeLines(readLines(pt_days_filepath))
-```
-
-```{r}
-res <- run_pipeline(
-  data_sources = list(smr04_with_days = smr04_with_days_data),
-  feature_filenames = pt_days_filepath
-)
-
-dplyr::glimpse(res$features)
-```
-
 ## Putting it all together
 
-Just for good measure, let's run the entire pipeline with all five of the features above in one go.
+Just for good measure, let's run the entire pipeline with all four of the features above in one go.
 
 ```{r}
 res <- run_pipeline(
@@ -180,8 +212,7 @@ res <- run_pipeline(
     pt_episodes_filepath,
     pt_stays_filepath,
     total_days_filepath,
-    longest_stay_filepath,
-    pt_days_filepath
+    longest_stay_filepath
   )
 )
 
