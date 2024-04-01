@@ -8,10 +8,10 @@
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {
-          "column": "asthma",
-          "type": "date_gt",
-          "value": "1800-01-01"
-        }
+        "column": "asthma",
+        "type": "date_gt",
+        "value": "1800-01-01"
+      }
     },
     "diabetes": {
       "weight": 1,
@@ -19,10 +19,10 @@
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {
-          "column": "diabetes",
-          "type": "date_gt",
-          "value": "1800-01-01"
-        }
+        "column": "diabetes",
+        "type": "date_gt",
+        "value": "1800-01-01"
+      }
     },
     "parkinsons": {
       "weight": 1,
@@ -30,10 +30,10 @@
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {
-          "column": "parkinsons",
-          "type": "date_gt",
-          "value": "1800-01-01"
-        }
+        "column": "parkinsons",
+        "type": "date_gt",
+        "value": "1800-01-01"
+      }
     }
   }
 }

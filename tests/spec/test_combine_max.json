@@ -8,10 +8,12 @@
       "grouping_column": "id",
       "absent_default_value": 0,
       "filter": {
-          "column": "diagnosis_2",
-          "type": "in",
-          "value": [101]
-        }
+        "column": "diagnosis_2",
+        "type": "in",
+        "value": [
+          101
+        ]
+      }
     },
     "sum_of_all_diagnosis_1": {
       "source_file": "ae2",

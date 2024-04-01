@@ -1,12 +1,14 @@
 {
-    "output_feature_name": "filtered_count",
-    "transformation_type": "count",
-    "source_file": "input_table",
-    "grouping_column": "id",
-    "absent_default_value": 0,
-    "filter": {
-        "column": "diagnosis",
-        "type": "in",
-        "value": ["B"]
-    }
+  "output_feature_name": "filtered_count",
+  "transformation_type": "count",
+  "source_file": "input_table",
+  "grouping_column": "id",
+  "absent_default_value": 0,
+  "filter": {
+    "column": "diagnosis",
+    "type": "in",
+    "value": [
+      "B"
+    ]
+  }
 }

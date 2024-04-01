@@ -8,10 +8,12 @@
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {
-          "column": "diagnosis_1",
-          "type": "in",
-          "value": [101]
-        }
+        "column": "diagnosis_1",
+        "type": "in",
+        "value": [
+          101
+        ]
+      }
     },
     "sum_of_all_diagnosis_1": {
       "weight": 1,
