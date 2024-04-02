@@ -1,5 +1,5 @@
 {
-  "source_file": "ae2",
+  "source_table": "ae2",
   "transformation_type": "nunique",
   "aggregation_column": "diagnosis_1",
   "grouping_column": "id",

@@ -4,7 +4,7 @@
   "subfeature": {
     "asthma": {
       "weight": 1,
-      "source_file": "ltc",
+      "source_table": "ltc",
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {
@@ -15,7 +15,7 @@
     },
     "diabetes": {
       "weight": 1,
-      "source_file": "ltc",
+      "source_table": "ltc",
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {
@@ -26,7 +26,7 @@
     },
     "parkinsons": {
       "weight": 1,
-      "source_file": "ltc",
+      "source_table": "ltc",
       "transformation_type": "present",
       "grouping_column": "id",
       "filter": {

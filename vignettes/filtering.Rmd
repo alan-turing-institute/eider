@@ -81,7 +81,7 @@ selects for people who are 18, 19, or 20 years old; and likewise if the `date_of
 
 selects for people born on or after January 1, 2000.
 
-As a reminder, the table to be filtered is passed as the `source_file` key in the feature JSON.
+As a reminder, the table to be filtered is passed as the `source_table` key in the feature JSON.
 This is described in the [introductory vignette](eider.html).
 
 

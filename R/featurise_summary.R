@@ -5,7 +5,7 @@
 #' of: 'sum', 'nunique', 'mean', 'median', 'sd'.
 #' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
-#'  - source_file:         Filename of the source table to read from.
+#'  - source_table:         Filename of the source table to read from.
 #'  - filter:      A filter object to apply to the source table.
 #'  - aggregation_column:  Name of the column which provides the values to be
 #'  -                      summarised over.
@@ -66,7 +66,7 @@ featurise_summary <- function(mode,
   )
 
   # Validate spec
-  source_table <- validate_source_file(spec, all_tables, context)
+  source_table <- validate_source_table(spec, all_tables, context)
   source_table <- preprocess_table(source_table, spec, context)
   output_feature_name <- validate_output_feature_name(spec, context)
   aggregation_column <- validate_column_present(

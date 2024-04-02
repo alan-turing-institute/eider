@@ -1,5 +1,5 @@
 {
-  "source_file": "ae",
+  "source_table": "ae",
   "grouping_column": "id",
   "transformation_type": "time_since",
   "time_units": "days",

@@ -160,7 +160,7 @@ total_days_filepath <- eider_example("days_in_smr04.json")
 writeLines(readLines(total_days_filepath))
 ```
 
-Notice that the feature above specifies a different `"source_file"`.
+Notice that the feature above specifies a different `"source_table"`.
 This new identifier can then be passed to `run_pipeline()`, together with the data frame that we calculated above.
 
 ```{r}

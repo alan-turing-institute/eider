@@ -3,7 +3,7 @@
   "transformation_type": "combine_max",
   "subfeature": {
     "num_A": {
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,
@@ -16,7 +16,7 @@
       }
     },
     "num_B": {
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,

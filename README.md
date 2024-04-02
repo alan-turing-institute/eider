@@ -17,7 +17,7 @@ function documentation).
 
 ``` json
 {
-  "source_file": "ae2",
+  "source_table": "ae2",
   "transformation_type": "COUNT",
   "grouping_column": "id",
   "absent_default_value": 0,

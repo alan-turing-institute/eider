@@ -1,5 +1,5 @@
 {
-  "source_file": "ae2",
+  "source_table": "ae2",
   "transformation_type": "time_since",
   "grouping_column": "id",
   "output_feature_name": "days_since_first_101_diag",

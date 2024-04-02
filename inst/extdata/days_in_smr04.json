@@ -1,5 +1,5 @@
 {
-  "source_file": "smr04_with_days",
+  "source_table": "smr04_with_days",
   "transformation_type": "sum",
   "grouping_column": "id",
   "absent_default_value": 0,

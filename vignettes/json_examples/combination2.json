@@ -4,7 +4,7 @@
   "subfeature": {
     "A_score": {
       "weight": 10,
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,
@@ -18,7 +18,7 @@
     },
     "B_score": {
       "weight": 20,
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,

@@ -3,7 +3,7 @@
 #'
 #' @param all_tables List of all input tables (passed in from read_data).
 #' @param spec A list containing the following elements:
-#'  - source_file:         Filename of the source table to read from.
+#'  - source_table:         Filename of the source table to read from.
 #'  - filter:      A filter object to apply to the source table.
 #'  - output_feature_name: Name of the output column.
 #'  - grouping_column:     Name of the column to group by.
@@ -29,7 +29,7 @@ featurise_count <- function(all_tables,
   trace_context(context)
 
   # Validate spec
-  source_table <- validate_source_file(spec, all_tables, context)
+  source_table <- validate_source_table(spec, all_tables, context)
   source_table <- preprocess_table(source_table, spec, context)
   output_feature_name <- validate_output_feature_name(spec, context)
   grouping_column <- validate_column_present(

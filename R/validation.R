@@ -1,12 +1,12 @@
-#' Checks that `spec$source_file` is a single string and that it is a key in
+#' Checks that `spec$source_table` is a single string and that it is a key in
 #' `all_tables`. If so, returns the table itself (or the file path of the
 #' table).
 #' @noRd
-validate_source_file <- function(spec, all_tables, context) {
-  n <- spec$source_file
+validate_source_table <- function(spec, all_tables, context) {
+  n <- spec$source_table
 
   if (!(is.character(n) && length(n) == 1)) {
-    error_not_string(n, "source_file", context)
+    error_not_string(n, "source_table", context)
   }
 
   if (!(n %in% names(all_tables))) {
@@ -14,7 +14,7 @@ validate_source_file <- function(spec, all_tables, context) {
       message = paste0(
         "The name '",
         n,
-        "' supplied for 'source_file' was not provided as an input table."
+        "' supplied for 'source_table' was not provided as an input table."
       ),
       context = context
     )

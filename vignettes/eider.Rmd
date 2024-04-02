@@ -67,7 +67,7 @@ writeLines(readLines("json_examples/eider.json"))
 
 - `transformation_type` tells you what kind of overall operation is being performed.
   This determines which other fields are required in the JSON.
-- `source_file` specifies the name of the data source to be used in the list of data sources.
+- `source_table` specifies the name of the data source to be used in the list of data sources.
 - `grouping_column` specifies the columns to group by.
 - `absent_default_value` specifies what to do if there is no data for a particular patient ID.
 - `output_feature_name` specifies the name of the column to be created in the output table.
@@ -98,7 +98,7 @@ As an alternative to placing the JSON in a file and providing the filename to `r
 ```{r}
 json_string <- '{
     "transformation_type": "count",
-    "source_file": "attendances",
+    "source_table": "attendances",
     "grouping_column": "patient_id",
     "absent_default_value": 0,
     "output_feature_name": "total_attendances",

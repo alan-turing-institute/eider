@@ -12,7 +12,7 @@ preprocess_table <- function(input_table, spec, context = NULL) {
   if ("preprocess" %in% names(spec)) {
     debug_context(
       context,
-      message = paste0("Preprocessing table ", spec$source_file)
+      message = paste0("Preprocessing table ", spec$source_table)
     )
 
     on <- validate_columns_present(

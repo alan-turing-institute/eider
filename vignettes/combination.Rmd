@@ -34,7 +34,7 @@ The value of `transformation_type` can be:
 
 On top of these, combination features require a `subfeature` key, which is itself a JSON object.
 Its keys can be any string (though it helps to be descriptive), and its values are the JSON objects which define those subfeatures, _sans_ `output_feature_name` (because those are not required).
-Note that each subfeature may have a different `source_file` key, which allows the subfeatures to come from different input tables.
+Note that each subfeature may have a different `source_table` key, which allows the subfeatures to come from different input tables.
 
 For linear combinations, each subfeature must further contain a `weight` key, which is a number that determines the coefficients of each feature in the linear combination.
 
@@ -58,7 +58,7 @@ The number of "A" diagnoses would ordinarily be specified using the following JS
 ```json
 {
     "output_feature_name": "num_A",
-    "source_file": "input_table",
+    "source_table": "input_table",
     "transformation_type": "count",
     "absent_default_value": 0,
     "grouping_column": "id",

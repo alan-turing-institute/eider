@@ -64,7 +64,7 @@ writeLines(readLines(ae_count_filepath))
 This JSON file is also provided as part of the package, and as with the data, can be accessed using the `eider_example()` function.
 It contains the following information:
 
-- `source_file` specifies the identifier by which the input table is provided to `eider`;
+- `source_table` specifies the identifier by which the input table is provided to `eider`;
 - `output_feature_name` specifies the name of the column that will be created in the output table;
 - `absent_default_value` specifies the value that will be used when a patient does not appear in the table. In this case, the logical value to use is 0: if a patient does not appear in the A&E table, it means they have 0 attendances.
 - `grouping_column` specifies the column by which the table will be grouped. In this case, it is the `id` column.
@@ -86,8 +86,8 @@ As described in the [introductory vignette](eider.html), the `run_pipeline()` fu
 In this case, because we provided `ae_count_filepath` as one of the `feature_filenames`, the data we are interested in is returned as part of `res$features`.
 
 Notice also how the `data_sources` argument takes a named list.
-The names of this list are used to match the `source_file` in the JSON file to the actual data.
-In this case, because the `source_file` is `"ae"`, we need to specify the data to be used as `ae = ae_data_filepath`.
+The names of this list are used to match the `source_table` in the JSON file to the actual data.
+In this case, because the `source_table` is `"ae"`, we need to specify the data to be used as `ae = ae_data_filepath`.
 
 ## Feature 2: Total number of neurology attendances in 2017
 

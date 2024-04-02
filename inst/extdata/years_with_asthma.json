@@ -1,5 +1,5 @@
 {
-  "source_file": "ltc",
+  "source_table": "ltc",
   "grouping_column": "id",
   "transformation_type": "time_since",
   "time_units": "years",

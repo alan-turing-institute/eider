@@ -1,5 +1,5 @@
 {
-  "source_file": "pis",
+  "source_table": "pis",
   "transformation_type": "sum",
   "grouping_column": "id",
   "absent_default_value": 0,

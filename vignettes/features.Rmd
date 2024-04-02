@@ -39,7 +39,7 @@ Conceptually, JSON objects are similar to R lists.
 To be correctly parsed by `eider`, each feature must contain a specific set of keys.
 The keys that are shared across all features are:
 
-* **(string) `source_file`**
+* **(string) `source_table`**
 
   The name of the table to be read in.
   Note that this is not a filename: it is a unique identifier which is passed as part of the `data_sources` argument to `run_pipeline()`.

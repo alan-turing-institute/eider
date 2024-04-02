@@ -1,5 +1,5 @@
 {
-  "source_file": "ae2",
+  "source_table": "ae2",
   "transformation_type": "count",
   "grouping_column": "id",
   "output_feature_name": "diag_101_count",
