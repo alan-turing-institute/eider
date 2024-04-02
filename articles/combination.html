@@ -102,7 +102,7 @@
 <li>
 <code>combine_max</code>: calculate the maximum of the features</li>
 </ul>
-<p>On top of these, combination features require a <code>subfeature</code> key, which is itself a JSON object. Its keys can be any string (though it helps to be descriptive), and its values are the JSON objects which define those subfeatures, <em>sans</em> <code>output_feature_name</code> (because those are not required). Note that each subfeature may have a different <code>source_file</code> key, which allows the subfeatures to come from different input tables.</p>
+<p>On top of these, combination features require a <code>subfeature</code> key, which is itself a JSON object. Its keys can be any string (though it helps to be descriptive), and its values are the JSON objects which define those subfeatures, <em>sans</em> <code>output_feature_name</code> (because those are not required). Note that each subfeature may have a different <code>source_table</code> key, which allows the subfeatures to come from different input tables.</p>
 <p>For linear combinations, each subfeature must further contain a <code>weight</code> key, which is a number that determines the coefficients of each feature in the linear combination.</p>
 </div>
 <div class="section level2">
@@ -129,7 +129,7 @@
 <p>The number of “A” diagnoses would ordinarily be specified using the following JSON:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">{</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>    <span class="dt">"output_feature_name"</span><span class="fu">:</span> <span class="st">"num_A"</span><span class="fu">,</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="dt">"source_file"</span><span class="fu">:</span> <span class="st">"input_table"</span><span class="fu">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="dt">"source_table"</span><span class="fu">:</span> <span class="st">"input_table"</span><span class="fu">,</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>    <span class="dt">"transformation_type"</span><span class="fu">:</span> <span class="st">"count"</span><span class="fu">,</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a>    <span class="dt">"absent_default_value"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    <span class="dt">"grouping_column"</span><span class="fu">:</span> <span class="st">"id"</span><span class="fu">,</span></span>
@@ -146,7 +146,7 @@
   "transformation_type": "combine_max",
   "subfeature": {
     "num_A": {
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,
@@ -159,7 +159,7 @@
       }
     },
     "num_B": {
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,
@@ -201,7 +201,7 @@
   "subfeature": {
     "A_score": {
       "weight": 10,
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,
@@ -215,7 +215,7 @@
     },
     "B_score": {
       "weight": 20,
-      "source_file": "input_table",
+      "source_table": "input_table",
       "grouping_column": "id",
       "transformation_type": "count",
       "absent_default_value": 0,

@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span><span class="va">ae_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ae_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ae_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpUBgWqX/temp_libpath17491f75817d/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpH8VNrm/temp_libpath17764b929a2f/eider/extdata/random_ae_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -134,7 +134,7 @@
 <code class="sourceCode R"><span><span class="va">ae_count_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"ae_total_attendances.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ae_count_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "source_table": "ae",</span></span>
 <span><span class="co">#&gt;   "transformation_type": "count",</span></span>
 <span><span class="co">#&gt;   "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
@@ -143,7 +143,7 @@
 <p>This JSON file is also provided as part of the package, and as with the data, can be accessed using the <code><a href="../reference/eider_example.html">eider_example()</a></code> function. It contains the following information:</p>
 <ul>
 <li>
-<code>source_file</code> specifies the identifier by which the input table is provided to <code>eider</code>;</li>
+<code>source_table</code> specifies the identifier by which the input table is provided to <code>eider</code>;</li>
 <li>
 <code>output_feature_name</code> specifies the name of the column that will be created in the output table;</li>
 <li>
@@ -166,7 +166,7 @@
 <span><span class="co">#&gt; $ id                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,…</span></span>
 <span><span class="co">#&gt; $ total_ae_attendances <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 6, 4, 6, 3, 5, 4, 6, 5, 5, 10, 4, 5, 4, 8, 4, 7, …</span></span></code></pre></div>
 <p>As described in the <a href="eider.html">introductory vignette</a>, the <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code> function returns both <em>features</em> and <em>responses</em>. In this case, because we provided <code>ae_count_filepath</code> as one of the <code>feature_filenames</code>, the data we are interested in is returned as part of <code>res$features</code>.</p>
-<p>Notice also how the <code>data_sources</code> argument takes a named list. The names of this list are used to match the <code>source_file</code> in the JSON file to the actual data. In this case, because the <code>source_file</code> is <code>"ae"</code>, we need to specify the data to be used as <code>ae = ae_data_filepath</code>.</p>
+<p>Notice also how the <code>data_sources</code> argument takes a named list. The names of this list are used to match the <code>source_table</code> in the JSON file to the actual data. In this case, because the <code>source_table</code> is <code>"ae"</code>, we need to specify the data to be used as <code>ae = ae_data_filepath</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="feature-2-total-number-of-neurology-attendances-in-2017">Feature 2: Total number of neurology attendances in 2017<a class="anchor" aria-label="anchor" href="#feature-2-total-number-of-neurology-attendances-in-2017"></a>
@@ -291,7 +291,7 @@
 <code class="sourceCode R"><span><span class="va">ae_neurology_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"ae_attendances_neurology_2017.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ae_neurology_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "source_table": "ae",</span></span>
 <span><span class="co">#&gt;   "transformation_type": "count",</span></span>
 <span><span class="co">#&gt;   "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;   "absent_default_value": 0,</span></span>
@@ -394,7 +394,7 @@
 <code class="sourceCode R"><span><span class="va">ae_present_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"has_visited_ae.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">ae_present_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "source_table": "ae",</span></span>
 <span><span class="co">#&gt;   "transformation_type": "present",</span></span>
 <span><span class="co">#&gt;   "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;   "output_feature_name": "has_visited_ae"</span></span>
@@ -420,7 +420,7 @@
 <code class="sourceCode R"><span><span class="va">days_since_ae_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"days_since_last_ae.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">days_since_ae_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "ae",</span></span>
+<span><span class="co">#&gt;   "source_table": "ae",</span></span>
 <span><span class="co">#&gt;   "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;   "transformation_type": "time_since",</span></span>
 <span><span class="co">#&gt;   "time_units": "days",</span></span>

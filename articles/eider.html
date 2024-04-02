@@ -119,7 +119,7 @@
 <p>Suppose we want to extract a feature corresponding to the total number of times a patient attended for reason 6. <code>eider</code> requires that the feature is specified as JSON, which looks like this:</p>
 <pre><code>{
   "transformation_type": "count",
-  "source_file": "attendances",
+  "source_table": "attendances",
   "grouping_column": "patient_id",
   "absent_default_value": 0,
   "output_feature_name": "total_attendances",
@@ -135,7 +135,7 @@
 <li>
 <code>transformation_type</code> tells you what kind of overall operation is being performed. This determines which other fields are required in the JSON.</li>
 <li>
-<code>source_file</code> specifies the name of the data source to be used in the list of data sources.</li>
+<code>source_table</code> specifies the name of the data source to be used in the list of data sources.</li>
 <li>
 <code>grouping_column</code> specifies the columns to group by.</li>
 <li>
@@ -173,7 +173,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">json_string</span> <span class="op">&lt;-</span> <span class="st">'{</span></span>
 <span><span class="st">    "transformation_type": "count",</span></span>
-<span><span class="st">    "source_file": "attendances",</span></span>
+<span><span class="st">    "source_table": "attendances",</span></span>
 <span><span class="st">    "grouping_column": "patient_id",</span></span>
 <span><span class="st">    "absent_default_value": 0,</span></span>
 <span><span class="st">    "output_feature_name": "total_attendances",</span></span>

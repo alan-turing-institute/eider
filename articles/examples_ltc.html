@@ -95,7 +95,7 @@
 <code class="sourceCode R"><span><span class="va">ltc_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_ltc_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ltc_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpUBgWqX/temp_libpath17491f75817d/eider/extdata/random_ltc_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpH8VNrm/temp_libpath17764b929a2f/eider/extdata/random_ltc_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -130,7 +130,7 @@
 <code class="sourceCode R"><span><span class="va">years_asthma_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"years_with_asthma.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">years_asthma_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "ltc",</span></span>
+<span><span class="co">#&gt;   "source_table": "ltc",</span></span>
 <span><span class="co">#&gt;   "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;   "transformation_type": "time_since",</span></span>
 <span><span class="co">#&gt;   "time_units": "years",</span></span>
@@ -164,7 +164,7 @@
 <code class="sourceCode R"><span><span class="va">has_asthma_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"has_asthma.json"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">has_asthma_filepath</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; {</span></span>
-<span><span class="co">#&gt;   "source_file": "ltc",</span></span>
+<span><span class="co">#&gt;   "source_table": "ltc",</span></span>
 <span><span class="co">#&gt;   "transformation_type": "present",</span></span>
 <span><span class="co">#&gt;   "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;   "output_feature_name": "has_asthma",</span></span>
@@ -200,7 +200,7 @@
 <span><span class="co">#&gt;   "subfeature": {</span></span>
 <span><span class="co">#&gt;     "asthma": {</span></span>
 <span><span class="co">#&gt;       "weight": 1,</span></span>
-<span><span class="co">#&gt;       "source_file": "ltc",</span></span>
+<span><span class="co">#&gt;       "source_table": "ltc",</span></span>
 <span><span class="co">#&gt;       "transformation_type": "present",</span></span>
 <span><span class="co">#&gt;       "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;       "filter": {</span></span>
@@ -211,7 +211,7 @@
 <span><span class="co">#&gt;     },</span></span>
 <span><span class="co">#&gt;     "diabetes": {</span></span>
 <span><span class="co">#&gt;       "weight": 1,</span></span>
-<span><span class="co">#&gt;       "source_file": "ltc",</span></span>
+<span><span class="co">#&gt;       "source_table": "ltc",</span></span>
 <span><span class="co">#&gt;       "transformation_type": "present",</span></span>
 <span><span class="co">#&gt;       "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;       "filter": {</span></span>
@@ -222,7 +222,7 @@
 <span><span class="co">#&gt;     },</span></span>
 <span><span class="co">#&gt;     "parkinsons": {</span></span>
 <span><span class="co">#&gt;       "weight": 1,</span></span>
-<span><span class="co">#&gt;       "source_file": "ltc",</span></span>
+<span><span class="co">#&gt;       "source_table": "ltc",</span></span>
 <span><span class="co">#&gt;       "transformation_type": "present",</span></span>
 <span><span class="co">#&gt;       "grouping_column": "id",</span></span>
 <span><span class="co">#&gt;       "filter": {</span></span>

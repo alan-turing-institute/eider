@@ -141,7 +141,7 @@
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    <span class="fu">}</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
 <p>selects for people born on or after January 1, 2000.</p>
-<p>As a reminder, the table to be filtered is passed as the <code>source_file</code> key in the feature JSON. This is described in the <a href="eider.html">introductory vignette</a>.</p>
+<p>As a reminder, the table to be filtered is passed as the <code>source_table</code> key in the feature JSON. This is described in the <a href="eider.html">introductory vignette</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="compound-filters">Compound filters<a class="anchor" aria-label="anchor" href="#compound-filters"></a>
@@ -215,7 +215,7 @@
 <pre><code>{
   "output_feature_name": "unfiltered_count",
   "transformation_type": "count",
-  "source_file": "input_table",
+  "source_table": "input_table",
   "grouping_column": "id",
   "absent_default_value": 0
 }</code></pre>
@@ -235,7 +235,7 @@
 <pre><code>{
   "output_feature_name": "filtered_count",
   "transformation_type": "count",
-  "source_file": "input_table",
+  "source_table": "input_table",
   "grouping_column": "id",
   "absent_default_value": 0,
   "filter": {
@@ -262,7 +262,7 @@
 <pre><code>{
   "output_feature_name": "doubly_filtered_count",
   "transformation_type": "count",
-  "source_file": "input_table",
+  "source_table": "input_table",
   "grouping_column": "id",
   "absent_default_value": 0,
   "filter": {
