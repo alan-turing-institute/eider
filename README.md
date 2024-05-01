@@ -53,7 +53,7 @@ You can install `eider` from [GitHub](https://github.com/) using:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("alan-turing-institute/eider")
+devtools::install_github("alan-turing-institute/eider", build_vignettes = TRUE)
 ```
 
 We plan to submit `eider` to CRAN in the near future.
