@@ -1,4 +1,4 @@
-^miniSPARRA01\.Rproj$
+^eider\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
 ^docs$
@@ -7,6 +7,7 @@
 ^doc$
 ^Meta$
 ^README\.Rmd$
+^README\.md$
 ^.github$
 ^.pre-commit-config\.yaml$
 ^.lintr$
