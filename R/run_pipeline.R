@@ -1,6 +1,8 @@
 #' Perform the entire feature transformation process
 #'
-#' Please see the package articles for usage examples.
+#' Reads in data and feature specifications and performs the requisite
+#' transformations. Please see the package vignettes for more detailed
+#' information on the JSON specification of features.
 #'
 #' @param data_sources A list, whose names are the unique identifiers of the
 #' data sources, and whose values are either the data frame itself or the file
@@ -23,6 +25,13 @@
 #' JSON files.
 #' * `responses`: A data frame with all the responses. The structure is the same
 #' as the `features` data frame.
+#'
+#' @examples
+#' run_pipeline(
+#'   data_sources = list(ae = eider_example("random_ae_data.csv")),
+#'   feature_filenames = eider_example("ae_total_attendances.json")
+#' )
+#'
 #' @export
 run_pipeline <- function(
     data_sources,

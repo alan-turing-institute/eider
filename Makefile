@@ -23,3 +23,6 @@ site:
 
 vig:
 	sh -c "trap 'kill 0' SIGINT; make vig_build & make vig_serv"
+	
+crancheck:
+	Rscript -e "devtools::check(remote = TRUE, manual = TRUE)"

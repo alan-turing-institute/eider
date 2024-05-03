@@ -47,14 +47,19 @@ analyses to be carried out in different contexts.
 
 ## Installation
 
-You can install `eider` from [GitHub](https://github.com/) using:
+Install via CRAN:
+
+``` r
+install.packages("eider")
+```
+
+Alternatively, install `eider` from its source code on
+[GitHub](https://github.com/alan-turing-institute/eider) using:
 
 ``` r
 install.packages("devtools")
 devtools::install_github("alan-turing-institute/eider", build_vignettes = TRUE)
 ```
-
-We plan to submit `eider` to CRAN in the near future.
 
 ## Documentation
 

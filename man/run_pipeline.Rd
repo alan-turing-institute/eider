@@ -40,5 +40,14 @@ as the \code{features} data frame.
 }
 }
 \description{
-Please see the package articles for usage examples.
+Reads in data and feature specifications and performs the requisite
+transformations. Please see the package vignettes for more detailed
+information on the JSON specification of features.
+}
+\examples{
+run_pipeline(
+  data_sources = list(ae = eider_example("random_ae_data.csv")),
+  feature_filenames = eider_example("ae_total_attendances.json")
+)
+
 }

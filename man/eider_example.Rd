@@ -7,8 +7,8 @@
 eider_example(file = NULL)
 }
 \arguments{
-\item{file}{The filename to return the full path for. If NULL, will return a
-vector of all valid filenames.}
+\item{file}{The filename to return the full path for. Defaults to \code{NULL}, in
+which case it will return a vector of all valid filenames.}
 }
 \value{
 A string containing the full path to the file, or a vector of

@@ -4,8 +4,8 @@
 #' the package. These files are contained in the package `inst/extdata`
 #' directory.
 #'
-#' @param file The filename to return the full path for. If NULL, will return a
-#' vector of all valid filenames.
+#' @param file The filename to return the full path for. Defaults to `NULL`, in
+#' which case it will return a vector of all valid filenames.
 #'
 #' @return A string containing the full path to the file, or a vector of
 #' filenames
