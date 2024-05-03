@@ -4,7 +4,7 @@
 \name{eider-package}
 \alias{eider}
 \alias{eider-package}
-\title{eider: Declarative feature extraction from tabular records data}
+\title{eider: Declarative Feature Extraction from Tabular Records Data}
 \description{
 \code{eider} is a lightweight package for processing tabular data in a
 declarative fashion. To get started, see:

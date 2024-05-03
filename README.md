@@ -36,13 +36,11 @@ and merged together. As features are specified without reference to a
 specific programming language or paradigm, it also encourages code that
 is concise, easy to read, and maintainable.
 
-`eider` is a collaboration between [The Alan Turing
-Institute](https://www.turing.ac.uk/), [Public Health
-Scotland](https://publichealthscotland.scot/), and the Universities of
-[Edinburgh](https://www.ed.ac.uk) and
-[Durham](https://www.durham.ac.uk). It grew out of a desire to
-generalise the feature extraction process for health data, specifically
-the [SPARRA *(Scottish Patients At Risk of Readmission and Admission)*
+`eider` is a collaboration between The Alan Turing Institute, Public
+Health Scotland, and the Universities of Edinburgh and Durham. It grew
+out of a desire to generalise the feature extraction process for health
+data, specifically the [SPARRA *(Scottish Patients At Risk of
+Readmission and Admission)*
 project](https://www.gov.scot/publications/sparra-made-easy/) ([GitHub
 repo](https://github.com/jamesliley/SPARRAv4)), and to allow similar
 analyses to be carried out in different contexts.
