@@ -1,5 +1,5 @@
 pandoc: 2.9.2.1
-pkgdown: 2.0.7
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   combination: combination.html
@@ -12,7 +12,7 @@ articles:
   filtering: filtering.html
   logging: logging.html
   preprocessing: preprocessing.html
-last_built: 2024-04-02T07:56Z
+last_built: 2024-05-03T14:52Z
 urls:
   reference: https://alan-turing-institute.github.io/eider/docs/reference
   article: https://alan-turing-institute.github.io/eider/docs/articles
