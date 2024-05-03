@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eider</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/alan-turing-institute/eider/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -81,14 +88,14 @@
       <img src="" class="logo" alt=""><h1>Preprocessing</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/eider/blob/HEAD/vignettes/preprocessing.Rmd" class="external-link"><code>vignettes/preprocessing.Rmd</code></a></small>
       <div class="d-none name"><code>preprocessing.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">eider</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alan-turing-institute/eider" class="external-link">eider</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></code></pre></div>
 <p>Inside each feature JSON, an optional <code>preprocess</code> object can be included, which causes the input table to be modified in a particular way before the feature is calculated.</p>
 <p>This is primarily useful for data where each row represents some subdivision of a larger entity, and the user wants to calculate features based on the information from those larger entity. In particular, this is useful for <em>episodic data</em>, where each row represents an <em>episode</em> within a continuous hospital <em>stay</em>.</p>
@@ -322,7 +329,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Camila Rangel Smith, Helen Duncan Little, Jonathan Yong.</p>
+  <p>Developed by Camila Rangel Smith, Helen Duncan Little, Jonathan Yong, The Alan Turing Institute.</p>
 </div>
 
 <div class="pkgdown-footer-right">

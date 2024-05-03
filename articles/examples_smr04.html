@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">eider</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,14 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/alan-turing-institute/eider/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -81,21 +88,21 @@
       <img src="" class="logo" alt=""><h1>Examples: SMR04 data</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/eider/blob/HEAD/vignettes/examples_smr04.Rmd" class="external-link"><code>vignettes/examples_smr04.Rmd</code></a></small>
       <div class="d-none name"><code>examples_smr04.Rmd</code></div>
     </div>
 
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">eider</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alan-turing-institute/eider" class="external-link">eider</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></code></pre></div>
 <p>This series of vignettes in the <em>Gallery</em> section aim to demonstrate the functionality of <code>eider</code> through examples that are similar to real-life usage. To do this, we have created a series of randomly generated datasets that are stored with the package. You can access these datasets using the <code><a href="../reference/eider_example.html">eider_example()</a></code> function, which will return the path to where the dataset is stored in your installation of R.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smr04_data_filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eider_example.html">eider_example</a></span><span class="op">(</span><span class="st">"random_smr04_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">smr04_data_filepath</span></span>
-<span><span class="co">#&gt; [1] "/tmp/Rtmpwve25a/temp_libpath31243dd99e4a/eider/extdata/random_smr04_data.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpClaJ35/temp_libpath16e56b298fb5/eider/extdata/random_smr04_data.csv"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
 </h2>
@@ -356,7 +363,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Camila Rangel Smith, Helen Duncan Little, Jonathan Yong.</p>
+  <p>Developed by Camila Rangel Smith, Helen Duncan Little, Jonathan Yong, The Alan Turing Institute.</p>
 </div>
 
 <div class="pkgdown-footer-right">
