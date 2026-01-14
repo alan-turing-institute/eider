@@ -1,72 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/404.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/combination.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/eider.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ae.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ltc.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_pis.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_smr04.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/features.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/filtering.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/logging.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/articles/preprocessing.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/index.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/reference/eider-package.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/reference/eider_example.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://alan-turing-institute.github.io/eider/docs/reference/run_pipeline.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/404.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/CONTRIBUTING.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/LICENSE-text.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/LICENSE.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/combination.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/eider.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ae.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_ltc.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_pis.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/examples_smr04.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/features.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/filtering.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/index.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/logging.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/articles/preprocessing.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/authors.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/index.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/news/index.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/reference/eider-package.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/reference/eider_example.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/reference/index.html</loc></url>
+<url><loc>https://alan-turing-institute.github.io/eider/docs/reference/run_pipeline.html</loc></url>
 </urlset>
+

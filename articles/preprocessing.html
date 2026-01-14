@@ -5,90 +5,77 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="eider">
 <title>Preprocessing • eider</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Fira_Mono-0.4.9/font.css" rel="stylesheet">
-<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Preprocessing">
-<meta property="og:description" content="eider">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/Fira_Mono-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Preprocessing">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">eider</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/eider.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/eider.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Features as JSON</h6>
-    <a class="dropdown-item" href="../articles/features.html">An overview of features</a>
-    <a class="dropdown-item" href="../articles/filtering.html">Filtering</a>
-    <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
-    <a class="dropdown-item" href="../articles/combination.html">Combination features</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Logging</h6>
-    <a class="dropdown-item" href="../articles/logging.html">Logging and errors</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Gallery</h6>
-    <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
-    <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
-    <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
-    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Features as JSON</h6></li>
+    <li><a class="dropdown-item" href="../articles/features.html">An overview of features</a></li>
+    <li><a class="dropdown-item" href="../articles/filtering.html">Filtering</a></li>
+    <li><a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a></li>
+    <li><a class="dropdown-item" href="../articles/combination.html">Combination features</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Logging</h6></li>
+    <li><a class="dropdown-item" href="../articles/logging.html">Logging and errors</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Gallery</h6></li>
+    <li><a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a></li>
+    <li><a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a></li>
+    <li><a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a></li>
+    <li><a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/alan-turing-institute/eider/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/alan-turing-institute/eider/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
 
 
-<script src="preprocessing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Preprocessing</h1>
+
+      <h1>Preprocessing</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/eider/blob/HEAD/vignettes/preprocessing.Rmd" class="external-link"><code>vignettes/preprocessing.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/preprocessing.Rmd" class="external-link"><code>vignettes/preprocessing.Rmd</code></a></small>
       <div class="d-none name"><code>preprocessing.Rmd</code></div>
     </div>
 
@@ -97,13 +84,23 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alan-turing-institute/eider" class="external-link">eider</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></code></pre></div>
-<p>Inside each feature JSON, an optional <code>preprocess</code> object can be included, which causes the input table to be modified in a particular way before the feature is calculated.</p>
-<p>This is primarily useful for data where each row represents some subdivision of a larger entity, and the user wants to calculate features based on the information from those larger entity. In particular, this is useful for <em>episodic data</em>, where each row represents an <em>episode</em> within a continuous hospital <em>stay</em>.</p>
+<p>Inside each feature JSON, an optional <code>preprocess</code> object
+can be included, which causes the input table to be modified in a
+particular way before the feature is calculated.</p>
+<p>This is primarily useful for data where each row represents some
+subdivision of a larger entity, and the user wants to calculate features
+based on the information from those larger entity. In particular, this
+is useful for <em>episodic data</em>, where each row represents an
+<em>episode</em> within a continuous hospital <em>stay</em>.</p>
 <div class="section level2">
 <h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
-<p>We begin by making the case for why preprocessing can be required for certain features.</p>
-<p>Consider the following data frame. (This is a heavily simplified version of the example <a href="https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/smr04-summary-of-rules/?Search=S&amp;ID=999&amp;Title=SMR04%20-%20Summary%20of%20Rules" class="external-link">SMR04</a> data bundled with the package, which you can obtain using <code>eider_example('random_smr04_data.csv')</code>.)</p>
+<p>We begin by making the case for why preprocessing can be required for
+certain features.</p>
+<p>Consider the following data frame. (This is a heavily simplified
+version of the example <a href="https://publichealthscotland.scot/services/national-data-catalogue/data-dictionary/a-to-z-of-data-dictionary-terms/smr04-summary-of-rules/?Search=S&amp;ID=999&amp;Title=SMR04%20-%20Summary%20of%20Rules" class="external-link">SMR04</a>
+data bundled with the package, which you can obtain using
+<code>eider_example('random_smr04_data.csv')</code>.)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">input_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -124,11 +121,25 @@
 <span><span class="co">#&gt; 2  1     2016-01-01     2016-01-04          2                  1         B</span></span>
 <span><span class="co">#&gt; 3  1     2016-01-04     2016-01-08          2                  2         C</span></span>
 <span><span class="co">#&gt; 4  1     2017-01-01     2017-01-08          3                  1         B</span></span></code></pre></div>
-<p>Here, each row is an episode; multiple episodes make up a <em>continuous inpatient stay</em> (hence the abbreviation “cis”). The <code>cis_marker</code> field is used to label stays, and can thus be used to identify episodes belonging to the same stay. In this case, the <code>episode_within_cis</code> tells us the order of the episodes within a stay; such information is not always present, though.</p>
-<p>In this table snippet, there is only one patient: they have had 3 distinct stays; the second of these comprises 2 episodes.</p>
-<p>Such information can be tricky to perform filtering on, because the <code>admission_date</code> and <code>discharge_date</code> pertain to each episode, but we are often interested in stay-level data: for example, when the patient was first admitted to hospital.</p>
-<p>Consider the following question: <em>how many stays has a patient had since 5 January 2016 in which they had a diagnosis of “B”?</em> For the patient in this table, the answer is 2: both the 2016 and 2017 stays had a diagnosis of “B”, and both <em>stays</em> ended after 5 January 2016.</p>
-<p>If we were to naively try to perform this calculation without accounting for the dates, we could write something like <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing1.json" class="external-link"><code>json_examples/preprocessing1.json</code></a>:</p>
+<p>Here, each row is an episode; multiple episodes make up a
+<em>continuous inpatient stay</em> (hence the abbreviation “cis”). The
+<code>cis_marker</code> field is used to label stays, and can thus be
+used to identify episodes belonging to the same stay. In this case, the
+<code>episode_within_cis</code> tells us the order of the episodes
+within a stay; such information is not always present, though.</p>
+<p>In this table snippet, there is only one patient: they have had 3
+distinct stays; the second of these comprises 2 episodes.</p>
+<p>Such information can be tricky to perform filtering on, because the
+<code>admission_date</code> and <code>discharge_date</code> pertain to
+each episode, but we are often interested in stay-level data: for
+example, when the patient was first admitted to hospital.</p>
+<p>Consider the following question: <em>how many stays has a patient had
+since 5 January 2016 in which they had a diagnosis of “B”?</em> For the
+patient in this table, the answer is 2: both the 2016 and 2017 stays had
+a diagnosis of “B”, and both <em>stays</em> ended after 5 January
+2016.</p>
+<p>If we were to naively try to perform this calculation without
+accounting for the dates, we could write something like <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing1.json" class="external-link"><code>json_examples/preprocessing1.json</code></a>:</p>
 <pre><code>{
   "output_feature_name": "naive",
   "transformation_type": "nunique",
@@ -164,25 +175,36 @@
 <span><span class="va">results</span><span class="op">$</span><span class="va">features</span></span>
 <span><span class="co">#&gt;   id naive</span></span>
 <span><span class="co">#&gt; 1  1     1</span></span></code></pre></div>
-<p>We got a value of 1, which is incorrect! What gives? As it happens, the filter was applied to each episode, and because the first episode of the 2016 stay ended before 5 January, it was not counted in the data. The second episode of the 2016 stay was also removed because its diagnosis was not “B”. So only the third stay, in 2017, was counted.</p>
+<p>We got a value of 1, which is incorrect! What gives? As it happens,
+the filter was applied to each episode, and because the first episode of
+the 2016 stay ended before 5 January, it was not counted in the data.
+The second episode of the 2016 stay was also removed because its
+diagnosis was not “B”. So only the third stay, in 2017, was counted.</p>
 </div>
 <div class="section level2">
 <h2 id="preprocessing-specification">Preprocessing specification<a class="anchor" aria-label="anchor" href="#preprocessing-specification"></a>
 </h2>
-<p>The way <code>eider</code> approaches this issue is to allow users to preprocess their data. This is accomplished by specifying a <code>preprocess</code> object in the feature JSON. In our case, to merge episode dates into stays, we can say that we would like:</p>
+<p>The way <code>eider</code> approaches this issue is to allow users to
+preprocess their data. This is accomplished by specifying a
+<code>preprocess</code> object in the feature JSON. In our case, to
+merge episode dates into stays, we can say that we would like:</p>
 <ul>
-<li>for each unique pair of <code>id</code> and <code>cis_marker</code>,</li>
-<li>replace the value of the admission date with the earliest of all episodes,</li>
-<li>and replace the discharge date replaced with the latest of all episodes.</li>
+<li>for each unique pair of <code>id</code> and
+<code>cis_marker</code>,</li>
+<li>replace the value of the admission date with the earliest of all
+episodes,</li>
+<li>and replace the discharge date replaced with the latest of all
+episodes.</li>
 </ul>
-<p>In <code>dplyr</code> terms, one would write a pipeline like this:</p>
+<p>In <code>dplyr</code> terms, one would write a pipeline like
+this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">processed_table</span> <span class="op">&lt;-</span> <span class="va">input_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">cis_marker</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">processed_table</span> <span class="op">&lt;-</span> <span class="va">input_table</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">cis_marker</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    admission_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">admission_date</span><span class="op">)</span>,</span>
 <span>    discharge_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">discharge_date</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">processed_table</span></span>
@@ -193,35 +215,48 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     1 2016-01-01     2016-01-08              2                  1 B        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     1 2016-01-01     2016-01-08              2                  2 C        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     1 2017-01-01     2017-01-08              3                  1 B</span></span></code></pre></div>
-<p>Notice how the dates for both episodes in stay 2 are now the same, and reflect the overall dates for the stay.</p>
-<p>Returning to the <code>eider</code> library, this information is (unsurprisingly) specified in JSON. Including a <code>preprocess</code> object in the feature will cause the input table to be modified as above:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="fu">{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>  <span class="dt">"preprocess"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>    <span class="dt">"on"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"id"</span><span class="ot">,</span> <span class="st">"cis_marker"</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>    <span class="dt">"retain_min"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"admission_date"</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>    <span class="dt">"retain_max"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"discharge_date"</span><span class="ot">]</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>  <span class="fu">},</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<p>Notice how the dates for both episodes in stay 2 are now the same,
+and reflect the overall dates for the stay.</p>
+<p>Returning to the <code>eider</code> library, this information is
+(unsurprisingly) specified in JSON. Including a <code>preprocess</code>
+object in the feature will cause the input table to be modified as
+above:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="dt">"preprocess"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>    <span class="dt">"on"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"id"</span><span class="ot">,</span> <span class="st">"cis_marker"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="dt">"retain_min"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"admission_date"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="dt">"retain_max"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"discharge_date"</span><span class="ot">]</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <p>The <code>preprocess</code> object contains one mandatory key:</p>
 <ul>
 <li>
-<strong>(array of strings) <code>"on"</code></strong>: the names of the columns by which the data should be grouped for preprocessing</li>
+<strong>(array of strings) <code>"on"</code></strong>: the names of
+the columns by which the data should be grouped for preprocessing</li>
 </ul>
-<p>and several optional keys can be provided, corresponding to the operations which should be performed. All of these keys refer to column names:</p>
+<p>and several optional keys can be provided, corresponding to the
+operations which should be performed. All of these keys refer to column
+names:</p>
 <ul>
 <li>
-<strong>(array of strings) <code>"retain_min"</code></strong>: retain the minimum value within each group</li>
+<strong>(array of strings) <code>"retain_min"</code></strong>:
+retain the minimum value within each group</li>
 <li>
-<strong>(array of strings) <code>"retain_max"</code></strong>: retain the maximum value within each group</li>
+<strong>(array of strings) <code>"retain_max"</code></strong>:
+retain the maximum value within each group</li>
 <li>
-<strong>(array of strings) <code>"replace_with_sum"</code></strong>: sum the values within each group and replace the original values with the sum</li>
+<strong>(array of strings) <code>"replace_with_sum"</code></strong>:
+sum the values within each group and replace the original values with
+the sum</li>
 </ul>
-<p>Columns may not be specified in more than one of the above keys (i.e., you cannot preprocess the same column twice).</p>
+<p>Columns may not be specified in more than one of the above keys
+(i.e., you cannot preprocess the same column twice).</p>
 </div>
 <div class="section level2">
 <h2 id="returning-to-the-example">Returning to the example<a class="anchor" aria-label="anchor" href="#returning-to-the-example"></a>
 </h2>
-<p>We can now rewrite the feature JSON to include the preprocessing step (<a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing2.json" class="external-link"><code>json_examples/preprocessing2.json</code></a>):</p>
+<p>We can now rewrite the feature JSON to include the preprocessing step
+(<a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing2.json" class="external-link"><code>json_examples/preprocessing2.json</code></a>):</p>
 <pre><code>{
   "output_feature_name": "correct",
   "transformation_type": "nunique",
@@ -259,7 +294,11 @@
     ]
   }
 }</code></pre>
-<p>and rerunning the pipeline gives us the correct value of 2. Note that although the <code>preprocess</code> object is placed after the <code>filter</code> object in the JSON, the preprocessing is always done <em>prior</em> to filtering. The order of the keys in the JSON has no effect whatsoever on the result.</p>
+<p>and rerunning the pipeline gives us the correct value of 2. Note that
+although the <code>preprocess</code> object is placed after the
+<code>filter</code> object in the JSON, the preprocessing is always done
+<em>prior</em> to filtering. The order of the keys in the JSON has no
+effect whatsoever on the result.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_pipeline.html">run_pipeline</a></span><span class="op">(</span></span>
 <span>  data_sources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>input_table <span class="op">=</span> <span class="va">input_table</span><span class="op">)</span>,</span>
@@ -273,9 +312,11 @@
 <div class="section level2">
 <h2 id="an-example-for-replace_with_sum">An example for <code>replace_with_sum</code><a class="anchor" aria-label="anchor" href="#an-example-for-replace_with_sum"></a>
 </h2>
-<p>To motivate the use of <code>replace_with_sum</code>, we can add a column to our previous data frame to denote the length of each episode:</p>
+<p>To motivate the use of <code>replace_with_sum</code>, we can add a
+column to our previous data frame to denote the length of each
+episode:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">input_table_with_sum</span> <span class="op">&lt;-</span> <span class="va">input_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">input_table_with_sum</span> <span class="op">&lt;-</span> <span class="va">input_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">discharge_date</span> <span class="op">-</span> <span class="va">admission_date</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">input_table_with_sum</span></span>
@@ -284,7 +325,10 @@
 <span><span class="co">#&gt; 2  1     2016-01-01     2016-01-04          2                  1         B    3</span></span>
 <span><span class="co">#&gt; 3  1     2016-01-04     2016-01-08          2                  2         C    4</span></span>
 <span><span class="co">#&gt; 4  1     2017-01-01     2017-01-08          3                  1         B    7</span></span></code></pre></div>
-<p>Now consider a different question, which is: <em>how many stays has a patient had which lasted for a week or more?</em> To answer this, we need to first sum up the <code>days</code> for each stay, and we can then filter based on this sum. This is accomplished with <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing3.json" class="external-link"><code>json_examples/preprocessing3.json</code></a>:</p>
+<p>Now consider a different question, which is: <em>how many stays has a
+patient had which lasted for a week or more?</em> To answer this, we
+need to first sum up the <code>days</code> for each stay, and we can
+then filter based on this sum. This is accomplished with <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/json_examples/preprocessing3.json" class="external-link"><code>json_examples/preprocessing3.json</code></a>:</p>
 <pre><code>{
   "output_feature_name": "using_sum",
   "transformation_type": "nunique",
@@ -320,9 +364,13 @@
 <div class="section level2">
 <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a>
 </h2>
-<p>The <em>Gallery</em> section contains two examples of preprocessing in action: both <a href="examples_pis.html#feature-4-maximum-number-of-items-prescribed-in-a-single-day">PIS feature 4</a> and <a href="examples_smr04.html#feature-4-longest-single-stay-in-hospital">SMR04 feature 4</a> use the <code>replace_with_sum</code> preprocessing function.</p>
+<p>The <em>Gallery</em> section contains two examples of preprocessing
+in action: both <a href="examples_pis.html#feature-4-maximum-number-of-items-prescribed-in-a-single-day">PIS
+feature 4</a> and <a href="examples_smr04.html#feature-4-longest-single-stay-in-hospital">SMR04
+feature 4</a> use the <code>replace_with_sum</code> preprocessing
+function.</p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -333,15 +381,15 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

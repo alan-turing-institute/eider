@@ -5,204 +5,261 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="eider">
 <title>An overview of features • eider</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Fira_Mono-0.4.9/font.css" rel="stylesheet">
-<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="An overview of features">
-<meta property="og:description" content="eider">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Fira_Sans-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/Fira_Mono-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="An overview of features">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">eider</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../articles/eider.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../articles/eider.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <h6 class="dropdown-header" data-toc-skip>Features as JSON</h6>
-    <a class="dropdown-item" href="../articles/features.html">An overview of features</a>
-    <a class="dropdown-item" href="../articles/filtering.html">Filtering</a>
-    <a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a>
-    <a class="dropdown-item" href="../articles/combination.html">Combination features</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Logging</h6>
-    <a class="dropdown-item" href="../articles/logging.html">Logging and errors</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Gallery</h6>
-    <a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a>
-    <a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a>
-    <a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a>
-    <a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Features as JSON</h6></li>
+    <li><a class="dropdown-item" href="../articles/features.html">An overview of features</a></li>
+    <li><a class="dropdown-item" href="../articles/filtering.html">Filtering</a></li>
+    <li><a class="dropdown-item" href="../articles/preprocessing.html">Preprocessing</a></li>
+    <li><a class="dropdown-item" href="../articles/combination.html">Combination features</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Logging</h6></li>
+    <li><a class="dropdown-item" href="../articles/logging.html">Logging and errors</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Gallery</h6></li>
+    <li><a class="dropdown-item" href="../articles/examples_ae.html">Examples: A&amp;E data</a></li>
+    <li><a class="dropdown-item" href="../articles/examples_ltc.html">Examples: LTC data</a></li>
+    <li><a class="dropdown-item" href="../articles/examples_pis.html">Examples: PIS data</a></li>
+    <li><a class="dropdown-item" href="../articles/examples_smr04.html">Examples: SMR04 data</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/alan-turing-institute/eider/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/alan-turing-institute/eider/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
 
 
-<script src="features_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>An overview of features</h1>
+
+      <h1>An overview of features</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/eider/blob/HEAD/vignettes/features.Rmd" class="external-link"><code>vignettes/features.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/alan-turing-institute/eider/blob/main/vignettes/features.Rmd" class="external-link"><code>vignettes/features.Rmd</code></a></small>
       <div class="d-none name"><code>features.Rmd</code></div>
     </div>
 
     
     
-<p>As the <a href="eider.html">introductory vignette</a> shows, writing R code with <code>eider</code> simply consists of a call to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>. Most of the time spent using this library will be spent defining the features themselves using JSON.</p>
+<p>As the <a href="eider.html">introductory vignette</a> shows, writing
+R code with <code>eider</code> simply consists of a call to
+<code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>. Most of the time spent using this library
+will be spent defining the features themselves using JSON.</p>
 <div class="section level2">
 <h2 id="features-as-json">Features as JSON<a class="anchor" aria-label="anchor" href="#features-as-json"></a>
 </h2>
-<p>Features are JSON <em>objects</em>, which are an association of <em>keys</em> and <em>values</em> tied together within curly braces. Keys are always strings, and values can be strings, numbers, booleans, arrays, or objects themselves, as shown in the example object below. Conceptually, JSON objects are similar to R lists.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>  <span class="dt">"key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="dt">"key_2"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>  <span class="dt">"key_3"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>  <span class="dt">"key_4"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>  <span class="dt">"key_5"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="dt">"nested_key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    <span class="dt">"nested_key_2"</span><span class="fu">:</span> <span class="dv">1</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a>  <span class="fu">}</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
-<p>To be correctly parsed by <code>eider</code>, each feature must contain a specific set of keys. The keys that are shared across all features are:</p>
+<p>Features are JSON <em>objects</em>, which are an association of
+<em>keys</em> and <em>values</em> tied together within curly braces.
+Keys are always strings, and values can be strings, numbers, booleans,
+arrays, or objects themselves, as shown in the example object below.
+Conceptually, JSON objects are similar to R lists.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="dt">"key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="dt">"key_2"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="dt">"key_3"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="dt">"key_4"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span> <span class="dv">2</span><span class="ot">,</span> <span class="dv">3</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="dt">"key_5"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    <span class="dt">"nested_key_1"</span><span class="fu">:</span> <span class="st">"a string"</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="dt">"nested_key_2"</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>To be correctly parsed by <code>eider</code>, each feature must
+contain a specific set of keys. The keys that are shared across all
+features are:</p>
 <ul>
 <li>
 <p><strong>(string) <code>source_table</code></strong></p>
-<p>The name of the table to be read in. Note that this is not a filename: it is a unique identifier which is passed as part of the <code>data_sources</code> argument to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>. Please see <a href="eider.html">the introductory vignette</a> for an explanation of this.</p>
+<p>The name of the table to be read in. Note that this is not a
+filename: it is a unique identifier which is passed as part of the
+<code>data_sources</code> argument to <code><a href="../reference/run_pipeline.html">run_pipeline()</a></code>.
+Please see <a href="eider.html">the introductory vignette</a> for an
+explanation of this.</p>
 </li>
 <li>
 <p><strong>(string) <code>output_feature_name</code></strong></p>
-<p>This determines the name of the column in the final dataframe that <code>eider</code> produces.</p>
-<p>It can be any string you like, as long as there are no clashes between multiple features; the feature name <code>"id"</code> is also reserved and cannot be used.</p>
+<p>This determines the name of the column in the final dataframe that
+<code>eider</code> produces.</p>
+<p>It can be any string you like, as long as there are no clashes
+between multiple features; the feature name <code>"id"</code> is also
+reserved and cannot be used.</p>
 </li>
 <li>
 <p><strong>(string) <code>grouping_column</code></strong></p>
-<p>This is the name of the column in the input dataframe that the feature will be calculated over. The feature column will contain the result of the calculation for each unique value in this column.</p>
-<p>In the case of medical data, this would typically be the name of the column containing the patient ID. In the remainder of this vignette, we will refer to the values within this column as “IDs”.</p>
+<p>This is the name of the column in the input dataframe that the
+feature will be calculated over. The feature column will contain the
+result of the calculation for each unique value in this column.</p>
+<p>In the case of medical data, this would typically be the name of the
+column containing the patient ID. In the remainder of this vignette, we
+will refer to the values within this column as “IDs”.</p>
 </li>
 <li>
-<p><strong>(number; optional) <code>absent_default_value</code></strong></p>
-<p>This is the value that will be used for IDs that are not present in the input dataframe. Because <code>eider</code> only calculates numeric features, this has to be a number. If omitted, <code>eider</code> will insert <code>NA</code> values for missing IDs.</p>
+<p><strong>(number; optional)
+<code>absent_default_value</code></strong></p>
+<p>This is the value that will be used for IDs that are not present in
+the input dataframe. Because <code>eider</code> only calculates numeric
+features, this has to be a number. If omitted, <code>eider</code> will
+insert <code>NA</code> values for missing IDs.</p>
 </li>
 <li>
 <p><strong>(string) <code>transformation_type</code></strong></p>
-<p>This defines the <em>type</em> of calculation performed for the feature. Each transformation type may require an extra set of keys to be specified for the feature to be correctly calculated.</p>
+<p>This defines the <em>type</em> of calculation performed for the
+feature. Each transformation type may require an extra set of keys to be
+specified for the feature to be correctly calculated.</p>
 </li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="transformation-types">Transformation types<a class="anchor" aria-label="anchor" href="#transformation-types"></a>
 </h2>
-<p>The available transformation types can be split into a few groups:</p>
+<p>The available transformation types can be split into a few
+groups:</p>
 <div class="section level3">
 <h3 id="counting">Counting<a class="anchor" aria-label="anchor" href="#counting"></a>
 </h3>
-<p><strong>Transformation types:</strong> <code>"count"</code>, <code>"present"</code></p>
-<p>The two simplest features are <code>"count"</code>, which counts the number of occurrences of each ID in the dataset, and <code>"present"</code>, which outputs <code>1</code> if the ID was found in the dataset and <code>0</code> if not.</p>
-<p>Examples of the <code>"count"</code> feature type are provided in <a href="examples_ae.html#feature-1-total-number-of-attendances">A&amp;E features 1 and 2</a>, as well as <a href="examples_smr04.html#feature-1-number-of-episodes-associated-with-a-psychotherapy-specialty">SMR04 feature 1</a>.</p>
-<p>The <code>"present"</code> feature type is showcased in <a href="examples_ae.html#feature-3-whether-a-patient-has-ever-attended-ae">A&amp;E feature 3</a>, as well as <a href="examples_ltc.html#feature-2-whether-a-patient-has-asthma-or-not">LTC features 2 and 3</a>.</p>
+<p><strong>Transformation types:</strong> <code>"count"</code>,
+<code>"present"</code></p>
+<p>The two simplest features are <code>"count"</code>, which counts the
+number of occurrences of each ID in the dataset, and
+<code>"present"</code>, which outputs <code>1</code> if the ID was found
+in the dataset and <code>0</code> if not.</p>
+<p>Examples of the <code>"count"</code> feature type are provided in <a href="examples_ae.html#feature-1-total-number-of-attendances">A&amp;E
+features 1 and 2</a>, as well as <a href="examples_smr04.html#feature-1-number-of-episodes-associated-with-a-psychotherapy-specialty">SMR04
+feature 1</a>.</p>
+<p>The <code>"present"</code> feature type is showcased in <a href="examples_ae.html#feature-3-whether-a-patient-has-ever-attended-ae">A&amp;E
+feature 3</a>, as well as <a href="examples_ltc.html#feature-2-whether-a-patient-has-asthma-or-not">LTC
+features 2 and 3</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="summaries">Summaries<a class="anchor" aria-label="anchor" href="#summaries"></a>
 </h3>
-<p><strong>Transformation types:</strong> <code>"sum"</code>, <code>"nunique"</code>, <code>"mean"</code>, <code>"median"</code>, <code>"sd"</code>, <code>"first"</code>, <code>"last"</code>, <code>"min"</code>, <code>"max"</code></p>
-<p>As these features act with respect to the values in a specific column, they require a single extra key to be specified:</p>
+<p><strong>Transformation types:</strong> <code>"sum"</code>,
+<code>"nunique"</code>, <code>"mean"</code>, <code>"median"</code>,
+<code>"sd"</code>, <code>"first"</code>, <code>"last"</code>,
+<code>"min"</code>, <code>"max"</code></p>
+<p>As these features act with respect to the values in a specific
+column, they require a single extra key to be specified:</p>
 <ul>
 <li>
 <p><strong>(string) <code>aggregation_column</code></strong></p>
-<p>The name of the column containing the values to be aggregated.</p>
+<p>The name of the column containing the values to be
+aggregated.</p>
 </li>
 </ul>
-<p>The feature will be calculated for each unique ID by aggregating the values in this column.</p>
-<p>Example features with summary functions include all the <a href="examples_pis.html">PIS features</a>, and also <a href="examples_smr04.html#feature-2-number-of-stays-associated-with-a-psychotherapy-specialty">SMR04 features 2, 3, and 4</a>. These cover the transformation types <code>"nunique"</code>, <code>"sum"</code>, and <code>"max"</code>.</p>
+<p>The feature will be calculated for each unique ID by aggregating the
+values in this column.</p>
+<p>Example features with summary functions include all the <a href="examples_pis.html">PIS features</a>, and also <a href="examples_smr04.html#feature-2-number-of-stays-associated-with-a-psychotherapy-specialty">SMR04
+features 2, 3, and 4</a>. These cover the transformation types
+<code>"nunique"</code>, <code>"sum"</code>, and <code>"max"</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="time-based">Time-based<a class="anchor" aria-label="anchor" href="#time-based"></a>
 </h3>
 <p><strong>Transformation types:</strong> <code>"time_since"</code></p>
-<p>The <code>time_since</code> transformation type calculates the period of time between a given date and the first (or last) date in the dataset for each ID. This feature requires a few more keys:</p>
+<p>The <code>time_since</code> transformation type calculates the period
+of time between a given date and the first (or last) date in the dataset
+for each ID. This feature requires a few more keys:</p>
 <ul>
 <li>
 <p><strong>(string) <code>date_column</code></strong></p>
-<p>The name of the column containing the dates to be used in the calculation.</p>
+<p>The name of the column containing the dates to be used in the
+calculation.</p>
 </li>
 <li>
 <p><strong>(string) <code>cutoff_date</code></strong></p>
-<p>The date to be used as the reference point for the calculation. This should be in the format <code>YYYY-MM-DD</code>.</p>
+<p>The date to be used as the reference point for the calculation. This
+should be in the format <code>YYYY-MM-DD</code>.</p>
 </li>
 <li>
 <p><strong>(boolean) <code>from_first</code></strong></p>
-<p>If <code>true</code>, the feature will calculate the time between the cutoff date and the first date in the dataset for each ID. If <code>false</code>, it will calculate the time between the cutoff date and the last date.</p>
+<p>If <code>true</code>, the feature will calculate the time between the
+cutoff date and the first date in the dataset for each ID. If
+<code>false</code>, it will calculate the time between the cutoff date
+and the last date.</p>
 </li>
 <li>
 <p><strong>(string) <code>time_units</code></strong></p>
-<p>The unit of time to be used in the calculation. This can be either <code>"days"</code> or <code>"years"</code>: a year is defined as 365.25 days.</p>
+<p>The unit of time to be used in the calculation. This can be either
+<code>"days"</code> or <code>"years"</code>: a year is defined as 365.25
+days.</p>
 </li>
 </ul>
-<p>Examples of <code>"time_since"</code> features are given in <a href="examples_ae.html#feature-4-the-number-of-days-since-the-last-ae-attendance">A&amp;E feature 4</a> and <a href="examples_ltc.html#feature-1-number-of-years-with-asthma">LTC feature 1</a>.</p>
+<p>Examples of <code>"time_since"</code> features are given in <a href="examples_ae.html#feature-4-the-number-of-days-since-the-last-ae-attendance">A&amp;E
+feature 4</a> and <a href="examples_ltc.html#feature-1-number-of-years-with-asthma">LTC
+feature 1</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="combination-features">Combination features<a class="anchor" aria-label="anchor" href="#combination-features"></a>
 </h3>
-<p><strong>Transformation types:</strong> <code>"combine_linear"</code>, <code>"combine_min"</code>, <code>"combine_max"</code></p>
-<p>Combination features are a way of combining the results of multiple features into a single feature. They have a slightly different structure to the rest: broadly speaking, these transformation types require a <code>subfeature</code> key, which is itself an object which contains the features which are to be combined.</p>
+<p><strong>Transformation types:</strong> <code>"combine_linear"</code>,
+<code>"combine_min"</code>, <code>"combine_max"</code></p>
+<p>Combination features are a way of combining the results of multiple
+features into a single feature. They have a slightly different structure
+to the rest: broadly speaking, these transformation types require a
+<code>subfeature</code> key, which is itself an object which contains
+the features which are to be combined.</p>
 <p>Combination features are covered in a <a href="combination.html">separate vignette</a>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="preprocessing-and-filtering">Preprocessing and filtering<a class="anchor" aria-label="anchor" href="#preprocessing-and-filtering"></a>
 </h2>
-<p>While the above may seem like a large number of possible calculations, on their own they offer no way of controlling which parts of the input data are to be considered.</p>
-<p>In addition to the keys shown above, (non-combination) features may also contain the <code>preprocess</code> and <code>filter</code> keys, which perform transformations on the input table before the features are calculated from them. Preprocessing refers to the modification of values within a table, whereas filtering does not modify the values, but only allows rows that pass a set of criteria to be considered when calculating the feature.</p>
-<p>Preprocessing is performed prior to filtering: thus, if both are specified, filtering is performed on the already-preprocessed values.</p>
-<p>Both the <code>preprocess</code> and <code>filter</code> keys are themselves JSON objects, and are detailed respectively in the <a href="preprocessing.html">preprocessing</a> and <a href="filtering.html">filtering</a> vignettes.</p>
+<p>While the above may seem like a large number of possible
+calculations, on their own they offer no way of controlling which parts
+of the input data are to be considered.</p>
+<p>In addition to the keys shown above, (non-combination) features may
+also contain the <code>preprocess</code> and <code>filter</code> keys,
+which perform transformations on the input table before the features are
+calculated from them. Preprocessing refers to the modification of values
+within a table, whereas filtering does not modify the values, but only
+allows rows that pass a set of criteria to be considered when
+calculating the feature.</p>
+<p>Preprocessing is performed prior to filtering: thus, if both are
+specified, filtering is performed on the already-preprocessed
+values.</p>
+<p>Both the <code>preprocess</code> and <code>filter</code> keys are
+themselves JSON objects, and are detailed respectively in the <a href="preprocessing.html">preprocessing</a> and <a href="filtering.html">filtering</a> vignettes.</p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -213,15 +270,15 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
