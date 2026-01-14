@@ -103,3 +103,27 @@ monitor your vignette RMarkdown files, rebuild the vignettes any time
 they are changed, and launch a HTTP server on port 8000 to view the
 files. If you change any library code you will have to run
 `make install` again before rerunning `make vig`.
+
+## Releasing a new version
+
+To release a new version of the package, first update the version number by
+running the following in the R shell. The following will prompt you for a new
+version number (major, minor, or patch), which you can choose according to
+semantic versioning considerations:
+
+```R
+usethis::use_version()
+```
+
+Make sure that CRAN checks pass with this:
+
+```R
+devtools::check(remote = TRUE, manual = TRUE)
+```
+
+It's probably also good to make sure that CI is passing on GitHub. When you're
+ready, commit and push to GitHub. Then:
+
+```R
+devtools::submit_cran()
+```
