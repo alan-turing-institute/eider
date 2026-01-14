@@ -59,11 +59,11 @@ featurise_time_since <- function(all_tables,
   filter_obj <- spec$filter
 
   # Calculate feature
-  feature_table <- source_table %>% filter_all(filter_obj, context)
+  feature_table <- source_table |> filter_all(filter_obj, context)
   feature_table <- tryCatch(
     {
-      feature_table %>%
-        magrittr::extract2("passed") %>%
+      feature_table |>
+        magrittr::extract2("passed") |>
         rename(id = !!grouping_column)
     },
     error = function(e) {
@@ -84,21 +84,21 @@ featurise_time_since <- function(all_tables,
 
   feature_table <- tryCatch(
     {
-      tbl <- feature_table %>%
+      tbl <- feature_table |>
         mutate(
           !!output_feature_name :=
             (cutoff_date - .data[[date_column]]) %/% ndays
-        ) %>%
+        ) |>
         group_by(id)
 
       if (from_first) {
-        tbl <- tbl %>%
+        tbl <- tbl |>
           summarise(!!output_feature_name := max(.data[[output_feature_name]]))
       } else {
-        tbl <- tbl %>%
+        tbl <- tbl |>
           summarise(!!output_feature_name := min(.data[[output_feature_name]]))
       }
-      tbl %>% select(id, !!output_feature_name)
+      tbl |> select(id, !!output_feature_name)
     },
     error = function(e) {
       stop_context(message = conditionMessage(e), context = context)

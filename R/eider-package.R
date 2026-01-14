@@ -8,7 +8,6 @@
 #' @import dplyr
 #' @import rlang
 #' @import logger
-#' @importFrom magrittr %>%
 "_PACKAGE"
 
 # Suppress R CMD check notes for NSE usage

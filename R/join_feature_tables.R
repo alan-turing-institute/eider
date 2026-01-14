@@ -31,9 +31,9 @@ join_feature_tables <- function(
       )
     )
     get_ids <- function(feature) feature$feature_table$id
-    all_ids <- lapply(calculated_features, get_ids) %>%
-      unlist() %>%
-      unique() %>%
+    all_ids <- lapply(calculated_features, get_ids) |>
+      unlist() |>
+      unique() |>
       sort()
   } else {
     debug_context(
@@ -87,8 +87,8 @@ add_feature_column_to_df <- function(df, feature, context = NULL) {
     )
   }
 
-  df <- df %>%
-    left_join(feature$feature_table, by = "id") %>%
+  df <- df |>
+    left_join(feature$feature_table, by = "id") |>
     mutate(
       !!output_column_name :=
         coalesce(

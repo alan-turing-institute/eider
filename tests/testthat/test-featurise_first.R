@@ -10,13 +10,13 @@ test_that("featurise_first", {
 
   # Check the result
   orig_table <- utils::read.csv(ae2_table_path)
-  diag_101_expected <- orig_table %>%
-    group_by(id) %>%
-    summarise(first_diagnosis = first(diagnosis_1)) %>%
+  diag_101_expected <- orig_table |>
+    group_by(id) |>
+    summarise(first_diagnosis = first(diagnosis_1)) |>
     select(c(id, first_diagnosis))
   for (id_num in orig_table$id) {
     if (!id_num %in% diag_101_expected$id) {
-      diag_101_expected <- diag_101_expected %>%
+      diag_101_expected <- diag_101_expected |>
         dplyr::add_row(id = id_num, first_diagnosis = 0)
     }
   }

@@ -96,12 +96,12 @@ In our case, to merge episode dates into stays, we can say that we would like:
 In `dplyr` terms, one would write a pipeline like this:
 
 ```{r}
-processed_table <- input_table %>%
-  dplyr::group_by(id, cis_marker) %>%
+processed_table <- input_table |>
+  dplyr::group_by(id, cis_marker) |>
   dplyr::mutate(
     admission_date = min(admission_date),
     discharge_date = max(discharge_date)
-  ) %>%
+  ) |>
   dplyr::ungroup()
 
 processed_table
@@ -163,7 +163,7 @@ results$features
 To motivate the use of `replace_with_sum`, we can add a column to our previous data frame to denote the length of each episode:
 
 ```{r}
-input_table_with_sum <- input_table %>%
+input_table_with_sum <- input_table |>
   dplyr::mutate(days = as.numeric(discharge_date - admission_date))
 
 input_table_with_sum

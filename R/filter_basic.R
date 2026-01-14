@@ -49,17 +49,17 @@ filter_basic <- function(table,
 
   # Add a sentinel column indicating whether the row passed the filter
   private_sentinel <- "EIDER_PRIVATE_FILTERED"
-  table <- table %>%
+  table <- table |>
     mutate(!!private_sentinel := operator(.data[[column_name]], value))
 
   # Split the table into passed and rejected rows, and remove the sentinel
   # column
   list(
-    passed = table %>%
-      filter(.data[[private_sentinel]]) %>%
+    passed = table |>
+      filter(.data[[private_sentinel]]) |>
       select(-all_of(private_sentinel)),
-    rejected = table %>%
-      filter(!(.data[[private_sentinel]])) %>%
+    rejected = table |>
+      filter(!(.data[[private_sentinel]])) |>
       select(-all_of(private_sentinel))
   )
 }

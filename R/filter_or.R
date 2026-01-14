@@ -61,11 +61,11 @@ filter_or <- function(table, filter_obj, context = NULL) {
 
   # Sort by the index column (to restore the input order) and remove it
   if (!has_indices) {
-    passed <- passed %>%
-      arrange(.data[[private_sentinel_index]]) %>%
+    passed <- passed |>
+      arrange(.data[[private_sentinel_index]]) |>
       select(-all_of(private_sentinel_index))
-    not_yet_passed <- not_yet_passed %>%
-      arrange(.data[[private_sentinel_index]]) %>%
+    not_yet_passed <- not_yet_passed |>
+      arrange(.data[[private_sentinel_index]]) |>
       select(-all_of(private_sentinel_index))
   }
 

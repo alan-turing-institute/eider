@@ -86,8 +86,8 @@ fatal_context <- function(context, message = "") {
 #' message showing the current execution context
 #' @noRd
 stop_context <- function(context, message = "") {
-  ctx_str <- context %>%
-    lapply(function(x) paste0(" > ", x)) %>%
+  ctx_str <- context |>
+    lapply(function(x) paste0(" > ", x)) |>
     stringr::str_c(collapse = "\n")
 
   stop(message, "\nContext:\n", ctx_str, call. = FALSE)

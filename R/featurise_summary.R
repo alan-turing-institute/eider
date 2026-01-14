@@ -79,13 +79,13 @@ featurise_summary <- function(mode,
   filter_obj <- spec$filter
 
   # Calculate feature
-  feature_table <- source_table %>% filter_all(filter_obj, context)
+  feature_table <- source_table |> filter_all(filter_obj, context)
   feature_table <- tryCatch(
     {
-      feature_table %>%
-        magrittr::extract2("passed") %>%
-        rename(id = !!grouping_column) %>%
-        group_by(id) %>%
+      feature_table |>
+        magrittr::extract2("passed") |>
+        rename(id = !!grouping_column) |>
+        group_by(id) |>
         summarise(
           !!output_feature_name := summary_function(.data[[aggregation_column]])
         )

@@ -22,20 +22,20 @@ test_that("join_feature_tables (with all_ids specified)", {
   # Check the result
   orig_table <- utils::read.csv(ae2_table_path)
   ids <- data.frame(id = all_ids)
-  diag_101_expected <- orig_table %>%
-    filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) %>%
-    group_by(id) %>%
-    summarise(diag_101_count = n()) %>%
+  diag_101_expected <- orig_table |>
+    filter(diagnosis_1 == 101 | diagnosis_2 == 101 | diagnosis_3 == 101) |>
+    group_by(id) |>
+    summarise(diag_101_count = n()) |>
     select(c(id, diag_101_count))
-  diag_102_expected <- orig_table %>%
-    filter(diagnosis_1 == 102 | diagnosis_2 == 102 | diagnosis_3 == 102) %>%
-    group_by(id) %>%
-    summarise(diag_102_count = n()) %>%
+  diag_102_expected <- orig_table |>
+    filter(diagnosis_1 == 102 | diagnosis_2 == 102 | diagnosis_3 == 102) |>
+    group_by(id) |>
+    summarise(diag_102_count = n()) |>
     select(c(id, diag_102_count))
-  feature_table_expected <- ids %>%
-    left_join(diag_101_expected, by = "id") %>%
-    mutate(diag_101_count = tidyr::replace_na(diag_101_count, 0)) %>%
-    left_join(diag_102_expected, by = "id") %>%
+  feature_table_expected <- ids |>
+    left_join(diag_101_expected, by = "id") |>
+    mutate(diag_101_count = tidyr::replace_na(diag_101_count, 0)) |>
+    left_join(diag_102_expected, by = "id") |>
     mutate(diag_102_count = tidyr::replace_na(diag_102_count, 0))
 
   expect_equal(joined_feature_table$features$id, feature_table_expected$id)

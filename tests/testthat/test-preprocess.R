@@ -13,10 +13,10 @@ test_that("preprocess_table", {
   )
 
   preprocessed <- preprocess_table(df, mock_preproc_spec)
-  alternative <- df %>%
-    group_by(id, group) %>%
-    mutate(start_date = min(start_date)) %>%
-    mutate(end_date = max(end_date)) %>%
+  alternative <- df |>
+    group_by(id, group) |>
+    mutate(start_date = min(start_date)) |>
+    mutate(end_date = max(end_date)) |>
     ungroup()
 
   expect_equal(preprocessed, alternative)

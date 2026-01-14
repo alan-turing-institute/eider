@@ -31,7 +31,7 @@ read_spec_type <- function(filename_or_json_str, context = NULL) {
     stop_context("Unknown error when trying to read specification", context)
   }
 
-  return(file_or_string)
+  file_or_string
 }
 
 #' Check to see if provided spec is path or a JSON string.
@@ -46,17 +46,17 @@ chk_pth <- function(file_or_json) {
     expr = {
       is_valid_file <- fs::is_file(file_or_json)
       if (is_valid_file) {
-        return("valid")
+        "valid"
       } else {
-        return("not_valid")
+        "not_valid"
       }
     },
     error = function(e) {
       too_long <- stringr::str_detect(e[[1]], "NAMETOOLONG")
       if (too_long) {
-        return("too_long")
+        "too_long"
       } else {
-        return("other_error")
+        "other_error"
       }
     }
   )

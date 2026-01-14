@@ -63,7 +63,7 @@ featurise_combine <- function(mode,
     )
     # Issue 89: set `this_absent_default_value` to 0 if the subfeature is a
     # PRESENT
-    if (subfeature_spec$transformation_type %>% tolower() == "present") {
+    if (subfeature_spec$transformation_type |> tolower() == "present") {
       this_absent_default_value <- 0
     }
 
@@ -91,7 +91,7 @@ featurise_combine <- function(mode,
   joined_subfeatures <- joined_subfeatures$features
 
   # Then combine the subfeatures
-  feature_table <- tibble::tibble(id = joined_subfeatures$id) %>%
+  feature_table <- tibble::tibble(id = joined_subfeatures$id) |>
     mutate(!!output_feature_name := initial_missing_value)
   for (i in seq_along(subfeatures)) {
     subfeature_name <- names(spec$subfeature)[i]

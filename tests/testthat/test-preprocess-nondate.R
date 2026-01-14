@@ -12,10 +12,10 @@ test_that("preprocess_table with numbers", {
   )
 
   preprocessed <- preprocess_table(df, mock_preproc_spec)
-  alternative <- df %>%
-    group_by(id) %>%
-    mutate(diagnosis_1 = min(diagnosis_1)) %>%
-    mutate(diagnosis_2 = min(diagnosis_2)) %>%
+  alternative <- df |>
+    group_by(id) |>
+    mutate(diagnosis_1 = min(diagnosis_1)) |>
+    mutate(diagnosis_2 = min(diagnosis_2)) |>
     ungroup()
 
   expect_equal(preprocessed, alternative)

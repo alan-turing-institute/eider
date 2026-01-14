@@ -35,7 +35,7 @@ In this specific vignette, we are using simulated [SMR04 data](https://publichea
 Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
 
 ```{r}
-smr04_data <- utils::read.csv(smr04_data_filepath) %>%
+smr04_data <- utils::read.csv(smr04_data_filepath) |>
   dplyr::mutate(
     admission_date = lubridate::ymd(admission_date),
     discharge_date = lubridate::ymd(discharge_date)
@@ -142,7 +142,7 @@ Specifically, data sources do not necessarily need to be CSV filenames; they can
 Let's construct this new data frame:
 
 ```{r}
-smr04_with_days_data <- smr04_data %>%
+smr04_with_days_data <- smr04_data |>
   dplyr::mutate(days_in_hospital = as.numeric(discharge_date - admission_date))
 
 dplyr::glimpse(smr04_with_days_data)

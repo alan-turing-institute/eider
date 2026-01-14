@@ -35,7 +35,7 @@ In this specific vignette, we are using simulated long-term condition (LTC) data
 Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
 
 ```{r}
-ltc_data <- utils::read.csv(ltc_data_filepath) %>%
+ltc_data <- utils::read.csv(ltc_data_filepath) |>
   dplyr::mutate(asthma = lubridate::ymd(asthma),
                 diabetes = lubridate::ymd(diabetes),
                 parkinsons = lubridate::ymd(parkinsons))

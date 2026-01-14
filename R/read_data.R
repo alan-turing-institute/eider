@@ -22,8 +22,8 @@ read_one_table <- function(filepath_or_df, name) {
       The data source ", name, " is of class ", class(filepath_or_df), "."))
   }
 
-  df %>%
-    coerce_dates() %>%
+  df |>
+    coerce_dates() |>
     tibble::as_tibble()
 }
 

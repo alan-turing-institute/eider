@@ -26,7 +26,7 @@ featurise <- function(all_tables,
   trace_context(context)
 
   # Read the feature JSON file
-  t <- spec$transformation_type %>% tolower()
+  t <- spec$transformation_type |> tolower()
 
   # Check the transformation type and dispatch to the appropriate function
   if (t == "count") {

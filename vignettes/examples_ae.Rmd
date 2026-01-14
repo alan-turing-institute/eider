@@ -35,7 +35,7 @@ In this specific vignette, we are using simulated [accident and emergency (A&E) 
 Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
 
 ```{r}
-ae_data <- utils::read.csv(ae_data_filepath) %>%
+ae_data <- utils::read.csv(ae_data_filepath) |>
   dplyr::mutate(date = as.Date(date))
 
 dplyr::glimpse(ae_data)
@@ -256,20 +256,20 @@ We can verify some of the results above using a standard `dplyr` pipeline.
 For feature 1:
 
 ```{r}
-ae_data %>%
-  dplyr::group_by(id) %>%
-  dplyr::summarise(total_ae_attendances = dplyr::n()) %>%
+ae_data |>
+  dplyr::group_by(id) |>
+  dplyr::summarise(total_ae_attendances = dplyr::n()) |>
   dplyr::glimpse()
 ```
 
 and for feature 2:
 
 ```{r}
-ae_data %>%
-  dplyr::filter(date >= "2017-01-01", date <= "2017-12-31") %>%
-  dplyr::filter(diagnosis_1 == 13 | diagnosis_2 == 13 | diagnosis_3 == 13) %>%
-  dplyr::group_by(id) %>%
-  dplyr::summarise(total_neurology_ae_attendances = dplyr::n()) %>%
+ae_data |>
+  dplyr::filter(date >= "2017-01-01", date <= "2017-12-31") |>
+  dplyr::filter(diagnosis_1 == 13 | diagnosis_2 == 13 | diagnosis_3 == 13) |>
+  dplyr::group_by(id) |>
+  dplyr::summarise(total_neurology_ae_attendances = dplyr::n()) |>
   dplyr::glimpse()
 ```
 

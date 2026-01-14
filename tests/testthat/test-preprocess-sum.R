@@ -12,9 +12,9 @@ test_that("preprocess_table", {
   )
 
   preprocessed <- preprocess_table(df, mock_preproc_spec)
-  alternative <- df %>%
-    group_by(id, group) %>%
-    mutate(value = sum(value)) %>%
+  alternative <- df |>
+    group_by(id, group) |>
+    mutate(value = sum(value)) |>
     ungroup()
 
   expect_equal(preprocessed, alternative)

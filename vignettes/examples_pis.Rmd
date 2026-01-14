@@ -35,7 +35,7 @@ In this specific vignette, we are using simulated [Prescribing Information Syste
 Our dataset does not contain every column specified in here, but serves as a useful example of how real-life data may be treated using `eider`.
 
 ```{r}
-pis_data <- utils::read.csv(pis_data_filepath) %>%
+pis_data <- utils::read.csv(pis_data_filepath) |>
   dplyr::mutate(paid_date = lubridate::ymd(paid_date))
 
 dplyr::glimpse(pis_data)

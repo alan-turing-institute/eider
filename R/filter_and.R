@@ -64,11 +64,11 @@ filter_and <- function(table,
   # This line to silence R CMD check 'no visible binding for global variable'.
   # Sort by the index column (to restore the input order) and remove it
   if (!has_indices) {
-    not_yet_failed <- not_yet_failed %>%
-      arrange(.data[[private_sentinel_index]]) %>%
+    not_yet_failed <- not_yet_failed |>
+      arrange(.data[[private_sentinel_index]]) |>
       select(-all_of(private_sentinel_index))
-    failed <- failed %>%
-      arrange(.data[[private_sentinel_index]]) %>%
+    failed <- failed |>
+      arrange(.data[[private_sentinel_index]]) |>
       select(-all_of(private_sentinel_index))
   }
 

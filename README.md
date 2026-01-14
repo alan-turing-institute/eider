@@ -4,6 +4,7 @@
 # eider <img src="man/figures/eider_hexagon.png" align="right" height="138" style="max-height: 138px" />
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 **eider** is an R package for extracting machine learning features from

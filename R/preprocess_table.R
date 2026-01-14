@@ -43,24 +43,24 @@ preprocess_table <- function(input_table, spec, context = NULL) {
       )
     }
 
-    input_table <- input_table %>% group_by(across(all_of(on)))
+    input_table <- input_table |> group_by(across(all_of(on)))
 
     for (col in retain_min) {
-      input_table <- input_table %>%
+      input_table <- input_table |>
         mutate(!!col := min(!!sym(col)))
     }
 
     for (col in retain_max) {
-      input_table <- input_table %>%
+      input_table <- input_table |>
         mutate(!!col := max(!!sym(col)))
     }
 
     for (col in replace_with_sum) {
-      input_table <- input_table %>%
+      input_table <- input_table |>
         mutate(!!col := sum(!!sym(col)))
     }
 
-    input_table %>% ungroup()
+    input_table |> ungroup()
   } else {
     debug_context(
       context,
